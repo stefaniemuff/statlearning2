@@ -1,0 +1,2293 @@
+---
+subtitle: "TMA4268 Statistical Learning V2022"
+title: "Module 4: Classification"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "January 31 and February 3rd, 2022"
+fontsize: 10pt
+output:
+  # beamer_presentation:
+  #   keep_tex: yes
+  #   fig_caption: false
+  #   latex_engine: xelatex
+  #   theme: "Singapore"
+  #   colortheme: "default"
+  #   font: "serif"
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+urlcolor: blue
+bibliography: refs.bib
+header-includes: \usepackage{multirow}
+   \usepackage{bm}
+ 
+
+---
+
+```{r setup, include=FALSE}
+showsolA<-TRUE
+showsolB<-TRUE
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
+knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+                      cache=TRUE, size="scriptsize")
+whichformat="latex"
+```
+
+
+---
+
+# Acknowledgements
+
+* Thanks to Mette Langaas and her TAs who permit me to use and modify their original material. 
+
+* Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal.
+
+--- 
+
+# Introduction
+
+## Learning material for this module
+\vspace{2mm}
+
+* James et al. (2013): An Introduction to Statistical Learning. Chapter 4 + Chapter 2.2.3.  
+
+$~$
+
+* All the material presented on these module slides.
+
+
+
+<!-- --- -->
+
+<!-- ### Will be added after the lectures -->
+
+<!-- * [Classnotes 28.01.2019](https://www.math.ntnu.no/emner/TMA4268/2019v/notes/M4L1notes.pdf). -->
+<!-- * [Classnotes 31.01.2019](https://www.math.ntnu.no/emner/TMA4268/2019v/notes/M4L2notes.pdf).   -->
+
+<!-- ### Move to -->
+
+<!-- * [Part A: Introduction to classification, and modelling class densities ](#PartA) -->
+<!-- * [Part B: Modelling posterior probabilites, ROC/AUC and comparions](#PartB) -->
+
+---
+
+## What will you learn?
+
+$~$
+
+* Classification and discrimination
+
+* Logistic regression
+
+* Bayes classifier, Bayes risk
+
+* KNN - majority vote or estimate posterior class probability?
+
+* Linear discriminant analysis: model, method, results.
+
+* Quadratic discriminant analysis: model, method, results.
+
+* Naive Bayes - when and why?
+
+* Sensitivity, specificity and ROC curves
+
+
+---
+
+# What is classification?
+\vspace{3mm}
+
+* By now our responses $Y$ was assumed _continuous_, while covariates were allowed to be _categorical_.
+\vspace{1mm}
+
+* Now we allow the response to be _categorical_.
+\vspace{1mm}
+
+* This is even more common than continuous responses. Examples:
+    + Spam filters `email` $\in$ \{spam, ham\},
+    + `Eye color` $\in$ \{blue, brown, green\}.
+    + `Medical condition` $\in$ \{disease1, disease2, disease3\}.
+    
+<!-- *  Given a feature vector $X$ and a qualitative response $Y$ -->
+<!-- taking values in the set $\mathcal{C}$, the classification task is to build -->
+<!-- a function $C(X)$ that takes as input the feature vector $X$ -->
+<!-- and predicts its value for $Y$; i.e. $C(X) \in \mathcal{C}$. -->
+
+
+
+---
+
+* Suppose we have a qualititative response value that can be a member in one of $K$ classes $\mathcal{C} = \{c_1, c_2, \ldots , c_K\}$. 
+
+* In classification we build a function $f(X)$ that takes a vector of input variables $X$ and predicts its class membership, such that $Y \in \mathcal{C}$.
+
+* We would also assess the _uncertainty_ in this classification. Sometimes the role of the different predictors may be of main interest. 
+
+* We often build models that **predict probabilities of categories**, _given_ certain covariates $X$.
+
+<!-- Discrimination: also focus on describing the class boundaries using _discriminant functions_. -->
+
+
+
+
+
+<!-- --- -->
+
+<!-- # Discrimination and classification -->
+
+<!-- * Discrimination is concerned with the description and the separation of the classes and  -->
+<!-- * classification with the allocation and the assignment of observations to predefined classes.  -->
+<!-- * The two tasks are closely related and often overlap.   -->
+
+---
+
+### Example: The credit card data
+\vspace{2mm}
+
+The `Default` dataset is available from the ISLR package. 
+
+\vspace{2mm}
+**Aim** : to predic whether an individual will default on his or her credit card payment, given the annual income and credit card balance. 
+
+\textcolor{orange}{Orange: default=yes}, \textcolor{blue}{blue: default=no}.
+
+
+ \centering
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.1a.png){width=50%}
+ 
+
+
+---
+
+## General classification setup
+
+$~$
+
+**Set-up:** Training observations $\{(x_1, y_1), ..., (x_n, y_n)\}$ where the response variable $Y$ is categorical, e.g $Y \in \mathcal{C} = \{0, 1, ..., 9\}$ or $Y \in \mathcal{C} = \{dog, cat,... ,horse\}$. 
+
+$~$
+
+**Aim: **
+To _build_ a classifier $f(X)$ that assigns a class label from $\mathcal{C}$ to a future unlabelled observation $x$ and to asses the _uncertainty_ in this classification. 
+
+$~$
+
+**Performance measure:** Most popular is the misclassification error rate (training and test version).
+
+
+
+---
+
+## What are the methods?
+
+$~$ 
+
+**Three methods for classification** are discussed here:
+
+$~$
+
+
+* Logistic regression
+
+* $K$-nearest neighbours
+
+* Linear and quadratic discriminant analysis
+
+
+
+
+---
+
+## Linear regression for binary classification?
+\vspace{1mm}
+
+Suppose we have a binary outcome, for example whether a credit card user defaults $Y =$ `yes` or `no`, given covariates $X$ to predict $Y$. We could use _dummy encoding_ for $Y$ like
+
+$$Y = \left\{ \begin{array}{ll}
+0 & \text{if } \texttt{no} \ , \\
+1 & \text{if } \texttt{yes} \ .
+\end{array} \right.$$
+Can we simply perform a linear regression of $Y$ on $X$ and
+classify as `yes` if $\hat{Y}> 0.5$? 
+
+\vspace{2mm}
+
+* In this case of a binary outcome, linear regression does a
+good job as a classifier, and is equivalent to linear
+discriminant analysis which we discuss later.
+
+\vspace{2mm}
+
+* However, linear regression might produce probabilities less
+than zero or bigger than one. 
+
+\vspace{2mm}
+
+$\rightarrow$ We need to use **logistic regression**.
+
+
+--- 
+
+### Linear vs. logistic regression
+
+$~$
+
+Let's anticipate a bit, to see why linear regression does not so well. We estimate the probability that someone defaults, given the credit card balance as predictor:
+\vspace{2mm}
+
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.2.png)
+
+
+---
+
+## Linear regression for categorical classification?
+
+$~$
+
+What when there are more than two possible outcomes? For example, a medical diagnosis $Y$, given predictors $X$ can be categorized as
+
+$~$
+
+$$Y = \left\{ \begin{array}{ll}
+1 & \text{if } \texttt{stroke} \ , \\
+2 & \text{if } \texttt{drug overdose} \ , \\
+3 & \text{if } \texttt{epileptic seizure} \ .
+\end{array} \right.$$
+
+$~$
+
+This suggests an ordering, but this is artificial.
+
+$~$
+
+* Linear and logistic regression are not appropriate here.
+* We need _Multiclass logistic regression_ and _Discriminant Analysis_. 
+
+
+
+---
+
+### However:
+
+\vspace{2mm}
+
+* It is still possible to use linear regression for classification problems with two classes. It is actually not even a bad idea, and works well under some conditions. Under some standard assumptions, this linear regression (with 0 and 1 response) will in fact give the same classification as linear discriminant analysis (LDA). 
+
+\vspace{2mm}
+
+* For categorical outcomes with more than two levels, it requires some extra work (multivariate $Y$ due to the dummy variable coding). 
+
+\vspace{2mm}
+
+* We leave linear regression for now.
+
+
+---
+
+
+# Logistic regression 
+
+* In logistic regression we consider a classification problem with two classes.
+
+
+* Assume that $Y$ is coded ($\mathcal{C} = \{1, 0\}$ or \{success, failure\}), and we focus on success $(Y=1)$. 
+
+* We may assume that $Y_i$ follows a **Bernoulli distribution** with probability of success $p_i$.
+
+$$Y_i = \begin{cases} 1 \text{ with probability } p_i, \\ 0 \text{ with probability } 1-p_i. \end{cases}$$
+
+* **Aim**: For covariates $(X_1,\ldots,X_p)$, we want to estimate $p_i = \text{Pr}(Y_i=1 \mid X_1,\ldots,X_p)$.
+
+---
+
+
+* We need a clever way to _link_ our covariates $X_1, \ldots, X_p$ with this probability $p_i$. Aim: want to relate the _linear predictor_
+$$\eta_i = \beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}$$ 
+to $p_i$. How?
+
+
+
+* The idea is to use a so-called _link-function_ to link $p_i$ to the linear predictor. 
+
+* In logistic regression, we use the _logistic link function_
+
+
+\begin{equation}
+\log\left( \frac{p_i}{1-p_i} \right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \ldots + \beta_p x_{ip} \ .
+\end{equation}
+
+
+* **Q:** What is the rationale behind this?
+
+
+---
+
+### Logistic regression with one covariate
+
+\vspace{2mm}
+
+* Equation (1) can be rearranged and solved for $p_i$. Let's look at this for only one covariate: 
+
+$$ p_i= \frac{e^{\beta_0+\beta_1 x_i}}{1 + e^{\beta_0 + \beta_1 x_i}}.$$
+
+\vspace{2mm}
+
+* **Important:** These values $p_i$ will always lie in the interval between 0 and 1, with an S-shaped curve. 
+
+
+
+
+---
+
+### Example: `Default` credit card data
+
+$~$
+
+* The parameters are estimated using the method of maximum likelihood - we will look at that soon.
+
+\vspace{2mm}
+
+* Let's first do it! In R, this works with the `glm()` function, where we specify `family="binomial"`. 
+
+\vspace{4mm}
+
+\scriptsize
+```{r, echo=T}
+library(ISLR)
+data(Default)
+Default$default <- as.numeric(Default$default)-1
+glm_default = glm(default~balance, data=Default, family="binomial")
+
+summary(glm_default)$coef
+```
+
+---
+
+Plotting the fitted line (in blue):
+
+$~$
+
+```{r defaultglm, echo=FALSE, fig.width=5, fig.height=3,fig.align = "center",out.width='70%'}
+library(ggplot2)
+glm_alpha = coef(glm_default)[1]
+glm_beta = coef(glm_default)[2]
+
+ggglm = ggplot(Default, aes(x=balance, y=default))+geom_point() + 
+  geom_line(aes(x=balance, y=exp(glm_alpha+glm_beta*balance)/
+                  (1+exp(glm_alpha+glm_beta*balance))), col="blue")
+
+
+ggglm
+```
+
+$~$
+
+Default data: here $\hat{\beta}_0=$ `r round(glm_alpha,2)` and $\hat{\beta}_1=$ `r round(glm_beta,3)`.
+
+
+---
+
+### Estimating the regression coefficients with ML
+
+$~$
+
+* The coefficients $\beta_0, \beta_1, \ldots$ are estimated with _maximum likelihood_ (ML).
+
+\vspace{2mm}
+
+* Given $n$ independent observation pairs  $\{{\boldsymbol x}_i, y_i\}$, the likelihood function of a logistic regression model can be written as:
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) = \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},$$
+where $\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)^T$ enters into $p_i$
+
+$$p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\beta_0 + \beta_1 x_{i1}+\cdots+\beta_p x_{ip})} \ .$$
+
+---
+
+* The maximum likelihood estimates are found by maximizing the likelihood.
+
+* To make the math easier, we usually work with the log-likelihood (the log is a monotone transform, thus it will give the same result as maximizing the likelihood).
+
+\vspace{-4mm}
+
+\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) =\sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
+&= \sum_{i=1}^n \Big (y_i (\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}) - \log(1 + e^{\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}} ) \Big ).\end{align*}
+
+---
+
+* To maximize the log-likelihood function we find the $r+1$ partial derivatives, and set equal to 0. 
+
+* This gives us a set of $p+1$ non-linear equations in the $\beta$s.
+
+* This set of equations does not have a closed form solution.
+
+* The equation system is therefore solved numerically using the _Newton-Raphson algorithm_ (or Fisher Scoring).
+
+
+---
+
+### Qualitative interpretation of the coefficients  
+
+$~$
+
+Let's again look at the regression output:
+
+$~$
+
+\scriptsize
+```{r, echo=T}
+summary(glm_default)$coef
+```
+
+$~$
+
+$~$
+
+\normalsize
+
+* The $z$-statistic is equal to $\frac{\hat\beta}{SE(\hat\beta)}$, and is approximately $N(0,1)$ distributed.\footnote{With this knowledge we can construct confidence intervals and test hypotheses about the $\beta$s, with the aim to understand which covariate(s) contribute to our posterior probabilites and classification.}
+
+\vspace{2mm}
+
+* The $p$-value is $\text{Pr}(|Z| > |z|)$ for a $Z\sim N(0,1)$ random variable
+
+\vspace{2mm}
+
+* Check the $p$-value for `Balance`. Conclusion?
+
+---
+
+### Quantitative interpretation of the coefficients  
+
+\vspace{2mm}
+Remember from equation (1) that
+
+\begin{equation*}
+\log\left( \frac{p_i}{1-p_i} \right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \ldots + \beta_p x_{ip} \ ,
+\end{equation*}
+
+thus
+
+\begin{equation*}
+ \frac{p_i}{1-p_i} = e^{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \ldots + \beta_p x_{ip}} = e^{\eta_i} \ .
+\end{equation*}
+
+\vspace{2mm}
+
+The quantity $p_i/(1-p_i)$ is called the _\textcolor{red}{odds}_. Odds represent _\textcolor{red}{chances}_ (e.g. in betting).
+
+$~$
+
+**Q**: Answer in mentimeter:
+
+1. You think your football team will win tonight with a probability $p=80\%$. What is the odds that it will win?
+
+2. The odds for the best horse in a race is $5:1$. What is the probability that this horse will win?
+
+
+
+
+---
+
+### Why is the odds relevant? 
+
+\vspace{2mm}
+Let's again rearrange the _odds_ in the logistic regression model:
+
+\begin{align*}
+ \frac{p_i}{1-p_i} &=  \frac{\text{P}(Y_i=1 \mid X=x)}{\text{P}(Y_i=0 \mid X = x)} \\[2mm]
+ &= \exp(\beta_0) \cdot \exp(\beta_1 x_{i1}) \cdot \ldots \cdot  \exp(\beta_p x_{ip}) \ .
+ \end{align*}
+
+$~$
+<!-- \begin{align*} -->
+<!-- \eta_i&= \beta_0+\beta_1 x_{i1}+\beta_2 x_{i2}+\cdots + \beta_p x_{ip}\\ -->
+<!-- p_i&= \frac{\exp(\eta_i)}{1+\exp(\eta_i)}\\ -->
+<!-- \eta_i&=\ln(\frac{p_i}{1-p_i})\\ -->
+<!-- \ln(\frac{p_i}{1-p_i})&=\beta_0+\beta_1 x_{i1}+\beta_2 x_{i2}+\cdots + \beta_p x_{ip}\\ -->
+<!-- \frac{p_i}{1-p_i}=&\frac{\text{Pr}(Y_i=1|{\boldsymbol x}_i)}{\text{Pr}(Y_i=0|{\boldsymbol x}_i)}=\exp(\beta_0)\cdot \exp(\beta_1 x_{i1})\cdots\exp(\beta_p x_{ip}) -->
+<!-- \end{align*} -->
+
+$\rightarrow$ We have a _multiplicative model_ for the odds - which can help us to interpret our $\beta$s.
+
+---
+
+### The odds ratio
+
+$~$
+
+To understand the effect of a regression coefficient $\beta_j$, let's see what happens if we increase $x_{ij}$ to $x_{ij}+1$, while all other covariates are kept fixed.
+
+\vspace{2mm}
+Using simple algebra and the formula on the previous slide, you will see that
+
+\begin{equation}
+\frac{\text{odds}(Y_i=1 \mid X_{j} = x_{ij} + 1)}{\text{odds}(Y_i=1 \mid X_j = x_{ij})} = \exp(\beta_j)  \ .
+\end{equation}
+
+\vspace{2mm}
+
+$~$
+
+**Interpretation**:
+
+By increasing covariate $x_{ij}$ by one unit, we change the odds for $Y_i=1$ by a factor $\exp(\beta_j)$.
+ 
+ $~$
+
+**Moreover**:
+
+Taking the log on equation (2), it follows that $\beta_j$ can be interpreted as a **log odds-ratio**.
+ 
+
+---
+
+Let's now fit the logistic regression model for `default`, given `balance`, `income` and the binary variable `student` as predictors:
+
+$~$
+
+\scriptsize
+```{r, echo=T}
+glm_default2 = glm(default~balance + income + student, data=Default, family="binomial")
+
+summary(glm_default2)$coef
+```
+
+$~$
+
+\normalsize
+
+**Questions:**
+
+* What happens with the odds to default when `income` increases by 10'000 dollars?
+
+<!-- $\rightarrow$ The odds ratio to default increases by a factor $\exp(10000\cdot \beta_{\text{income}})=$ `r round(exp(summary(glm_default2)$coef[3,1]*10000),2)` -->
+
+* What happens with the odds to default when `balance` increases by 100 dollars?
+
+<!-- $\rightarrow$ The odds to default increases by a factor $\exp(100 \cdot \beta_{\text{balance}})=$ `r round(exp(summary(glm_default2)$coef[2,1]*100),2)` -->
+
+
+
+---
+
+## Predictions
+
+\vspace{2mm}
+
+Let's catch up. Why were we doing all this in the first place?
+
+\vspace{2mm}
+
+**Answer:** We wanted to build a model that **predict probabilities of categories** $Y$, _given_ certain covariates $X_1, \ldots, X_p$.
+
+\vspace{2mm}
+ 
+* For given parameter estimates $\hat\beta_0, \hat\beta_1, \ldots \hat\beta_p$ and a new observation ${\boldsymbol x}_0$, we can estimate the probability $\hat{p}({\boldsymbol x}_0)$ that the new observation belongs to the class defined by $Y=1$
+
+$$\hat{p}({\boldsymbol x}_0) = \frac{e^{\hat{\eta}_0}}{1+e^{\hat{\eta}_0}} \ , $$
+
+with linear predictor
+$$\hat\eta_0 = \hat\beta_0 + \hat\beta_1 x_{01} + \ldots + \hat\beta_p x_{0p} \ .$$
+
+In the case of qualitative covariates, a dummy variable needs to be introduced. This can be done as for linear regression. 
+
+
+---
+
+So in the `Default` example, we can predict the probability that someone defaults. 
+
+For example: "What is the estimated probability that a student defaults with a balance of 2000, and an income of 40000?"
+
+$$\hat{p}(X) = \frac{e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}}{ 1+  e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}} = 0.5196$$
+\vspace{6mm}
+
+Using R:
+\scriptsize
+```{r}
+eta <- summary(glm_default2)$coef[,1] %*% c(1,2000,40000,1)
+exp(eta)/(1+exp(eta))
+```
+
+\normalsize
+(Or via the `predict()` function in R.)
+
+---
+
+## Example: South African heart disease data set
+
+$~$
+
+* `SAheart` data set from the `ElemStatLearn` package, a retrospective sample of males in a heart-disease high-risk region in South Africa. 
+
+\vspace{2mm}
+
+* 462 observations on 10 variables. 
+
+\vspace{2mm}
+
+* All subjects are male in the age range 15-64. 
+
+\vspace{2mm}
+
+* 160 cases (individuals who have suffered from a conorary heart disease) and 302 controls (individuals who have not suffered from a conorary heart disease).    
+
+
+
+---
+
+The response value (`chd`) and covariates
+
+* `chd` : conorary heart disease \{yes, no\} coded by the numbers \{1, 0\}
+* `sbp` : systolic blood pressure  
+* `tobacco` : cumulative tobacco (kg)  
+* `ldl` : low density lipoprotein cholesterol
+* `famhist` : family history of heart disease. Categorical variable with two levels: \{Absent, Present\}.
+* `obesity` : a numerical value
+* `alcohol` : current alcohol consumption
+* `age` : age at onset
+
+The goal is to identify important risk factors. We start by loading and looking at the data:
+
+---
+
+\footnotesize
+```{r,echo=showsolB}
+library(ElemStatLearn)
+
+d.heart <- SAheart
+d.heart$chd <- as.factor(d.heart$chd)
+d.heart <- d.heart[,c("sbp","tobacco","ldl","famhist","obesity","alcohol","age","chd")]
+head(d.heart)
+```
+\normalsize
+
+
+
+---
+
+`pairs()` plot with $Y=1$ (case) in green and $Y=0$ (control) in blue:
+
+```{r ggpairs_heart, message=FALSE,echo=FALSE, fig.width=6.5,fig.height=6,fig.align="center",out.width='80%'}
+pairs(d.heart[,-c(8)],col=ifelse(d.heart$chd==0,"green","blue"))
+```
+
+
+---
+
+Fitting the model using all predictors in R:
+
+$~$
+
+\tiny
+
+```{r}
+glm_heart = glm(chd~., data=d.heart, family="binomial")
+summary(glm_heart)
+```
+
+---
+
+* For which predictors do we have evidence that they are associated with CHD (www.menti.com)?
+
+* How would you now calculate $\hat{p}(X)$ that someone will develop CHD, given covariates $X$?
+
+\vspace{5mm}
+
+**R-hint:** The `predict()` function can be used to get predicted probabilities using 
+
+\scriptsize
+```{r, eval=FALSE}
+predict(glm_heart, newdata=... , type="response")
+```
+
+
+<!-- --- -->
+
+<!-- ## Multinomial logistic regression -->
+
+<!-- * Generalization of the logistic regression model to a response variable with more than two ($K$) possible classes.  -->
+
+<!-- * The probability that $Y$ belongs to class $k$, given an observation vector $\mathbf{x} = (x_1, x_2, \dots, x_p)^T$ is (usually) modelled by: -->
+<!-- $$\log \frac{\text{Pr}(Y = k | \mathbf{x})}{\text{Pr}(Y = K | \mathbf{x})}= \beta_{0k} + \beta_{1k} x_1 + \cdots + \beta_{pk} x_p ,$$ -->
+<!-- where $K$ is chosen as the _reference category_ (arbitrary). We would thus (jointly) estimate $K-1$ sets of regression parameters. -->
+
+<!-- * The multinomial logistic regression model is implemented in the `glmnet` or `VGAM` package in `R`. -->
+
+<!-- * We will not discuss this further since LDA is more popular (than logistic regression) in the multi-class setting. And, as we shall see soon - they are not that different. -->
+
+
+---
+
+# The Bayes classifier
+
+* We were going for classification, but now estimated $\hat{p}(X)=\text{Pr}(Y \mid X)$ using logistic regression. Idea: probability can be used for classification.
+
+\vspace{0mm}
+
+* Assume that we know or can estimate the probability that a new observation $x_0$ belongs to class $k$, for $K$ classes $\mathcal{C} = \{c_1, c_2,\ldots, c_K\}$, with elements numbered as $1, 2, ..., K$
+$$p_k(x_0) = \text{Pr}(Y=k | X=x_0), \quad k = 1, 2, ... K \ .$$
+This is the probability that $Y=k$ given the observation $x_0$. 
+\vspace{1mm}
+
+* The _Bayes classifier assigns an observation to \textcolor{red}{the most likely class}_, given its predictor values.  
+
+
+* **Example** for two groups $\{A, B\}$. A new observation $x_0$ will be classified to $A$ if $\text{Pr}(Y=A | X=x_0) > 0.5$ and to class $B$ otherwise.
+
+
+---
+
+## Properties of the Bayes classifier
+
+$~$
+
+* It has the _smallest \textcolor{red}{test error} rate_. 
+
+\vspace{2mm}
+
+* The class boundaries using the Bayes classifier is called the _Bayes decision boundary_.
+
+\vspace{2mm}
+
+* The overall Bayes error rate is given as $$1-\text{E}(\max_j \text{Pr}(Y=j\mid X))$$ where the expectation is over $X$.
+
+\vspace{2mm}
+
+* The Bayes error rate is comparable to the _irreducible error_ in the regression setting.
+
+\vspace{2mm}
+
+* **Caveat:** We usually don't know the true conditional distribution $\text{Pr}(Y  |  X)$ for real data.
+
+---
+
+# Some terminology
+
+\vspace{2mm}
+ 
+
+**Training set:** Independent observations $\{(x_1, y_1), ..., (x_n, y_n)\}$ with _qualitative response_ variable $Y \in \{1, 2, ..., K\}$, used to construct the classification rule (by estimating parameters in class densities or posterior probabilites).
+
+\vspace{2mm}
+
+**Test set:** Independent observations of the same format as the training set, used to evaluate the classification rule.
+
+\vspace{2mm}
+
+**Loss function:** The misclassifications are given the loss 1 and the correct classifications loss 0 - this is called _0/1-loss_. 
+
+---
+
+### Training error
+
+$~$
+
+**Training error rate**:
+The proportion of mistakes that are made if we apply our estimator $\hat{f}$ to the training observations, i.e. $\hat{y}_i=\hat{f}(x_i)$ 
+$$\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,$$
+with indicator function I, which is defined as: 
+
+$$\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
+0 \text{ else. } \end{cases}$$
+
+\vspace{2mm}
+
+ 
+---
+
+### Test error
+
+$~$
+
+**Test error rate**: The fraction of misclassifications when our model is applied on a test set
+
+$$\frac{1}{n_0}\sum_{i=1}^{n_0} \text{I}(y_{0i} \neq \hat{y}_{0i}) \ ,$$
+where the average is over all the test observations $(x_0,y_0)$.
+
+\vspace{6mm}
+
+Remember: a _\textcolor{red}{good classifier}_ is a classifier that has a _\textcolor{red}{low test error}_ (why?).
+
+ 
+
+
+---
+
+# The K-nearest neighbour (KNN) classifier
+
+
+* We have discussed how to estimate $\text{Pr}(Y  |  X)$ with logistic regression (for two categories).
+
+
+
+\vspace{1mm}
+
+\vspace{1mm}
+
+* Alternative: $K$-nearest neighbor (KNN) classifier estimates this conditional distribution _\textcolor{red}{non-parametrically}_ and chooses the most likely cateogry (Bayes classifier).\footnote{Attention!! $K$ refers to the number of neighbours used for the classifier, and \emph{not} to the number of classes!! The latter is assumed known.} 
+
+
+
+---
+
+
+
+## A synthetic example
+
+$~$
+
+* Simulate $2\times 100$ observations from a bivariate normal distribution with mean vectors $\mu_A  = (1, 1)^T$, $\mu_B = (3, 3)^T$, and covariance matrix $\Sigma_A = \Sigma_B = \begin{pmatrix} 2\hspace{2mm}   0 \\ 0 \hspace{2mm} 2 \end{pmatrix}$.
+
+$~$
+
+```{r knn, message=FALSE,echo=FALSE, fig.width=5,fig.height=4,fig.align="center",out.width='50%'}
+library(mvtnorm)
+library(MASS)
+library(ggplot2)
+
+set.seed(9)
+
+Sigma = matrix(c(2, 0, 0, 2), 2, 2)
+
+mu1 = c(1, 1)
+mu2 = c(3, 3)
+
+X1 = mvrnorm(100, mu=mu1, Sigma=Sigma)
+X2 = mvrnorm(100, mu=mu2, Sigma=Sigma)
+
+class = c(rep("A",100), rep("B", 100))
+class = as.factor(class)
+
+df = data.frame(rbind(X1, X2), class)
+
+ggplot(df, aes(x=X1, y=X2, color=class))+geom_point(size=2)+theme_bw()
+```
+
+\vspace{2mm}
+
+
+* Aim: Find a rule to classify a new observation to $A$ or $B$, given only the data points (not the knowledge about the true parameters).
+
+---
+
+\vspace{2mm}
+The $K$-nearest neighbour classifier (KNN) works in the following way: 
+
+* Given a new observation $x_0$ it searches for the $K$ points in our training data that are closest to it (Euclidean distance). 
+\vspace{1mm}
+
+* These points make up the neighborhood of $x_0$, $\mathcal{N}_0$. 
+\vspace{1mm}
+
+* Classification is done by a _\textcolor{red}{majority vote}_: $x_0$ is classified to the most occurring class among its neighbors
+$$\text{Pr}(Y=j | X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)\ .$$
+
+
+
+
+
+---
+
+Illustration:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE,fig.width=8,fig.height=5.5,fig.align="center",out.width='90%'}
+library(class)
+library(dplyr)
+library(ggpubr)
+
+test = expand.grid(x = seq(min(df[,1]-1), max(df[,1]+1), by=0.2), y=seq(min(df[,2]-1), max(df[,2]+1), by=0.2))
+
+
+## k = 1
+classif = knn(df[,1:2], test=test, cl=df[,3], k=1, prob=TRUE)
+prob = attr(classif, "prob")
+
+dataf = bind_rows(mutate(test, prob=prob, class="A", prob_cls=ifelse(classif==class, 1, 0)),
+                  mutate(test, prob=prob, class="B", prob_cls=ifelse(classif==class, 1, 0)))
+
+gg = ggplot(dataf)+geom_point(aes(x=x, y=y, colour=class), data=mutate(test, class=classif), size=0.01) 
+gg = gg + geom_contour(aes(x=x, y=y, z=prob_cls, group=class, color=class), data=dataf, bins=2,size=0.5)
+gg = gg + geom_point(aes(x=x, y=y, col=class), size=2, data=data.frame(x=df[,1], y=df[,2], class=df[,3]))
+gg = gg + ggtitle("k = 1")+xlab("X1")+ylab("X2")+theme_minimal()
+
+# k = 3
+classif3 = knn(df[,1:2], test=test, cl=df[,3], k=3, prob=TRUE)
+prob3 = attr(classif3, "prob")
+
+dataf3 = bind_rows(mutate(test, prob=prob3, class="A", prob_cls=ifelse(classif3==class, 1, 0)),
+                    mutate(test, prob=prob3, class="B", prob_cls=ifelse(classif3==class, 1, 0)))
+
+gg3 = ggplot(dataf3)+geom_point(aes(x=x, y=y, colour=class), data=mutate(test, class=classif3), size=0.01)
+gg3 = gg3 + geom_contour(aes(x=x, y=y, z=prob_cls, group=class, color=class), data=dataf3, bins=2, size=0.5)
+gg3 = gg3 + geom_point(aes(x=x, y=y, col=class), size=2, data=data.frame(x=df[,1], y=df[,2], class=df[,3]))
+gg3 = gg3 + ggtitle("k = 3")+xlab("X1")+ylab("X2")+theme_minimal()
+
+## k = 10
+
+classif10 = knn(df[,1:2], test=test, cl=df[,3], k=10, prob=TRUE)
+prob10 = attr(classif10, "prob")
+
+dataf10 = bind_rows(mutate(test, prob=prob10, class="A", prob_cls=ifelse(classif10==class, 1, 0)),
+                  mutate(test, prob=prob10, class="B", prob_cls=ifelse(classif10==class, 1, 0)))
+
+gg10 = ggplot(dataf10)+geom_point(aes(x=x, y=y, colour=class), data=mutate(test, class=classif10), size=0.05)
+gg10 = gg10 + geom_contour(aes(x=x, y=y, z=prob_cls, group=class, color=class), data=dataf10, bins=2, size=0.5)
+gg10 = gg10 + geom_point(aes(x=x, y=y, col=class), size=2, data=data.frame(x=df[,1], y=df[,2], class=df[,3]))
+gg10 = gg10 + ggtitle("k = 10")+xlab("X1")+ylab("X2")+theme_minimal()
+
+## k = 150
+
+classif150 = knn(df[,1:2], test=test, cl=df[,3], k=150, prob=TRUE)
+prob150 = attr(classif150, "prob")
+
+dataf150 = bind_rows(mutate(test, prob=prob150, class="A", prob_cls=ifelse(classif150==class, 1, 0)),
+                  mutate(test, prob=prob150, class="B", prob_cls=ifelse(classif150==class, 1, 0)))
+
+gg150 = ggplot(dataf150)+geom_point(aes(x=x, y=y, colour=class), data=mutate(test, class=classif150), size=0.05)
+gg150 = gg150 + geom_contour(aes(x=x, y=y, z=prob_cls, group=class, color=class), data=dataf150, bins=2, size=0.5)
+gg150 = gg150 + geom_point(aes(x=x, y=y, col=class), size=2, data=data.frame(x=df[,1], y=df[,2], class=df[,3]))
+gg150 = gg150 + ggtitle("k = 150")+xlab("X1")+ylab("X2")+theme_minimal()
+
+ggarrange(gg,gg3,gg10,gg150)
+```
+
+\vspace{2mm}
+
+\scriptsize
+
+* The small colored dots show the predicted classes for an evenly-spaced grid. 
+* The lines show the decision boundaries. 
+
+
+---
+
+## How to choose $K$?
+\vspace{2mm}
+
+* $K=1$:  the classification is made to the same class as the one nearest neighbor. 
+
+\vspace{2mm}
+
+* $K$ large: the decision boundary tends towards a straight line (which is the Bayes boundary in this set-up).   
+
+\vspace{2mm}
+
+
+
+$~$
+
+**Discuss**: 
+
+\vspace{2mm}
+
+* Depending on the choice of $K$, when is the bias large, when is the variance large?
+
+\vspace{2mm}
+
+* How to find the optimal $K$?
+
+
+
+---
+
+## Bias-variance trade-off in a classification setting
+
+$~$
+
+Finding the _optimal value_ of $K$: Test the predictive power for different $K$, for example by cross-validation (Module 5).
+
+$~$
+
+```{r knnerror1,echo=FALSE,fig.width=5.5,fig.height=3.7,fig.align="center",out.width="60%"}
+misclas=numeric(50)
+n = dim(df)[1]
+set.seed(9)
+for(k in 1:50){
+  knn = knn.cv(train = df[,-3], cl=df[,3], k=k)
+  t = table(knn, df[,3])
+  error = (n-sum(diag(t)))/n
+  misclas[k] = error
+}
+
+knn_ds = data.frame(X1 = 1:50, X2 = misclas)
+gge = ggplot(knn_ds, aes(x = X1, y=X2)) + geom_point(color="blue") + geom_line()
+gge = gge + xlab("Number of neighbors K") + ylab("Test error")
+gge = gge + ggtitle("Cross-validated test error rate for KNN")+theme_minimal()
+gge
+```
+
+\vspace{2mm}
+
+
+
+<!-- * A too low value of $K$ will give a very flexible classifier which will fit the training set too well: High variance, low bias, and thus poor predictions for new observations due to overfit.  -->
+
+<!-- * Choosing a high value for $K$ makes the classifier loose its flexibility: Low variance, high bias. -->
+
+
+ 
+
+---
+
+## The curse of dimensionality
+
+\vspace{2mm}
+
+* KNN can be quite good if the number of predictors $p$ is small and the number of observations $n$ is large. We need enough close neighbors to make a good classification. 
+
+\vspace{2mm}
+
+* The effectiveness of the KNN classifier falls quickly when the dimension of the preditor space is high. 
+
+\vspace{2mm}
+
+* Why? Because the nearest neighbors tend to be far away in high dimensions and the method is no longer  local. This is referred to as the _\textcolor{red}{curse of dimensionality}_.
+
+
+
+---
+
+# Bayes decision rule - two paradigms
+\vspace{1mm}
+
+Two approaches to estimate $\text{Pr}(Y=k \mid X=x)$:
+\vspace{1mm}
+
+### Diagnostic paradigm
+
+This is what we did so far: The focus was  _directly_ estimating the posterior distribution for the classes $$\text{Pr}(Y=k \mid X=x)\ .$$ 
+ **Examples:**
+    Logistic regression. 
+    KNN classification.
+
+\vspace{2mm}
+
+### Sampling paradigm
+
+\vspace{1mm}
+
+* Indirect approach: Model the conditional distribution of predictors $f_k(x)=\text{Pr}(X=x \mid Y=k)$ for each class, and the prior probabilities $\pi_k=\text{Pr}(Y=k)$.
+
+\vspace{1mm}
+
+* Then classify to the class with the maximal product $\pi_k f_k(x)$. In this paradigm, we need to model the pdf for each class. 
+
+
+---
+
+Given a continuous $X$ and categorical $Y$, and 
+
+* the probability  _\textcolor{red}{density}_ function $f_k(x) = \text{Pr}(X=x \mid Y=k)$ for $X$ in class $k$.
+* the  _\textcolor{red}{prior}_ probability for class $k$, $\pi_k = \text{Pr}(Y=k)$, is the prior probability.
+
+How do we get $\text{Pr}(Y=k | X=x_0)$? That is, how can we "flip" the conditioning around?
+\vspace{4mm}
+
+ 
+### **Bayes theorem** 
+\vspace{-3mm}
+\begin{align}
+p_k(X) = \text{Pr}(Y=k \mid X= x) &= 
+\frac{\text{Pr}(X=x \cap Y=k)}{f(x)} \nonumber\\
+&= \frac{ f_k(x) \pi_k}{\sum_{l=1}^K  f_l(x) \pi_l}  \ . \label{eq:Bayes}
+\end{align}
+
+
+
+---
+
+
+# Discriminant Analysis
+
+\vspace{2mm}
+
+* Discriminant analysis is relying on the _sampling paradigm_.
+
+
+* The approach is to model the distribution of $X$ in each of
+the classes separately, and then use Bayes theorem to flip things
+around and obtain $\text{Pr}(Y \mid X)$.
+
+<!-- * When we use normal (Gaussian) distributions for each class, -->
+<!-- this leads to linear or quadratic discriminant analysis. -->
+
+<!-- * However, this approach is quite general, and other distributions -->
+<!-- can be used as well. We will focus on normal distributions. -->
+
+
+\vspace{2mm}
+
+## Example
+
+\vspace{2mm}
+
+Suppose we have observations coming from two classes:
+
+ \{\textcolor{green}{green}, \textcolor{orange}{orange}\}
+
+$$X_{\text{green}}\sim \mathcal{N}(-2, 1.5^2) \text{ and }
+X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) $$
+
+\vspace{2mm}
+
+Assume probabilities to be equal, $\pi_1 = \pi_2 = 0.5$.
+
+
+
+---
+
+We plot $\pi_k f_k(x)$ for the two classes:
+
+```{r gauss1, echo=FALSE, fig.width=5, fig.height=3.5,fig.align = "center",out.width='70%'}
+library(ggplot2)
+library(ggpubr)
+x = seq(-6, 6, by = 0.01)
+n = length(x)
+y1 = dnorm(x, mean = -2, sd=1.5)
+y2 = dnorm(x, mean= 2, sd=1.5)
+
+XY = data.frame(x, y1, y2)
+ggplot(XY)+geom_line(aes(x=x, y=0.5*y1), col="darkgreen")+geom_line(aes(x=x, y=0.5*y2), col="orange")+geom_vline(xintercept=0, linetype="dashed")+ annotate("text", x = 1.7, y = 0.175, parse=TRUE, label = as.character(expression(paste(pi[1], "=", pi[2], "=", 0.5))))+labs(y=NULL, title=expression(pi[k]*f[k](x)))
+
+```
+
+The decision boundary is where the point of intersection of the two lines is, because here $\pi_1 f_1(x)=\pi_2 f_2(x)$. 
+
+
+---
+
+For different priors $\pi_1 = 0.3$ and $\pi_2 = 0.7$, the decision boundary shifts to the left:
+
+```{r gauss2, echo=FALSE, fig.width=5, fig.height=3.5,fig.align = "center",out.width='70%'}
+ggplot(XY)+geom_line(aes(x=x, y=0.3*y1), col="darkgreen")+geom_line(aes(x=x, y=0.7*y2),col="orange")+geom_vline(xintercept=-0.45, linetype="dashed") +annotate("text", x = -2, y = 0.2, parse=TRUE, label =as.character(expression(pi[1] == 0.3)))+annotate("text", x=1, y=0.2, parse=TRUE, label=as.character(expression(pi[2]==0.7)))+labs(y=NULL, title=expression(pi[k]*f[k](x)))
+
+```
+
+
+---
+
+# Linear discriminant analysis (LDA) when $p=1$
+
+
+* Class conditional distributions $f_k(X)$ are assumed normal (Gaussian) for $k=1,\ldots,K$, that is
+$$f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k} e^{-\frac{1}{2}\big(\frac{x-\mu_k}{\sigma_k}\big)^2} $$
+has parameters $\mu_k$ (mean) and $\sigma_k$ (standard deviation).
+
+
+* With LDA we assume that all of the classes have the _same standard deviation_ $\sigma_k = \sigma$.
+
+* In addition we have prior class probabilites $\pi_k=\text{Pr}(Y=k)$, so that $\sum_{k=1}^K \pi_k=1$.
+
+---
+
+We can insert the expression for each class distribution into Bayes formula to obtain the posterior probability $p_k(x) = \text{Pr}(Y = k | X = x)$
+$$p_k(x) = \frac{f_k({\boldsymbol x}) \pi_k}{f({\boldsymbol x})}=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}\big(\frac{x-\mu_k}{\sigma}\big)^2}}{\sum_{l=1}^K \pi_l \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}\big(\frac{x-\mu_l}{\sigma}\big)^2}} \ .$$
+
+Our rule is to classify to the class for which $p_k(x)$ is largest. 
+
+---
+
+
+Taking logs, and discarding terms that do not
+depend on $k$, we see that this is equivalent to assigning $x$ to the
+class with the largest *discriminant score* $\delta_k(x)$:
+
+$$\delta_k(x) = x\cdot \frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2 \sigma^2}+\log(\pi_k).$$
+
+* This decision boundaries between the classes are *linear* in $x$. 
+
+* For $K=2$ classes and $\pi_1=\pi_2$, the decision boundary is at
+
+$$x = \frac{\mu_1+ \mu_2}{2} \ .$$
+
+(Show this by setting $\delta_1(x)=\delta_2(x)$ and resolving for $x$.)
+
+---
+
+### Back to our example
+
+
+$$X_{\text{green}}\sim \mathcal{N}(-2, 1.5^2) \text{ and }
+X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) $$
+
+
+
+
+
+
+
+```{r gauss4, echo=FALSE, fig.width=4, fig.height=3,fig.align = "center",out.width='60%'}
+taildnorm=function(x,upper,lower,mean,sd,faktor)
+{ 
+  res=faktor*dnorm(x,mean=mean,sd=sd)
+  res[x<lower]=0
+  res[x>upper]=0
+  return(res)
+}
+
+gg=ggplot(XY)+geom_line(aes(x=x, y=0.5*y1), col="darkgreen")+geom_line(aes(x=x, y=0.5*y2), col="orange")+geom_vline(xintercept=0, linetype="dashed")+ annotate("text", x = 1.7, y = 0.175, parse=TRUE, label = as.character(expression(paste(pi[1], "=", pi[2], "=", 0.5))))+labs(y=NULL)
+gg+stat_function(fun=taildnorm,geom='area',fill="lightgreen",alpha=0.5,args=list(upper=6,lower=0,mean=-2,sd=1.5,faktor=0.5))+stat_function(fun=taildnorm,geom='area',fill="orange",alpha=0.5,args=list(upper=0,lower=-6,mean=2,sd=1.5,faktor=0.5))
+```
+
+* The Bayes decision boundary is at $x=0$. 
+* Bayes error rate: `round(pnorm(0,2,1.5))`=`r round(pnorm(0,2,1.5),2)`.
+
+* The Bayes classifier has the lowest test error rate.
+
+
+
+
+---
+
+\vspace{2mm}
+
+In the above example we knew the true distributions $p_k(X)$ and the priors $\pi_k$. But typically we don't know these parameters, we only have the training data.
+
+Idea: we simply estimate the parameters and plug them into the rule.
+
+
+
+---
+
+## Parameter estimators
+
+\vspace{2mm}
+
+
+
+* Prior probability for class $k$ is  (often) estimated by taking the fraction of observations $n_k$ (out of $n$) coming from class $k$: $\hat{\pi}_k = \frac{n_k}{n}.$
+
+* The mean value for class $k$ is simply the sample mean of all observations from class $k$:
+$$\hat{\mu}_k = \frac{1}{n_k}\sum_{i:y_i=k} x_i.$$
+
+* The standard deviation: sample standard deviation across all classes ("pooled" standard deviation):
+$$\hat{\sigma}^2=\frac{1}{n-K}\sum_{k=1}^K \sum_{i: y_i=k} (x_i-\hat{\mu}_k)^2 = \sum_{k=1}^K \frac{n_k - 1}{n - K} \cdot \hat{\sigma}_k^2.$$
+$\hat{\sigma}_k$: estimated standard deviation of all observations from class $k$.
+
+
+
+---
+
+## How to test the goodness of the estimator?
+
+$~$
+
+1. Use the training set to estimate parameters and class boundary.
+2. Use the test set to estimate misclassification rate.
+
+$~$
+
+**Simulated example:**
+
+\vspace{2mm}
+
+\scriptsize
+```{r}
+n=1000;pi1=pi2=0.5;mu1=-2;mu2=2;sigma=1.5;set.seed(1)
+n1train=rbinom(1,n,pi1);n2train=n-n1train
+n1test=rbinom(1,n,pi1);n2test=n-n1test
+train1=rnorm(n1train,mu1,sigma);train2=rnorm(n2train,mu2,sigma)
+test1=rnorm(n1test,mu1,sigma);test2=rnorm(n2test,mu2,sigma)
+var2.1=var(train1);var2.2=var(train2)
+var.pool=((n1train-1)*var2.1+(n2train-1)*var2.2)/(n-2)
+```
+
+---
+
+Then set
+
+$$\hat\delta_1(x) = \hat\delta_2(x)$$
+
+and resolve for $x$ to obtain a decision rule (boundary). 
+
+\vspace{2mm}
+
+**Exercise**: Verify that the following code will give you the training and test error rates:
+
+\vspace{2mm}
+
+\scriptsize
+
+```{r}
+rule=0.5*(mean(train1)+mean(train2))+
+  var.pool*(log(n2train/n)-log(n1train/n))/(mean(train1)-mean(train2))
+
+trainingError <- (sum(train1>rule)+sum(train2<rule))/n 
+testError <- (sum(test1>rule)+sum(test2<rule))/n
+
+c(trainingError,testError)
+```
+\normalsize
+
+
+This is a rather good performance, compared to the minimal Bayes error rate. But keep in mind that the LDA classifier relies on the Normal assumption, and that $\sigma_k=\sigma$ for all classes is assumed\footnote{Both of which we knew were fulfilled here.}.
+
+---
+
+## The confusion matrix
+
+$~$
+
+* The confusion matrix is a table that can show the performance of a classifier, given that the true values are known. 
+
+\vspace{2mm}
+
+* We can make a confusion matrix from the training or test set
+
+\vspace{2mm}
+
+
+* The sum of the diagonal is the total number of correct classifications. The sum of all elements off the diagonal is the total number of misclassifications.
+
+\centering
+![](true_predicted.png){width=45%}
+
+<!-- \begin{center} -->
+<!-- ```{r, echo=FALSE, warning=FALSE} -->
+<!-- library(knitr) -->
+<!-- library(kableExtra) -->
+
+<!-- row1 = c("", "Predicted 1", "Predicted 2","...", "Predicted K") -->
+<!-- row2 = c("True 1", "correct", "wrong", "...", "wrong") -->
+<!-- row3 = c("True 2", "wrong", "correct","...", "wrong") -->
+<!-- row4 = c("...", "...", "...", "...","...") -->
+<!-- row5 = c("True K", "wrong", "wrong","...", "correct") -->
+
+
+<!-- kable(rbind(row1, row2, row3,row4,row5), format=whichformat,row.names=FALSE) -->
+<!-- ``` -->
+<!-- \end{center} -->
+
+\vspace{2mm}
+\flushleft
+
+* The confusion matrix can be obtained in `R` by using the `table` function, or directly using the `caret` package.
+
+
+---
+
+# Multivariate LDA ($p>1$)
+
+\vspace{2mm}
+
+* LDA can be generalized to situations when $p>1$ covariates are used. The decision boundaries are still linear.
+
+* The multivariate normal distribution function:
+$$f(x) = \frac{1}{(2 \pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}\exp({-\frac{1}{2}({\boldsymbol x}-\boldsymbol\mu)^T \boldsymbol{\Sigma}^{-1}({\boldsymbol x}-\boldsymbol\mu)})$$
+
+\centering
+![ISLR Figure 4.5](../../ISLR/Figures/Chapter4/4.5.png){width=70%}
+ 
+
+---
+
+* Plugging this density into equation (\ref{eq:Bayes}) gives the following expression for the discriminant function:
+$$\delta_k(x) = {\boldsymbol x}^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_k - \frac{1}{2}\boldsymbol\mu_k^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_k + \log \pi_k.$$
+
+* Note: $\delta_k(x) = c_{k0} + c_{k1}x_1 + \ldots + c_{kp}x_p$ is a linear function in $(x_1,\ldots ,x_p)$.
+
+<!-- --- -->
+
+<!-- In the compulsory 1 exercise you are going to show that the condition -->
+
+<!-- $$P(Y=0 \,|\, \boldsymbol{X}=\boldsymbol{x}) = P(Y=1  \,|\, \boldsymbol{X}=\boldsymbol{x}) $$ -->
+
+<!-- can be expressed as  -->
+
+<!-- $$\delta_0({\boldsymbol x}) = \delta_1({\boldsymbol x}) \ .$$ -->
+
+
+---
+
+## Back to our synthetic example
+
+\vspace{2mm}
+
+* Consider again our simulation from a bivariate normal distribution with mean vectors $\mu_A  = (1, 1)^T$, $\mu_B = (3, 3)^T$, and covariance matrix $\Sigma_A = \Sigma_B = \begin{pmatrix} 2\hspace{2mm}   0 \\ 0 \hspace{2mm} 2 \end{pmatrix}$.  
+
+* Aim: Use LDA to classify a new observation $x_0$ to class $A$ or $B$.
+
+\vspace{4mm}
+
+```{r synthAB2, echo=FALSE, fig.width=6, fig.height=4.5,fig.align = "center",out.width='55%'}
+library(mvtnorm)
+library(ggplot2)
+
+set.seed(9)
+
+Sigma = matrix(c(2, 0, 0, 2), 2, 2)
+
+mu1 = c(1, 1)
+mu2 = c(3, 3)
+
+X1 = mvrnorm(100, mu=mu1, Sigma=Sigma)
+X2 = mvrnorm(100, mu=mu2, Sigma=Sigma)
+
+class = c(rep("A",100), rep("B", 100))
+class = as.factor(class)
+
+df = data.frame(rbind(X1, X2), class)
+
+ggplot(df, aes(x=X1, y=X2, color=class))+geom_point(size=3) +theme_bw()
+```
+
+---
+
+* Since _the truth is known here_, we can calculate the Bayes boundary and the Bayes error. 
+
+* Since we have bivariate normal class distributions with common covariance matrix, the optimal boundary is given by LDA, with boundary given at $\delta_A({\boldsymbol x})=\delta_B({\boldsymbol x})$.
+
+<!-- where $\delta_A({\boldsymbol x})= {\boldsymbol x}^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_A - \frac{1}{2}\boldsymbol\mu_A^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_A + \log \pi_A$, and for $\delta_B({\boldsymbol x})$ with $\boldsymbol\mu_B$. -->
+
+$${\boldsymbol x}^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_A - \frac{1}{2}\boldsymbol\mu_A^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_A + \log \pi_A={\boldsymbol x}^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_B - \frac{1}{2}\boldsymbol\mu_B^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_B + \log \pi_B$$
+
+$${\boldsymbol x}^T\boldsymbol{\Sigma}^{-1}(\boldsymbol\mu_A -\boldsymbol\mu_B)-\frac{1}{2}\boldsymbol\mu_A^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_A +\frac{1}{2}\boldsymbol\mu_B^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_B +\log \pi_A-\log \pi_B=0$$
+
+Inserting numerical values gives $-x_1-x_2+4=0$, thus a boundary with functional form $$x_2=4-x_1 \ .$$
+
+<!-- ```{r} -->
+<!-- muA=matrix(c(1,1),ncol=1) -->
+<!-- muB=matrix(c(3,3),ncol=1) -->
+<!-- sigmainv=diag(2)/2 -->
+<!-- sigmainv%*%(muA-muB) -->
+<!-- -0.5*t(muA)%*%sigmainv%*%muA+0.5*t(muB)%*%sigmainv%*%muB+log(0.5)-log(0.5) -->
+<!-- ``` -->
+
+<!-- The Bayes error can then be found by calculation of areas for the two class densities on the wrong side of the boundary, or by simulating many test data and counting misclassifications rates. -->
+
+---
+
+## Confusion matrix for the synthetic example
+
+\vspace{2mm}
+
+We can use the Bayes boundary to find the error rate:
+
+\vspace{2mm}
+
+\scriptsize
+```{r}
+r.pred <- ifelse(df$X2<4-df$X1,"A","B")
+table(real=df$class, r.pred) 
+```
+
+\vspace{6mm}
+
+\normalsize
+
+Of course, the Bayes boundary is usually not known, and we must estimate it from the data.
+
+---
+
+**Estimators for p>1:**
+
+* Prior probability for class $k$ (unchanged from $p=1$): $\hat{\pi}_k = \frac{n_k}{n}.$
+
+* The mean value for class $k$ is simply the sample mean of all observations from class $k$ (but now these are vectors):
+$$\hat{\boldsymbol{\mu}}_k = \frac{1}{n_k}\sum_{i:y_i=k} {\bf X}_i.$$
+
+* The covariance matrices for each class:
+$$\hat{\boldsymbol{\Sigma}}_k=\frac{1}{n_k-1}\sum_{i:y_i=k} ({\bf X}_i-\hat{\boldsymbol{\mu}}_k ) ({\bf X}_i-\hat{\boldsymbol{\mu}}_k)^T$$
+
+* Pooled version:
+$$\hat{\boldsymbol{\Sigma}}= \sum_{k=1}^K \frac{n_k - 1}{n - K} \cdot \hat{\boldsymbol{\Sigma}}_k.$$
+
+<!-- Optional: [Proof that the estimator $\hat{\boldsymbol{\Sigma}}_k$ is unbiased for each class (from TMA4267)](https://www.math.ntnu.no/emner/TMA4268/2018v/notes/ProofMeanS.pdf). Proof for pooled version not provided. -->
+
+
+
+---
+
+
+## Analysing the synthetic example with `lda()`  
+
+$~$
+
+
+\scriptsize
+```{r}
+r.lda <- lda(class ~ X1 + X2, df)
+r.pred <- predict(r.lda, df)$class
+table(real=df$class, predicted = r.pred)  
+```
+
+$~$
+
+\normalsize
+Note: The training error is smaller than for the Bayes boundary. Why?
+
+---
+
+### Comparison of the Bayes with the estimated boundary
+
+\vspace{2mm}
+
+Solid line: Bayes boundary
+
+Dashed line: Estimated boundary
+
+$~$
+
+```{r synthAB3, echo=FALSE, fig.width=6, fig.height=4.5,fig.align = "center",out.width='65%'}
+t.beta <- r.lda$scaling
+m.df <- colMeans(df[,1:2])
+
+t.alpha <- -t(t.beta)%*%m.df
+koeff <- -c(t.alpha,t.beta[1])/t.beta[2]
+
+ggplot(df, aes(x=X1, y=X2, color=class))+geom_point(size=3) + 
+  geom_abline(intercept=4, slope=-1) +
+  geom_abline(intercept=koeff[1],slope=koeff[2],lty=2)  + theme_bw() 
+```
+
+---
+
+## Posterior probabilites 
+
+\vspace{2mm}
+
+* Sometimes the probability that an observation comes from a class $k$ is more interesting than the actual classification itself. 
+
+\vspace{2mm}
+
+* These class probabilities can be estimated from the priors and class conditional distributions, or from the discriminant functions:
+
+
+\begin{align*}\hat{P}(Y=k | X=\boldsymbol{x})&=
+\frac{\hat{\pi}_k \cdot \frac{1}{(2 \pi)^{p/2}|\hat{\boldsymbol{\Sigma}}|^{1/2}} \exp(-\frac{1}{2}
+(\boldsymbol{x}-\hat{\boldsymbol\mu}_k)^T \hat{\boldsymbol{\Sigma}}^{-1}
+(\boldsymbol{x}-\hat{\boldsymbol\mu}_k))}
+{\sum_{l=1}^K \hat{\pi}_l 
+\frac{1}{(2 \pi)^{p/2}|\hat{\boldsymbol{\Sigma}}|^{1/2}}
+\exp(-\frac{1}{2}
+(\boldsymbol{x}-\hat{\boldsymbol\mu}_l)^T 
+\hat{\boldsymbol{\Sigma}}^{-1}
+(\boldsymbol{x}-\hat{\boldsymbol\mu}_l))}\\
+&=
+\frac{e^{\hat{\delta}_k(\boldsymbol{x})}}{\sum_{l=1}^K e^{\hat{\delta}_l(\boldsymbol{x})}}.\end{align*}
+
+---
+
+# Quadratic Discriminant Analysis (QDA)
+
+* In LDA we assumed that $\boldsymbol{\Sigma}_k  = \boldsymbol{\Sigma}$ for all classes.
+
+* In QDA we allow different covariance matrices $\boldsymbol{\Sigma}_k$ for each class, while the predictors are still multivariate Gaussian
+
+$$X \sim N(\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) \ .$$
+
+* The discriminant functions are now given by:
+\vspace{-3mm}
+\begin{align*} \delta_k({\boldsymbol x}) &= -\frac{1}{2}({\boldsymbol x}-\boldsymbol{\mu}_k)^T \boldsymbol{\Sigma}_k^{-1}({\boldsymbol x}-\boldsymbol{\mu}_k)-\frac{1}{2}\log |\boldsymbol{\Sigma}_k| + \log \pi_k \\ 
+&= -\frac{1}{2} {\boldsymbol x}^T \boldsymbol{\Sigma}_k^{-1}{\boldsymbol x} + {\boldsymbol x}^T \boldsymbol{\Sigma}_k^{-1}\boldsymbol{\mu}_k - \frac{1}{2} \boldsymbol{\mu}_k^T \boldsymbol{\Sigma}_k^{-1}\boldsymbol{\mu}_k - \frac{1}{2}\log |\boldsymbol{\Sigma}_k | + \log \pi_k.\\
+\end{align*} 
+
+* These decision boundaries are *quadratic* functions of ${\boldsymbol x}$.
+
+---
+
+## LDA vs QDA
+
+\vspace{2mm}
+
+QDA is more flexible than LDA, as it allows for group-specific covariance matrices. 
+
+\vspace{4mm}
+
+**Q:**
+
+* But, if the covariance matrices in theory are equal - will they not be estimated equal?
+* Should we not always prefer QDA to LDA?
+
+---
+
+**A:**
+
+<!-- \vspace{2mm} -->
+<!-- Explanation similar to a "Bias-variance trade-off": -->
+
+<!-- * If the assumption of equal covariance matrices is wrong, then LDA may suffer from high bias for the parameter estimators. -->
+<!-- * But for small sample sizes the covariance matrices might be poorly estimated (high variance of estimators). -->
+
+<!-- If the number of covariates is high: -->
+
+<!-- * then QDA requires estimating $K\cdot p \cdot (p+1)/2$ parameters, -->
+<!-- * while LDA only requires $p\cdot(p+1)/2$. -->
+
+<!-- Therefore, LDA is less flexible than QDA and might therefore have much less variance. -->
+
+---
+
+## LDA vs QDA -- Illustration
+\vspace{1mm}
+
+Bayes (purple dashed), LDA (black dotted) and QDA (green solid) decision boundaries for the cases where $\boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2$ (left) and $\boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2$ (right).
+
+\centering
+![ISLR Figure 4.9](../../ISLR/Figures/Chapter4/4.9.png){width=100%}
+
+
+
+---
+
+### Example: Which type of iris species?
+
+$~$
+
+The `iris` flower data set was introduced by the British statistician and biologist Ronald Fisher in 1936. 
+
+\vspace{2mm}
+
+* **Three plant species**: \{setosa, virginica, versicolor\}.
+* **Four features**: `Sepal.Length`, `Sepal.Width`, `Petal.Length` and `Petal.Width`.   
+
+```{r iris_pic, echo=FALSE, fig.cap="Iris plant with sepal and petal leaves", out.width = "30%"}
+knitr::include_graphics("iris.png")
+```
+\vspace{-2mm}
+\tiny
+<http://blog.kaggle.com/2015/04/22/scikit-learn-video-3-machine-learning-first-steps-with-the-iris-dataset/>
+
+---
+
+## Example: Classification of iris plants
+
+\vspace{2mm}
+
+We will use `sepal width` and `sepal length` to build a classificator. We have 50 observations from each class.
+
+$~$
+
+\scriptsize
+```{r irisex, echo=showsolA, warning=FALSE, message=FALSE}
+attach(iris)
+head(iris)
+```
+
+---
+
+
+
+```{r iris1, echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center",out.width='80%'}
+iris0_plot = ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, 
+                              color=Species))+geom_point(size=2.5) + theme_bw()
+iris0_plot
+```
+
+---
+
+### Iris: LDA
+
+\scriptsize
+
+```{r, echo=T}
+iris_lda = lda(Species~Sepal.Length+Sepal.Width, data=iris, prior=c(1,1,1)/3)
+```
+
+$~$
+
+```{r iris2, echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center",out.width='70%'}
+testgrid = expand.grid(Sepal.Length = seq(min(iris[,1]-0.2), max(iris[,1]+0.2), 
+              by=0.05), Sepal.Width = seq(min(iris[,2]-0.2), max(iris[,2]+0.2), 
+              by=0.05))
+
+res = predict(object = iris_lda, newdata = testgrid)
+Species_lda = res$class
+postprobs=res$posterior
+
+iris_lda_df = bind_rows(mutate(testgrid, Species_lda))
+iris_lda_df$Species_lda = as.factor(iris_lda_df$Species_lda)
+
+irislda_plot = iris0_plot + geom_point(aes(x = Sepal.Width, y=Sepal.Length, 
+                            colour=Species_lda), data=iris_lda_df, size=0.5,  alpha=1/2)
+irislda_plot
+```
+
+
+---
+
+### Iris: QDA
+
+\scriptsize
+
+```{r, echo=T}
+iris_qda = qda(Species~Sepal.Length + Sepal.Width, data=iris, prior=c(1,1,1)/3)
+```
+
+$~$
+
+```{r iris3, echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center",out.width='70%'}
+
+Species_qda = predict(object = iris_qda, newdata = testgrid)$class
+
+iris_qda_df = bind_rows(mutate(testgrid, Species_qda))
+iris_qda_df$Species_qda = as.factor(iris_qda_df$Species_qda)
+
+gridprobs=
+
+irisqda_plot = iris0_plot + geom_point(aes(x = Sepal.Width, y=Sepal.Length, 
+                            colour=Species_qda), data=iris_qda_df, size=0.5, alpha=1/2)
+irisqda_plot
+```
+
+---
+
+### Iris: compare LDA and QDA
+
+\vspace{2mm}
+
+To compare the _predictive performance_ of our two classifiers we divide the original `iris` data set randomly into train and test samples of equal size:
+
+$~$
+
+\scriptsize
+
+```{r iriserror, echo=TRUE,message=FALSE, warning=FALSE}
+set.seed(1)
+train = sample(1:150, 75)
+
+iris_train = iris[train, ]
+iris_test = iris[-train, ]
+```
+
+\normalsize
+
+$~$
+
+Run LDA and QDA _on the same training set_:
+
+$~$
+
+\scriptsize
+
+```{r}
+iris_lda2 = lda(Species~Sepal.Length + Sepal.Width, 
+                data=iris_train, 
+                prior=c(1,1,1)/3)
+ 
+iris_qda2 = qda(Species~Sepal.Length + Sepal.Width, 
+                data=iris_train, 
+                prior=c(1,1,1)/3)
+```
+
+
+---
+
+LDA training error: $\frac{14}{75} =0.19$
+
+\scriptsize
+
+
+```{r}
+table(predict(iris_lda2, newdata=iris_train)$class, 
+      iris_train$Species)
+```
+
+\normalsize
+
+\vspace{2mm}
+
+
+LDA test error:  $\frac{19}{75} =0.26.$
+
+\scriptsize
+
+```{r}
+iris_lda2_predict = predict(iris_lda2, newdata=iris_test)
+table(iris_lda2_predict$class, iris$Species[-train])
+
+```
+
+
+---
+
+QDA training error: $\frac{13}{75} =0.17$.
+
+\scriptsize
+
+
+```{r}
+table(predict(iris_qda2, newdata=iris_train)$class, iris_train$Species)
+```
+
+\normalsize
+
+\vspace{2mm}
+
+
+QDA test error:  $\frac{24}{75}=0.32$.
+
+\scriptsize
+
+```{r}
+iris_qda2_predict = predict(iris_qda2, newdata=iris_test)
+table(iris_qda2_predict$class, iris$Species[-train])
+```
+
+---
+
+
+
+**Result**: The LDA classifier has given the smallest test error\footnote{Note that the training error is of much less interest; it could be low due to \emph{overfitting} only.} for classifying iris plants based on sepal width and sepal length for our test set and should be preferred in this case.
+
+\vspace{2mm}
+
+But:
+
+1. Would another division of the data into training and test set give the same conclusion (that LDA is better than QDA for this data set)?  
+    A: Not necessarily, but probably.  
+    $\rightarrow$ We will look into such questions in Module 5 (cross-validation).
+
+\vspace{2mm}
+
+2. What about the other two covariates? Would adding them to the model (4 covariates) give a better classification rule?  
+A: Probably. Try if you want.
+
+<!-- --- -->
+
+<!-- ## Fishers idea (Optional) -->
+
+<!-- In 1936 R. A. Fisher developed LDA.  -->
+
+<!-- * His aim was to find a linear combination of the explanatory variables which _maximized the ratio of its between class to within class variance_. -->
+<!-- * In this way the observations are transformed so that they are separated as much as possible. -->
+<!-- * His approach has the advantage that it is suited for visual inspection -->
+<!-- and graphical description, it ``separates'' the populations. -->
+
+<!-- Let the between-class variance be denoted -->
+<!-- $\boldsymbol{B}=\sum_{m=1}^{M}(\boldsymbol{\mu}_{m}- -->
+<!-- \bar{\boldsymbol{\mu}})(\boldsymbol{\mu}_{m}-\bar{\boldsymbol{\mu}})^{T}$, where -->
+<!-- $\boldsymbol{\mu}_{m}$ denotes the mean of class $\omega_{m}$ and $\bar{\boldsymbol{\mu}}$ the overall -->
+<!-- mean.  -->
+
+<!-- The within-class variance is assumed equal for all classes and is -->
+<!-- denoted $\boldsymbol{\Sigma}$ ($\boldsymbol{\Sigma}$ is assumed to have full rank). -->
+
+<!-- --- -->
+
+<!-- The linear combination $\boldsymbol{l}^{T}\boldsymbol{X}$ that maximize  -->
+<!-- ${\boldsymbol{l}^{T}\boldsymbol{B}\boldsymbol{l}}/{\boldsymbol{l}^{T}\boldsymbol{\Sigma}\boldsymbol{l}}$ under the -->
+<!-- constraint that $\boldsymbol{l}^{T}\boldsymbol{\Sigma}\boldsymbol{l}=1$ is found to be the scaled -->
+<!-- eigenvectors of $\boldsymbol{\Sigma}^{-1}\boldsymbol{B}$ corresponding to the nonzero -->
+<!-- eigenvalues of $\boldsymbol{\Sigma}^{-1}\boldsymbol{B}$. -->
+<!-- The eigenvector corresponding to -->
+<!-- the largest eigenvalue defines the first discriminant -->
+<!-- $\boldsymbol{l}_{1}^{T}\boldsymbol{X}$. The second linear discriminant -->
+<!-- $\boldsymbol{l}_{2}^{T}\boldsymbol{X}$ is constructed from  -->
+<!-- the eigenvector corresponding to the second -->
+<!-- largest eigenvalue and so on. (We also have -->
+<!-- $Cov(\boldsymbol{l}_{j}^{T}\boldsymbol{X},\boldsymbol{l}_{i}^{T}\boldsymbol{X})=0$ for $i \ne j$ and -->
+<!-- $Var(\boldsymbol{l}_{j}^{T}\boldsymbol{X})=1$.)  -->
+
+<!-- --- -->
+
+<!-- The number of linear discriminants -->
+<!-- equals the number of nonzero eigenvalues. Observations are assigned to the class of the -->
+<!-- nearest (Euclidean distance) class mean in the discriminant -->
+<!-- space.  -->
+
+<!-- This equals classification to the nearest Mahalanobis distance -->
+<!-- population mean in the input space. Again, the parameters -->
+<!-- $\boldsymbol{\mu}_{i}$ and $\boldsymbol{\Sigma}$ and the between-class variance -->
+<!-- $\boldsymbol{B}$ are usually unavailable. Replacing -->
+<!-- the parameters by estimates from the training set leads to Fisher's -->
+<!-- sample linear  -->
+<!-- discriminants.  -->
+
+
+---
+
+## Different forms of discriminant analysis
+
+$~$
+
+* LDA
+
+\vspace{2mm}
+
+* QDA
+
+\vspace{2mm}
+
+* Naive Bayes ("Idiot's Bayes"): Assume that each class density is the product of marginal densities - i.e. inputs are conditionally independent in each class
+$$f_k(x)=\prod_{j=1}^p f_{kj}(x_j) \ .$$
+This is generally not true, but it simplifies the estimation dramatically.
+
+\vspace{2mm}
+
+
+* Other forms by proposing specific density models for
+$f_k(x)$, including nonparametric approaches.
+
+---
+
+
+## Naive Bayes 
+
+\vspace{2mm}
+
+* Naive Bayes is method that is popular when $p$ is large.
+
+\vspace{2mm}
+
+* The _original naive Bayes_: univariate normal marginal distributions. Consequently
+$$\delta_k (x) \propto \log \left[ \pi_k \prod_{j=1}^p f_{kj}(x_j) \right] = - \frac{1}{2} \sum_{j=1}^p \frac{(x_j - \mu_{kj})^2}{\sigma_{kj}^2} + \log(\pi_k) \ , $$
+thus $\boldsymbol{\Sigma}_k$ is assumed diagonal, and only the diagonal elements are estimated.
+
+\vspace{2mm}
+
+* Arbitraty generalizations can be made. For example, mixed features (qualitative and quantitative predictors).
+
+\vspace{2mm}
+
+* This method often produces good results, even though the joint pdf is not the product of the marginal pdf. This might be because we are not focussing on estimation of class pdfs, but class boundaries.
+
+
+--- 
+
+## Summary of Classification Methods
+
+$~$
+
+* Logistic regression
+
+* KNN
+
+* Linear discriminant analysis
+
+* Quadratic discriminant analysis
+
+* Naive Bayes
+
+\vspace{4mm}
+
+Remember: 
+
+* Logistic regression and KNN _\textcolor{red}{directly estimate}_ $\text{Pr}(Y=k \mid X=x)$ (diagnostic paradigm).
+* LDA, QDA and naive Bayes _\textcolor{red}{indirectly estimate}_  $\text{Pr}(Y=k \mid X=x) \propto f_k(x) \cdot \pi_k$ (sampling paradigm). 
+
+\vspace{2mm}
+
+---
+
+# Which classification method is the best?
+
+## Advantages of discriminant analysis
+
+ 
+$~$
+
+* Linear discriminant analysis is more stable than logistic regression when
+    * the classes are well-separated. In that case, the parameter
+estimates for the logistic regression model are very
+unstable. 
+    * if the number of observations $n$ is small and the distribution of the predictors $X$ is approximately (multivariate) normal.
+
+\vspace{2mm}
+ 
+* Moreover, linear discriminant analysis is popular when we have more
+than two response classes.
+ 
+
+---
+
+## Linearity
+
+$~$
+
+Assume a binary classification problem with one covariate. 
+
+\vspace{2mm}
+
+* Recall that logistic regression can be written:
+$$\log \Big ( \frac{p(x)}{1-p(x)}\Big ) = \beta_0 + \beta_1 x  \ .$$
+
+* For a two-class problem, one can show that for LDA
+$$\log\left(\frac{p_1(x)}{1-p_1(x)}\right) = \log\left(\frac{p_1(x)}{p_2(x)}\right) = c_0 + c_1 x_1 \ , $$
+thus the same linear form.
+The difference is in how the parameters are estimated.
+
+
+
+
+---
+
+### LDA vs logistic regression
+
+
+\vspace{2mm}
+
+* In practice the results are often
+very similar\footnote{logistic regression can also fit quadratic boundaries
+like QDA, by explicitly including quadratic terms in the model.}, but  
+\vspace{2mm}
+    * LDA is "more available" in the multi-class setting.
+    * if the class conditional distributions are multivariate normal then LDA (or QDA) is preferred.
+    * logistic regression makes no assumptions about the covariates and is therefore to be preferred in many practical applications.
+    * in medicine for two-class problems logistic regression is often preferred (for interpretability) and (always) together with ROC and AUC (for model comparison).
+
+\vspace{2mm}
+
+### and KNN?
+
+\vspace{2mm}
+
+* KNN is used when the class boundaries are non-linear.
+
+---
+
+## So: Which classification method is the best?
+
+$~$
+
+The answer is: **it depends!**
+
+\vspace{2mm}
+
+* Logistic regression is very popular for classification,
+especially when $K = 2$.
+
+\vspace{2mm}
+
+* LDA is useful when $n$ is small, or the classes are well
+separated, and Gaussian assumptions are reasonable. Also
+when $K > 2$.
+
+\vspace{2mm}
+
+* Naive Bayes is useful when $p$ is very large.
+
+\vspace{2mm}
+
+* KNN is nonparametric, thus no assumptions about the decision boundary nor the distribution of the variables. Expected to work better than LDA and logistic regression when boundary is very non-linear. Caveats: 
+  * No interpretation of the effect of the covariates possbile.
+  * Curse of dimensionality.
+
+\vspace{2mm}
+Please read Section 4.5 of our coursebook [@james.etal].
+
+
+
+
+---
+
+
+# Two-class problems: sensitivity, specificity
+
+* Problems with only two classes (binary classifiers) have a special status, e.g. in medicine or biology.
+
+* Assume the classes ($Y$) are labelled "-" (non disease, or $Y=0$) and "+" (disease, or $Y=1$), and that a diagnostic test is used to predict $Y$ given $X=x$.
+
+* **Sensitivity** is the proportion of correctly classified positive observations: 
+$$\frac{\# \text{True Positive}}{\# \text{Condition Positive}}=\frac{\text{TP}}{\text{P}} \ .$$ 
+
+* **Specificity** is the proportion of correctly classified negative observations: 
+$$\frac{\# \text{True Negative}}{\# \text{Condition Negative}}=\frac{\text{TN}}{\text{N}} \ .$$
+
+---
+
+* We would like that a classification rule (or a diagnostic test) have both a high sensitivity and a high specificity.
+
+\vspace{2mm}
+
+* However, in an imperfect test (i.e., an imperfect predictor) one usually comes at the cost of the other.
+
+\vspace{2mm}
+
+$2 \times 2$ table shows data from a simple diagnostic study:
+\begin{center}
+\begin{tabular}{ll|cc|c}
+& & \multicolumn{2}{c}{\emph{Predicted}} \\
+& & $\hat{Y}=0$ & $\hat{Y}=1$ \\ 
+\hline
+\multirow{2}{*}{\emph{True}} & $Y=0$ & True negative ($TN$) & False positive ($FN$) & $N$\\
+ & $Y=1$ & False negative ($FP$) & True positive ($TP$) & $P$\\
+\hline
+& & $N^\star$ & $P^\star$ & $Tot$ 
+\end{tabular}
+\end{center}
+
+---
+
+## Example Continued: South African heart disease
+\vspace{2mm}
+
+We evaluate our multiple logistic model for the `SAheart` data set. We divide the original data set randomly into a training and test dataset of equal size.
+
+\vspace{2mm}
+
+\scriptsize
+```{r}
+set.seed(20)
+train_ID = sample(1:nrow(d.heart), nrow(d.heart)/2)
+train_SA = d.heart[train_ID, ]
+test_SA = d.heart[-train_ID, ]
+```
+
+
+\normalsize
+
+$~$
+
+**Fit** a logistic regression model, **using the training set only**:
+
+\vspace{2mm}
+
+\scriptsize
+
+```{r,echo=showsolB}
+glm_SA = glm(chd~. , data=train_SA, family="binomial")
+summary(glm_SA)$coef
+```
+
+
+---
+
+* The estimated probability of a `chd` event ($Y=1$) is then given as
+$$\hat{p}(\mathbf{X}) =\frac{e^\eta}{1+e^\eta} ,$$
+with $\eta=\beta_0 + \beta_1 \cdot x_{\text{sbp}} + \beta_2\cdot x_{\text{tobacco}} + \ldots + \beta_7\cdot x_{\text{age}}$.  
+Remember that $x_{famhist} \in \{0,1\}$ is a binary covariate.
+
+\vspace{2mm}
+
+* We are interested in the **predictions for the test set**.
+
+
+
+
+---
+
+* The `predict` function does these calculations for us. When specifying `type="response"` the function returns the probabilities for $Y=1$.
+
+$~$
+
+\scriptsize
+```{r}
+probs_SA = predict(glm_SA, newdata=test_SA, type="response")
+```
+
+$~$
+
+\normalsize
+
+* Here we have chosen a threshold value of 0.5. By using the `ifelse` function we specify that all probabilities larger than 0.5 are to be classified as 1, while the remaining probabilities are to be classified as 0.
+
+---
+
+\scriptsize
+```{r}
+pred_SA = ifelse(probs_SA > 0.5, 1, 0)
+
+predictions_SA = data.frame(probs_SA, pred_SA, test_SA[,"chd"])
+colnames(predictions_SA) = c("Estim. prob. of Y=1","Predicted class","True class")
+head(predictions_SA)
+```
+
+---
+
+The confusion matrix is used to count the number of misclassifications in the test set: 
+
+\vspace{2mm}
+
+\scriptsize
+```{r}
+table(predicted=pred_SA, true=d.heart[-train_ID,"chd"])
+```
+
+\vspace{2mm}
+
+\normalsize
+
+* The logistic model has correctly classified 118+41 times, and misclassified 27+45 times, thus
+$$\text{Test error rate} = \frac{27+45}{27+45+118+41} \approx 0.31 \ .$$
+* Sensitivity: $\frac{41}{41+45}=0.477$, specificity = $\frac{118}{118+27}=0.814.$
+
+
+<!-- --- -->
+
+<!-- The training error can be calculated in a similar fashion, but now we use the fitted model to make prediction for the training set.  -->
+
+<!-- \scriptsize -->
+<!-- ```{r} -->
+<!-- SA_train_prob = glm_SA$fitted.values -->
+<!-- SA_train_pred = ifelse(SA_train_prob>0.5, 1, 0) -->
+<!-- conf_train = table(SA_train_pred, d.heart[train_ID, "chd"]) -->
+<!-- misclas_train = (231-sum(diag(conf_train)))/231 -->
+<!-- misclas_train -->
+<!-- ``` -->
+
+<!-- \normalsize -->
+<!-- The train misclassification error rate is $\approx 23.8\%$. -->
+
+---
+
+## ROC curves and AUC
+
+$~$
+
+* The receiver operating characteristics (ROC) curve gives a graphical display of the sensitivity against (1-specificity), as the threshold value (cut-off on probability) is moved from 0 to 1. 
+
+\vspace{2mm}
+
+* An ideal classifier will give a ROC curve which hugs the top left corner (sensitivity = specificity = 1), while a straight line represents a classifier with a random guess of the outcome. 
+
+\vspace{2mm}
+
+* The **AUC** score is the area under the AUC curve. It ranges between the values 0 and 1, where a higher value indicates a better classifier. 
+
+\vspace{2mm}
+
+* AUC is useful for comparing the performance of different classifiers.
+
+---
+
+### Example Continued: South African heart disease
+
+In order to see how our model performs for different threshold values, we can plot a ROC curve:
+
+\vspace{2mm}
+
+\scriptsize
+```{r roc, echo=FALSE, fig.width=5, fig.height=4.5,fig.align = "center",out.width='70%'}
+library(pROC)
+SA_roc = roc(d.heart[-train_ID, "chd"], probs_SA, legacy.axes=TRUE)
+ggroc(SA_roc, legacy.axes=TRUE)+ggtitle("ROC curve")+ 
+  annotate("text", x = 0.25, y = 0.30, label = "AUC = 0.7762") + 
+  geom_segment(aes(x = 0, xend = 1, y = 0, yend = 1), color="grey", linetype="dashed")
+
+```
+
+---
+
+To check where in the plot we find the default cut-off on 0.5, we need to calculate sensitivity and specificity for this cut-off:
+
+\scriptsize
+```{r, cache=FALSE}
+res=table(pred_SA, d.heart[-train_ID,"chd"])
+sens=res[2,2]/sum(res[,2])
+spec=res[1,1]/sum(res[,1])
+sens
+spec
+```
+
+\normalsize
+Observe that the value `r format(sens,3,3,3)` (on $y$-axis) and `r format(1-spec,3,3,3)` (1-specificity on $x$-axis) is on our ROC curve.
+
+The ROC-curve is made up of all possible cut-offs and their associated sensitivity and specificity.
+
+
+
+---
+
+
+#  Further reading  
+
+
+* [Videos on YouTube by the authors of ISL, Chapter 4,](https://www.youtube.com/playlist?list=PL5-da3qGB5IC4vaDba5ClatUmFppXLAhE)
+
+
+
+---
+
+# References
