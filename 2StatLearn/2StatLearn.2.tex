@@ -1,33 +1,36 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
-\documentclass[ignorenonframetext,]{beamer}
+\documentclass[
+  ignorenonframetext,
+]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
+% Prevent slide breaks in the middle of a paragraph
 \widowpenalties 1 10000
 \raggedbottom
 \setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
 }
 \AtBeginPart{
   \frame{\partpage}
@@ -41,45 +44,40 @@
 \AtBeginSubsection{
   \frame{\subsectionpage}
 }
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
-  \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
+\usepackage{lmodern}
 \usetheme[]{Singapore}
 \usefonttheme{serif}
-% use upquote if available, for straight quotes in verbatim environments
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 \usepackage{xcolor}
-\usepackage{hyperref}
-\hypersetup{
-            pdftitle={Module 2, Part 2: Random vectors, covariance, multivariate Normal distribution},
-            pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
-            colorlinks=true,
-            linkcolor=Maroon,
-            filecolor=Maroon,
-            citecolor=Blue,
-            urlcolor=blue,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -92,13 +90,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -106,7 +104,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -115,13 +113,13 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -130,23 +128,35 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \usepackage{xcolor,bm}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 2, Part 2: Random vectors, covariance, multivariate Normal distribution},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 2, Part 2: Random vectors, covariance, multivariate Normal
 distribution}
-\providecommand{\subtitle}[1]{}
 \subtitle{TMA4268 Statistical Learning V2022}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
 \date{January 20, 2022}
 
 \begin{document}
@@ -154,7 +164,6 @@ distribution}
 
 \begin{frame}{Overview}
 \protect\hypertarget{overview}{}
-
 \normalsize
 
 \begin{itemize}
@@ -165,12 +174,10 @@ distribution}
 \item
   The multivariate normal distribution
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}{Random vector}
 \protect\hypertarget{random-vector}{}
-
 \begin{itemize}
 \tightlist
 \item
@@ -183,7 +190,7 @@ distribution}
     Weight of cork deposits in \(p=4\) directions (N, E, S, W).
   \item
     Factors to predict body fat: bmi, age, weight, hip
-    circumference,\ldots{}.
+    circumference,\ldots.
   \end{itemize}
 \item
   Joint distribution function: \(f(\boldsymbol{x})\).
@@ -195,13 +202,11 @@ distribution}
   Cumulative distribution (definite integrals!) used to calculate
   probabilites.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Moments}
-
+\protect\hypertarget{moments}{}
 \vspace{2mm}
 
 The moments are important properties of the distribution of
@@ -220,15 +225,12 @@ The moments are important properties of the distribution of
 \item
   E and Cov of multiple linear combinations.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{The Cork deposit data}
-
+\protect\hypertarget{the-cork-deposit-data}{}
 \(~\)
 
 \begin{itemize}
@@ -246,9 +248,9 @@ The moments are important properties of the distribution of
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{corkds =}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\StringTok{"https://www.math.ntnu.no/emner/TMA4268/2019v/data/corkMKB.txt"}\NormalTok{))}
-\KeywordTok{dimnames}\NormalTok{(corkds)[[}\DecValTok{2}\NormalTok{]] =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"W"}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(corkds)}
+\NormalTok{corkds }\OtherTok{=} \FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{read.table}\NormalTok{(}\StringTok{"https://www.math.ntnu.no/emner/TMA4268/2019v/data/corkMKB.txt"}\NormalTok{))}
+\FunctionTok{dimnames}\NormalTok{(corkds)[[}\DecValTok{2}\NormalTok{]] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"W"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(corkds)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -264,38 +266,33 @@ The moments are important properties of the distribution of
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{dim}\NormalTok{(corkds)}
+\FunctionTok{dim}\NormalTok{(corkds)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## [1] 28  4
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Look at the data (always the first thing to do):
 
 \tiny
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(GGally)}
-\NormalTok{corkds <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(corkds)}
-\KeywordTok{ggpairs}\NormalTok{(corkds)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\NormalTok{corkds }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(corkds)}
+\FunctionTok{ggpairs}\NormalTok{(corkds)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{2StatLearn.2_files/figure-beamer/unnamed-chunk-2-1.pdf}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   Here we have a random sample of \(n=28\) cork trees from the
@@ -307,13 +304,11 @@ Look at the data (always the first thing to do):
 \end{itemize}
 
 \[\boldsymbol{X}_{(28 \times 4)}=\left[ \begin{array}{cccc}X_{11} & X_{12} & X_{13}& X_{14}\\ X_{21} & X_{22} & X_{23}& X_{24}\\ X_{31} & X_{32} & X_{33}& X_{34}\\ \vdots & \vdots & \ddots & \vdots\\ X_{28,1} & X_{28,2} & X_{28,3}& X_{28,4}\\ \end{array} \right]\]
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Rules for means}
-
+\protect\hypertarget{rules-for-means}{}
 \(~\)
 
 \begin{itemize}
@@ -342,13 +337,10 @@ Look at the data (always the first thing to do):
 \end{itemize}
 
 (Rules of vector addition)
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \tightlist
 \item
@@ -360,11 +352,9 @@ Look at the data (always the first thing to do):
 Proof: Board
 
 \vspace{60mm}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Q}:
 
 \begin{itemize}
@@ -376,13 +366,11 @@ Proof: Board
 \end{itemize}
 
 \vspace{80mm}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The covariance}
-
+\protect\hypertarget{the-covariance}{}
 \vspace{2mm}
 
 In the introductory statistics course we defined the covariance
@@ -414,24 +402,19 @@ In the introductory statistics course we defined the covariance
     positive?
   \end{itemize}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Make a scatter plot for negative, zero and positive correlation (see
 also R example).
 
 \vspace{6cm}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Variance-covariance matrix}
-
+\protect\hypertarget{variance-covariance-matrix}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -448,13 +431,10 @@ also R example).
    = \text{E}(\boldsymbol{X}\boldsymbol{X}^T)-\boldsymbol{\mu}\boldsymbol{\mu}^T
   \end{align*}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   The diagonal elements in \(\boldsymbol\Sigma\),
@@ -467,13 +447,11 @@ also R example).
   variance-covariance matrix and denoted both
   \(\text{Var}(\boldsymbol{X})\) and \(\text{Cov}(\boldsymbol{X})\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Exercise: the variance-covariance matrix}
-
+\protect\hypertarget{exercise-the-variance-covariance-matrix}{}
 \vspace{2mm}
 
 Let \(\boldsymbol{X}_{4\times 1}\) have variance-covariance matrix
@@ -485,15 +463,12 @@ Let \(\boldsymbol{X}_{4\times 1}\) have variance-covariance matrix
           \right].\]
 
 Explain what this means.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Correlation matrix}
-
+\protect\hypertarget{correlation-matrix}{}
 \(~\)
 
 Correlation matrix \(\boldsymbol{\rho}\) (real and symmetric)
@@ -527,15 +502,12 @@ Correlation matrix \(\boldsymbol{\rho}\) (real and symmetric)
     \vdots & \vdots & \ddots & \vdots\\
     0 & 0 & \cdots &  \sqrt{\sigma_{p}^2} \\
 \end{array} \right]\]
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Exercise: the correlation matrix}
-
+\protect\hypertarget{exercise-the-correlation-matrix}{}
 \(~\)
 
 Let \(\boldsymbol{X}_{4\times 1}\) have variance-covariance matrix
@@ -545,21 +517,16 @@ Let \(\boldsymbol{X}_{4\times 1}\) have variance-covariance matrix
       0&1&1&2\\
           \end{array}
           \right].\] Find the correlation matrix.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{A}:
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Linear combinations}
-
+\protect\hypertarget{linear-combinations}{}
 \(~\)
 
 Consider a random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean
@@ -576,15 +543,12 @@ have
 
 \textbf{Exercise:} Follow the proof (board) - what are the most
 important transitions?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Exercise: Linear combinations}
-
+\protect\hypertarget{exercise-linear-combinations}{}
 \[\boldsymbol{X}=\left[ \begin{array}{c} X_N\\
           X_E\\
 X_S\\
@@ -622,22 +586,19 @@ giving the three contrasts.
   matrix of \(\boldsymbol{Y}\), when the mean vector and covariance
   matrix for \(\boldsymbol{X}\) given below.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \tiny
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{corkds <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{read.table}\NormalTok{(}\StringTok{"https://www.math.ntnu.no/emner/TMA4268/2019v/data/corkMKB.txt"}\NormalTok{))}
-\KeywordTok{dimnames}\NormalTok{(corkds)[[}\DecValTok{2}\NormalTok{]] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"W"}\NormalTok{)}
-\NormalTok{mu =}\StringTok{ }\KeywordTok{apply}\NormalTok{(corkds, }\DecValTok{2}\NormalTok{, mean)}
+\NormalTok{corkds }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{read.table}\NormalTok{(}\StringTok{"https://www.math.ntnu.no/emner/TMA4268/2019v/data/corkMKB.txt"}\NormalTok{))}
+\FunctionTok{dimnames}\NormalTok{(corkds)[[}\DecValTok{2}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"S"}\NormalTok{, }\StringTok{"W"}\NormalTok{)}
+\NormalTok{mu }\OtherTok{=} \FunctionTok{apply}\NormalTok{(corkds, }\DecValTok{2}\NormalTok{, mean)}
 \NormalTok{mu}
-\NormalTok{Sigma =}\StringTok{ }\KeywordTok{var}\NormalTok{(corkds)}
+\NormalTok{Sigma }\OtherTok{=} \FunctionTok{var}\NormalTok{(corkds)}
 \NormalTok{Sigma}
 \end{Highlighting}
 \end{Shaded}
@@ -654,7 +615,7 @@ giving the three contrasts.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(C <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{byrow =}\NormalTok{ T, }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{))}
+\NormalTok{(C }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{byrow =}\NormalTok{ T, }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -667,7 +628,7 @@ giving the three contrasts.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{C }\OperatorTok{%*%}\StringTok{ }\NormalTok{Sigma }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(C)}
+\NormalTok{C }\SpecialCharTok{\%*\%}\NormalTok{ Sigma }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(C)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -677,13 +638,11 @@ giving the three contrasts.
 ## [2,] -38.57672  788.68254 -149.94180
 ## [3,]  21.02116 -149.94180  128.71958
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The covariance matrix - more requirements?}
-
+\protect\hypertarget{the-covariance-matrix---more-requirements}{}
 \(~\)
 
 Random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean vector
@@ -695,13 +654,10 @@ Random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean vector
     \vdots & \vdots & \ddots & \vdots\\
     \sigma_{1p} & \sigma_{2p} & \cdots & \sigma_{p}^2\\
 \end{array} \right]\]
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \tightlist
 \item
@@ -722,25 +678,20 @@ Random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean vector
 
 Hint: Is it possible that the variance of the linear combination
 \(\boldsymbol{Y}=\boldsymbol{b}^T\boldsymbol{X}\) is negative?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Random vectors - Single-choice exercise}
-
+\protect\hypertarget{random-vectors---single-choice-exercise}{}
 \vspace{4mm}
 
 Quizz on www.menti.com, code 3967 5773
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 1: Mean of sum}
-
+\protect\hypertarget{question-1-mean-of-sum}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) and \(\boldsymbol{Y}\) are two bivariate random
@@ -761,15 +712,12 @@ vectors with \(\text{E}(\boldsymbol{X})=(1,2)^T\) and
 \item
   D: \((1,-2)^T\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 2: Mean of linear combination}
-
+\protect\hypertarget{question-2-mean-of-linear-combination}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) is a 2-dimensional random vector with
@@ -790,15 +738,12 @@ vectors with \(\text{E}(\boldsymbol{X})=(1,2)^T\) and
 \item
   D: 5
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 3: Covariance}
-
+\protect\hypertarget{question-3-covariance}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) is a \(p\)-dimensional random vector with mean
@@ -822,15 +767,12 @@ matrix?
   D:
   \(E[(\boldsymbol{X}-\boldsymbol{\mu})^T(\boldsymbol{X}-\boldsymbol{\mu})^T]\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 4: Mean of linear combinations}
-
+\protect\hypertarget{question-4-mean-of-linear-combinations}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) is a \(p\)-dimensional random vector with mean
@@ -852,15 +794,12 @@ matrix?
 \item
   D: \(\boldsymbol{C}\boldsymbol\Sigma\boldsymbol{C}^T\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 5: Covariance of linear combinations}
-
+\protect\hypertarget{question-5-covariance-of-linear-combinations}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) is a \(p\)-dimensional random vector with mean
@@ -882,15 +821,12 @@ the \(k\)-dimensional random vector
 \item
   D: \(\boldsymbol{C}\boldsymbol\Sigma\boldsymbol{C}^T\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 6: Correlation}
-
+\protect\hypertarget{question-6-correlation}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}\) is a \(2\)-dimensional random vector with covariance
@@ -914,18 +850,14 @@ matrix \[ \boldsymbol\Sigma= \left[\begin{array}{cc}
 \item
   D: 0.80
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \end{frame}
 
 \begin{frame}{The multivariate normal distribution}
 \protect\hypertarget{the-multivariate-normal-distribution}{}
-
 \vspace{2mm}
 
 Why is the mvN so popular?
@@ -945,23 +877,19 @@ Why is the mvN so popular?
 \item
   Building block in many models and methods.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \centering
 
 \includegraphics[width=0.8\textwidth,height=\textheight]{mvN.jpeg}
 
 3D multivariate Normal distributions
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The multivariate normal (mvN) pdf}
-
+\protect\hypertarget{the-multivariate-normal-mvn-pdf}{}
 \vspace{2mm}
 
 The random vector \(\boldsymbol{X}_{p\times 1}\) is multivariate normal
@@ -983,17 +911,14 @@ matrix \(\boldsymbol\Sigma\). The pdf is:
   What is the dimension of the part in \(\exp\)?
 \item
   What happens if the determinant \(|\boldsymbol\Sigma| = 0\)
-  (degenerate case)? 
+  (degenerate case)?
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Four useful properties of the mvN}
-
+\protect\hypertarget{four-useful-properties-of-the-mvn}{}
 \vspace{2mm}
 
 Let \(\boldsymbol{X}_{(p\times 1)}\) be a random vector from
@@ -1022,24 +947,19 @@ Let \(\boldsymbol{X}_{(p\times 1)}\) be a random vector from
 
 If you need a refresh, you might find that video useful:
 \url{https://www.youtube.com/watch?v=eho8xH3E6mE}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 All of these are proven in TMA4267 Linear Statistical Models.
 
 The result 4 is rather useful! If you have a bivariate normal and
 observed covariance 0, then your variables are independent.
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Contours of multivariate normal distribution}
-
+\protect\hypertarget{contours-of-multivariate-normal-distribution}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1057,25 +977,20 @@ observed covariance 0, then your variables are independent.
   To see this the spectral decomposition of the covariance matrix is
   useful.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Note:
 
 \emph{In M4: Classification the mvN is very important and we will often
 draw contours of the mvN as ellipses (in 2D space). This is the reason
 why we do that. }
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Identify the mvNs from their contours}
-
+\protect\hypertarget{identify-the-mvns-from-their-contours}{}
 \vspace{4mm}
 
 Let
@@ -1100,38 +1015,30 @@ The following four figure contours have been generated:
 \vspace{8mm}
 
 \textbf{Match the distributions to the figures on the next slide.}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{center}\includegraphics[width=0.65\linewidth]{2StatLearn.2_files/figure-beamer/cont-1} \end{center}
 
 Take a look at the contour plots - when are the contours circles, when
 ellipses?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Multiple choice - multivariate normal}
-
+\protect\hypertarget{multiple-choice---multivariate-normal}{}
 \vspace{2mm}
 
 A second quizz on www.menti.com, code 3967 5773
 
 Choose the correct answer. Let's go!
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 1: Multivariate normal pdf}
-
+\protect\hypertarget{question-1-multivariate-normal-pdf}{}
 \vspace{2mm}
 
 The probability density function is
@@ -1151,15 +1058,12 @@ where \(Q\) is
 \item
   C: \(\boldsymbol\Sigma-\boldsymbol{\mu}\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 2: Trivariate normal pdf}
-
+\protect\hypertarget{question-2-trivariate-normal-pdf}{}
 \vspace{2mm}
 
 What graphical form has the solution to \(f(\boldsymbol{x})=\) constant?
@@ -1177,15 +1081,12 @@ What graphical form has the solution to \(f(\boldsymbol{x})=\) constant?
 \item
   D: Bell shape
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 3: Multivariate normal distribution}
-
+\protect\hypertarget{question-3-multivariate-normal-distribution}{}
 \vspace{2mm}
 
 \(\boldsymbol{X}_p \sim N_p(\boldsymbol{\mu},\boldsymbol\Sigma)\), and
@@ -1205,15 +1106,12 @@ What graphical form has the solution to \(f(\boldsymbol{x})=\) constant?
 \item
   D: Multivariate normal with mean \(\boldsymbol{C}\boldsymbol{\mu}\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 4: Independence}
-
+\protect\hypertarget{question-4-independence}{}
 \vspace{2mm}
 
 Let \(\boldsymbol{X}\sim N_3(\boldsymbol{\mu},\boldsymbol\Sigma)\), with
@@ -1237,15 +1135,12 @@ Let \(\boldsymbol{X}\sim N_3(\boldsymbol{\mu},\boldsymbol\Sigma)\), with
 \item
   D: None -- but two are uncorrelated.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Question 5: Constructing independent variables?}
-
+\protect\hypertarget{question-5-constructing-independent-variables}{}
 \vspace{2mm}
 
 Let \(\boldsymbol{X}\sim N_p(\boldsymbol{\mu},\boldsymbol\Sigma)\). How
@@ -1267,33 +1162,26 @@ can I construct a vector of independent standard normal variables from
   D:
   \(\boldsymbol\Sigma^{\frac{1}{2}}(\boldsymbol{X}+\boldsymbol{\mu})\)
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \end{frame}
 
 \begin{frame}{ Further reading/resources}
 \protect\hypertarget{further-readingresources}{}
-
 \begin{itemize}
 \tightlist
 \item
   \href{https://www.youtube.com/playlist?list=PL5-da3qGB5IDvuFPNoSqheihPOQNJpzyy}{Videoes
   on YouTube by the authors of ISL, Chapter 2}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}{Acknowledgements}
 \protect\hypertarget{acknowledgements}{}
-
 Thanks to Mette Langaas, who developed the first slide set in 2018 and
 2019, and to Julia Debik for contributing to this module.
-
 \end{frame}
 
 \end{document}

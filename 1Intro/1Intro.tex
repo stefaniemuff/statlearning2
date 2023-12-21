@@ -46,19 +46,22 @@
   \frame{\subsectionpage}
 }
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
+\usepackage{lmodern}
 \usetheme[]{Singapore}
 \usefonttheme{serif}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
@@ -88,13 +91,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -102,7 +105,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -111,7 +114,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -140,10 +143,10 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 1: Introduction},
-  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -153,8 +156,8 @@
 
 \title{Module 1: Introduction}
 \subtitle{TMA4268 Statistical Learning V2023}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{9th January, 2023}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
+\date{11th January, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -216,11 +219,10 @@
     module subpages.
   \end{itemize}
 \item
-  All the lecture notes, \textbf{including any classnotes} made on the
-  iPad or black board (iPad notes will be made available online).
+  All the lecture notes (iPad notes will be made available online).
 \item
   The R course here:
-  \url{https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/}
+  \url{https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about}
 \item
   \textbf{Additional reading material will be clearly indicated in the
   modules and on the course page.}
@@ -231,23 +233,20 @@
 \protect\hypertarget{course-page}{}
 All the relevant information for the course can be found here:
 
-\url{https://wiki.math.ntnu.no/tma4268/2023v/start}
+\url{https://wiki.math.ntnu.no/tma4268/2024v/start}
 
 On each module page, all the relevant learning material and exercises
 (incl.~solutions) will be provided in due time.
 \end{frame}
 
-\begin{frame}{The Statistical Learning Team 2023}
-\protect\hypertarget{the-statistical-learning-team-2023}{}
+\begin{frame}{The Statistical Learning Team 2024}
+\protect\hypertarget{the-statistical-learning-team-2024}{}
 \begin{block}{The TAs:}
 \protect\hypertarget{the-tas}{}
 \vspace{2mm}
 
 \begin{itemize}
 \tightlist
-\item
-  \href{https://www.ntnu.no/ansatte/emma.s.skarstein}{Emma Skarstein};
-  PhD student
 \item
   \href{https://www.ntnu.no/ansatte/kenneth.aase}{Kenneth Aaase}; PhD
   student
@@ -265,11 +264,11 @@ On each module page, all the relevant learning material and exercises
 \begin{itemize}
 \tightlist
 \item
-  \href{https://www.ntnu.edu/employees/stefanie.muff}{Stefanie Muff};
+  \href{https://www.ntnu.no/ansatte/sara.martino}{Sara Martino};
   Associate Professor
 \item
-  \href{https://www.ntnu.no/ansatte/daesoo.lee}{Daesoo Lee} (modules
-  2--4)
+  \href{https://www.ntnu.edu/employees/stefanie.muff}{Stefanie Muff};
+  Associate Professor
 \end{itemize}
 \end{block}
 \end{frame}
@@ -303,7 +302,7 @@ On each module page, all the relevant learning material and exercises
 \tightlist
 \item
   No background in statistical software needed: but we will use the R
-  statistical software extensively in the course. Knowing python will
+  statistical software extensively in the course. Knowing Python will
   make this easier for you!
 \end{itemize}
 
@@ -508,8 +507,8 @@ On each module page, all the relevant learning material and exercises
 \protect\hypertarget{the-lectures}{}
 \vspace{4mm}
 
-\textbf{Mondays at 10.15-12.00 in KJL2 and Thursdays at 08.15-10.00 in
-EL3}
+\textbf{Thursdays at 8.15-10.00 in EL6 and Fridays at 12.15-14.00 in
+EL6}
 
 \vspace{4mm}
 
@@ -526,7 +525,7 @@ EL3}
 \tightlist
 \item
   See here
-  \url{https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf}
+  \url{https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf}
   for a tentative schedule.
 \end{itemize}
 
@@ -577,7 +576,7 @@ EL3}
 \protect\hypertarget{recommended-exercises}{}
 \vspace{4mm}
 
-\textbf{Thursdays at 10.15-12.00 in KJL2}
+\textbf{Thursdays at 16.15-19.00 in EL6}
 
 \vspace{4mm}
 
@@ -700,8 +699,7 @@ EL3}
   \hspace{8mm}
 
   Suggested submission deadline:\\
-  \vspace{2mm} \hspace{8mm} \textbf{Thursday, 23. February 2023,
-  23:59h}.
+  \vspace{2mm} \hspace{8mm} ** **.
 \end{itemize}
 
 \vspace{8mm}
@@ -714,7 +712,7 @@ EL3}
   \hspace{8mm}
 
   Suggested submission deadline:\\
-  \vspace{2mm} \hspace{8mm}\textbf{Monday, 24. April 2023, 23:59h}.
+  \vspace{2mm} \hspace{8mm}** **.
 \end{itemize}
 \end{frame}
 
@@ -728,7 +726,7 @@ the following link (als available from our course page):
 
 \vspace{2mm}
 
-\url{https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf}
+\url{https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf}
 \end{block}
 \end{frame}
 
@@ -741,7 +739,7 @@ the following link (als available from our course page):
 \tightlist
 \item
   All the material presented in class will be available on our course
-  webpage (\url{https://wiki.math.ntnu.no/tma4268/2023v/start}).
+  webpage (\url{https://wiki.math.ntnu.no/tma4268/2024v/start}).
 \end{itemize}
 
 \vspace{2mm}
@@ -765,7 +763,7 @@ the following link (als available from our course page):
 \tightlist
 \item
   Use our discussion forum on Mattelab for all course-relevant
-  questions: \url{https://mattelab2023v.math.ntnu.no/c/tma4268/6}
+  questions: \url{https://mattelab2024v.math.ntnu.no/c/tma4268/6}
 \end{itemize}
 
 \(~\)
@@ -805,11 +803,8 @@ Volunteers?
 \begin{itemize}
 \tightlist
 \item
-  Håkon Kjelland-Mørdre (BMAT)
 \item
-  (IndMat or Math/Physcis master, year 4 or 5?)
 \item
-  (Other)
 \end{itemize}
 
 Thanks to the three people that volunteer.
@@ -1116,7 +1111,7 @@ prediction!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{modelB }\OtherTok{=} \FunctionTok{lm}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(SYSBP) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SEX }\SpecialCharTok{+}\NormalTok{ AGE }\SpecialCharTok{+}\NormalTok{ CURSMOKE }\SpecialCharTok{+}\NormalTok{ BMI }\SpecialCharTok{+}\NormalTok{ TOTCHOL }\SpecialCharTok{+}\NormalTok{ BPMEDS, }\AttributeTok{data =}\NormalTok{ thisds)}
+\NormalTok{modelB}\OtherTok{=}\FunctionTok{lm}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(SYSBP)}\SpecialCharTok{\textasciitilde{}}\NormalTok{SEX}\SpecialCharTok{+}\NormalTok{AGE}\SpecialCharTok{+}\NormalTok{CURSMOKE}\SpecialCharTok{+}\NormalTok{BMI}\SpecialCharTok{+}\NormalTok{TOTCHOL}\SpecialCharTok{+}\NormalTok{BPMEDS,}\AttributeTok{data=}\NormalTok{thisds)}
 
 \FunctionTok{summary}\NormalTok{(modelB)}
 \end{Highlighting}

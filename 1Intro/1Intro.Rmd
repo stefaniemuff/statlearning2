@@ -1,8 +1,8 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 1: Introduction"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "9th January, 2023"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "11th January, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -42,6 +42,7 @@ $~$
 
 # Learning outcomes of TMA4268
 
+
 1. **Knowledge.** The student has knowledge about the most popular statistical learning models and methods that are used for _prediction_ and _inference_ in science and technology. Emphasis is on regression- and classification-type statistical models.
 
 2. **Skills.** The student can, based on an existing data set, choose a suitable statistical model, apply sound statistical methods, and perform the analyses using statistical software. The student can present, interpret and communicate the results from the statistical analyses, and knows which conclusions can be drawn from the analyses, and what the caveats are. 
@@ -60,9 +61,9 @@ The textbook can be downloaded here: https://www.statlearning.com/
     * There are 15 hours of youtube videos by two of the authors of the book, Trevor Hastie an Rob Tibshirani. Links will be added to the module subpages.
 
 
-2) All the lecture notes, \textbf{including any classnotes} made on the iPad or black board (iPad notes will be made available online).
+2) All the lecture notes (iPad notes will be made available online).
 
-3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/)
+3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about)
 
 4) **Additional reading material will be clearly indicated in the modules and on the course page.**
 
@@ -73,19 +74,18 @@ The textbook can be downloaded here: https://www.statlearning.com/
 
 All the relevant information for the course can be found here:
 
-https://wiki.math.ntnu.no/tma4268/2023v/start
+https://wiki.math.ntnu.no/tma4268/2024v/start
 
 On each module page, all the relevant learning material and exercises (incl. solutions) will be provided in due time.
 
 ---
 
-# The Statistical Learning Team 2023
+# The Statistical Learning Team 2024
 
 ## The TAs:
 
 \vspace{2mm}
 
-* [Emma Skarstein](https://www.ntnu.no/ansatte/emma.s.skarstein); PhD student
 * [Kenneth Aaase](https://www.ntnu.no/ansatte/kenneth.aase); PhD student
 * [Daesoo Lee](https://www.ntnu.no/ansatte/daesoo.lee); PhD student
 
@@ -95,8 +95,8 @@ $~$
 
 \vspace{2mm}
 
+* [Sara Martino](https://www.ntnu.no/ansatte/sara.martino); Associate Professor
 * [Stefanie Muff](https://www.ntnu.edu/employees/stefanie.muff); Associate Professor
-* [Daesoo Lee](https://www.ntnu.no/ansatte/daesoo.lee) (modules 2--4)
 
 
 ---
@@ -118,7 +118,7 @@ $~$
 
 \vspace{2mm}
 
-* No background in statistical software needed: but we will use the R statistical software extensively in the course. Knowing python will make this easier for you!
+* No background in statistical software needed: but we will use the R statistical software extensively in the course. Knowing Python will make this easier for you!
 
 \vspace{2mm}
 
@@ -231,7 +231,7 @@ $~$
 
 \vspace{4mm}  
 
-**Mondays at 10.15-12.00 in KJL2 and Thursdays at 08.15-10.00 in EL3**
+**Thursdays at 8.15-10.00 in EL6 and Fridays at 12.15-14.00 in EL6**
 
 
 \vspace{4mm}
@@ -240,7 +240,7 @@ $~$
 
 \vspace{2mm}
 
-* See here [https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf](https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf) for a tentative schedule.
+* See here [https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf](https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf) for a tentative schedule.
 
 \vspace{2mm}
 
@@ -269,7 +269,7 @@ $~$
 
 \vspace{4mm}  
 
-**Thursdays at 10.15-12.00 in KJL2**
+**Thursdays at 16.15-19.00 in EL6**
 
 \vspace{4mm}
 
@@ -336,7 +336,7 @@ $~$
   
   \hspace{8mm} Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm} **Thursday, 23. February 2023, 23:59h**.
+  \hspace{8mm} ** **.
 
 
 \vspace{8mm}
@@ -345,7 +345,7 @@ $~$
  
   \hspace{8mm}Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm}**Monday, 24. April 2023, 23:59h**.
+  \hspace{8mm}** **.
 
 ---
 
@@ -357,7 +357,7 @@ A tentative schedule (i.e., with continous updates) can be found under the follo
 
 \vspace{2mm}
 
-[https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf](https://github.com/stefaniemuff/statlearning/blob/master/TMA4268_schedule2023.pdf)
+[https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf](https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf)
 
 ---
 
@@ -365,7 +365,7 @@ A tentative schedule (i.e., with continous updates) can be found under the follo
 
 $~$
 
-* All the material presented in class will be available on our course webpage (https://wiki.math.ntnu.no/tma4268/2023v/start).
+* All the material presented in class will be available on our course webpage (https://wiki.math.ntnu.no/tma4268/2024v/start).
 
 \vspace{2mm}
 
@@ -380,7 +380,7 @@ $~$
 
 
 * Use our discussion forum on Mattelab for all course-relevant questions: 
-[https://mattelab2023v.math.ntnu.no/c/tma4268/6](https://mattelab2023v.math.ntnu.no/c/tma4268/6)
+[https://mattelab2024v.math.ntnu.no/c/tma4268/6](https://mattelab2024v.math.ntnu.no/c/tma4268/6)
 
 $~$
 
@@ -477,9 +477,9 @@ Log into www.menti.com and use the code 6390 7810.
 
 Volunteers?
 
- * Håkon Kjelland-Mørdre (BMAT)
- * (IndMat or Math/Physcis master, year 4 or 5?)
- * (Other)
+ * 
+ * 
+ * 
 
 Thanks to the three people that volunteer. 
 
@@ -528,7 +528,7 @@ _\textcolor{red}{Recommended}_:
 
 \vspace{1mm}
 
-* Watch the video lecture for Chapter 1 by Hastie and Tibshirani [here](https://wiki.math.ntnu.no/tma4268/2023v/subpage1).
+* Watch the video lecture for Chapter 1 by Hastie and Tibshirani [here](https://wiki.math.ntnu.no/tma4268/2024v/subpage1).
 
 
 
@@ -765,7 +765,8 @@ In this plot the small black dots represent correctly classified iris plants, wh
 
 ```{r irislda, echo=FALSE, fig.width=6, fig.height=4.5,out.width="10cm"}
 library(klaR)
-drawparti(iris$Species, iris$Sepal.Length, iris$Sepal.Width,  prec=301, gs=20,  method="lda", image.colors=c("#F8766D", "#00BA38", "#619CFF"), xlab="Sepal Length", ylab="Sepal Width", print.err=0)
+drawparti(iris$Species, iris$Sepal.Length, iris$Sepal.Width,  prec=301, gs=20,  
+          method="lda", image.colors=c("#F8766D", "#00BA38", "#619CFF"), xlab="Sepal Length", ylab="Sepal Width", print.err=0)
 legend("topright", title="Species", legend=c("setosa", "versicolor", "virginica"), fill=c("#F8766D", "#00BA38", "#619CFF"),  inset=.02 , cex=0.8)
 ```
 
@@ -844,7 +845,7 @@ Finding clusters in protein-protein-interaction networks.
 
 $~$
 
-* You can work through parts 1 - 6 in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/)
+* You can work through parts 1 - 6 in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about)
 
 \vspace{2mm}
 

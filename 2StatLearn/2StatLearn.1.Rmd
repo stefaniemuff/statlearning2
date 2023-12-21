@@ -1,22 +1,22 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 2, Part 1: Statistical Learning "
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
 date: "January 17, 2022"
 output:
-  # beamer_presentation:
-  #   keep_tex: yes
-  #   fig_caption: false
-  #   latex_engine: xelatex
-  #   theme: "Singapore"
-  #   colortheme: "default"
-  #   font: "serif"
+  beamer_presentation:
+    keep_tex: yes
+    fig_caption: false
+    latex_engine: xelatex
+    theme: "Singapore"
+    colortheme: "default"
+    font: "serif"
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
+#bibliography: refs.bib
 header-includes: \usepackage{xcolor}
 
 ---
@@ -31,6 +31,18 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(class)
+library(dplyr)
+library(ggpubr)
+library(mvtnorm)
+library(MASS)
+library(ggplot2)
+library(ISLR)
+library(patchwork)
+set.seed(9)
+
+```
 
 # Acknowledgements
 
@@ -354,7 +366,7 @@ and there is a great deal of “cross-fertilization”.
 
 A tweet by one of the co-authors of the course book, coincidentially...
 
-![](AI_ML_stat.jpg)
+<!-- %![](AI_ML_stat.jpg) -->
 
 ---
 
@@ -385,7 +397,11 @@ $~$
 
 Sales of a product, given advertising budgets in different media.
 
-![ISLR Figure 2.12](../../ISLR/Figures/Chapter2/2.1.png)
+![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.1.pdf)
+
+
+
+
 
 ---
 
@@ -395,7 +411,9 @@ Sales of a product, given advertising budgets in different media.
 
 Income for given levels of education.
 
-![ISLR Figure 2.12](../../ISLR/Figures/Chapter2/2.2.png)
+
+![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.2.pdf)
+
 
 ---
 
@@ -552,14 +570,6 @@ $~$
 $~$
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(class)
-library(dplyr)
-library(ggpubr)
-library(mvtnorm)
-library(MASS)
-library(ggplot2)
-
-set.seed(9)
 
 Sigma = matrix(c(2, 0, 0, 2), 2, 2)
 
@@ -680,8 +690,10 @@ $~$
 Example: Prediction of icome from "Years of Education" and "Seniority"\vspace{2mm}
 
 \centering
-![ISLR Figure 2.4](../../ISLR/Figures/Chapter2/2.4.png){width=45%}
-![ISLR Figure 2.6](../../ISLR/Figures/Chapter2/2.6.png){width=45%}
+![ISLR Figure 2.4](../../ISLR_book/Figure/Chapter2/2.4.pdf){width=45%}
+
+
+![ISLR Figure 2.6](../../ISLR_book/Figure/Chapter2/2.6.pdf){width=45%}
 
 A linear model vs a perfect fit.
 
@@ -1164,7 +1176,7 @@ $\rightarrow$  **Bias-Variance  trade-off**
  
 ---
 
-![ISLR Figure 2.12](../../ISLR/Figures/Chapter2/2.12.png)
+![ISLR Figure 2.12](../../ISLR_book/Figure/Chapter2/2.12.pdf)
 
 
 
