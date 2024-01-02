@@ -190,8 +190,8 @@ $~$
     5) Resampling methods
     6) Model selection/regularization
     7) Non-linearity
-    8) Support vector machines
-    9) Tree-based methods
+    8) Tree-based methods 1
+    9) Tree-based methods 2
     10) Unsupervised methods
     11) Neural networks (new in the course book edition 2)
 
@@ -837,7 +837,7 @@ More:
 Finding clusters in protein-protein-interaction networks.
 \vspace{2mm}
 
-![](muff_etal.png)
+<!-- ![](muff_etal.png) -->
 
 ---
 
