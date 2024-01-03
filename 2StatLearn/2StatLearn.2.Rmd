@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 2, Part 2: Random vectors, covariance, multivariate Normal distribution"
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 20, 2022"
+date: "January 20, 2024"
 output:
   beamer_presentation:
     keep_tex: yes
@@ -11,6 +11,8 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
+    includes:
+      in_header: header.tex
   html_document:
     toc: true
     toc_float: true
@@ -403,8 +405,11 @@ $$\boldsymbol{b}^T \boldsymbol{\Sigma} \boldsymbol{b} \geq 0 \ .$$
 * Why do you think that is?
 
 $~$
-
+\pause
 Hint: Is it possible that the variance of the linear combination $\boldsymbol{Y}=\boldsymbol{b}^T\boldsymbol{X}$ is negative? 
+
+
+
 
 
 ---
@@ -519,10 +524,31 @@ $~$
 
 ---
 
+### Question 7
+
+$\boldsymbol{X}$ is a $2$-dimensional random vector with mean $\boldsymbol{\mu}$ and covariance matrix $\boldsymbol\Sigma$. 
+
+Are these sufficient to totally describe the random vector  $\boldsymbol{X}$?
+
+$~$
+
+* A: Yes
+* B: No
+
+\pause
+
+$~$
+
+Why?^[Show the Datasaurus data: https://cran.r-project.org/web/packages/datasauRus/vignettes/Datasaurus.html]
+
+
+
+
+
 ```{r, echo=FALSE, results='asis', eval=showsolB}
 cat("
 ## Answers: 
-1B, 2A, 3B, 4A, 5D, 6C 
+1B, 2A, 3B, 4A, 5D, 6C , 7B
 ")
 ```
 

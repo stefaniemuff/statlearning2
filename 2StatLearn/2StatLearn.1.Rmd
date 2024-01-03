@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 2, Part 1: Statistical Learning "
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 17, 2022"
+date: "January 18, 2024"
 output:
   beamer_presentation:
     keep_tex: yes
