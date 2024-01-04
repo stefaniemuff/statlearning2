@@ -136,6 +136,8 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number]
 \usepackage{xcolor,bm}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
@@ -157,7 +159,7 @@
 distribution}
 \subtitle{TMA4268 Statistical Learning V2022}
 \author{Sara Martino, Department of Mathematical Sciences, NTNU}
-\date{January 20, 2022}
+\date{January 20, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -674,10 +676,9 @@ Random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean vector
   Why do you think that is?
 \end{itemize}
 
-\(~\)
-
-Hint: Is it possible that the variance of the linear combination
-\(\boldsymbol{Y}=\boldsymbol{b}^T\boldsymbol{X}\) is negative?
+\(~\) \pause Hint: Is it possible that the variance of the linear
+combination \(\boldsymbol{Y}=\boldsymbol{b}^T\boldsymbol{X}\) is
+negative?
 \end{frame}
 
 \begin{frame}
@@ -854,6 +855,31 @@ matrix \[ \boldsymbol\Sigma= \left[\begin{array}{cc}
 \end{frame}
 
 \begin{frame}
+\begin{block}{Question 7}
+\protect\hypertarget{question-7}{}
+\(\boldsymbol{X}\) is a \(2\)-dimensional random vector with mean
+\(\boldsymbol{\mu}\) and covariance matrix \(\boldsymbol\Sigma\).
+
+Are these sufficient to totally describe the random vector
+\(\boldsymbol{X}\)?
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  A: Yes
+\item
+  B: No
+\end{itemize}
+
+\pause
+
+\(~\)
+
+Why?\footnote<.->{Show the Datasaurus data:
+  \url{https://cran.r-project.org/web/packages/datasauRus/vignettes/Datasaurus.html}}
+\end{block}
 \end{frame}
 
 \begin{frame}{The multivariate normal distribution}

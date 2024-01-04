@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 2, Part 1: Statistical Learning "
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 17, 2022"
+date: "January 18, 2024"
 output:
   beamer_presentation:
     keep_tex: yes
@@ -11,6 +11,8 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
+    includes:
+      in_header: header.tex
   html_document:
     toc: true
     toc_float: true
@@ -366,7 +368,7 @@ and there is a great deal of “cross-fertilization”.
 
 A tweet by one of the co-authors of the course book, coincidentially...
 
-<!-- %![](AI_ML_stat.jpg) -->
+%![](AI_ML_stat.png)
 
 ---
 
@@ -464,7 +466,7 @@ $$\text{E}[(Y-\hat{Y})^2] = \underbrace{(f(X)-\hat{f}(X))^2}_{reducible} + \unde
 
 <!-- --- -->
 
-<!-- ### A:  -->
+<!-- ### A: -->
 
 <!-- If we know all predictors and the (deterministic) connection to the reponse, and there is no random error added, then we will have no irreducible error. If there is a deterministic relationship, but we don't know all predictor values, then the non-observed predictors will give us irreducible error. -->
 
@@ -532,7 +534,7 @@ $~$
 ## Parametric methods
 $~$
 
-Asumption about the form or shape of the function $f$.  
+Assumption about the form or shape of the function $f$.  
 
 The multiple linear model (M3) is an example of a parametric method: 
 
@@ -836,6 +838,7 @@ Why is the training MSE not the real measure of interest?
 
 $~$
 
+\pause  
 
 Examples: 
 

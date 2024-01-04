@@ -103,6 +103,8 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number]
 \usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
@@ -123,7 +125,7 @@
 \title{Module 2, Part 1: Statistical Learning}
 \subtitle{TMA4268 Statistical Learning V2022}
 \author{Sara Martino, Department of Mathematical Sciences, NTNU}
-\date{January 17, 2022}
+\date{January 18, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -478,6 +480,8 @@ ones!}
 \begin{frame}
 A tweet by one of the co-authors of the course book,
 coincidentially\ldots{}
+
+\%\includegraphics{AI_ML_stat.png}
 \end{frame}
 
 \begin{frame}
@@ -663,7 +667,7 @@ Overall idea:
 \protect\hypertarget{parametric-methods}{}
 \(~\)
 
-Asumption about the form or shape of the function \(f\).
+Assumption about the form or shape of the function \(f\).
 
 The multiple linear model (M3) is an example of a parametric method:
 
@@ -949,6 +953,8 @@ squared error), using the data that were used to estimate \(f\):
 Why is the training MSE not the real measure of interest?
 
 \(~\)
+
+\pause
 
 Examples:
 
