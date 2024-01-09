@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2022"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 3: Linear Regression"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "January 24 and 27, 2022"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "January 26 and 26, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -12,13 +12,15 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
+    includes:
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
-header-includes: \usepackage{bm}
+#bibliography: refs.bib
+#header-includes: \usepackage{bm}
 
 ---
 
@@ -33,13 +35,13 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 ```
 
  
----
+<!-- --- -->
 
-# Acknowledgements
+<!-- # Acknowledgements -->
 
-* Thanks to Mette Langaas and her TAs who permit me to use and modify their original material. 
+<!-- * Thanks to Mette Langaas and her TAs who permit me to use and modify their original material.  -->
 
-* Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
+<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL. -->
 
 --- 
 
@@ -1965,7 +1967,7 @@ $~$
 
 Let's look at the graphs:
 
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.png)
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.pdf)
 
 $\rightarrow$ We want a model that allows for different slopes!
 

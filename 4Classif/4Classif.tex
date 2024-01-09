@@ -1,33 +1,37 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
-\documentclass[10pt,ignorenonframetext,]{beamer}
+\documentclass[
+  10pt,
+  ignorenonframetext,
+]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
+% Prevent slide breaks in the middle of a paragraph
 \widowpenalties 1 10000
 \raggedbottom
 \setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
 }
 \AtBeginPart{
   \frame{\partpage}
@@ -41,45 +45,40 @@
 \AtBeginSubsection{
   \frame{\subsectionpage}
 }
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
-  \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
+\usepackage{lmodern}
 \usetheme[]{Singapore}
 \usefonttheme{serif}
-% use upquote if available, for straight quotes in verbatim environments
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 \usepackage{xcolor}
-\usepackage{hyperref}
-\hypersetup{
-            pdftitle={Module 4: Classification},
-            pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
-            colorlinks=true,
-            linkcolor=Maroon,
-            filecolor=Maroon,
-            citecolor=Blue,
-            urlcolor=blue,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -92,13 +91,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -106,7 +105,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -115,13 +114,13 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -130,20 +129,57 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
-\usepackage{multirow} \usepackage{bm}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number]
+\usepackage{multirow}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 4: Classification},
+  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 4: Classification}
-\providecommand{\subtitle}[1]{}
 \subtitle{TMA4268 Statistical Learning V2022}
 \author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
 \date{January 31 and February 3rd, 2022}
@@ -151,31 +187,19 @@
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}{Acknowledgements}
-\protect\hypertarget{acknowledgements}{}
-
-\begin{itemize}
-\item
-  Thanks to Mette Langaas and her TAs who permit me to use and modify
-  their original material.
-\item
-  Some of the figures and slides in this presentation are taken (or are
-  inspired) from James et al. (2013).
-\end{itemize}
-
+\begin{frame}
 \end{frame}
 
 \begin{frame}{Introduction}
 \protect\hypertarget{introduction}{}
-
 \begin{block}{Learning material for this module}
-
+\protect\hypertarget{learning-material-for-this-module}{}
 \vspace{2mm}
 
 \begin{itemize}
 \tightlist
 \item
-  James et al. (2013): An Introduction to Statistical Learning. Chapter
+  James et al.~(2013): An Introduction to Statistical Learning. Chapter
   4 + Chapter 2.2.3.
 \end{itemize}
 
@@ -186,15 +210,12 @@
 \item
   All the material presented on these module slides.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{What will you learn?}
-
+\protect\hypertarget{what-will-you-learn}{}
 \(~\)
 
 \begin{itemize}
@@ -215,14 +236,11 @@
 \item
   Sensitivity, specificity and ROC curves
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]{What is classification?}
 \protect\hypertarget{what-is-classification}{}
-
 \vspace{3mm}
 
 \begin{itemize}
@@ -245,11 +263,9 @@
     disease3\}.
   \end{itemize}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   Suppose we have a qualititative response value that can be a member in
@@ -266,13 +282,11 @@
   We often build models that \textbf{predict probabilities of
   categories}, \emph{given} certain covariates \(X\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example: The credit card data}
-
+\protect\hypertarget{example-the-credit-card-data}{}
 \vspace{2mm}
 
 The \texttt{Default} dataset is available from the ISLR package.
@@ -287,16 +301,13 @@ balance.
 \textcolor{blue}{blue: default=no}.
 
 \centering
-\includegraphics[width=0.5\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.1a.png}
-
+\includegraphics[width=0.5\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.1a.pdf}
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{General classification setup}
-
+\protect\hypertarget{general-classification-setup}{}
 \(~\)
 
 \textbf{Set-up:} Training observations
@@ -314,15 +325,12 @@ class label from \(\mathcal{C}\) to a future unlabelled observation
 
 \textbf{Performance measure:} Most popular is the misclassification
 error rate (training and test version).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{What are the methods?}
-
+\protect\hypertarget{what-are-the-methods}{}
 \(~\)
 
 \textbf{Three methods for classification} are discussed here:
@@ -337,15 +345,12 @@ error rate (training and test version).
 \item
   Linear and quadratic discriminant analysis
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Linear regression for binary classification?}
-
+\protect\hypertarget{linear-regression-for-binary-classification}{}
 \vspace{1mm}
 
 Suppose we have a binary outcome, for example whether a credit card user
@@ -380,31 +385,25 @@ on \(X\) and classify as \texttt{yes} if \(\hat{Y}> 0.5\)?
 \vspace{2mm}
 
 \(\rightarrow\) We need to use \textbf{logistic regression}.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Linear vs.~logistic regression}
-
+\protect\hypertarget{linear-vs.-logistic-regression}{}
 \(~\)
 
 Let's anticipate a bit, to see why linear regression does not so well.
 We estimate the probability that someone defaults, given the credit card
 balance as predictor: \vspace{2mm}
 
-\includegraphics{../../ISLR/Figures/Chapter4/4.2.png}
-
+\includegraphics{../../ISLR/Figures/Chapter4/4.2.pdf}
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Linear regression for categorical classification?}
-
+\protect\hypertarget{linear-regression-for-categorical-classification}{}
 \(~\)
 
 What when there are more than two possible outcomes? For example, a
@@ -432,15 +431,12 @@ This suggests an ordering, but this is artificial.
   We need \emph{Multiclass logistic regression} and \emph{Discriminant
   Analysis}.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{However:}
-
+\protect\hypertarget{however}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -469,14 +465,11 @@ This suggests an ordering, but this is artificial.
 \item
   We leave linear regression for now.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Logistic regression}
 \protect\hypertarget{logistic-regression}{}
-
 \begin{itemize}
 \item
   In logistic regression we consider a classification problem with two
@@ -497,11 +490,9 @@ This suggests an ordering, but this is artificial.
   \textbf{Aim}: For covariates \((X_1,\ldots,X_p)\), we want to estimate
   \(p_i = \text{Pr}(Y_i=1 \mid X_1,\ldots,X_p)\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   We need a clever way to \emph{link} our covariates
@@ -525,13 +516,11 @@ This suggests an ordering, but this is artificial.
 \item
   \textbf{Q:} What is the rationale behind this?
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Logistic regression with one covariate}
-
+\protect\hypertarget{logistic-regression-with-one-covariate}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -551,15 +540,12 @@ This suggests an ordering, but this is artificial.
   \textbf{Important:} These values \(p_i\) will always lie in the
   interval between 0 and 1, with an S-shaped curve.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example: \texttt{Default} credit card data}
-
+\protect\hypertarget{example-default-credit-card-data}{}
 \(~\)
 
 \begin{itemize}
@@ -584,12 +570,12 @@ This suggests an ordering, but this is artificial.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ISLR)}
-\KeywordTok{data}\NormalTok{(Default)}
-\NormalTok{Default}\OperatorTok{$}\NormalTok{default <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(Default}\OperatorTok{$}\NormalTok{default) }\OperatorTok{-}\StringTok{ }\DecValTok{1}
-\NormalTok{glm_default =}\StringTok{ }\KeywordTok{glm}\NormalTok{(default }\OperatorTok{~}\StringTok{ }\NormalTok{balance, }\DataTypeTok{data =}\NormalTok{ Default, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{data}\NormalTok{(Default)}
+\NormalTok{Default}\SpecialCharTok{$}\NormalTok{default }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(Default}\SpecialCharTok{$}\NormalTok{default) }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{glm\_default }\OtherTok{=} \FunctionTok{glm}\NormalTok{(default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ balance, }\AttributeTok{data =}\NormalTok{ Default, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
 
-\KeywordTok{summary}\NormalTok{(glm_default)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(glm\_default)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -598,13 +584,10 @@ This suggests an ordering, but this is artificial.
 ## (Intercept) -10.651330614 0.3611573721 -29.49221 3.623124e-191
 ## balance       0.005498917 0.0002203702  24.95309 1.976602e-137
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Plotting the fitted line (in blue):
 
 \(~\)
@@ -615,13 +598,11 @@ Plotting the fitted line (in blue):
 
 Default data: here \(\hat{\beta}_0=\) -10.65 and \(\hat{\beta}_1=\)
 0.005.
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Estimating the regression coefficients with ML}
-
+\protect\hypertarget{estimating-the-regression-coefficients-with-ml}{}
 \(~\)
 
 \begin{itemize}
@@ -639,20 +620,19 @@ Default data: here \(\hat{\beta}_0=\) -10.65 and \(\hat{\beta}_1=\)
   Given \(n\) independent observation pairs
   \(\{{\boldsymbol x}_i, y_i\}\), the likelihood function of a logistic
   regression model can be written as:
-  \[L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) = \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},\]
-  where
-  \(\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)^T\)
-  enters into \(p_i\)
 \end{itemize}
 
+\[L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) \propto \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},\]
+
+where
+\(\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)^T\)
+enters into \(p_i\)
+
 \[p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\beta_0 + \beta_1 x_{i1}+\cdots+\beta_p x_{ip})} \ .\]
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   The maximum likelihood estimates are found by maximizing the
@@ -665,13 +645,11 @@ Default data: here \(\hat{\beta}_0=\) -10.65 and \(\hat{\beta}_1=\)
 
 \vspace{-4mm}
 
-\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) =\sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
+\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) \propto \sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
 &= \sum_{i=1}^n \Big (y_i (\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}) - \log(1 + e^{\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}} ) \Big ).\end{align*}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   To maximize the log-likelihood function we find the \(r+1\) partial
@@ -684,13 +662,11 @@ Default data: here \(\hat{\beta}_0=\) -10.65 and \(\hat{\beta}_1=\)
   The equation system is therefore solved numerically using the
   \emph{Newton-Raphson algorithm} (or Fisher Scoring).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Qualitative interpretation of the coefficients}
-
+\protect\hypertarget{qualitative-interpretation-of-the-coefficients}{}
 \(~\)
 
 Let's again look at the regression output:
@@ -701,7 +677,7 @@ Let's again look at the regression output:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(glm_default)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(glm\_default)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -741,15 +717,12 @@ Let's again look at the regression output:
 \item
   Check the \(p\)-value for \texttt{Balance}. Conclusion?
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Quantitative interpretation of the coefficients}
-
+\protect\hypertarget{quantitative-interpretation-of-the-coefficients}{}
 \vspace{2mm}
 
 Remember from equation (1) that
@@ -781,15 +754,12 @@ Odds represent \emph{\textcolor{red}{chances}} (e.g.~in betting).
   The odds for the best horse in a race is \(5:1\). What is the
   probability that this horse will win?
 \end{enumerate}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Why is the odds relevant?}
-
+\protect\hypertarget{why-is-the-odds-relevant}{}
 \vspace{2mm}
 
 Let's again rearrange the \emph{odds} in the logistic regression model:
@@ -803,15 +773,12 @@ Let's again rearrange the \emph{odds} in the logistic regression model:
 
 \(\rightarrow\) We have a \emph{multiplicative model} for the odds -
 which can help us to interpret our \(\beta\)s.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The odds ratio}
-
+\protect\hypertarget{the-odds-ratio}{}
 \(~\)
 
 To understand the effect of a regression coefficient \(\beta_j\), let's
@@ -842,13 +809,10 @@ By increasing covariate \(x_{ij}\) by one unit, we change the odds for
 
 Taking the log on equation (2), it follows that \(\beta_j\) can be
 interpreted as a \textbf{log odds-ratio}.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Let's now fit the logistic regression model for \texttt{default}, given
 \texttt{balance}, \texttt{income} and the binary variable
 \texttt{student} as predictors:
@@ -859,10 +823,10 @@ Let's now fit the logistic regression model for \texttt{default}, given
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{glm_default2 =}\StringTok{ }\KeywordTok{glm}\NormalTok{(default }\OperatorTok{~}\StringTok{ }\NormalTok{balance }\OperatorTok{+}\StringTok{ }\NormalTok{income }\OperatorTok{+}\StringTok{ }\NormalTok{student, }\DataTypeTok{data =}\NormalTok{ Default, }
-    \DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\NormalTok{glm\_default2 }\OtherTok{=} \FunctionTok{glm}\NormalTok{(default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ balance }\SpecialCharTok{+}\NormalTok{ income }\SpecialCharTok{+}\NormalTok{ student, }\AttributeTok{data =}\NormalTok{ Default,}
+    \AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
 
-\KeywordTok{summary}\NormalTok{(glm_default2)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(glm\_default2)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -894,12 +858,18 @@ Let's now fit the logistic regression model for \texttt{default}, given
   by 100 dollars?
 \end{itemize}
 
-\end{frame}
+\begin{itemize}
+\tightlist
+\item
+  How do student and non student relate to each other?
+\end{itemize}
 
-\begin{frame}
+\begin{block}{}
+\protect\hypertarget{section}{}
+\end{block}
 
 \begin{block}{Predictions}
-
+\protect\hypertarget{predictions}{}
 \vspace{2mm}
 
 Let's catch up. Why were we doing all this in the first place?
@@ -929,13 +899,10 @@ with linear predictor
 
 In the case of qualitative covariates, a dummy variable needs to be
 introduced. This can be done as for linear regression.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 So in the \texttt{Default} example, we can predict the probability that
 someone defaults.
 
@@ -949,8 +916,8 @@ Using R: \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{eta <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(glm_default2)}\OperatorTok{$}\NormalTok{coef[, }\DecValTok{1}\NormalTok{] }\OperatorTok{%*%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{40000}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\KeywordTok{exp}\NormalTok{(eta)}\OperatorTok{/}\NormalTok{(}\DecValTok{1} \OperatorTok{+}\StringTok{ }\KeywordTok{exp}\NormalTok{(eta))}
+\NormalTok{eta }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(glm\_default2)}\SpecialCharTok{$}\NormalTok{coef[, }\DecValTok{1}\NormalTok{] }\SpecialCharTok{\%*\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{40000}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{exp}\NormalTok{(eta)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+} \FunctionTok{exp}\NormalTok{(eta))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -962,19 +929,17 @@ Using R: \scriptsize
 \normalsize
 
 (Or via the \texttt{predict()} function in R.)
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example: South African heart disease data set}
-
+\protect\hypertarget{example-south-african-heart-disease-data-set}{}
 \(~\)
 
 \begin{itemize}
 \tightlist
 \item
-  \texttt{SAheart} data set from the \texttt{ElemStatLearn} package, a
+  \texttt{SAheart} data set from the \texttt{bestglm} package, a
   retrospective sample of males in a heart-disease high-risk region in
   South Africa.
 \end{itemize}
@@ -1004,13 +969,10 @@ Using R: \scriptsize
   disease) and 302 controls (individuals who have not suffered from a
   conorary heart disease).
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 The response value (\texttt{chd}) and covariates
 
 \begin{itemize}
@@ -1037,22 +999,20 @@ The response value (\texttt{chd}) and covariates
 
 The goal is to identify important risk factors. We start by loading and
 looking at the data:
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \footnotesize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ElemStatLearn)}
+\FunctionTok{library}\NormalTok{(bestglm)}
 
-\NormalTok{d.heart <-}\StringTok{ }\NormalTok{SAheart}
-\NormalTok{d.heart}\OperatorTok{$}\NormalTok{chd <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(d.heart}\OperatorTok{$}\NormalTok{chd)}
-\NormalTok{d.heart <-}\StringTok{ }\NormalTok{d.heart[, }\KeywordTok{c}\NormalTok{(}\StringTok{"sbp"}\NormalTok{, }\StringTok{"tobacco"}\NormalTok{, }\StringTok{"ldl"}\NormalTok{, }\StringTok{"famhist"}\NormalTok{, }\StringTok{"obesity"}\NormalTok{, }
+\NormalTok{d.heart }\OtherTok{\textless{}{-}}\NormalTok{ SAheart}
+\NormalTok{d.heart}\SpecialCharTok{$}\NormalTok{chd }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(d.heart}\SpecialCharTok{$}\NormalTok{chd)}
+\NormalTok{d.heart }\OtherTok{\textless{}{-}}\NormalTok{ d.heart[, }\FunctionTok{c}\NormalTok{(}\StringTok{"sbp"}\NormalTok{, }\StringTok{"tobacco"}\NormalTok{, }\StringTok{"ldl"}\NormalTok{, }\StringTok{"famhist"}\NormalTok{, }\StringTok{"obesity"}\NormalTok{,}
     \StringTok{"alcohol"}\NormalTok{, }\StringTok{"age"}\NormalTok{, }\StringTok{"chd"}\NormalTok{)]}
-\KeywordTok{head}\NormalTok{(d.heart)}
+\FunctionTok{head}\NormalTok{(d.heart)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1067,20 +1027,16 @@ looking at the data:
 \end{verbatim}
 
 \normalsize
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \texttt{pairs()} plot with \(Y=1\) (case) in green and \(Y=0\) (control)
 in blue:
 
 \begin{center}\includegraphics[width=0.8\linewidth]{4Classif_files/figure-beamer/ggpairs_heart-1} \end{center}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Fitting the model using all predictors in R:
 
 \(~\)
@@ -1089,8 +1045,8 @@ Fitting the model using all predictors in R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{glm_heart =}\StringTok{ }\KeywordTok{glm}\NormalTok{(chd }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ d.heart, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\KeywordTok{summary}\NormalTok{(glm_heart)}
+\NormalTok{glm\_heart }\OtherTok{=} \FunctionTok{glm}\NormalTok{(chd }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ d.heart, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(glm\_heart)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1098,10 +1054,6 @@ Fitting the model using all predictors in R:
 ## 
 ## Call:
 ## glm(formula = chd ~ ., family = "binomial", data = d.heart)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.7517  -0.8378  -0.4552   0.9292   2.4434  
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error z value Pr(>|z|)    
@@ -1124,11 +1076,9 @@ Fitting the model using all predictors in R:
 ## 
 ## Number of Fisher Scoring iterations: 4
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{itemize}
 \item
   For which predictors do we have evidence that they are associated with
@@ -1147,15 +1097,13 @@ predicted probabilities using
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{predict}\NormalTok{(glm_heart, }\DataTypeTok{newdata =}\NormalTok{ ..., }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{predict}\NormalTok{(glm\_heart, }\AttributeTok{newdata =}\NormalTok{ ..., }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
 \end{frame}
 
 \begin{frame}{The Bayes classifier}
 \protect\hypertarget{the-bayes-classifier}{}
-
 \begin{itemize}
 \tightlist
 \item
@@ -1183,13 +1131,11 @@ predicted probabilities using
   \(x_0\) will be classified to \(A\) if
   \(\text{Pr}(Y=A | X=x_0) > 0.5\) and to class \(B\) otherwise.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Properties of the Bayes classifier}
-
+\protect\hypertarget{properties-of-the-bayes-classifier}{}
 \(~\)
 
 \begin{itemize}
@@ -1234,14 +1180,11 @@ predicted probabilities using
   \textbf{Caveat:} We usually don't know the true conditional
   distribution \(\text{Pr}(Y | X)\) for real data.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Some terminology}
 \protect\hypertarget{some-terminology}{}
-
 \vspace{2mm}
 
 \textbf{Training set:} Independent observations
@@ -1259,18 +1202,16 @@ training set, used to evaluate the classification rule.
 
 \textbf{Loss function:} The misclassifications are given the loss 1 and
 the correct classifications loss 0 - this is called \emph{0/1-loss}.
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Training error}
-
+\protect\hypertarget{training-error}{}
 \(~\)
 
 \textbf{Training error rate}: The proportion of mistakes that are made
-if we apply our estimator \(\hat{f}\) to the training observations, i.e.
-\(\hat{y}_i=\hat{f}(x_i)\)
+if we apply our estimator \(\hat{f}\) to the training observations,
+i.e.~\(\hat{y}_i=\hat{f}(x_i)\)
 \[\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,\] with
 indicator function I, which is defined as:
 
@@ -1278,15 +1219,12 @@ indicator function I, which is defined as:
 0 \text{ else. } \end{cases}\]
 
 \vspace{2mm}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Test error}
-
+\protect\hypertarget{test-error}{}
 \(~\)
 
 \textbf{Test error rate}: The fraction of misclassifications when our
@@ -1299,14 +1237,11 @@ where the average is over all the test observations \((x_0,y_0)\).
 
 Remember: a \emph{\textcolor{red}{good classifier}} is a classifier that
 has a \emph{\textcolor{red}{low test error}} (why?).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{The K-nearest neighbour (KNN) classifier}
 \protect\hypertarget{the-k-nearest-neighbour-knn-classifier}{}
-
 \begin{itemize}
 \tightlist
 \item
@@ -1326,13 +1261,11 @@ has a \emph{\textcolor{red}{low test error}} (why?).
   and chooses the most likely cateogry (Bayes
   classifier).\footnote{Attention!! $K$ refers to the number of neighbours used for the classifier, and \emph{not} to the number of classes!! The latter is assumed known.}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{A synthetic example}
-
+\protect\hypertarget{a-synthetic-example}{}
 \(~\)
 
 \begin{itemize}
@@ -1357,13 +1290,10 @@ has a \emph{\textcolor{red}{low test error}} (why?).
   given only the data points (not the knowledge about the true
   parameters).
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \vspace{2mm}
 
 The \(K\)-nearest neighbour classifier (KNN) works in the following way:
@@ -1381,11 +1311,9 @@ The \(K\)-nearest neighbour classifier (KNN) works in the following way:
   \(x_0\) is classified to the most occurring class among its neighbors
   \[\text{Pr}(Y=j | X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)\ .\]
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 Illustration:
 
 \begin{center}\includegraphics[width=0.9\linewidth]{4Classif_files/figure-beamer/unnamed-chunk-8-1} \end{center}
@@ -1402,13 +1330,11 @@ Illustration:
 \item
   The lines show the decision boundaries.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{How to choose \(K\)?}
-
+\protect\hypertarget{how-to-choose-k}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1449,15 +1375,12 @@ Illustration:
 \item
   How to find the optimal \(K\)?
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Bias-variance trade-off in a classification setting}
-
+\protect\hypertarget{bias-variance-trade-off-in-a-classification-setting}{}
 \(~\)
 
 Finding the \emph{optimal value} of \(K\): Test the predictive power for
@@ -1468,15 +1391,12 @@ different \(K\), for example by cross-validation (Module 5).
 \begin{center}\includegraphics[width=0.6\linewidth]{4Classif_files/figure-beamer/knnerror1-1} \end{center}
 
 \vspace{2mm}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The curse of dimensionality}
-
+\protect\hypertarget{the-curse-of-dimensionality}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1505,30 +1425,26 @@ different \(K\), for example by cross-validation (Module 5).
   dimensions and the method is no longer local. This is referred to as
   the \emph{\textcolor{red}{curse of dimensionality}}.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Bayes decision rule - two paradigms}
 \protect\hypertarget{bayes-decision-rule---two-paradigms}{}
-
 \vspace{1mm}
 
 Two approaches to estimate \(\text{Pr}(Y=k \mid X=x)\): \vspace{1mm}
 
 \begin{block}{Diagnostic paradigm}
-
+\protect\hypertarget{diagnostic-paradigm}{}
 This is what we did so far: The focus was \emph{directly} estimating the
 posterior distribution for the classes \[\text{Pr}(Y=k \mid X=x)\ .\]
 \textbf{Examples:} Logistic regression. KNN classification.
 
 \vspace{2mm}
-
 \end{block}
 
 \begin{block}{Sampling paradigm}
-
+\protect\hypertarget{sampling-paradigm}{}
 \vspace{1mm}
 
 \begin{itemize}
@@ -1547,13 +1463,10 @@ posterior distribution for the classes \[\text{Pr}(Y=k \mid X=x)\ .\]
   Then classify to the class with the maximal product \(\pi_k f_k(x)\).
   In this paradigm, we need to model the pdf for each class.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Given a continuous \(X\) and categorical \(Y\), and
 
 \begin{itemize}
@@ -1570,7 +1483,7 @@ How do we get \(\text{Pr}(Y=k | X=x_0)\)? That is, how can we ``flip''
 the conditioning around? \vspace{4mm}
 
 \begin{block}{\textbf{Bayes theorem}}
-
+\protect\hypertarget{bayes-theorem}{}
 \vspace{-3mm}
 
 \begin{align}
@@ -1578,14 +1491,11 @@ p_k(X) = \text{Pr}(Y=k \mid X= x) &=
 \frac{\text{Pr}(X=x \cap Y=k)}{f(x)} \nonumber\\
 &= \frac{ f_k(x) \pi_k}{\sum_{l=1}^K  f_l(x) \pi_l}  \ . \label{eq:Bayes}
 \end{align}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Discriminant Analysis}
 \protect\hypertarget{discriminant-analysis}{}
-
 \vspace{2mm}
 
 \begin{itemize}
@@ -1600,7 +1510,7 @@ p_k(X) = \text{Pr}(Y=k \mid X= x) &=
 \vspace{2mm}
 
 \begin{block}{Example}
-
+\protect\hypertarget{example}{}
 \vspace{2mm}
 
 Suppose we have observations coming from two classes:
@@ -1613,34 +1523,27 @@ X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) \]
 \vspace{2mm}
 
 Assume probabilities to be equal, \(\pi_1 = \pi_2 = 0.5\).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 We plot \(\pi_k f_k(x)\) for the two classes:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{4Classif_files/figure-beamer/gauss1-1} \end{center}
 
 The decision boundary is where the point of intersection of the two
 lines is, because here \(\pi_1 f_1(x)=\pi_2 f_2(x)\).
-
 \end{frame}
 
 \begin{frame}
-
 For different priors \(\pi_1 = 0.3\) and \(\pi_2 = 0.7\), the decision
 boundary shifts to the left:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{4Classif_files/figure-beamer/gauss2-1} \end{center}
-
 \end{frame}
 
 \begin{frame}{Linear discriminant analysis (LDA) when \(p=1\)}
 \protect\hypertarget{linear-discriminant-analysis-lda-when-p1}{}
-
 \begin{itemize}
 \item
   Class conditional distributions \(f_k(X)\) are assumed normal
@@ -1654,22 +1557,18 @@ boundary shifts to the left:
   In addition we have prior class probabilites \(\pi_k=\text{Pr}(Y=k)\),
   so that \(\sum_{k=1}^K \pi_k=1\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 We can insert the expression for each class distribution into Bayes
 formula to obtain the posterior probability
 \(p_k(x) = \text{Pr}(Y = k | X = x)\)
 \[p_k(x) = \frac{f_k({\boldsymbol x}) \pi_k}{f({\boldsymbol x})}=\frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}\big(\frac{x-\mu_k}{\sigma}\big)^2}}{\sum_{l=1}^K \pi_l \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}\big(\frac{x-\mu_l}{\sigma}\big)^2}} \ .\]
 
 Our rule is to classify to the class for which \(p_k(x)\) is largest.
-
 \end{frame}
 
 \begin{frame}
-
 Taking logs, and discarding terms that do not depend on \(k\), we see
 that this is equivalent to assigning \(x\) to the class with the largest
 \emph{discriminant score} \(\delta_k(x)\):
@@ -1688,13 +1587,11 @@ that this is equivalent to assigning \(x\) to the class with the largest
 
 (Show this by setting \(\delta_1(x)=\delta_2(x)\) and resolving for
 \(x\).)
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Back to our example}
-
+\protect\hypertarget{back-to-our-example}{}
 \[X_{\text{green}}\sim \mathcal{N}(-2, 1.5^2) \text{ and }
 X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) \]
 
@@ -1708,13 +1605,10 @@ X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) \]
 \item
   The Bayes classifier has the lowest test error rate.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \vspace{2mm}
 
 In the above example we knew the true distributions \(p_k(X)\) and the
@@ -1722,13 +1616,11 @@ priors \(\pi_k\). But typically we don't know these parameters, we only
 have the training data.
 
 Idea: we simply estimate the parameters and plug them into the rule.
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Parameter estimators}
-
+\protect\hypertarget{parameter-estimators}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1747,15 +1639,12 @@ Idea: we simply estimate the parameters and plug them into the rule.
   \(\hat{\sigma}_k\): estimated standard deviation of all observations
   from class \(k\).
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{How to test the goodness of the estimator?}
-
+\protect\hypertarget{how-to-test-the-goodness-of-the-estimator}{}
 \(~\)
 
 \begin{enumerate}
@@ -1776,32 +1665,29 @@ Idea: we simply estimate the parameters and plug them into the rule.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n =}\StringTok{ }\DecValTok{1000}
-\NormalTok{pi1 =}\StringTok{ }\NormalTok{pi2 =}\StringTok{ }\FloatTok{0.5}
-\NormalTok{mu1 =}\StringTok{ }\DecValTok{-2}
-\NormalTok{mu2 =}\StringTok{ }\DecValTok{2}
-\NormalTok{sigma =}\StringTok{ }\FloatTok{1.5}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{n1train =}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
-\NormalTok{n2train =}\StringTok{ }\NormalTok{n }\OperatorTok{-}\StringTok{ }\NormalTok{n1train}
-\NormalTok{n1test =}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
-\NormalTok{n2test =}\StringTok{ }\NormalTok{n }\OperatorTok{-}\StringTok{ }\NormalTok{n1test}
-\NormalTok{train1 =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n1train, mu1, sigma)}
-\NormalTok{train2 =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n2train, mu2, sigma)}
-\NormalTok{test1 =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n1test, mu1, sigma)}
-\NormalTok{test2 =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n2test, mu2, sigma)}
-\NormalTok{var2}\FloatTok{.1}\NormalTok{ =}\StringTok{ }\KeywordTok{var}\NormalTok{(train1)}
-\NormalTok{var2}\FloatTok{.2}\NormalTok{ =}\StringTok{ }\KeywordTok{var}\NormalTok{(train2)}
-\NormalTok{var.pool =}\StringTok{ }\NormalTok{((n1train }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{var2}\FloatTok{.1} \OperatorTok{+}\StringTok{ }\NormalTok{(n2train }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{var2}\FloatTok{.2}\NormalTok{)}\OperatorTok{/}\NormalTok{(n }\OperatorTok{-}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{n }\OtherTok{=} \DecValTok{1000}
+\NormalTok{pi1 }\OtherTok{=}\NormalTok{ pi2 }\OtherTok{=} \FloatTok{0.5}
+\NormalTok{mu1 }\OtherTok{=} \SpecialCharTok{{-}}\DecValTok{2}
+\NormalTok{mu2 }\OtherTok{=} \DecValTok{2}
+\NormalTok{sigma }\OtherTok{=} \FloatTok{1.5}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{n1train }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
+\NormalTok{n2train }\OtherTok{=}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ n1train}
+\NormalTok{n1test }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
+\NormalTok{n2test }\OtherTok{=}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ n1test}
+\NormalTok{train1 }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(n1train, mu1, sigma)}
+\NormalTok{train2 }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(n2train, mu2, sigma)}
+\NormalTok{test1 }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(n1test, mu1, sigma)}
+\NormalTok{test2 }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(n2test, mu2, sigma)}
+\NormalTok{var2}\FloatTok{.1} \OtherTok{=} \FunctionTok{var}\NormalTok{(train1)}
+\NormalTok{var2}\FloatTok{.2} \OtherTok{=} \FunctionTok{var}\NormalTok{(train2)}
+\NormalTok{var.pool }\OtherTok{=}\NormalTok{ ((n1train }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ var2}\FloatTok{.1} \SpecialCharTok{+}\NormalTok{ (n2train }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ var2}\FloatTok{.2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Then set
 
 \[\hat\delta_1(x) = \hat\delta_2(x)\]
@@ -1819,13 +1705,13 @@ training and test error rates:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rule =}\StringTok{ }\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{mean}\NormalTok{(train1) }\OperatorTok{+}\StringTok{ }\KeywordTok{mean}\NormalTok{(train2)) }\OperatorTok{+}\StringTok{ }\NormalTok{var.pool }\OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{log}\NormalTok{(n2train}\OperatorTok{/}\NormalTok{n) }\OperatorTok{-}\StringTok{ }
-\StringTok{    }\KeywordTok{log}\NormalTok{(n1train}\OperatorTok{/}\NormalTok{n))}\OperatorTok{/}\NormalTok{(}\KeywordTok{mean}\NormalTok{(train1) }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(train2))}
+\NormalTok{rule }\OtherTok{=} \FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(train1) }\SpecialCharTok{+} \FunctionTok{mean}\NormalTok{(train2)) }\SpecialCharTok{+}\NormalTok{ var.pool }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{log}\NormalTok{(n2train}\SpecialCharTok{/}\NormalTok{n) }\SpecialCharTok{{-}}
+    \FunctionTok{log}\NormalTok{(n1train}\SpecialCharTok{/}\NormalTok{n))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{mean}\NormalTok{(train1) }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(train2))}
 
-\NormalTok{trainingError <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(train1 }\OperatorTok{>}\StringTok{ }\NormalTok{rule) }\OperatorTok{+}\StringTok{ }\KeywordTok{sum}\NormalTok{(train2 }\OperatorTok{<}\StringTok{ }\NormalTok{rule))}\OperatorTok{/}\NormalTok{n}
-\NormalTok{testError <-}\StringTok{ }\NormalTok{(}\KeywordTok{sum}\NormalTok{(test1 }\OperatorTok{>}\StringTok{ }\NormalTok{rule) }\OperatorTok{+}\StringTok{ }\KeywordTok{sum}\NormalTok{(test2 }\OperatorTok{<}\StringTok{ }\NormalTok{rule))}\OperatorTok{/}\NormalTok{n}
+\NormalTok{trainingError }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(train1 }\SpecialCharTok{\textgreater{}}\NormalTok{ rule) }\SpecialCharTok{+} \FunctionTok{sum}\NormalTok{(train2 }\SpecialCharTok{\textless{}}\NormalTok{ rule))}\SpecialCharTok{/}\NormalTok{n}
+\NormalTok{testError }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(test1 }\SpecialCharTok{\textgreater{}}\NormalTok{ rule) }\SpecialCharTok{+} \FunctionTok{sum}\NormalTok{(test2 }\SpecialCharTok{\textless{}}\NormalTok{ rule))}\SpecialCharTok{/}\NormalTok{n}
 
-\KeywordTok{c}\NormalTok{(trainingError, testError)}
+\FunctionTok{c}\NormalTok{(trainingError, testError)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1839,13 +1725,11 @@ This is a rather good performance, compared to the minimal Bayes error
 rate. But keep in mind that the LDA classifier relies on the Normal
 assumption, and that \(\sigma_k=\sigma\) for all classes is
 assumed\footnote{Both of which we knew were fulfilled here.}.
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{The confusion matrix}
-
+\protect\hypertarget{the-confusion-matrix}{}
 \(~\)
 
 \begin{itemize}
@@ -1875,8 +1759,6 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
 
 \centering
 
-\includegraphics[width=0.45\textwidth,height=\textheight]{true_predicted.png}
-
 \vspace{2mm}
 \flushleft
 
@@ -1886,14 +1768,11 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
   The confusion matrix can be obtained in \texttt{R} by using the
   \texttt{table} function, or directly using the \texttt{caret} package.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Multivariate LDA (\(p>1\))}
 \protect\hypertarget{multivariate-lda-p1}{}
-
 \vspace{2mm}
 
 \begin{itemize}
@@ -1907,12 +1786,10 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
 
 \centering
 
-\includegraphics[width=0.7\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.5.png}
-
+\includegraphics[width=0.7\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.5.pdf}
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   Plugging this density into equation (\ref{eq:Bayes}) gives the
@@ -1922,13 +1799,11 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
   Note: \(\delta_k(x) = c_{k0} + c_{k1}x_1 + \ldots + c_{kp}x_p\) is a
   linear function in \((x_1,\ldots ,x_p)\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Back to our synthetic example}
-
+\protect\hypertarget{back-to-our-synthetic-example}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1945,13 +1820,10 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
 \vspace{4mm}
 
 \begin{center}\includegraphics[width=0.55\linewidth]{4Classif_files/figure-beamer/synthAB2-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \item
   Since \emph{the truth is known here}, we can calculate the Bayes
@@ -1968,13 +1840,11 @@ assumed\footnote{Both of which we knew were fulfilled here.}.
 
 Inserting numerical values gives \(-x_1-x_2+4=0\), thus a boundary with
 functional form \[x_2=4-x_1 \ .\]
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Confusion matrix for the synthetic example}
-
+\protect\hypertarget{confusion-matrix-for-the-synthetic-example}{}
 \vspace{2mm}
 
 We can use the Bayes boundary to find the error rate:
@@ -1985,8 +1855,8 @@ We can use the Bayes boundary to find the error rate:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.pred <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(df}\OperatorTok{$}\NormalTok{X2 }\OperatorTok{<}\StringTok{ }\DecValTok{4} \OperatorTok{-}\StringTok{ }\NormalTok{df}\OperatorTok{$}\NormalTok{X1, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
-\KeywordTok{table}\NormalTok{(}\DataTypeTok{real =}\NormalTok{ df}\OperatorTok{$}\NormalTok{class, r.pred)}
+\NormalTok{r.pred }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{X2 }\SpecialCharTok{\textless{}} \DecValTok{4} \SpecialCharTok{{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{X1, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
+\FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, r.pred)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2003,14 +1873,11 @@ We can use the Bayes boundary to find the error rate:
 
 Of course, the Bayes boundary is usually not known, and we must estimate
 it from the data.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
-\textbf{Estimators for p\textgreater{}1:}
+\textbf{Estimators for p\textgreater1:}
 
 \begin{itemize}
 \item
@@ -2027,22 +1894,20 @@ it from the data.
   Pooled version:
   \[\hat{\boldsymbol{\Sigma}}= \sum_{k=1}^K \frac{n_k - 1}{n - K} \cdot \hat{\boldsymbol{\Sigma}}_k.\]
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Analysing the synthetic example with \texttt{lda()}}
-
+\protect\hypertarget{analysing-the-synthetic-example-with-lda}{}
 \(~\)
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.lda <-}\StringTok{ }\KeywordTok{lda}\NormalTok{(class }\OperatorTok{~}\StringTok{ }\NormalTok{X1 }\OperatorTok{+}\StringTok{ }\NormalTok{X2, df)}
-\NormalTok{r.pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(r.lda, df)}\OperatorTok{$}\NormalTok{class}
-\KeywordTok{table}\NormalTok{(}\DataTypeTok{real =}\NormalTok{ df}\OperatorTok{$}\NormalTok{class, }\DataTypeTok{predicted =}\NormalTok{ r.pred)}
+\NormalTok{r.lda }\OtherTok{\textless{}{-}} \FunctionTok{lda}\NormalTok{(class }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X1 }\SpecialCharTok{+}\NormalTok{ X2, df)}
+\NormalTok{r.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(r.lda, df)}\SpecialCharTok{$}\NormalTok{class}
+\FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, }\AttributeTok{predicted =}\NormalTok{ r.pred)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2058,15 +1923,12 @@ it from the data.
 \normalsize
 
 Note: The training error is smaller than for the Bayes boundary. Why?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Comparison of the Bayes with the estimated boundary}
-
+\protect\hypertarget{comparison-of-the-bayes-with-the-estimated-boundary}{}
 \vspace{2mm}
 
 Solid line: Bayes boundary
@@ -2076,15 +1938,12 @@ Dashed line: Estimated boundary
 \(~\)
 
 \begin{center}\includegraphics[width=0.65\linewidth]{4Classif_files/figure-beamer/synthAB3-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Posterior probabilites}
-
+\protect\hypertarget{posterior-probabilites}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -2115,14 +1974,11 @@ Dashed line: Estimated boundary
 (\boldsymbol{x}-\hat{\boldsymbol\mu}_l))}\\
 &=
 \frac{e^{\hat{\delta}_k(\boldsymbol{x})}}{\sum_{l=1}^K e^{\hat{\delta}_l(\boldsymbol{x})}}.\end{align*}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Quadratic Discriminant Analysis (QDA)}
 \protect\hypertarget{quadratic-discriminant-analysis-qda}{}
-
 \begin{itemize}
 \item
   In LDA we assumed that \(\boldsymbol{\Sigma}_k = \boldsymbol{\Sigma}\)
@@ -2145,13 +2001,11 @@ Dashed line: Estimated boundary
   These decision boundaries are \emph{quadratic} functions of
   \({\boldsymbol x}\).
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{LDA vs QDA}
-
+\protect\hypertarget{lda-vs-qda}{}
 \vspace{2mm}
 
 QDA is more flexible than LDA, as it allows for group-specific
@@ -2169,21 +2023,16 @@ covariance matrices.
 \item
   Should we not always prefer QDA to LDA?
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{A:}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{LDA vs QDA -- Illustration}
-
+\protect\hypertarget{lda-vs-qda-illustration}{}
 \vspace{1mm}
 
 Bayes (purple dashed), LDA (black dotted) and QDA (green solid) decision
@@ -2193,16 +2042,13 @@ boundaries for the cases where
 
 \centering
 
-\includegraphics[width=1\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.9.png}
-
+\includegraphics[width=1\textwidth,height=\textheight]{../../ISLR/Figures/Chapter4/4.9.pdf}
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example: Which type of iris species?}
-
+\protect\hypertarget{example-which-type-of-iris-species}{}
 \(~\)
 
 The \texttt{iris} flower data set was introduced by the British
@@ -2226,15 +2072,12 @@ statistician and biologist Ronald Fisher in 1936.
 \tiny
 
 \url{http://blog.kaggle.com/2015/04/22/scikit-learn-video-3-machine-learning-first-steps-with-the-iris-dataset/}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example: Classification of iris plants}
-
+\protect\hypertarget{example-classification-of-iris-plants}{}
 \vspace{2mm}
 
 We will use \texttt{sepal\ width} and \texttt{sepal\ length} to build a
@@ -2246,8 +2089,8 @@ classificator. We have 50 observations from each class.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{attach}\NormalTok{(iris)}
-\KeywordTok{head}\NormalTok{(iris)}
+\FunctionTok{attach}\NormalTok{(iris)}
+\FunctionTok{head}\NormalTok{(iris)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2260,63 +2103,52 @@ classificator. We have 50 observations from each class.
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{center}\includegraphics[width=0.8\linewidth]{4Classif_files/figure-beamer/iris1-1} \end{center}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Iris: LDA}
-
+\protect\hypertarget{iris-lda}{}
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_lda =}\StringTok{ }\KeywordTok{lda}\NormalTok{(Species }\OperatorTok{~}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{+}\StringTok{ }\NormalTok{Sepal.Width, }\DataTypeTok{data =}\NormalTok{ iris, }\DataTypeTok{prior =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }
-    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{iris\_lda }\OtherTok{=} \FunctionTok{lda}\NormalTok{(Species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length }\SpecialCharTok{+}\NormalTok{ Sepal.Width, }\AttributeTok{data =}\NormalTok{ iris, }\AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \(~\)
 
 \begin{center}\includegraphics[width=0.7\linewidth]{4Classif_files/figure-beamer/iris2-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Iris: QDA}
-
+\protect\hypertarget{iris-qda}{}
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_qda =}\StringTok{ }\KeywordTok{qda}\NormalTok{(Species }\OperatorTok{~}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{+}\StringTok{ }\NormalTok{Sepal.Width, }\DataTypeTok{data =}\NormalTok{ iris, }\DataTypeTok{prior =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }
-    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{iris\_qda }\OtherTok{=} \FunctionTok{qda}\NormalTok{(Species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length }\SpecialCharTok{+}\NormalTok{ Sepal.Width, }\AttributeTok{data =}\NormalTok{ iris, }\AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \(~\)
 
 \begin{center}\includegraphics[width=0.7\linewidth]{4Classif_files/figure-beamer/iris3-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Iris: compare LDA and QDA}
-
+\protect\hypertarget{iris-compare-lda-and-qda}{}
 \vspace{2mm}
 
 To compare the \emph{predictive performance} of our two classifiers we
@@ -2329,11 +2161,11 @@ samples of equal size:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{train =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{150}\NormalTok{, }\DecValTok{75}\NormalTok{)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{train }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{150}\NormalTok{, }\DecValTok{75}\NormalTok{)}
 
-\NormalTok{iris_train =}\StringTok{ }\NormalTok{iris[train, ]}
-\NormalTok{iris_test =}\StringTok{ }\NormalTok{iris[}\OperatorTok{-}\NormalTok{train, ]}
+\NormalTok{iris\_train }\OtherTok{=}\NormalTok{ iris[train, ]}
+\NormalTok{iris\_test }\OtherTok{=}\NormalTok{ iris[}\SpecialCharTok{{-}}\NormalTok{train, ]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2349,27 +2181,24 @@ Run LDA and QDA \emph{on the same training set}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_lda2 =}\StringTok{ }\KeywordTok{lda}\NormalTok{(Species }\OperatorTok{~}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{+}\StringTok{ }\NormalTok{Sepal.Width, }\DataTypeTok{data =}\NormalTok{ iris_train, }
-    \DataTypeTok{prior =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{iris\_lda2 }\OtherTok{=} \FunctionTok{lda}\NormalTok{(Species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length }\SpecialCharTok{+}\NormalTok{ Sepal.Width, }\AttributeTok{data =}\NormalTok{ iris\_train,}
+    \AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
 
-\NormalTok{iris_qda2 =}\StringTok{ }\KeywordTok{qda}\NormalTok{(Species }\OperatorTok{~}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{+}\StringTok{ }\NormalTok{Sepal.Width, }\DataTypeTok{data =}\NormalTok{ iris_train, }
-    \DataTypeTok{prior =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+\NormalTok{iris\_qda2 }\OtherTok{=} \FunctionTok{qda}\NormalTok{(Species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Sepal.Length }\SpecialCharTok{+}\NormalTok{ Sepal.Width, }\AttributeTok{data =}\NormalTok{ iris\_train,}
+    \AttributeTok{prior =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 LDA training error: \(\frac{14}{75} =0.19\)
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{table}\NormalTok{(}\KeywordTok{predict}\NormalTok{(iris_lda2, }\DataTypeTok{newdata =}\NormalTok{ iris_train)}\OperatorTok{$}\NormalTok{class, iris_train}\OperatorTok{$}\NormalTok{Species)}
+\FunctionTok{table}\NormalTok{(}\FunctionTok{predict}\NormalTok{(iris\_lda2, }\AttributeTok{newdata =}\NormalTok{ iris\_train)}\SpecialCharTok{$}\NormalTok{class, iris\_train}\SpecialCharTok{$}\NormalTok{Species)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2391,8 +2220,8 @@ LDA test error: \(\frac{19}{75} =0.26.\)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_lda2_predict =}\StringTok{ }\KeywordTok{predict}\NormalTok{(iris_lda2, }\DataTypeTok{newdata =}\NormalTok{ iris_test)}
-\KeywordTok{table}\NormalTok{(iris_lda2_predict}\OperatorTok{$}\NormalTok{class, iris}\OperatorTok{$}\NormalTok{Species[}\OperatorTok{-}\NormalTok{train])}
+\NormalTok{iris\_lda2\_predict }\OtherTok{=} \FunctionTok{predict}\NormalTok{(iris\_lda2, }\AttributeTok{newdata =}\NormalTok{ iris\_test)}
+\FunctionTok{table}\NormalTok{(iris\_lda2\_predict}\SpecialCharTok{$}\NormalTok{class, iris}\SpecialCharTok{$}\NormalTok{Species[}\SpecialCharTok{{-}}\NormalTok{train])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2403,18 +2232,16 @@ LDA test error: \(\frac{19}{75} =0.26.\)
 ##   versicolor      0         22        11
 ##   virginica       0          8        12
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 QDA training error: \(\frac{13}{75} =0.17\).
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{table}\NormalTok{(}\KeywordTok{predict}\NormalTok{(iris_qda2, }\DataTypeTok{newdata =}\NormalTok{ iris_train)}\OperatorTok{$}\NormalTok{class, iris_train}\OperatorTok{$}\NormalTok{Species)}
+\FunctionTok{table}\NormalTok{(}\FunctionTok{predict}\NormalTok{(iris\_qda2, }\AttributeTok{newdata =}\NormalTok{ iris\_train)}\SpecialCharTok{$}\NormalTok{class, iris\_train}\SpecialCharTok{$}\NormalTok{Species)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2436,8 +2263,8 @@ QDA test error: \(\frac{24}{75}=0.32\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_qda2_predict =}\StringTok{ }\KeywordTok{predict}\NormalTok{(iris_qda2, }\DataTypeTok{newdata =}\NormalTok{ iris_test)}
-\KeywordTok{table}\NormalTok{(iris_qda2_predict}\OperatorTok{$}\NormalTok{class, iris}\OperatorTok{$}\NormalTok{Species[}\OperatorTok{-}\NormalTok{train])}
+\NormalTok{iris\_qda2\_predict }\OtherTok{=} \FunctionTok{predict}\NormalTok{(iris\_qda2, }\AttributeTok{newdata =}\NormalTok{ iris\_test)}
+\FunctionTok{table}\NormalTok{(iris\_qda2\_predict}\SpecialCharTok{$}\NormalTok{class, iris}\SpecialCharTok{$}\NormalTok{Species[}\SpecialCharTok{{-}}\NormalTok{train])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2448,11 +2275,9 @@ QDA test error: \(\frac{24}{75}=0.32\).
 ##   versicolor      0         18        12
 ##   virginica       0         12        11
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Result}: The LDA classifier has given the smallest test
 error\footnote{Note that the training error is of much less interest; it could be low due to \emph{overfitting} only.}
 for classifying iris plants based on sepal width and sepal length for
@@ -2482,13 +2307,11 @@ But:
   covariates) give a better classification rule?\\
   A: Probably. Try if you want.
 \end{enumerate}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Different forms of discriminant analysis}
-
+\protect\hypertarget{different-forms-of-discriminant-analysis}{}
 \(~\)
 
 \begin{itemize}
@@ -2525,15 +2348,12 @@ But:
   Other forms by proposing specific density models for \(f_k(x)\),
   including nonparametric approaches.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Naive Bayes}
-
+\protect\hypertarget{naive-bayes}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -2572,15 +2392,12 @@ But:
   not the product of the marginal pdf. This might be because we are not
   focussing on estimation of class pdfs, but class boundaries.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Summary of Classification Methods}
-
+\protect\hypertarget{summary-of-classification-methods}{}
 \(~\)
 
 \begin{itemize}
@@ -2612,16 +2429,13 @@ Remember:
 \end{itemize}
 
 \vspace{2mm}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Which classification method is the best?}
 \protect\hypertarget{which-classification-method-is-the-best}{}
-
 \begin{block}{Advantages of discriminant analysis}
-
+\protect\hypertarget{advantages-of-discriminant-analysis}{}
 \(~\)
 
 \begin{itemize}
@@ -2649,15 +2463,12 @@ Remember:
   Moreover, linear discriminant analysis is popular when we have more
   than two response classes.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Linearity}
-
+\protect\hypertarget{linearity}{}
 \(~\)
 
 Assume a binary classification problem with one covariate.
@@ -2674,15 +2485,12 @@ Assume a binary classification problem with one covariate.
   thus the same linear form. The difference is in how the parameters are
   estimated.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{LDA vs logistic regression}
-
+\protect\hypertarget{lda-vs-logistic-regression}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -2712,11 +2520,10 @@ Assume a binary classification problem with one covariate.
 \end{itemize}
 
 \vspace{2mm}
-
 \end{block}
 
 \begin{block}{and KNN?}
-
+\protect\hypertarget{and-knn}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -2724,15 +2531,12 @@ Assume a binary classification problem with one covariate.
 \item
   KNN is used when the class boundaries are non-linear.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{So: Which classification method is the best?}
-
+\protect\hypertarget{so-which-classification-method-is-the-best}{}
 \(~\)
 
 The answer is: \textbf{it depends!}
@@ -2784,14 +2588,11 @@ The answer is: \textbf{it depends!}
 \vspace{2mm}
 
 Please read Section 4.5 of our coursebook (James et al. 2013).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Two-class problems: sensitivity, specificity}
 \protect\hypertarget{two-class-problems-sensitivity-specificity}{}
-
 \begin{itemize}
 \item
   Problems with only two classes (binary classifiers) have a special
@@ -2809,11 +2610,9 @@ Please read Section 4.5 of our coursebook (James et al. 2013).
   negative observations:
   \[\frac{\# \text{True Negative}}{\# \text{Condition Negative}}=\frac{\text{TN}}{\text{N}} \ .\]
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \tightlist
 \item
@@ -2845,13 +2644,11 @@ Please read Section 4.5 of our coursebook (James et al. 2013).
 & & $N^\star$ & $P^\star$ & $Tot$ 
 \end{tabular}
 \end{center}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example Continued: South African heart disease}
-
+\protect\hypertarget{example-continued-south-african-heart-disease}{}
 \vspace{2mm}
 
 We evaluate our multiple logistic model for the \texttt{SAheart} data
@@ -2864,10 +2661,10 @@ dataset of equal size.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{20}\NormalTok{)}
-\NormalTok{train_ID =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(d.heart), }\KeywordTok{nrow}\NormalTok{(d.heart)}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
-\NormalTok{train_SA =}\StringTok{ }\NormalTok{d.heart[train_ID, ]}
-\NormalTok{test_SA =}\StringTok{ }\NormalTok{d.heart[}\OperatorTok{-}\NormalTok{train_ID, ]}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{20}\NormalTok{)}
+\NormalTok{train\_ID }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(d.heart), }\FunctionTok{nrow}\NormalTok{(d.heart)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{train\_SA }\OtherTok{=}\NormalTok{ d.heart[train\_ID, ]}
+\NormalTok{test\_SA }\OtherTok{=}\NormalTok{ d.heart[}\SpecialCharTok{{-}}\NormalTok{train\_ID, ]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2884,8 +2681,8 @@ only}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{glm_SA =}\StringTok{ }\KeywordTok{glm}\NormalTok{(chd }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train_SA, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-\KeywordTok{summary}\NormalTok{(glm_SA)}\OperatorTok{$}\NormalTok{coef}
+\NormalTok{glm\_SA }\OtherTok{=} \FunctionTok{glm}\NormalTok{(chd }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ train\_SA, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(glm\_SA)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2900,13 +2697,10 @@ only}:
 ## alcohol        -0.0007383597 0.008039590 -0.09184047 0.926824793
 ## age             0.0446073935 0.014781896  3.01770439 0.002546972
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{itemize}
 \tightlist
 \item
@@ -2923,11 +2717,9 @@ only}:
 \item
   We are interested in the \textbf{predictions for the test set}.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{itemize}
 \tightlist
 \item
@@ -2942,7 +2734,7 @@ only}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{probs_SA =}\StringTok{ }\KeywordTok{predict}\NormalTok{(glm_SA, }\DataTypeTok{newdata =}\NormalTok{ test_SA, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\NormalTok{probs\_SA }\OtherTok{=} \FunctionTok{predict}\NormalTok{(glm\_SA, }\AttributeTok{newdata =}\NormalTok{ test\_SA, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2958,21 +2750,19 @@ only}:
   0.5 are to be classified as 1, while the remaining probabilities are
   to be classified as 0.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pred_SA =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(probs_SA }\OperatorTok{>}\StringTok{ }\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{pred\_SA }\OtherTok{=} \FunctionTok{ifelse}\NormalTok{(probs\_SA }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 
-\NormalTok{predictions_SA =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(probs_SA, pred_SA, test_SA[, }\StringTok{"chd"}\NormalTok{])}
-\KeywordTok{colnames}\NormalTok{(predictions_SA) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Estim. prob. of Y=1"}\NormalTok{, }\StringTok{"Predicted class"}\NormalTok{, }
+\NormalTok{predictions\_SA }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(probs\_SA, pred\_SA, test\_SA[, }\StringTok{"chd"}\NormalTok{])}
+\FunctionTok{colnames}\NormalTok{(predictions\_SA) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"Estim. prob. of Y=1"}\NormalTok{, }\StringTok{"Predicted class"}\NormalTok{,}
     \StringTok{"True class"}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(predictions_SA)}
+\FunctionTok{head}\NormalTok{(predictions\_SA)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2985,11 +2775,9 @@ only}:
 ## 12           0.7112496               1          1
 ## 15           0.6702761               1          0
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 The confusion matrix is used to count the number of misclassifications
 in the test set:
 
@@ -2999,7 +2787,7 @@ in the test set:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{table}\NormalTok{(}\DataTypeTok{predicted =}\NormalTok{ pred_SA, }\DataTypeTok{true =}\NormalTok{ d.heart[}\OperatorTok{-}\NormalTok{train_ID, }\StringTok{"chd"}\NormalTok{])}
+\FunctionTok{table}\NormalTok{(}\AttributeTok{predicted =}\NormalTok{ pred\_SA, }\AttributeTok{true =}\NormalTok{ d.heart[}\SpecialCharTok{{-}}\NormalTok{train\_ID, }\StringTok{"chd"}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3024,13 +2812,11 @@ in the test set:
   Sensitivity: \(\frac{41}{41+45}=0.477\), specificity =
   \(\frac{118}{118+27}=0.814.\)
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{ROC curves and AUC}
-
+\protect\hypertarget{roc-curves-and-auc}{}
 \(~\)
 
 \begin{itemize}
@@ -3068,15 +2854,12 @@ in the test set:
 \item
   AUC is useful for comparing the performance of different classifiers.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Example Continued: South African heart disease}
-
+\protect\hypertarget{example-continued-south-african-heart-disease-1}{}
 In order to see how our model performs for different threshold values,
 we can plot a ROC curve:
 
@@ -3085,13 +2868,10 @@ we can plot a ROC curve:
 \scriptsize
 
 \begin{center}\includegraphics[width=0.7\linewidth]{4Classif_files/figure-beamer/roc-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 To check where in the plot we find the default cut-off on 0.5, we need
 to calculate sensitivity and specificity for this cut-off:
 
@@ -3099,9 +2879,9 @@ to calculate sensitivity and specificity for this cut-off:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{res =}\StringTok{ }\KeywordTok{table}\NormalTok{(pred_SA, d.heart[}\OperatorTok{-}\NormalTok{train_ID, }\StringTok{"chd"}\NormalTok{])}
-\NormalTok{sens =}\StringTok{ }\NormalTok{res[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{]}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(res[, }\DecValTok{2}\NormalTok{])}
-\NormalTok{spec =}\StringTok{ }\NormalTok{res[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(res[, }\DecValTok{1}\NormalTok{])}
+\NormalTok{res }\OtherTok{=} \FunctionTok{table}\NormalTok{(pred\_SA, d.heart[}\SpecialCharTok{{-}}\NormalTok{train\_ID, }\StringTok{"chd"}\NormalTok{])}
+\NormalTok{sens }\OtherTok{=}\NormalTok{ res[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(res[, }\DecValTok{2}\NormalTok{])}
+\NormalTok{spec }\OtherTok{=}\NormalTok{ res[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(res[, }\DecValTok{1}\NormalTok{])}
 \NormalTok{sens}
 \end{Highlighting}
 \end{Shaded}
@@ -3127,30 +2907,28 @@ Observe that the value 0.477 (on \(y\)-axis) and 0.186 (1-specificity on
 
 The ROC-curve is made up of all possible cut-offs and their associated
 sensitivity and specificity.
-
 \end{frame}
 
 \begin{frame}{Further reading}
 \protect\hypertarget{further-reading}{}
-
 \begin{itemize}
 \tightlist
 \item
   \href{https://www.youtube.com/playlist?list=PL5-da3qGB5IC4vaDba5ClatUmFppXLAhE}{Videos
   on YouTube by the authors of ISL, Chapter 4,}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}{References}
 \protect\hypertarget{references}{}
-
 \hypertarget{refs}{}
-\leavevmode\hypertarget{ref-james.etal}{}%
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-james.etal}{}}%
 James, G., D. Witten, T. Hastie, and R. Tibshirani. 2013. \emph{An
-Introduction to Statistical Learning with Applications in R}. New York:
+Introduction to Statistical Learning with Applications in r}. New York:
 Springer.
 
+\end{CSLReferences}
 \end{frame}
 
 \end{document}

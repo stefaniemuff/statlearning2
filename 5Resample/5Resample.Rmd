@@ -17,7 +17,7 @@ output:
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
+bibliography: ../refs.bib
 header-includes: \usepackage{multirow}
 
 ---
@@ -147,7 +147,7 @@ $~$
 Illustration: Linear regression with $K=1$ (left) and $K=9$ (right).
 
 \centering
-![](../../ISLR/Figures/Chapter3/317.png){width=55%}
+![](../../ISLR/Figures/Chapter3/3.17.pdf){width=55%}
 
 \tiny
 (Figure 3.17 from @james.etal).
@@ -284,7 +284,7 @@ This can be done by:
 
 \vspace{4mm}
 
-![ISLR Figure 5.1](../../ISLR/Figures/Chapter5/51.png){width=70%,centering}
+![ISLR Figure 5.1](../../ISLR/Figures/Chapter5/5.1.pdf){width=70%,centering}
 
 
 
@@ -522,11 +522,11 @@ The MSE is then estimated in each of the $k$ iterations ($\text{MSE}_1,\ldots,\t
 \centering
 LOOCV: 
 
-![ISLR Figure 5.3](../../ISLR/Figures/Chapter5/53.png){width=70%}
+![ISLR Figure 5.3](../../ISLR/Figures/Chapter5/5.3.pdf){width=70%}
 
 $k$-fold: 
 
-![ISLR Figure 5.5](../../ISLR/Figures/Chapter5/55.png){width=70%}
+![ISLR Figure 5.5](../../ISLR/Figures/Chapter5/5.5.pdf){width=70%}
 
 
 <!-- See class notes for drawing. -->
@@ -742,14 +742,14 @@ $$\text{CV}_{n}=\frac{1}{n} \sum_{i=1}^n {\text{Err}_i}$$
 Let us look at a data set from Chapter 2: 
 
 \centering
-![](213.png){width=80%}
+![](213.pdf){width=80%}
 
 ---
 
 We can fit logistic regression and look at the decision boundary, depending on the degree of of the regression model:
 
 \centering
-![](../../ISLR/Figures/Chapter5/57.png){width=50%}
+![](../../ISLR/Figures/Chapter5/57.pdf){width=50%}
 
 \flushleft
 
@@ -764,7 +764,7 @@ Which degree of the logistic regression polynomial is best?
 $\rightarrow$ Cross-validation!
 
 \centering
-![](58.png){width=60%}
+![](58.pdf){width=60%}
 
 \flushleft
 
@@ -845,7 +845,7 @@ Article by [Christophe Ambroise and Geoffrey J. McLachlan, PNAS 2002](http://www
 
 
 
-![Training vs test error](pnas.png){width=105%, align=center}
+![Training vs test error](pnas.pdf){width=105%, align=center}
 
 
 

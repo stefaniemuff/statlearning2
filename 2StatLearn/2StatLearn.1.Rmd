@@ -12,7 +12,7 @@ output:
     colortheme: "default"
     font: "serif"
     includes:
-      in_header: header.tex
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
@@ -399,7 +399,7 @@ $~$
 
 Sales of a product, given advertising budgets in different media.
 
-![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.1.pdf)
+![ISLR Figure 2.2](../../ISLR/Figures/Chapter2/2.1.pdf)
 
 
 
@@ -414,7 +414,7 @@ Sales of a product, given advertising budgets in different media.
 Income for given levels of education.
 
 
-![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.2.pdf)
+![ISLR Figure 2.2](../../ISLR/Figures/Chapter2/2.2.pdf)
 
 
 ---
@@ -692,10 +692,10 @@ $~$
 Example: Prediction of icome from "Years of Education" and "Seniority"\vspace{2mm}
 
 \centering
-![ISLR Figure 2.4](../../ISLR_book/Figure/Chapter2/2.4.pdf){width=45%}
+![ISLR Figure 2.4](../../ISLR/Figures/Chapter2/2.4.pdf){width=45%}
 
 
-![ISLR Figure 2.6](../../ISLR_book/Figure/Chapter2/2.6.pdf){width=45%}
+![ISLR Figure 2.6](../../ISLR/Figures/Chapter2/2.6.pdf){width=45%}
 
 A linear model vs a perfect fit.
 
@@ -1179,7 +1179,7 @@ $\rightarrow$  **Bias-Variance  trade-off**
  
 ---
 
-![ISLR Figure 2.12](../../ISLR_book/Figure/Chapter2/2.12.pdf)
+![ISLR Figure 2.12](../../ISLR/Figures/Chapter2/2.12.pdf)
 
 
 

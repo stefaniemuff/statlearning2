@@ -1,33 +1,37 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
-\documentclass[10pt,ignorenonframetext,]{beamer}
+\documentclass[
+  10pt,
+  ignorenonframetext,
+]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbolsempty
-% Prevent slide breaks in the middle of a paragraph:
+% Prevent slide breaks in the middle of a paragraph
 \widowpenalties 1 10000
 \raggedbottom
 \setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
 }
 \AtBeginPart{
   \frame{\partpage}
@@ -41,45 +45,40 @@
 \AtBeginSubsection{
   \frame{\subsectionpage}
 }
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
-  \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
+\usepackage{lmodern}
 \usetheme[]{Singapore}
 \usefonttheme{serif}
-% use upquote if available, for straight quotes in verbatim environments
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 \usepackage{xcolor}
-\usepackage{hyperref}
-\hypersetup{
-            pdftitle={Module 3: Linear Regression},
-            pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
-            colorlinks=true,
-            linkcolor=Maroon,
-            filecolor=Maroon,
-            citecolor=Blue,
-            urlcolor=blue,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
 \newif\ifbibliography
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -92,13 +91,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -106,7 +105,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -115,13 +114,13 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -130,68 +129,65 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
-\usepackage{bm}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number]
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 3: Linear Regression},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 3: Linear Regression}
-\providecommand{\subtitle}[1]{}
-\subtitle{TMA4268 Statistical Learning V2022}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{January 24 and 27, 2022}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
+\date{January 26 and 26, 2024}
 
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}{Acknowledgements}
-\protect\hypertarget{acknowledgements}{}
-
-\begin{itemize}
-\item
-  Thanks to Mette Langaas and her TAs who permit me to use and modify
-  their original material.
-\item
-  Some of the figures and slides in this presentation are taken (or are
-  inspired) from James et al. (2013).
-\end{itemize}
-
+\begin{frame}
 \end{frame}
 
 \begin{frame}{Introduction}
 \protect\hypertarget{introduction}{}
-
 \begin{block}{Learning material for this module}
-
+\protect\hypertarget{learning-material-for-this-module}{}
 \(~\)
 
 \begin{itemize}
 \tightlist
 \item
-  James et al. (2013): An Introduction to Statistical Learning, Chapter
-  3 (skip 3.5).
+  @ISL: An Introduction to Statistical Learning, Chapter 3 (skip 3.5).
 \end{itemize}
 
 \(~\)
 
 We need more statistical theory than is presented in the textbook, which
 you find in this module page.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{What will you learn?}
-
+\protect\hypertarget{what-will-you-learn}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -253,14 +249,11 @@ you find in this module page.
 \item
   Assessing model fit / residual analysis
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{Linear regression}
 \protect\hypertarget{linear-regression}{}
-
 \begin{itemize}
 \item
   Very simple approach for \emph{supervised learning}.
@@ -274,13 +267,11 @@ you find in this module page.
   \emph{understand} because many learning methods can be seen as
   generalization of linear regression.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Motivating example: Prognostic factors for body fat}
-
+\protect\hypertarget{motivating-example-prognostic-factors-for-body-fat}{}
 \tiny(From Theo Gasser \& Burkhardt Seifert \emph{Grundbegriffe der
 Biostatistik})
 
@@ -302,23 +293,18 @@ predictors were measured. Some
 scatterplots\footnote{The data to reproduce these plots and analyses can be found here: https://github.com/stefaniemuff/statlearning/tree/master/3LinReg/data}:
 
 \begin{center}\includegraphics[width=1\linewidth]{3LinReg_files/figure-beamer/motivating-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 For a good predictive model we need to dive into \emph{multiple linear
 regression}. However, wer start with the simple case of \emph{only one
 predictor variable}:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{3LinReg_files/figure-beamer/motivating2-1} \end{center}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \textbf{Interesting questions}
 
 \begin{enumerate}
@@ -334,12 +320,10 @@ predictor variable}:
 \item
   How well can we predict the bodyfat of a person?
 \end{enumerate}
-
 \end{frame}
 
 \begin{frame}{Simple Linear Regression}
 \protect\hypertarget{simple-linear-regression}{}
-
 \begin{itemize}
 \item
   One quantitative response \(Y\) is modelled
@@ -355,11 +339,9 @@ predictor variable}:
 If the relation between \(Y\) and \(x\) is perfectly linear, all
 instances of \((x,Y)\), given by \((x_i,y_i)\), \(i= 1,\ldots, n\), lie
 on a straight line and fulfill \[y_i = \beta_0 + \beta_1 x_i\ .\]
-
 \end{frame}
 
 \begin{frame}
-
 But which is the ``true'' or ``best'' line, if the relationship is not
 exact?
 
@@ -369,11 +351,9 @@ exact?
 and write it down (we will look at the ``best'' answer later).
 
 \(\rightarrow\) Mentimeter
-
 \end{frame}
 
 \begin{frame}
-
 It is obvious that
 
 \begin{itemize}
@@ -389,13 +369,11 @@ It is obvious that
 
 \(\Rightarrow\) We need a \textbf{model} that describes the relationship
 between BMI and bodyfat.
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The simple linear regression model}
-
+\protect\hypertarget{the-simple-linear-regression-model}{}
 \vspace{3mm}
 
 In the linear regression model the dependent variable \(Y\) is related
@@ -425,15 +403,12 @@ Note:
   \emph{\textcolor{red}{outcome}} / \emph{\textcolor{red}{response}}
   variable.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Modeling assumptions}
-
+\protect\hypertarget{modeling-assumptions}{}
 \vspace{4mm}
 
 The central assumption in linear regression is that for any pairs
@@ -457,15 +432,12 @@ implies \vspace{2mm}
   \(\varepsilon_1, \varepsilon_2, \ldots, \varepsilon_n\) are
   independent of each other.
 \end{enumerate}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Visualization of the regression assumptions}
-
+\protect\hypertarget{visualization-of-the-regression-assumptions}{}
 The assumptions about the linear regression model lie in the error term
 \[\varepsilon \sim N(0,\sigma^2) \ . \]
 
@@ -474,15 +446,12 @@ The assumptions about the linear regression model lie in the error term
 \includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
 
 Note: The true regression line goes through \(\mathsf{E}(Y)\).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Parameter estimation (``model fitting'')}
-
+\protect\hypertarget{parameter-estimation-model-fitting}{}
 \vspace{2mm}
 
 In a regression analysis, the task is to estimate the \textbf{regression
@@ -513,15 +482,12 @@ variance} \(\sigma^2\) for a given set of \((x,y)\) data.
 \vspace{4mm}
 
 But what are we actually going to minimize?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Least squares}
-
+\protect\hypertarget{least-squares}{}
 \vspace{2mm}
 
 Remember the \textbf{Least Squared Method}. Graphically, we are
@@ -530,13 +496,10 @@ minimizing the sum of the squared distances over all points:
 \vspace{4mm}
 
 \begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/squares-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{itemize}
 \tightlist
 \item
@@ -570,13 +533,11 @@ is being minimized.
 (The error terms are random variables and can not be estimated - they
 can be predicted. It is only for parameters that we speak about
 estimates.)
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Least squares estimators:}
-
+\protect\hypertarget{least-squares-estimators}{}
 \vspace{2mm}
 
 Using \(n\) observed independent data points
@@ -600,34 +561,28 @@ where \(\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i\) and
 
 This is something you should have proven in your previous statistics
 classes; if you forgot how to get there, please check again, e.g.~in
-chapter 11 of the book by Walepole et al. (2012), see
+chapter 11 of the book by @walepole.etal, see
 \href{https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf}{here}.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Do-it-yourself ``by hand''}
-
+\protect\hypertarget{do-it-yourself-by-hand}{}
 \vspace{6mm}
 
-Go to the Shiny gallery and try to ``estimate'' the correct parameters.
-\vspace{2mm}
+Go to the Shiny gallery and try to ``estimate'\,' the correct
+parameters. \vspace{2mm}
 
 You can do this here: \vspace{2mm}
 
 \url{https://gallery.shinyapps.io/simple_regression/}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example continued: Body fat}
-
+\protect\hypertarget{example-continued-body-fat}{}
 \vspace{2mm}
 
 Assume a linear relationship between the \% bodyfat (\texttt{bodyfat})
@@ -640,7 +595,7 @@ follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.bodyfat =}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
+\NormalTok{r.bodyfat }\OtherTok{=} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -656,7 +611,7 @@ The estimates (and more information) can be obtained as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,23 +620,18 @@ The estimates (and more information) can be obtained as follows:
 ## (Intercept) -26.984368  2.7689004 -9.745518 3.921511e-19
 ## bmi           1.818778  0.1083411 16.787522 2.063854e-42
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 We see that the model fits the data quite well. It captures the essence.
 It looks that a linear relationship between \texttt{bodyfat} and
 \texttt{bmi} is a good approximation.
 
 \begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-3-1} \end{center}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Questions:}
 
 \begin{itemize}
@@ -697,14 +647,12 @@ It looks that a linear relationship between \texttt{bodyfat} and
   \textbf{What could the regression line look like if another set of 243
   males were used for estimation?}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Uncertainty in the estimates \(\hat\beta_0\) and
 \(\hat\beta_1\)}
-
+\protect\hypertarget{uncertainty-in-the-estimates-hatbeta_0-and-hatbeta_1}{}
 \vspace{2mm}
 
 Note: \(\hat\beta_0\) and \(\hat\beta_1\) are themselves
@@ -721,7 +669,7 @@ estimate: \vspace{2mm}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -737,16 +685,13 @@ estimate: \vspace{2mm}
 
 \(\rightarrow\) The logical next question is: what is the distribution
 of the estimates?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Distribution of the estimators for \(\hat\beta_0\) and
 \(\hat\beta_1\)}
-
+\protect\hypertarget{distribution-of-the-estimators-for-hatbeta_0-and-hatbeta_1}{}
 \vspace{2mm}
 
 To obtain an intuition, we generate data points according to model
@@ -756,13 +701,13 @@ In each round, we estimate the parameters and store them: \tiny
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{niter <-}\StringTok{ }\DecValTok{1000}
-\NormalTok{pars <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =}\NormalTok{ niter, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\ControlFlowTok{for}\NormalTok{ (ii }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{niter) \{}
-\NormalTok{    x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{    y <-}\StringTok{ }\DecValTok{4} \OperatorTok{-}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DataTypeTok{sd =} \FloatTok{0.5}\NormalTok{)}
-\NormalTok{    pars[ii, ] <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{niter }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{pars }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ niter, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (ii }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{niter) \{}
+\NormalTok{    x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{    y }\OtherTok{\textless{}{-}} \DecValTok{4} \SpecialCharTok{{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ x }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{    pars[ii, ] }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x)}\SpecialCharTok{$}\NormalTok{coef}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -771,15 +716,12 @@ In each round, we estimate the parameters and store them: \tiny
 for \(\hat\beta_0\) and \(\hat\beta_1\):
 
 \begin{center}\includegraphics[width=0.4\linewidth]{3LinReg_files/figure-beamer/sim_fig-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Accuracy of the parameter estimates}
-
+\protect\hypertarget{accuracy-of-the-parameter-estimates}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -799,13 +741,10 @@ for \(\hat\beta_0\) and \(\hat\beta_1\):
 \textbf{Note}: We will \emph{derive a general version} of these formulas
 for multiple linear regression, because without matrix notation this is
 very cumbersome.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Under the assumption that \(\varepsilon \sim N(0,\sigma^2)\), and
 assuming \(\hat\beta_0\) and \(\hat\beta_1\) are estimated as in
 formulas (1) and (2), we have in addition that
@@ -818,13 +757,11 @@ formulas (1) and (2), we have in addition that
 
 \textbf{Again}: We will derive this in the multiple linear regression
 version in more generality (see recommended exercise 3).
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Design issue with data collection}
-
+\protect\hypertarget{design-issue-with-data-collection}{}
 \vspace{2mm}
 
 Recall that
@@ -845,15 +782,12 @@ the \emph{design} of the \(x_i\)'s!
 \end{itemize}
 
 \vspace{4cm}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Residual standard error (RSE)}
-
+\protect\hypertarget{residual-standard-error-rse}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -874,13 +808,10 @@ the \emph{design} of the \(x_i\)'s!
 \[\hat{\text{SE}}(\hat{\beta}_1)^2 = \frac{{\hat\sigma}^2}{\sum_{i=1}^n (x_i-\bar{x})^2} \ ,\]
 but we usually just write \({\text{SE}}(\hat{\beta}_1)^2\) (without the
 extra hat).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 The estimated standard errors can be seen using the \texttt{summary()}
 function:
 
@@ -890,7 +821,7 @@ function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -899,12 +830,10 @@ function:
 ## (Intercept) -26.984368  2.7689004 -9.745518 3.921511e-19
 ## bmi           1.818778  0.1083411 16.787522 2.063854e-42
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}{Testing and Confidence Intervals}
 \protect\hypertarget{testing-and-confidence-intervals}{}
-
 After the regression parameters and their uncertainties have been
 estimated, there are typically two fundamental questions:
 
@@ -931,11 +860,9 @@ estimated, there are typically two fundamental questions:
 
 \hspace{4mm} \(\rightarrow\) This leads us to determine
 \textbf{confidence intervals}.
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Let's first go back to the output from the bodyfat example:
 
 \vspace{2mm}
@@ -944,7 +871,7 @@ Let's first go back to the output from the bodyfat example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -964,13 +891,11 @@ there is a \texttt{t\ value} and a probability
 understand.
 
 How do these things help us to answer the two questions above?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Testing the effect of a covariate}
-
+\protect\hypertarget{testing-the-effect-of-a-covariate}{}
 \(~\)
 
 Remember: in a statistical test you first need to specify the
@@ -980,7 +905,7 @@ hypothesis is
 \[H_0: \quad \beta_1 =   0  \ .\]
 
 In words: \(H_0\) = ``There is no relationship between \(X\) and
-\(Y\).''
+\(Y\).'\,'
 \footnote{You could also test against another null hypothesis, like $\beta_1=c$.}
 
 \vspace{6mm}
@@ -989,13 +914,10 @@ Here, the \emph{\textcolor{red}{alternative hypothesis}} is given by
 \(~\)
 
 \[H_A: \quad \beta_1 \neq  0  \]
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Remember: To carry out a statistical test, we need a \emph{test
 statistic}. This is some type of \textbf{summary statistic} that follows
 a known distribution under \(H_0\). For our purpose, we use the
@@ -1013,13 +935,11 @@ T=\frac{\hat\beta_1 }{SE(\hat\beta_1)}\ .
 \begin{equation*}
 T=\frac{\hat\beta_1 - c}{SE(\hat\beta_1)} \ .
 \end{equation*}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Distribution of parameter estimators}
-
+\protect\hypertarget{distribution-of-parameter-estimators}{}
 \vspace{2mm}
 
 We will \emph{derive a general version} for multiple linear regression!
@@ -1028,16 +948,13 @@ We will \emph{derive a general version} for multiple linear regression!
 
 Brief recap: Under \(H_0\), \(T\) has a \(t\)-distribution with \(n-2\)
 degrees of freedom (\(n=\) number of data points; compare to Chapter 8.6
-in Walepole et al. (2012)).
-
+in @walepole.etal).
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Hypothesis tests for bodyfat example}
-
+\protect\hypertarget{hypothesis-tests-for-bodyfat-example}{}
 \(~\)
 
 So let's again go back to the bodyfat regression output:
@@ -1048,7 +965,7 @@ So let's again go back to the bodyfat regression output:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1075,15 +992,12 @@ So let's again go back to the bodyfat regression output:
   The \(p\)-value for \texttt{bmi} is very small (\(p<0.0001\)).
   \textbf{What does this mean?}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Cautionary notes regarding \(p\)-values:}
-
+\protect\hypertarget{cautionary-notes-regarding-p-values}{}
 \(~\)
 
 \begin{itemize}
@@ -1103,7 +1017,7 @@ So let's again go back to the bodyfat regression output:
 
 We will discuss this a bit in the final module 12. The topic is
 connected to good/bad research practice, problems with
-``reproducibility'' and scientific progress in general. See e.g.~here:
+``reproducibility'\,' and scientific progress in general. See e.g.~here:
 
 \begin{itemize}
 \tightlist
@@ -1111,21 +1025,18 @@ connected to good/bad research practice, problems with
   The \(p\)-value statement by ASA:
   \url{https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108\#.Xh16iuExnhM}
 \item
-  Ideas to redefine what ``statistical significane'' means:
+  Ideas to redefine what ``statistical significane'\,' means:
   \url{https://www.nature.com/articles/s41562-017-0189-z}
 \item
   Recently written with some co-authors:
   \url{https://www.cell.com/trends/ecology-evolution/fulltext/S0169-5347(21)00284-6}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Confidence intervals}
-
+\protect\hypertarget{confidence-intervals}{}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1163,13 +1074,10 @@ connected to good/bad research practice, problems with
     \emph{compatible with the data} }.
   \end{itemize}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 We can directly ask R to give us the CIs:
 
 \vspace{4mm}
@@ -1178,7 +1086,7 @@ We can directly ask R to give us the CIs:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{confint}\NormalTok{(r.bodyfat, }\DataTypeTok{level =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.95}\NormalTok{))}
+\FunctionTok{confint}\NormalTok{(r.bodyfat, }\AttributeTok{level =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.95}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1197,12 +1105,10 @@ We can directly ask R to give us the CIs:
 For an increase in the bmi by one index point, roughly \(\ldots\)
 percentage points more bodyfat are expected, and all true values for
 \(\beta_1\) between \(\ldots\) and \(\ldots\) are \(\ldots\).
-
 \end{frame}
 
 \begin{frame}{Model accuracy}
 \protect\hypertarget{model-accuracy}{}
-
 Measured by
 
 \begin{enumerate}
@@ -1227,13 +1133,11 @@ Measured by
 
 where \[\text{TSS} = \sum_{i=1}^n (y_i - \bar{y})^2\] is the \emph{total
 sum of squares}, a measure for the total variability in \(Y\).
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{\(R^2\) in simple linear regression}
-
+\protect\hypertarget{r2-in-simple-linear-regression}{}
 \vspace{3mm}
 
 \textbf{Note}: In simple linear regression, \(R^2\) is the squared
@@ -1250,7 +1154,7 @@ correlation between the two variables:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{r.squared}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{r.squared}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1260,21 +1164,18 @@ correlation between the two variables:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cor}\NormalTok{(d.bodyfat}\OperatorTok{$}\NormalTok{bodyfat, d.bodyfat}\OperatorTok{$}\NormalTok{bmi)}\OperatorTok{^}\DecValTok{2}
+\FunctionTok{cor}\NormalTok{(d.bodyfat}\SpecialCharTok{$}\NormalTok{bodyfat, d.bodyfat}\SpecialCharTok{$}\NormalTok{bmi)}\SpecialCharTok{\^{}}\DecValTok{2}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.5390391
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]{Multiple Linear Regression}
 \protect\hypertarget{multiple-linear-regression}{}
-
 Remember that the bodyfat dataset contained much more information than
 only bmi and bodyfat:
 
@@ -1295,13 +1196,11 @@ only bmi and bodyfat:
 \item
   \texttt{hip}: circumference of hip.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model}
-
+\protect\hypertarget{model}{}
 \(~\)
 
 We assume \begin{equation}
@@ -1325,15 +1224,12 @@ Assume we have \(n\) sampling units \((x_{1i},\ldots,x_{pi}, y_i)\),
 
 to write the model in matrix form:
 \[{\bf Y}={\bf {X}} \boldsymbol{\beta}+{\boldsymbol{\varepsilon}} \]
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Notation}
-
+\protect\hypertarget{notation}{}
 \(~\)
 
 \begin{itemize}
@@ -1383,15 +1279,12 @@ to write the model in matrix form:
 Remark: other books, including the book in TMA4267 and TMA4315 define
 \(p\) to include the intercept. This may lead to some confusion about
 \(p\) or \(p+1\) in formulas\ldots{}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Classical linear model}
-
+\protect\hypertarget{classical-linear-model}{}
 \(~\)
 
 \[{\bf Y=X \boldsymbol\beta}+{\boldsymbol \varepsilon}\]
@@ -1423,15 +1316,12 @@ additionally
   holds. Here \(N_n\) denotes the \(n\)-dimensional multivarate normal
   distribution.
 \end{enumerate}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{The bodyfat example for two predictors}
-
+\protect\hypertarget{the-bodyfat-example-for-two-predictors}{}
 \(~\)
 
 We are looking at the regression model
@@ -1453,7 +1343,7 @@ The regression
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.bodyfat =}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{age, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
+\NormalTok{r.bodyfat }\OtherTok{=} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1467,7 +1357,7 @@ The \emph{\textcolor{red}{design matrix}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{head}\NormalTok{(}\KeywordTok{model.matrix}\NormalTok{(r.bodyfat))}
+\FunctionTok{head}\NormalTok{(}\FunctionTok{model.matrix}\NormalTok{(r.bodyfat))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1482,15 +1372,12 @@ The \emph{\textcolor{red}{design matrix}}:
 \end{verbatim}
 
 \normalsize
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Distribution of the response vector}
-
+\protect\hypertarget{distribution-of-the-response-vector}{}
 \(~\)
 
 Assume that
@@ -1509,22 +1396,17 @@ Assume that
 \item
   Thus what is the distribution of \(\bf Y\)?
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{A}:
 \[ {\bf Y} \sim N_{n}({\bf X} {\boldsymbol\beta},\sigma^2 {\bf I})\]
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Parameter estimation for \(\boldsymbol{\beta}\)}
-
+\protect\hypertarget{parameter-estimation-for-boldsymbolbeta}{}
 \(~\)
 
 In multiple linear regression, the parameter vector \(\boldsymbol\beta\)
@@ -1543,33 +1425,28 @@ The estimator is found by solving the system of \((p+1)\) equations
 \[\frac{\partial \text{RSS}}{\partial \boldsymbol \beta}={\bf 0} \ .\]
 
 \(\rightarrow\) Derivation on the board.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Summing up:
 
 \textbf{The least squares and maximum likelihood estimator for ${\boldsymbol \beta}$:}
 is given like
 \[ \hat{\boldsymbol\beta}=({\bf X}^T{\bf X})^{-1} {\bf X}^T {\bf Y} \ .\]
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example continued}
-
+\protect\hypertarget{example-continued}{}
 \vspace{5mm}
 
 \tiny
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.bodyfat3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{neck }\OperatorTok{+}\StringTok{ }\NormalTok{hip }\OperatorTok{+}\StringTok{ }\NormalTok{abdomen, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
-\KeywordTok{summary}\NormalTok{(r.bodyfat3)}
+\NormalTok{r.bodyfat3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ neck }\SpecialCharTok{+}\NormalTok{ hip }\SpecialCharTok{+}\NormalTok{ abdomen, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
+\FunctionTok{summary}\NormalTok{(r.bodyfat3)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1599,13 +1476,10 @@ is given like
 \end{verbatim}
 
 \normalsize
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Reproduce the values under \texttt{Estimate} by calculating without the
 use of \texttt{lm}.
 
@@ -1615,10 +1489,10 @@ use of \texttt{lm}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{X =}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(r.bodyfat3)}
-\NormalTok{Y =}\StringTok{ }\NormalTok{d.bodyfat}\OperatorTok{$}\NormalTok{bodyfat}
-\NormalTok{betahat =}\StringTok{ }\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{X) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{Y}
-\KeywordTok{print}\NormalTok{(betahat)}
+\NormalTok{X }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(r.bodyfat3)}
+\NormalTok{Y }\OtherTok{=}\NormalTok{ d.bodyfat}\SpecialCharTok{$}\NormalTok{bodyfat}
+\NormalTok{betahat }\OtherTok{=} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ Y}
+\FunctionTok{print}\NormalTok{(betahat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1631,13 +1505,11 @@ use of \texttt{lm}.
 ## hip         -0.31764315
 ## abdomen      0.83909391
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Distribution of the regression parameter estimator}
-
+\protect\hypertarget{distribution-of-the-regression-parameter-estimator}{}
 \vspace{2mm}
 
 Given
@@ -1667,26 +1539,21 @@ Given
 \item
   \({\bf Y} \sim N_{n}({\bf X} {\boldsymbol\beta},\sigma^2 {\bf I})\).
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Answers:}
 
 See Problem 2 of recommended exercise 3 (and the respective solutions)
 to derive that
 
 \[\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\bf X}^T{\bf X})^{-1}}_{\text{covariance matrix}}) \ . \]
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{The covariance matrix of \(\boldsymbol{\hat\beta}\) in R}
-
+\protect\hypertarget{the-covariance-matrix-of-boldsymbolhatbeta-in-r}{}
 \(~\)
 
 The covariance matrix for the \(\boldsymbol{\hat\beta}\) can be obtained
@@ -1698,7 +1565,7 @@ as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{vcov}\NormalTok{(r.bodyfat3)}
+\FunctionTok{vcov}\NormalTok{(r.bodyfat3)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1718,13 +1585,10 @@ as follows:
 ## hip         -0.0045707222
 ## abdomen      0.0070861066
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 How does this compare to simple linear regression? Not so easy to see a
 connection!
 
@@ -1737,12 +1601,10 @@ connection!
 \textbf{Exercise:} Verify the connection using
 \(\boldsymbol\beta=(\beta_0,\beta_1)^\top\) and
 \({\bf X}= \left[\begin{matrix} 1 & x_{11} \\ 1 & x_{21} \\ 1 & \vdots \\ 1 & x_{n1} \\ \end{matrix}\right]\).
-
 \end{frame}
 
 \begin{frame}{Four important questions}
 \protect\hypertarget{four-important-questions}{}
-
 \begin{enumerate}
 \item
   Is at least one of the predictors \(X_1, \ldots, X_p\) useful in
@@ -1755,13 +1617,11 @@ connection!
 \item
   Given a set of predictor variables, how accurate is our prediction?
 \end{enumerate}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{1. Relationship between predictors and response?}
-
+\protect\hypertarget{relationship-between-predictors-and-response}{}
 \(~\)
 
 Question is whether we could as well omit all predictor variables at the
@@ -1773,13 +1633,10 @@ $$H_0: \beta_1=\beta_2=\ldots=\beta_p=0 $$
 vs. 
 $$H_1: \text{at least one } \beta_j \text{ is non-zero.}$$
 \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \vspace{4mm}
 
 To answer this, we need the \(F\)-statistic
@@ -1789,7 +1646,7 @@ To answer this, we need the \(F\)-statistic
 where total sum of squares \(\text{TSS}=\sum_i(y_i-\bar{y})^2\), and
 residual sum of squares \(\text{RSS}=\sum_i(y_i-\hat{y}_i)^2\). Under
 the Normal regression assumptions, \(F\) follows an \(F_{p,(n-p-1)}\)
-distribution (see Walepole et al. (2012), Chapter 8.7).
+distribution (see @walepole.etal, Chapter 8.7).
 
 \begin{itemize}
 \item
@@ -1800,11 +1657,9 @@ distribution (see Walepole et al. (2012), Chapter 8.7).
   \(F\) is greater than 1. For an observed value \(f_0\), the
   \(p\)-value is given as \[p =P(F_{p,n-p-1}> f_0) \ .\]
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Checking the \(F\)-value in the \texttt{R} output:
 
 \(~\)
@@ -1813,7 +1668,7 @@ Checking the \(F\)-value in the \texttt{R} output:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1844,13 +1699,11 @@ Checking the \(F\)-value in the \texttt{R} output:
 \normalsize
 
 Conclusion?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{More complex hypotheses}
-
+\protect\hypertarget{more-complex-hypotheses}{}
 \(~\)
 
 Sometimes we don't want to test if all \(\beta\)'s are zero at the same
@@ -1874,15 +1727,12 @@ where
 \item
   Small model: RSS\(_0\) with \(p+1-q\) regression parameters
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example in R}
-
+\protect\hypertarget{example-in-r}{}
 \vspace{3mm}
 
 \begin{itemize}
@@ -1901,9 +1751,9 @@ where
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.bodyfat.small =}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{age, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
-\NormalTok{r.bodyfat.large =}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{weight }\OperatorTok{+}\StringTok{ }\NormalTok{height, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
-\KeywordTok{anova}\NormalTok{(r.bodyfat.small, r.bodyfat.large)}
+\NormalTok{r.bodyfat.small }\OtherTok{=} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
+\NormalTok{r.bodyfat.large }\OtherTok{=} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ weight }\SpecialCharTok{+}\NormalTok{ height, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
+\FunctionTok{anova}\NormalTok{(r.bodyfat.small, r.bodyfat.large)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1918,15 +1768,12 @@ where
 \end{verbatim}
 
 \normalsize
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Inference about a single predictor \(\beta_j\)}
-
+\protect\hypertarget{inference-about-a-single-predictor-beta_j}{}
 \(~\)
 
 A special case is
@@ -1942,13 +1789,10 @@ A special case is
   \(T\)-statistic with \((n-p-1)\) degrees of freedom to get the
   \(p\)-value.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 Going back again:
 
 \(~\)
@@ -1957,7 +1801,7 @@ Going back again:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfat)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1975,13 +1819,11 @@ Going back again:
 \textbf{However}:
 
 Only checking the individual \(p\)-values is dangerous. \textbf{Why?}\\
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Inference about \(\beta_j\): confidence interval}
-
+\protect\hypertarget{inference-about-beta_j-confidence-interval}{}
 \(~\)
 
 \begin{itemize}
@@ -2002,7 +1844,7 @@ Only checking the individual \(p\)-values is dangerous. \textbf{Why?}\\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{confint}\NormalTok{(r.bodyfat)}
+\FunctionTok{confint}\NormalTok{(r.bodyfat)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2012,15 +1854,12 @@ Only checking the individual \(p\)-values is dangerous. \textbf{Why?}\\
 ## bmi           1.5467413   1.9583996
 ## age           0.0788673   0.1864861
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{2. Deciding on important variables}
-
+\protect\hypertarget{deciding-on-important-variables}{}
 \(~\)
 
 Overarching question:
@@ -2050,15 +1889,12 @@ But:
 \(~\)
 
 \(\rightarrow\) This topic is the focus of Module 6.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{3. Model Fit}
-
+\protect\hypertarget{model-fit}{}
 \(~\)
 
 We can again look at the two measures from simple linear regression:
@@ -2082,15 +1918,12 @@ We can again look at the two measures from simple linear regression:
   \[R^2 = \frac{\text{TSS}-\text{RSS}}{\text{TSS}}= 1-\frac{\text{RSS}}{\text{TSS}}=1-\frac{\sum_{i=1}^n(y_i-\hat{y}_i)^2}{\sum_{i=1}^n(y_i-\bar{y}_i)^2} \ .\]
   Simply speaking: ``The higher \(R^2\), the better.''
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{However: Caveat with \(R^2\)}
-
+\protect\hypertarget{however-caveat-with-r2}{}
 \(~\)
 
 Let us look at the \(R^2\)s from the three bodyfat models
@@ -2109,7 +1942,7 @@ model 3: \(y\sim bmi + age + neck + hip + abdomen\)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfatM1)}\OperatorTok{$}\NormalTok{r.squared}
+\FunctionTok{summary}\NormalTok{(r.bodyfatM1)}\SpecialCharTok{$}\NormalTok{r.squared}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2119,7 +1952,7 @@ model 3: \(y\sim bmi + age + neck + hip + abdomen\)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfatM2)}\OperatorTok{$}\NormalTok{r.squared}
+\FunctionTok{summary}\NormalTok{(r.bodyfatM2)}\SpecialCharTok{$}\NormalTok{r.squared}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2129,7 +1962,7 @@ model 3: \(y\sim bmi + age + neck + hip + abdomen\)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(r.bodyfatM3)}\OperatorTok{$}\NormalTok{r.squared}
+\FunctionTok{summary}\NormalTok{(r.bodyfatM3)}\SpecialCharTok{$}\NormalTok{r.squared}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2144,18 +1977,15 @@ model 3: \(y\sim bmi + age + neck + hip + abdomen\)
 The models explain 54\%, 58\% and 72\% of the total variability of
 \(y\).
 
-It thus \emph{seems} that larger models are ``better''. However, \(R^2\)
-does always increase when new variables are included, but this does not
-mean that the model is more reasonable.
-
+It thus \emph{seems} that larger models are ``better'\,'. However,
+\(R^2\) does always increase when new variables are included, but this
+does not mean that the model is more reasonable.
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Adjusted \(R^2\)}
-
+\protect\hypertarget{adjusted-r2}{}
 \(~\)
 
 When the sample size \(n\) is small with respect to the number of
@@ -2175,27 +2005,21 @@ really improve the model!
 \(~\)
 
 \(\rightarrow\) \(R_a\) may decrease when a new variable is added.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model fit -- in a broader sense}
-
+\protect\hypertarget{model-fit-in-a-broader-sense}{}
 \(~\)
 
 We will look at model validation / model checking later.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{4. Predictions: Two questions}
-
+\protect\hypertarget{predictions-two-questions}{}
 \(~\)
 
 \begin{enumerate}
@@ -2230,13 +2054,10 @@ the \emph{\textcolor{red}{confidence interval}}.
 \emph{true} value \(Y = f(X) + \varepsilon\) varies around \(\hat{Y}\).
 We can compute a \emph{\textcolor{red}{prediction interval}} for new
 observations \(Y\).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-21-1} \end{center}
 
 \begin{itemize}
@@ -2251,13 +2072,11 @@ observations \(Y\).
 
 Note: The prediction range is much broader than the confidence range.
 Why?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Calculation of the confidence intervals/range}
-
+\protect\hypertarget{calculation-of-the-confidence-intervalsrange}{}
 \(~\)
 
 \begin{itemize}
@@ -2290,15 +2109,12 @@ Why?
   For the confidence range, only the uncertainty in the estimates
   \(\hat\beta_0, \ldots \hat\beta_p\) matters.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Calculation of the prediction intervals/range}
-
+\protect\hypertarget{calculation-of-the-prediction-intervalsrange}{}
 \(~\)
 
 \begin{itemize}
@@ -2336,13 +2152,10 @@ Why?
   The \emph{prediction intervals and range are always wider than the
   confidence intervals and range}.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{itemize}
 \tightlist
 \item
@@ -2358,14 +2171,14 @@ Why?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit =}\StringTok{ }\KeywordTok{lm}\NormalTok{(bodyfat }\OperatorTok{~}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{abdomen, }\DataTypeTok{data =}\NormalTok{ d.bodyfat)}
-\NormalTok{newobs =}\StringTok{ }\NormalTok{d.bodyfat[}\DecValTok{1}\NormalTok{, ]}
+\NormalTok{fit }\OtherTok{=} \FunctionTok{lm}\NormalTok{(bodyfat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ abdomen, }\AttributeTok{data =}\NormalTok{ d.bodyfat)}
+\NormalTok{newobs }\OtherTok{=}\NormalTok{ d.bodyfat[}\DecValTok{1}\NormalTok{, ]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{predict}\NormalTok{(fit, }\DataTypeTok{newdata =}\NormalTok{ newobs, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{predict}\NormalTok{(fit, }\AttributeTok{newdata =}\NormalTok{ newobs, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2376,7 +2189,7 @@ Why?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{predict}\NormalTok{(fit, }\DataTypeTok{newdata =}\NormalTok{ newobs, }\DataTypeTok{interval =} \StringTok{"prediction"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{predict}\NormalTok{(fit, }\AttributeTok{newdata =}\NormalTok{ newobs, }\AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2384,11 +2197,9 @@ Why?
 ##        fit      lwr     upr
 ## 1 13.17595 3.951613 22.4003
 \end{verbatim}
-
 \end{frame}
 
 \begin{frame}
-
 Finally, we need to keep in mind that the model we work with is only an
 \emph{approximation of the reality}. In fact,
 
@@ -2409,13 +2220,11 @@ made by George Box in his often-cited remark that
 ``all models are wrong, but some are useful''.
 \end{quote}
 
-(Box 1979)
-
+{[}@box1979{]}
 \end{frame}
 
 \begin{frame}{Extensions of the linear model}
 \protect\hypertarget{extensions-of-the-linear-model}{}
-
 Extensions that make the linear model very powerful:
 
 \(~\)
@@ -2449,13 +2258,11 @@ Extensions that make the linear model very powerful:
 \item
   Non-linear terms
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Binary predictors}
-
+\protect\hypertarget{binary-predictors}{}
 \(~\)
 
 So far, the covariates \(X\) were always continuous.\\
@@ -2484,15 +2291,12 @@ Y_i = \left\{
 
 \textbf{Example}: Credit card data analysis in Section 3.3.1 in the ISLR
 book.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Qualitative predictors with more than 2 levels}
-
+\protect\hypertarget{qualitative-predictors-with-more-than-2-levels}{}
 \(~\)
 
 More generally, a covariate may indicate a \textbf{category}, for
@@ -2520,13 +2324,10 @@ y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k + \varepsilon_i \ .
 
 However: this model is
 \emph{\textcolor{red}{not identifiable}}.\footnote{What does that mean? I could add a constant to $\beta_1, \beta_2, ...\beta_k$ and subtract it from $\beta_0$, and the model would fit equally well to the data, so it cannot be decided which set of the parameters is best.}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Solution:} One of the \(k\) categories must be selected as a
 \emph{reference category} and is \emph{not included in the model}.
 Typically: the first category is the reference, thus \(\beta_1=0\).
@@ -2545,13 +2346,11 @@ y_i = \left\{
 \beta_0 + \beta_k + \varepsilon, & \text{if $x_{ik}=1$ } \ .
 \end{array}\right.
 \end{equation*}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{!Important to remember!}
-
+\protect\hypertarget{important-to-remember}{}
 \textcolor{gray}{(Common aspect that leads to confusion!)}
 
 \vspace{10mm}
@@ -2561,15 +2360,12 @@ y_i = \left\{
 
 \(\rightarrow\) The \emph{degrees of freedom} of the fitted model are
 therefore reduced by \(k-1\).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Example}
-
+\protect\hypertarget{example}{}
 \(~\)
 
 We are now using the \texttt{Credit} dataset from the \texttt{ISLR}
@@ -2581,9 +2377,9 @@ library.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ISLR)}
-\KeywordTok{data}\NormalTok{(Credit)}
-\KeywordTok{head}\NormalTok{(Credit)}
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{data}\NormalTok{(Credit)}
+\FunctionTok{head}\NormalTok{(Credit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2610,28 +2406,23 @@ library.
 
 Question: Do the Balances differ for different Ethnicities
 (Caucasian/Asian/Afro-American)?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(GGally)}
-\KeywordTok{ggpairs}\NormalTok{(Credit[, }\KeywordTok{c}\NormalTok{(}\StringTok{"Ethnicity"}\NormalTok{, }\StringTok{"Balance"}\NormalTok{)], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =}\NormalTok{ Ethnicity))}
+\FunctionTok{library}\NormalTok{(GGally)}
+\FunctionTok{ggpairs}\NormalTok{(Credit[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Ethnicity"}\NormalTok{, }\StringTok{"Balance"}\NormalTok{)], }\FunctionTok{aes}\NormalTok{(}\AttributeTok{colour =}\NormalTok{ Ethnicity))}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics[width=0.75\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-25-1}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 In R, a factor covariate can be used in the same way as a continuous
 predictor:
 
@@ -2641,8 +2432,8 @@ predictor:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Balance }\OperatorTok{~}\StringTok{ }\NormalTok{Ethnicity, }\DataTypeTok{data =}\NormalTok{ Credit)}
-\KeywordTok{summary}\NormalTok{(r.lm)}\OperatorTok{$}\NormalTok{coef}
+\NormalTok{r.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Balance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Ethnicity, }\AttributeTok{data =}\NormalTok{ Credit)}
+\FunctionTok{summary}\NormalTok{(r.lm)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2670,13 +2461,11 @@ Interpretation? Do the ethnicities really differ? Check also the
 \qquad \qquad\qquad \qquad\qquad & \text{if $i$ is Afro-American}\\
 \end{array}\right.
 \end{equation*}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Sidenote: The ``reference category''}
-
+\protect\hypertarget{sidenote-the-reference-category}{}
 \vspace{2mm}
 
 In the above example we do not see a result for the
@@ -2703,10 +2492,10 @@ In the above example we do not see a result for the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\NormalTok{Credit <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(Credit, }\DataTypeTok{Ethnicity =} \KeywordTok{relevel}\NormalTok{(Ethnicity, }\DataTypeTok{ref =} \StringTok{"Caucasian"}\NormalTok{))}
-\NormalTok{r.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Balance }\OperatorTok{~}\StringTok{ }\NormalTok{Ethnicity, }\DataTypeTok{data =}\NormalTok{ Credit)}
-\KeywordTok{summary}\NormalTok{(r.lm)}\OperatorTok{$}\NormalTok{coef}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{Credit }\OtherTok{\textless{}{-}} \FunctionTok{mutate}\NormalTok{(Credit, }\AttributeTok{Ethnicity =} \FunctionTok{relevel}\NormalTok{(Ethnicity, }\AttributeTok{ref =} \StringTok{"Caucasian"}\NormalTok{))}
+\NormalTok{r.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Balance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Ethnicity, }\AttributeTok{data =}\NormalTok{ Credit)}
+\FunctionTok{summary}\NormalTok{(r.lm)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2723,15 +2512,12 @@ In the above example we do not see a result for the
 
 Note: The differences are now with respect to the Caucasian category --
 the model is however exactly the same!
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Testing for a categorical predictor}
-
+\protect\hypertarget{testing-for-a-categorical-predictor}{}
 \vspace{2mm}
 
 \textbf{Question}: Is a qualitative predictor needed in the model?
@@ -2760,7 +2546,7 @@ In R, this is done by the \texttt{anova()} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{anova}\NormalTok{(r.lm)}
+\FunctionTok{anova}\NormalTok{(r.lm)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2772,15 +2558,12 @@ In R, this is done by the \texttt{anova()} function:
 ## Ethnicity   2    18454    9227  0.0434 0.9575
 ## Residuals 397 84321458  212397
 \end{verbatim}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Interactions: Removing the additivity assumption}
-
+\protect\hypertarget{interactions-removing-the-additivity-assumption}{}
 \vspace{2mm}
 
 We again look at the \texttt{Credit} dataset. We want to model the
@@ -2811,7 +2594,7 @@ In R, we simply add \texttt{Student} to the model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Balance }\OperatorTok{~}\StringTok{ }\NormalTok{Income }\OperatorTok{+}\StringTok{ }\NormalTok{Student, Credit)}
+\NormalTok{r.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Balance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Income }\SpecialCharTok{+}\NormalTok{ Student, Credit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2821,25 +2604,20 @@ In R, we simply add \texttt{Student} to the model:
 
 \textbf{Caveat:} This model assumes that students and non-students have
 the same slope for \texttt{Income}. Realistic?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 Let's look at the graphs:
 
-\includegraphics{../../ISLR/Figures/Chapter3/3.7.png}
+\includegraphics{../../ISLR/Figures/Chapter3/3.7.pdf}
 
 \(\rightarrow\) We want a model that allows for different slopes!
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Interaction terms}
-
+\protect\hypertarget{interaction-terms}{}
 \vspace{2mm}
 
 We formulate a new model that includes the interaction term
@@ -2858,21 +2636,18 @@ slope for the two groups:
 \end{array}
 \right.
 \end{equation*}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 In R, this is again quite simple:
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{r.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Balance }\OperatorTok{~}\StringTok{ }\NormalTok{Income }\OperatorTok{*}\StringTok{ }\NormalTok{Student, Credit)}
-\KeywordTok{summary}\NormalTok{(r.lm)}\OperatorTok{$}\NormalTok{coef}
+\NormalTok{r.lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Balance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Income }\SpecialCharTok{*}\NormalTok{ Student, Credit)}
+\FunctionTok{summary}\NormalTok{(r.lm)}\SpecialCharTok{$}\NormalTok{coef}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2901,27 +2676,22 @@ For a non-Student: \(\hat{y} =\) 200.6 + (6.2) \(\cdot\) Income
 \vspace{2mm}
 
 \textbf{Question:} Is the interaction relevant here?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{The hierarchical principle}
-
+\protect\hypertarget{the-hierarchical-principle}{}
 \(~\)
 
 If we include an interaction in a model, we should also include the main
 effects, even if the \(p\)-values associated with the coefficients of
 the main effects are large (see p.89 in ISLR book).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{More interactions}
-
+\protect\hypertarget{more-interactions}{}
 \vspace{4mm}
 
 We can include interactions also between
@@ -2940,15 +2710,12 @@ We can include interactions also between
 \(\rightarrow\) See problem 1 in recommended exercises 3 (important)!
 
 \vspace{4mm}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Non-linear terms}
-
+\protect\hypertarget{non-linear-terms}{}
 \vspace{2mm}
 
 \textbf{Linear regression is even more powerful!} \vspace{2mm}
@@ -2990,13 +2757,10 @@ We can include interactions also between
     \(\sin\), \(\cos\),
   \end{itemize}
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 How can a \emph{quadratic} regression be a \emph{linear regression}??
 
 \vspace{4mm}
@@ -3028,12 +2792,10 @@ the world is not linear. In particular, if
 
 \(\rightarrow\) In the later modules, we will discuss other more
 advanced non-linear approaches for addressing this issue.
-
 \end{frame}
 
 \begin{frame}{Challenges - for model fit}
 \protect\hypertarget{challenges---for-model-fit}{}
-
 \(~\)
 
 \begin{enumerate}
@@ -3053,13 +2815,11 @@ advanced non-linear approaches for addressing this issue.
 \item
   Collinearity
 \end{enumerate}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Recap of modelling assumptions in linear regression}
-
+\protect\hypertarget{recap-of-modelling-assumptions-in-linear-regression}{}
 \(~\)
 
 To make valid inference from our model, we must check if our model
@@ -3086,15 +2846,12 @@ The assumption in linear regression is that the residuals follow a
 \item
   The \(\varepsilon_i\) are independent of each other.
 \end{enumerate}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model checking tool I: Tukey-Anscombe diagram}
-
+\protect\hypertarget{model-checking-tool-i-tukey-anscombe-diagram}{}
 \(~\)
 
 The \emph{\textcolor{red}{Tukey-Anscombe}} diagram plots the residuals
@@ -3108,15 +2865,12 @@ against the fitted values. For the bodyfat data it looks like this:
 
 This plot is ideal to check if assumptions 1. and 2. (and partially 4.)
 are met. Here, this seems fine.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model checking tool II: The QQ-diagram}
-
+\protect\hypertarget{model-checking-tool-ii-the-qq-diagram}{}
 \(~\)
 
 To check assumption 3., the quantiles of the observed distribution are
@@ -3130,17 +2884,14 @@ distribution:
 \(~\)
 
 If the points lie approximately on a straight line, the data is fairly
-normally distributed. This is often ``tested'' by eye, and needs some
+normally distributed. This is often ``tested'\,' by eye, and needs some
 experience.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model checking tool III: The scale-location plot}
-
+\protect\hypertarget{model-checking-tool-iii-the-scale-location-plot}{}
 \(~\)
 
 The scale-location plot is particularly suited to check the assumption
@@ -3155,15 +2906,12 @@ should be \emph{no trend}:
 \vspace{2mm}
 
 \begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-33-1} \end{center}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Model checking tool IV: The leverage plot}
-
+\protect\hypertarget{model-checking-tool-iv-the-leverage-plot}{}
 \(~\)
 
 \begin{itemize}
@@ -3198,19 +2946,16 @@ H_{ii} = \frac{1}{n} + \frac{(x_i-\overline{x})^2}{\sum_{i'}(x_{i'}-\overline{x}
 \textbf{Q:} When are leverages expected to be large/small?
 
 \(~\)
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{Illustration}: Data points with \(x_i\) values far from the mean
 have a stronger leverage effect than when \(x_i\approx \overline{x}\):
 
 \begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-34-1} \end{center}
 
-The outlier in the middle plot ``pulls'' the regression line in its
+The outlier in the middle plot ``pulls'\,' the regression line in its
 direction and biases the slope.
 
 \(~\)
@@ -3218,24 +2963,20 @@ direction and biases the slope.
 \href{http://students.brown.edu/seeing-theory/regression-analysis/index.html}{http://students.brown.edu/seeing-theory/regression-analysis/index.html}
 to do it manually!
 \footnote{You may choose "Ordinary Least Squares" and then click on "I" for the Ascombe quartett example. Drag points to see what happens with the regression line.}
-
 \end{frame}
 
 \begin{frame}
-
 In the leverage plot, (standardized) residuals \(\tilde{r_i}\) are
 plotted against the leverage \(H_{ii}\) (still for the bodyfat):
 
 \begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-35-1} \end{center}
 
 \textbf{Critical ranges} are the top and bottom right corners! Why?
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Leverages in multiple regression}
-
+\protect\hypertarget{leverages-in-multiple-regression}{}
 \vspace{3mm}
 
 \begin{itemize}
@@ -3266,15 +3007,12 @@ plotted against the leverage \(H_{ii}\) (still for the bodyfat):
   influence on the estimation results, and that the covariate values
   (\({\boldsymbol x}_i\)) are unusual.
 \end{itemize}
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Different types of residuals?}
-
+\protect\hypertarget{different-types-of-residuals}{}
 \(~\)
 
 It can be shown that the vector of residuals,
@@ -3303,13 +3041,10 @@ may also be correlated.
 \(~\)
 
 \textbf{Q:} Why is that a problem?
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \textbf{A}:
 
 \begin{itemize}
@@ -3331,11 +3066,9 @@ may also be correlated.
 \(\rightarrow\) To make the \(e_i\) more ``like \(\epsilon_i\)'', we use
 \emph{\textcolor{red}{standardized}} or
 \emph{\textcolor{red}{studentized residuals}}.
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \textbf{Standardized residuals:}
 
 \[\tilde{r}_i=\frac{e_i}{\hat{\sigma}\sqrt{1-H_{ii}}}\] where \(H_{ii}\)
@@ -3356,26 +3089,21 @@ residuals.
 
 In R you can get the studentized residuals from an \texttt{lm}-object
 (named \texttt{fit}) by \texttt{rstudent(fit)}.
-
 \end{frame}
 
 \begin{frame}[fragile]
-
 \begin{block}{Diagnostic plots in \texttt{R}}
-
+\protect\hypertarget{diagnostic-plots-in-r}{}
 \vspace{2mm}
 
 See exercises: We use \texttt{autoplot()} from the \texttt{ggfortify}
 package in R to plot the diagnostic plots.
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}
-
 \begin{block}{Collinearity}
-
+\protect\hypertarget{collinearity}{}
 \vspace{2mm}
 
 In brief, collinearity refers to the situation when two or more
@@ -3411,42 +3139,21 @@ information.
 \(~\)
 
 \textbf{Todo:} Read in the course book p.99-102 (self-study).
-
 \end{block}
-
 \end{frame}
 
 \begin{frame}{ Further reading }
 \protect\hypertarget{further-reading}{}
-
 \begin{itemize}
 \tightlist
 \item
   \href{https://www.youtube.com/playlist?list=PL5-da3qGB5IBSSCPANhTgrw82ws7w_or9}{Videoes
   on YouTube by the authors of ISL, Chapter 3}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}{References}
 \protect\hypertarget{references}{}
-
-\hypertarget{refs}{}
-\leavevmode\hypertarget{ref-box1979}{}%
-Box, G. E. P. 1979. ``Robustness in the Strategy of Scientific Model
-Building.'' In \emph{In Robustness in Statistics}, edited by R. L.
-Launer and G. N. Wilkinson, 201--36. New York: Academic Press.
-
-\leavevmode\hypertarget{ref-ISL}{}%
-James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
-2013. \emph{An Introduction to Statistical Learning}. Vol. 112.
-Springer.
-
-\leavevmode\hypertarget{ref-walepole.etal}{}%
-Walepole, R. E., R. H. Myers, S. L. Myers, and K. Ye. 2012.
-\emph{Probability \& Statistics for Engineers and Scientists}. 9th ed.
-Boston: Pearson Education Inc.
-
 \end{frame}
 
 \end{document}
