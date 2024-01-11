@@ -3,11 +3,11 @@ title: 'Module 1: Introduction'
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
 date: "11th January, 2024"
 output:
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 2
-  slidy_presentation: default
+  # html_document:
+  #   toc: true
+  #   toc_float: true
+  #   toc_depth: 2
+  # slidy_presentation: default
   beamer_presentation:
     keep_tex: true
     fig_caption: false
@@ -412,7 +412,7 @@ $~$
 
 $~$
 
-Log into www.menti.com 
+Log into www.menti.com use code 3413 8094
 
 <!-- https://www.mentimeter.com/s/502463fe2a5484c36ffc166e1f33ef6b/977df7f3a325 -->
 

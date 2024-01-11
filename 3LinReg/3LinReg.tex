@@ -158,7 +158,7 @@
 \title{Module 3: Linear Regression}
 \subtitle{TMA4268 Statistical Learning V2024}
 \author{Sara Martino, Department of Mathematical Sciences, NTNU}
-\date{January 26 and 26, 2024}
+\date{January 26 and 27, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -328,17 +328,20 @@ predictor variable}:
 \item
   One quantitative response \(Y\) is modelled
 \item
-  from \emph{one covariate} \(x\) (=simple),
+  \emph{One covariate} \(x\) (=simple),
 \item
   and the relationship between \(Y\) and \(x\) is assumed to be
   \emph{linear}.
 \end{itemize}
+\end{frame}
 
-\vspace{6mm}
+\begin{frame}
+Looking at the data it is obbious that the relationship is not perfectly
+linear. But we could assume it to be approximately linear. Such that,
+all instances of \((x,Y)\), given by \((x_i,y_i)\), \(i= 1,\ldots, n\),
+lie around a straight line: \[y_i \approx \beta_0 + \beta_1 x_i\ .\]
 
-If the relation between \(Y\) and \(x\) is perfectly linear, all
-instances of \((x,Y)\), given by \((x_i,y_i)\), \(i= 1,\ldots, n\), lie
-on a straight line and fulfill \[y_i = \beta_0 + \beta_1 x_i\ .\]
+\begin{center}\includegraphics[width=0.7\linewidth]{3LinReg_files/figure-beamer/motivating2b-1} \end{center}
 \end{frame}
 
 \begin{frame}
@@ -510,7 +513,7 @@ minimizing the sum of the squared distances over all points:
 
 \[\text{RSS} = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - (a + b x_i) \]
 
-is being minimized.
+is minimized.
 
 \begin{itemize}
 \item
@@ -541,15 +544,30 @@ estimates.)
 \vspace{2mm}
 
 Using \(n\) observed independent data points
-\[(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\ ,\]
+\[(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\ ,\] we aim at finding \(a\)
+and \(b\) such that \[
+RSS = \sum_{i = 1}^n(y_i-a-b x_i)^2 = \text{min}
+\] to do this we need to solve the linear system \begin{align}
+\begin{aligned}
+\frac{\partial RSS}{\partial a } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
+\frac{\partial RSS}{\partial b } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
+\end{aligned}
+\end{align}
+\end{block}
+\end{frame}
 
-the least squares estiamtes for simple linear regression are given as
+\begin{frame}
+\begin{block}{Least squares estimators:}
+\protect\hypertarget{least-squares-estimators-1}{}
+The system can be solved analytically and the least squares estiamtes
+for simple linear regression are given as
 
-\begin{equation} 
-\hat{\beta}_0 = \bar{y}-\hat{\beta}_1 \bar{x}
-\end{equation} and \begin{equation} 
-\hat{\beta}_1 = \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\boldsymbol{x},\boldsymbol{y})}{\mathsf{Var}(\boldsymbol{x})}\ ,
-\end{equation}
+\begin{align}
+\begin{aligned}
+\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\\
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\boldsymbol{x},\boldsymbol{y})}{\mathsf{Var}(\boldsymbol{x})}
+\end{aligned}
+\end{align}
 
 \vspace{2mm}
 
@@ -562,6 +580,28 @@ where \(\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i\) and
 This is something you should have proven in your previous statistics
 classes; if you forgot how to get there, please check again, e.g.~in
 chapter 11 of the book by @walepole.etal, see
+\href{https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf}{here}.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Maximum likelihood estimator}
+\protect\hypertarget{maximum-likelihood-estimator}{}
+Another method to estimate \(\alpha,\beta,\sigma^2\) when we assume that
+\[
+y_i\sim\mathcal{N}(\alpha+\beta x_i,\sigma^2 ),\ i = 1\dots,n
+\] is to maximise the \textbf{likelihood} function: \[
+L(\alpha,\beta,\sigma^2;y_1,\dots,y_n) = \prod_i f(y_i;\alpha,\beta,\sigma^2)
+\] where \[
+f(y;\alpha,\beta,\sigma^2) = \frac{1}{\sqrt{2\sigma^2}}\exp\{-\frac{1}{2\sigma^2}(y-\alpha-\beta x)^2\}
+\] This gives the same result as the previous slide.
+
+\vspace{6mm}
+\scriptsize
+
+This is something you should know from TMA4240/4245; if you forgot how
+to get there, please check again, e.g.~in chapter 11 of the book by
+@walepole.etal, see
 \href{https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf}{here}.
 \end{block}
 \end{frame}
@@ -843,9 +883,10 @@ estimated, there are typically two fundamental questions:
 \tightlist
 \item
   \textbf{``Are the parameters compatible with some specific value?''}
-  Typically, the question is whether the slope \(\beta_1\) might be 0 or
-  not, that is: ``Is \(x\) an informative predictor or not?''
 \end{enumerate}
+
+Typically, the question is whether the slope \(\beta_1\) might be 0 or
+not, that is: ``Is \(x\) an informative predictor or not?''
 
 \hspace{4mm} \(\rightarrow\) This leads to a \textbf{statistical test}.
 
@@ -898,9 +939,10 @@ How do these things help us to answer the two questions above?
 \protect\hypertarget{testing-the-effect-of-a-covariate}{}
 \(~\)
 
-Remember: in a statistical test you first need to specify the
-\emph{\textcolor{red}{null hypothesis}}. Here, typically, the null
-hypothesis is
+\textbf{Remember}: in a statistical test you first need to specify the
+\emph{\textcolor{red}{null hypothesis}}.
+
+Here, typically, the null hypothesis is
 
 \[H_0: \quad \beta_1 =   0  \ .\]
 
@@ -918,7 +960,7 @@ Here, the \emph{\textcolor{red}{alternative hypothesis}} is given by
 \end{frame}
 
 \begin{frame}
-Remember: To carry out a statistical test, we need a \emph{test
+\textbf{Remember}: To carry out a statistical test, we need a \emph{test
 statistic}. This is some type of \textbf{summary statistic} that follows
 a known distribution under \(H_0\). For our purpose, we use the
 so-called \textbf{\(T\)-statistic}
@@ -1172,6 +1214,33 @@ correlation between the two variables:
 ## [1] 0.5390391
 \end{verbatim}
 \end{block}
+\end{frame}
+
+\begin{frame}{Summary: Simple Linear Regression}
+\protect\hypertarget{summary-simple-linear-regression}{}
+\begin{itemize}
+\item
+  The statistical model: \[
+  y_i = \alpha + \beta x_i + \epsilon_i, \ \epsilon_i\sim\mathcal(0,\sigma^2)\ \epsilon_i\perp\epsilon_j,\ i\neq j
+  \]
+\item
+  Parameter estimate
+\end{itemize}
+
+\begin{align}
+\begin{aligned}
+\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\sim\mathcal{N}(\beta_0, \frac{\sigma^2\sum x_i^2}{n\sum(x_i-\bar{x})^2})\\
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} \sim\mathcal{N}(\beta_1, \frac{\sigma^2}{\sum(x_i-\bar{x})^2})
+\end{aligned}
+\end{align}
+
+\begin{itemize}
+\item
+  Interpretation of the parameters
+\item
+  Derive confidence intervals and test
+\item
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Multiple Linear Regression}

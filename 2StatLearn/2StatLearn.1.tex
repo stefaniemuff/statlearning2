@@ -130,17 +130,7 @@
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}{Acknowledgements}
-\protect\hypertarget{acknowledgements}{}
-\begin{itemize}
-\item
-  A lot of this material stems from Mette Langaas and her TAs (especiall
-  Julia Debik). I would like to thank Mette for the permission to use
-  her material!
-\item
-  Some of the figures and slides in this presentation are taken (or are
-  inspired) from @ISL.
-\end{itemize}
+\begin{frame}
 \end{frame}
 
 \begin{frame}{Introduction}
@@ -597,8 +587,8 @@ a prediction of \(Y\):
   possibly the randomness of the situation.
 \end{itemize}
 
-For a given \(\hat{f}\) and a set of predictors \(X\) which gives
-\(\hat{Y}=\hat{f}(X)\), we have
+For a \textbf{given} \(\hat{f}\) and a set of predictors \(X\) which
+gives \(\hat{Y}=\hat{f}(X)\), we have
 
 \[\text{E}[(Y-\hat{Y})^2] = \underbrace{(f(X)-\hat{f}(X))^2}_{reducible} + \underbrace{\text{Var}(\epsilon)}_{irreducible}\]
 \end{frame}
@@ -805,7 +795,7 @@ Can often give good predictions & Much data are required to estimate
 \item
   KNN classification (M4), KNN regression, Smoothing splines (M7)
 \item
-  Bagging and boosting (M8), support vector machines (M9)
+  Bagging and boosting (M8 adn M9)
 \item
   Neural networks (M11)
 \end{itemize}
@@ -821,7 +811,7 @@ Example: Prediction of icome from ``Years of Education'' and
 
 \centering
 
-\includegraphics[width=0.45\textwidth,height=\textheight]{../../ISLR/Figures/Chapter2/2.4.pdf}
+\includegraphics[width=0.43\textwidth,height=\textheight]{../../ISLR/Figures/Chapter2/2.4.pdf}
 
 \includegraphics[width=0.45\textwidth,height=\textheight]{../../ISLR/Figures/Chapter2/2.6.pdf}
 
@@ -856,9 +846,9 @@ Consider a covariate \(x\) observed between \(x=-2, \ldots , 4\) and
 \end{frame}
 
 \begin{frame}
-We impose a relationship between reponse \(Y\) and covariate \(x\)
+We impose a relationship between response \(Y\) and covariate \(x\)
 
-\[ Y=x^2 + \varepsilon\]
+\[ Y=x^2 + \epsilon\]
 
 with error (noise) term \(\varepsilon\sim N(0,\sigma^2)\) with
 \(\sigma=2\). It is a substitue for all the unobserved variables that
@@ -1276,6 +1266,21 @@ the polynomial example.
 \begin{center}\includegraphics[width=0.9\linewidth]{2StatLearn.1_files/figure-beamer/averageoverxs-1} \end{center}
 
 Overall version (averaging over 61 gridpoints of \(x\)).
+\end{frame}
+
+\begin{frame}{Main Concepts}
+\protect\hypertarget{main-concepts}{}
+\begin{itemize}
+\tightlist
+\item
+  Prediction and Inference
+\item
+  Reducible and Irreducible Error
+\item
+  Training and Test Set
+\item
+  Bias-Variance Trade off
+\end{itemize}
 \end{frame}
 
 \begin{frame}{References}
