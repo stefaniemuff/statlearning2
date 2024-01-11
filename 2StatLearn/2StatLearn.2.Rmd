@@ -12,7 +12,7 @@ output:
     colortheme: "default"
     font: "serif"
     includes:
-      in_header: header.tex
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
@@ -119,19 +119,32 @@ $$\boldsymbol{X}_{(28 \times 4)}=\left[ \begin{array}{cccc}X_{11} & X_{12} & X_{
 
 ---
 
-## Rules for means
+## The mean vector
 
 $~$
 
-* Random vector $\boldsymbol{X}_{(p\times 1)}$ with mean vector $\boldsymbol{\mu}_{(p\times 1)}$:\footnote{Observe that $\text{E}(X_j)$ is calculated from the marginal distribution of $X_j$ and contains no information about dependencies between $X_{j}$ and $X_k$, $k\neq j$.}
+ * **Remember** for a univariate SV $X\sim f(x)$ the expected value (mean) is defined as
+ 
+ $$
+ \text{E}(X) = \int_\mathcal{R}x\ f(x) dx
+ $$
+
+
+* For a **Random vector** $\boldsymbol{X}_{(p\times 1)}$,  the  mean vector $\boldsymbol{\mu}_{(p\times 1)}$ is 
 
 $$\boldsymbol{X}_{(p\times 1)}=\left[ \begin{array}{c}X_1\\ X_2\\ \vdots\\ X_p\\ \end{array}\right], \text{ and }\boldsymbol{\mu}_{(p \times 1)}=\text{E}(\boldsymbol{X})=\left[ \begin{array}{c}\text{E}(X_1)\\ \text{E}(X_2)\\ \vdots\\ \text{E}(X_p)\\ \end{array}\right] \ .$$
 
+**Note** that $\text{E}(X_j)$ is calculated from the marginal distribution of $X_j$ and contains no information about dependencies between $X_{j}$ and $X_k$, $k\neq j$.
   
   
 * Same rule for random matrices.
 
-\vspace{2mm}
+
+--- 
+
+## Rules for the mean I
+
+$~$
 
 * Random matrix $\boldsymbol{X}_{(n\times p)}$ and random matrix $\boldsymbol{Y}_{(n\times p)}$:
 $$\text{E}(\boldsymbol{X}+\boldsymbol{Y})=\text{E}(\boldsymbol{X})+\text{E}(\boldsymbol{Y}) \ .$$
@@ -139,6 +152,11 @@ $$\text{E}(\boldsymbol{X}+\boldsymbol{Y})=\text{E}(\boldsymbol{X})+\text{E}(\bol
 (Rules of vector addition)
 
 ---
+
+## Rules for the mean II
+
+$~$
+
 
 * Random matrix $\boldsymbol{X}_{(n\times p)}$ and conformable constant matrices $\boldsymbol{A}$ and $\boldsymbol{B}$:
 $$\text{E}(\boldsymbol{A}\boldsymbol{X}\boldsymbol{B})=\boldsymbol{A}\text{E}(\boldsymbol{X})\boldsymbol{B}$$
@@ -418,7 +436,7 @@ Hint: Is it possible that the variance of the linear combination $\boldsymbol{Y}
 
 \vspace{4mm}
 
-Quizz on www.menti.com, code 3967 5773
+Quizz on www.menti.com
 
 <!-- In class - go to [https://forms.gle/HCaAFxpY2b7JoVim9](https://forms.gle/HCaAFxpY2b7JoVim9) to answer the questions on the following slides -->
 
@@ -724,7 +742,7 @@ Take a look at the contour plots - when are the contours circles, when ellipses?
 ## Multiple choice - multivariate normal
 \vspace{2mm}
 
-A second quizz on www.menti.com, code 3967 5773
+A second quizz on www.menti.com
 
 Choose the correct answer. Let's go!
 
@@ -821,6 +839,16 @@ cat("
 
 ---
 
+### Main Concepts:
+
+  * Mean of a random vector
+    - Linear operator
+  
+  * Variance-covariance Matrix    
+    - Correlation Matrix
+    
+  * Multinormal distribution
+---
 
 # <a id="further"> Further reading/resources</a>
 

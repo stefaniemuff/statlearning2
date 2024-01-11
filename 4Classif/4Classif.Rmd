@@ -5,21 +5,23 @@ author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
 date: "January 31 and February 3rd, 2022"
 fontsize: 10pt
 output:
-  # beamer_presentation:
-  #   keep_tex: yes
-  #   fig_caption: false
-  #   latex_engine: xelatex
-  #   theme: "Singapore"
-  #   colortheme: "default"
-  #   font: "serif"
+  beamer_presentation:
+    keep_tex: yes
+    fig_caption: false
+    latex_engine: xelatex
+    theme: "Singapore"
+    colortheme: "default"
+    font: "serif"
+    includes:
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
+bibliography: ../refs.bib
 header-includes: \usepackage{multirow}
-   \usepackage{bm}
+#   \usepackage{bm}
  
 
 ---
@@ -35,13 +37,13 @@ whichformat="latex"
 ```
 
 
----
+<!-- --- -->
 
-# Acknowledgements
+<!-- # Acknowledgements -->
 
-* Thanks to Mette Langaas and her TAs who permit me to use and modify their original material. 
+<!-- * Thanks to Mette Langaas and her TAs who permit me to use and modify their original material.  -->
 
-* Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal.
+<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal. -->
 
 --- 
 
@@ -154,7 +156,8 @@ The `Default` dataset is available from the ISLR package.
 
 
  \centering
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.1a.png){width=50%}
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.1a.pdf){width=50%}
+
  
 
 
@@ -236,7 +239,7 @@ $~$
 Let's anticipate a bit, to see why linear regression does not so well. We estimate the probability that someone defaults, given the credit card balance as predictor:
 \vspace{2mm}
 
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.2.png)
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.2.pdf)
 
 
 ---
@@ -397,7 +400,9 @@ $~$
 \vspace{2mm}
 
 * Given $n$ independent observation pairs  $\{{\boldsymbol x}_i, y_i\}$, the likelihood function of a logistic regression model can be written as:
-$$L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) = \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},$$
+
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) \propto \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},$$
+
 where $\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)^T$ enters into $p_i$
 
 $$p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\beta_0 + \beta_1 x_{i1}+\cdots+\beta_p x_{ip})} \ .$$
@@ -410,7 +415,7 @@ $$p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\bet
 
 \vspace{-4mm}
 
-\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) =\sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
+\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) \propto \sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
 &= \sum_{i=1}^n \Big (y_i (\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}) - \log(1 + e^{\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}} ) \Big ).\end{align*}
 
 ---
@@ -567,8 +572,9 @@ $~$
 
 <!-- $\rightarrow$ The odds to default increases by a factor $\exp(100 \cdot \beta_{\text{balance}})=$ `r round(exp(summary(glm_default2)$coef[2,1]*100),2)` -->
 
+* How do student and non student relate to each other?
 
-
+<!-- $\rightarrow$ If 'Student = TRUE' the odds to default decreases by a factor $\exp( \beta_{\text{studentYes}})=$ `r round(exp(summary(glm_default2)$coef[4,1]),2)` -->
 ---
 
 ## Predictions
@@ -618,7 +624,7 @@ exp(eta)/(1+exp(eta))
 
 $~$
 
-* `SAheart` data set from the `ElemStatLearn` package, a retrospective sample of males in a heart-disease high-risk region in South Africa. 
+* `SAheart` data set from the `bestglm` package, a retrospective sample of males in a heart-disease high-risk region in South Africa. 
 
 \vspace{2mm}
 
@@ -630,7 +636,7 @@ $~$
 
 \vspace{2mm}
 
-* 160 cases (individuals who have suffered from a conorary heart disease) and 302 controls (individuals who have not suffered from a conorary heart disease).    
+* 160 cases (individuals who have suffered from a cororary heart disease) and 302 controls (individuals who have not suffered from a cororary heart disease).    
 
 
 
@@ -653,7 +659,7 @@ The goal is to identify important risk factors. We start by loading and looking 
 
 \footnotesize
 ```{r,echo=showsolB}
-library(ElemStatLearn)
+library(bestglm)
 
 d.heart <- SAheart
 d.heart$chd <- as.factor(d.heart$chd)
@@ -1341,7 +1347,7 @@ $~$
 * The sum of the diagonal is the total number of correct classifications. The sum of all elements off the diagonal is the total number of misclassifications.
 
 \centering
-![](true_predicted.png){width=45%}
+<!-- ![](true_predicted.png){width=45%} -->
 
 <!-- \begin{center} -->
 <!-- ```{r, echo=FALSE, warning=FALSE} -->
@@ -1377,7 +1383,7 @@ $~$
 $$f(x) = \frac{1}{(2 \pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}\exp({-\frac{1}{2}({\boldsymbol x}-\boldsymbol\mu)^T \boldsymbol{\Sigma}^{-1}({\boldsymbol x}-\boldsymbol\mu)})$$
 
 \centering
-![ISLR Figure 4.5](../../ISLR/Figures/Chapter4/4.5.png){width=70%}
+![ISLR Figure 4.5](../../ISLR/Figures/Chapter4/4.5.pdf){width=70%}
  
 
 ---
@@ -1625,7 +1631,7 @@ QDA is more flexible than LDA, as it allows for group-specific covariance matric
 Bayes (purple dashed), LDA (black dotted) and QDA (green solid) decision boundaries for the cases where $\boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2$ (left) and $\boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2$ (right).
 
 \centering
-![ISLR Figure 4.9](../../ISLR/Figures/Chapter4/4.9.png){width=100%}
+![ISLR Figure 4.9](../../ISLR/Figures/Chapter4/4.9.pdf){width=100%}
 
 
 

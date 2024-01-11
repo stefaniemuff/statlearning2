@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2022"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 3: Linear Regression"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "January 24 and 27, 2022"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "January 26 and 27, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -12,13 +12,15 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
+    includes:
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
-header-includes: \usepackage{bm}
+#bibliography: refs.bib
+#header-includes: \usepackage{bm}
 
 ---
 
@@ -33,13 +35,13 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 ```
 
  
----
+<!-- --- -->
 
-# Acknowledgements
+<!-- # Acknowledgements -->
 
-* Thanks to Mette Langaas and her TAs who permit me to use and modify their original material. 
+<!-- * Thanks to Mette Langaas and her TAs who permit me to use and modify their original material.  -->
 
-* Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
+<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL. -->
 
 --- 
 
@@ -166,13 +168,22 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body 
 
 * One quantitative response $Y$ is modelled
 
-* from _one covariate_ $x$ (=simple), 
+* _One covariate_ $x$ (=simple), 
 
 * and the relationship between $Y$ and $x$ is assumed to be _linear_. 
 
-\vspace{6mm}
-If the relation between $Y$ and $x$ is perfectly linear, all instances of $(x,Y)$, given by $(x_i,y_i)$, $i= 1,\ldots, n$, lie on a  straight line and fulfill 
-$$y_i = \beta_0 + \beta_1 x_i\ .$$
+---
+
+
+Looking at the data it is obbious that the relationship is not perfectly linear. But we could assume it to be approximately linear. Such that, 
+<!-- If the relation between $Y$ and $x$ is perfectly linear,  -->
+all instances of $(x,Y)$, given by $(x_i,y_i)$, $i= 1,\ldots, n$, lie around a  straight line:
+$$y_i \approx \beta_0 + \beta_1 x_i\ .$$
+
+```{r motivating2b, echo=FALSE, fig.width=6, fig.height=5,fig.align = "center",out.width='70%'}
+ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")
+```
+
 
 ---
 
@@ -312,7 +323,7 @@ polygon(from_x,from_y,to_x,to_y,col=2,lwd=2)
 
 $$\text{RSS} = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - (a + b x_i) $$
 
-is being minimized.
+is  minimized.
 
 * The respective "best" estimates are called $\hat{\beta_0}$ and $\hat{\beta_1}$.
 
@@ -336,16 +347,34 @@ $$e_i = Y_i - \hat{y}_i.$$
 
 Using $n$ observed independent data points 
 $$(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\ ,$$ 
+we aim at finding $a$ and $b$ such that 
+$$
+RSS = \sum_{i = 1}^n(y_i-a-b x_i)^2 = \text{min}
+$$
+to do this we need to solve the linear system
+\begin{align}
+\begin{aligned}
+\frac{\partial RSS}{\partial a } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
+\frac{\partial RSS}{\partial b } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
+\end{aligned}
+\end{align}
 
+---
+
+## Least squares estimators:
+
+The system can be solved analytically and 
 the least squares estiamtes for simple linear regression are given as
 
-\begin{equation} 
-\hat{\beta}_0 = \bar{y}-\hat{\beta}_1 \bar{x}
-\end{equation}
-and
-\begin{equation} 
-\hat{\beta}_1 = \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\boldsymbol{x},\boldsymbol{y})}{\mathsf{Var}(\boldsymbol{x})}\ ,
-\end{equation}
+
+\begin{align}
+\begin{aligned}
+\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\\
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\boldsymbol{x},\boldsymbol{y})}{\mathsf{Var}(\boldsymbol{x})}
+\end{aligned}
+\end{align}
+
+
 
 \vspace{2mm}
 where 
@@ -354,6 +383,29 @@ $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ and $\bar{x} = \frac{1}{n}\sum_{i=1}^n 
 \vspace{6mm}
 \scriptsize
 This is something you should have proven in your previous statistics classes; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf).
+
+---
+
+## Maximum likelihood estimator
+
+Another method to estimate $\alpha,\beta,\sigma^2$ when we assume that
+$$
+y_i\sim\mathcal{N}(\alpha+\beta x_i,\sigma^2 ),\ i = 1\dots,n
+$$
+is to maximise the **likelihood** function: 
+$$
+L(\alpha,\beta,\sigma^2;y_1,\dots,y_n) = \prod_i f(y_i;\alpha,\beta,\sigma^2)
+$$
+where
+$$
+f(y;\alpha,\beta,\sigma^2) = \frac{1}{\sqrt{2\sigma^2}}\exp\{-\frac{1}{2\sigma^2}(y-\alpha-\beta x)^2\}
+$$
+This gives the same result as the previous slide.
+
+\vspace{6mm}
+\scriptsize
+This is something you should know from TMA4240/4245; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf).
+
 
 ---
 
@@ -580,6 +632,7 @@ After the regression parameters and their uncertainties have been estimated, the
 
  
 1. **"Are the parameters compatible with some specific value?"** 
+
  Typically, the question is whether the slope $\beta_1$ might be 0 or not, that is: "Is $x$ an informative predictor or not?"
  
  \hspace{4mm} $\rightarrow$ This leads to a **statistical test**. 
@@ -618,7 +671,9 @@ How do these things help us to answer the two questions above?
 
 $~$
 
-Remember: in a statistical test you first need to specify the _\textcolor{red}{null hypothesis}_. Here, typically, the null hypothesis is
+**Remember**: in a statistical test you first need to specify the _\textcolor{red}{null hypothesis}_. 
+
+Here, typically, the null hypothesis is
 
 
  
@@ -640,7 +695,7 @@ $$H_A: \quad \beta_1 \neq  0  $$
 ---
  
 
-Remember: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. For our purpose, we use the so-called **$T$-statistic**
+**Remember**: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. For our purpose, we use the so-called **$T$-statistic**
 
 
 
@@ -929,6 +984,30 @@ summary(r.bodyfat)$r.squared
 cor(d.bodyfat$bodyfat,d.bodyfat$bmi)^2
 ```
 
+---
+
+# Summary: Simple Linear Regression
+
+* The statistical model:
+$$
+y_i = \alpha + \beta x_i + \epsilon_i, \ \epsilon_i\sim\mathcal(0,\sigma^2)\ \epsilon_i\perp\epsilon_j,\ i\neq j
+$$
+
+* Parameter estimate
+
+\begin{align}
+\begin{aligned}
+\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\sim\mathcal{N}(\beta_0, \frac{\sigma^2\sum x_i^2}{n\sum(x_i-\bar{x})^2})\\
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} \sim\mathcal{N}(\beta_1, \frac{\sigma^2}{\sum(x_i-\bar{x})^2})
+\end{aligned}
+\end{align}
+
+* Interpretation of the parameters
+
+* Derive confidence intervals and test
+
+* Model accuracy
+
 
 
 
@@ -1108,7 +1187,7 @@ In multiple linear regression, the parameter vector $\boldsymbol\beta$ is estima
 
 $~$
 
-With least suqres, we minimize the RSS for a multiple linear regression model:
+With least squares, we minimize the RSS for a multiple linear regression model:
 $$\begin{aligned} \text{RSS} &=\sum_{i=1}^n (y_i - \hat y_i)^2 = \sum_{i=1}^n (y_i - \hat \beta_0 - \hat \beta_1 x_{i1} - \hat \beta_2 x_{i2} -...-\hat \beta_p x_{ip} )^2 \\
 &= \sum_{i=1}^n (y_i-{\boldsymbol x}_i^T \hat{\boldsymbol\beta})^2=({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})^T({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})\end{aligned}$$
 The estimator is found by solving the system of $(p+1)$ equations
@@ -1965,7 +2044,7 @@ $~$
 
 Let's look at the graphs:
 
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.png)
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.pdf)
 
 $\rightarrow$ We want a model that allows for different slopes!
 

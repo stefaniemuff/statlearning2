@@ -309,26 +309,46 @@ Look at the data (always the first thing to do):
 \end{frame}
 
 \begin{frame}
-\begin{block}{Rules for means}
-\protect\hypertarget{rules-for-means}{}
+\begin{block}{The mean vector}
+\protect\hypertarget{the-mean-vector}{}
 \(~\)
 
 \begin{itemize}
 \tightlist
 \item
-  Random vector \(\boldsymbol{X}_{(p\times 1)}\) with mean vector
-  \(\boldsymbol{\mu}_{(p\times 1)}\):\footnote{Observe that $\text{E}(X_j)$ is calculated from the marginal distribution of $X_j$ and contains no information about dependencies between $X_{j}$ and $X_k$, $k\neq j$.}
+  \textbf{Remember} for a univariate SV \(X\sim f(x)\) the expected
+  value (mean) is defined as
+\end{itemize}
+
+\[
+ \text{E}(X) = \int_\mathcal{R}x\ f(x) dx
+ \]
+
+\begin{itemize}
+\tightlist
+\item
+  For a \textbf{Random vector} \(\boldsymbol{X}_{(p\times 1)}\), the
+  mean vector \(\boldsymbol{\mu}_{(p\times 1)}\) is
 \end{itemize}
 
 \[\boldsymbol{X}_{(p\times 1)}=\left[ \begin{array}{c}X_1\\ X_2\\ \vdots\\ X_p\\ \end{array}\right], \text{ and }\boldsymbol{\mu}_{(p \times 1)}=\text{E}(\boldsymbol{X})=\left[ \begin{array}{c}\text{E}(X_1)\\ \text{E}(X_2)\\ \vdots\\ \text{E}(X_p)\\ \end{array}\right] \ .\]
+
+\textbf{Note} that \(\text{E}(X_j)\) is calculated from the marginal
+distribution of \(X_j\) and contains no information about dependencies
+between \(X_{j}\) and \(X_k\), \(k\neq j\).
 
 \begin{itemize}
 \tightlist
 \item
   Same rule for random matrices.
 \end{itemize}
+\end{block}
+\end{frame}
 
-\vspace{2mm}
+\begin{frame}
+\begin{block}{Rules for the mean I}
+\protect\hypertarget{rules-for-the-mean-i}{}
+\(~\)
 
 \begin{itemize}
 \tightlist
@@ -343,6 +363,10 @@ Look at the data (always the first thing to do):
 \end{frame}
 
 \begin{frame}
+\begin{block}{Rules for the mean II}
+\protect\hypertarget{rules-for-the-mean-ii}{}
+\(~\)
+
 \begin{itemize}
 \tightlist
 \item
@@ -354,6 +378,7 @@ Look at the data (always the first thing to do):
 Proof: Board
 
 \vspace{60mm}
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -686,7 +711,7 @@ negative?
 \protect\hypertarget{random-vectors---single-choice-exercise}{}
 \vspace{4mm}
 
-Quizz on www.menti.com, code 3967 5773
+Quizz on www.menti.com
 \end{block}
 \end{frame}
 
@@ -1056,7 +1081,7 @@ ellipses?
 \protect\hypertarget{multiple-choice---multivariate-normal}{}
 \vspace{2mm}
 
-A second quizz on www.menti.com, code 3967 5773
+A second quizz on www.menti.com
 
 Choose the correct answer. Let's go!
 \end{block}
@@ -1192,6 +1217,33 @@ can I construct a vector of independent standard normal variables from
 \end{frame}
 
 \begin{frame}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Main Concepts:}
+\protect\hypertarget{main-concepts}{}
+\begin{itemize}
+\item
+  Mean of a random vector
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Linear operator
+  \end{itemize}
+\item
+  Variance-covariance Matrix
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Correlation Matrix
+  \end{itemize}
+\item ~
+  \hypertarget{multinormal-distribution}{%
+  \subsection{Multinormal distribution}\label{multinormal-distribution}}
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}{ Further reading/resources}

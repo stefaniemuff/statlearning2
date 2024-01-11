@@ -1,24 +1,26 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2023"
-title: "Module 1: Introduction"
+title: 'Module 1: Introduction'
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
 date: "11th January, 2024"
-fontsize: 10pt
 output:
+  # html_document:
+  #   toc: true
+  #   toc_float: true
+  #   toc_depth: 2
+  # slidy_presentation: default
   beamer_presentation:
-    keep_tex: yes
+    keep_tex: true
     fig_caption: false
     latex_engine: xelatex
-    theme: "Singapore"
-    colortheme: "default"
-    font: "serif"
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 2
+    theme: Singapore
+    colortheme: default
+    font: serif
+    includes:
+      in_header: ../header.tex
+fontsize: 10pt
+subtitle: TMA4268 Statistical Learning V2023
 urlcolor: blue
 header-includes: \usepackage{multirow}
-
 ---
 
 
@@ -30,9 +32,9 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 # Acknowledgements
 
-* This course had been built up by Mette Langaas at NTNU in 2018 and 2019. I am using a some of her material, and material from her TAs, throughout the course.  
+* This course had been built up by Mette Langaas at NTNU in 2018 and 2019 and revised by Stefani Muff in 2020-2023. I am using a some of their material, and material from her TAs, throughout the course.  
 \vspace{2mm}
-**I would like to thank Mette for her great work and for the permission to use her material!**
+**I would like to thank Mette and Steffi for the great work and for the permission to use her material!**
 
 $~$
 
@@ -336,7 +338,7 @@ $~$
   
   \hspace{8mm} Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm} ** **.
+  \hspace{8mm} **Friday 23.02.24 **.
 
 
 \vspace{8mm}
@@ -345,7 +347,7 @@ $~$
  
   \hspace{8mm}Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm}** **.
+  \hspace{8mm}**Friday 19.04.24 **.
 
 ---
 
@@ -380,7 +382,7 @@ $~$
 
 
 * Use our discussion forum on Mattelab for all course-relevant questions: 
-[https://mattelab2024v.math.ntnu.no/c/tma4268/6](https://mattelab2024v.math.ntnu.no/c/tma4268/6)
+[https://mattelab2024v.math.ntnu.no/c/tma4268/22](https://mattelab2024v.math.ntnu.no/c/tma4268/22)
 
 $~$
 
@@ -410,7 +412,7 @@ $~$
 
 $~$
 
-Log into www.menti.com and use the code 6390 7810.
+Log into www.menti.com use code 3413 8094
 
 <!-- https://www.mentimeter.com/s/502463fe2a5484c36ffc166e1f33ef6b/977df7f3a325 -->
 
@@ -831,11 +833,36 @@ More:
 
 ---
 
-# Example 4: Unsupervised methods (Network clustering)
-\vspace{2mm}
+# Example 3: Unsupervised learning
 
-Finding clusters in protein-protein-interaction networks.
-\vspace{2mm}
+**Q**: What is different in this example?
+
+\pause
+
+  * We do not have a response variable
+  * We are not interested in predicting a particular variable but in determining whther there are groups, or clusters, among the observations.
+
+---  
+
+# Examples of unsupervised learning in practice
+
+
+  * Cancer research: Look for subgroups within the patients or within the genes in
+order to better understand the disease
+
+  * Online shopping site: Identify groups of shoppers as well as groups of items
+within each of those shoppers groups.
+
+  * Search engine: Search only a subset of the documents in order to find the best
+one for retrieval.
+
+  * $\dots$
+<!-- --- -->
+<!-- # Example 4: Unsupervised methods (Network clustering) -->
+<!-- \vspace{2mm} -->
+
+<!-- Finding clusters in protein-protein-interaction networks. -->
+<!-- \vspace{2mm} -->
 
 <!-- ![](muff_etal.png) -->
 

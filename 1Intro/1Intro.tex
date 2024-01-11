@@ -137,6 +137,8 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{footline}[frame number]
 \usepackage{multirow}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
@@ -168,10 +170,10 @@
 \tightlist
 \item
   This course had been built up by Mette Langaas at NTNU in 2018 and
-  2019. I am using a some of her material, and material from her TAs,
-  throughout the course.\\
-  \vspace{2mm} \textbf{I would like to thank Mette for her great work
-  and for the permission to use her material!}
+  2019 and revised by Stefani Muff in 2020-2023. I am using a some of
+  their material, and material from her TAs, throughout the course.\\
+  \vspace{2mm} \textbf{I would like to thank Mette and Steffi for the
+  great work and for the permission to use her material!}
 \end{itemize}
 
 \(~\)
@@ -699,7 +701,7 @@ EL6}
   \hspace{8mm}
 
   Suggested submission deadline:\\
-  \vspace{2mm} \hspace{8mm} ** **.
+  \vspace{2mm} \hspace{8mm} \textbf{Friday 23.02.24 }.
 \end{itemize}
 
 \vspace{8mm}
@@ -712,7 +714,7 @@ EL6}
   \hspace{8mm}
 
   Suggested submission deadline:\\
-  \vspace{2mm} \hspace{8mm}** **.
+  \vspace{2mm} \hspace{8mm}\textbf{Friday 19.04.24 }.
 \end{itemize}
 \end{frame}
 
@@ -763,7 +765,7 @@ the following link (als available from our course page):
 \tightlist
 \item
   Use our discussion forum on Mattelab for all course-relevant
-  questions: \url{https://mattelab2024v.math.ntnu.no/c/tma4268/6}
+  questions: \url{https://mattelab2024v.math.ntnu.no/c/tma4268/22}
 \end{itemize}
 
 \(~\)
@@ -781,7 +783,7 @@ the following link (als available from our course page):
 \protect\hypertarget{who-are-you---and-what-are-your-expectations}{}
 \(~\)
 
-Log into www.menti.com and use the code 6390 7810.
+Log into www.menti.com use code 3413 8094
 \end{frame}
 
 \begin{frame}{Reference group}
@@ -1313,11 +1315,38 @@ Sometimes a non-linear boundary is more suitable.
 More: \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2585023/}
 \end{frame}
 
-\begin{frame}{Example 4: Unsupervised methods (Network clustering)}
-\protect\hypertarget{example-4-unsupervised-methods-network-clustering}{}
-\vspace{2mm}
+\begin{frame}{Example 3: Unsupervised learning}
+\protect\hypertarget{example-3-unsupervised-learning}{}
+\textbf{Q}: What is different in this example?
 
-Finding clusters in protein-protein-interaction networks. \vspace{2mm}
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  We do not have a response variable
+\item
+  We are not interested in predicting a particular variable but in
+  determining whther there are groups, or clusters, among the
+  observations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of unsupervised learning in practice}
+\protect\hypertarget{examples-of-unsupervised-learning-in-practice}{}
+\begin{itemize}
+\item
+  Cancer research: Look for subgroups within the patients or within the
+  genes in order to better understand the disease
+\item
+  Online shopping site: Identify groups of shoppers as well as groups of
+  items within each of those shoppers groups.
+\item
+  Search engine: Search only a subset of the documents in order to find
+  the best one for retrieval.
+\item
+  \(\dots\)
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Plan for rest of the week}

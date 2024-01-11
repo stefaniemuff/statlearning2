@@ -12,13 +12,13 @@ output:
     colortheme: "default"
     font: "serif"
     includes:
-      in_header: header.tex
+      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-#bibliography: refs.bib
+bibliography: ../refs.bib
 header-includes: \usepackage{xcolor}
 
 ---
@@ -46,13 +46,13 @@ set.seed(9)
 
 ```
 
-# Acknowledgements
+<!-- # Acknowledgements -->
 
-* A lot of this material stems from Mette Langaas and her TAs (especiall Julia Debik). I would like to thank Mette for the permission to use her material!
+<!-- * A lot of this material stems from Mette Langaas and her TAs (especiall Julia Debik). I would like to thank Mette for the permission to use her material! -->
 
-* Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
+<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL. -->
 
----
+<!-- --- -->
 
 # Introduction
 
@@ -399,7 +399,7 @@ $~$
 
 Sales of a product, given advertising budgets in different media.
 
-![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.1.pdf)
+![ISLR Figure 2.2](../../ISLR/Figures/Chapter2/2.1.pdf)
 
 
 
@@ -414,7 +414,7 @@ Sales of a product, given advertising budgets in different media.
 Income for given levels of education.
 
 
-![ISLR Figure 2.2](../../ISLR_book/Figure/Chapter2/2.2.pdf)
+![ISLR Figure 2.2](../../ISLR/Figures/Chapter2/2.2.pdf)
 
 
 ---
@@ -456,7 +456,7 @@ There are two quantities which influence the accuracy of $\hat{Y}$ as a predicti
 * The _\textcolor{red}{irreducible error}_ comes from the error term $\varepsilon$ and cannot be reduced by improving $f$. This is related to the unobserved quantities influencing the response and possibly the randomness of the situation.
 
 
-For a given $\hat{f}$ and a set of predictors $X$ which gives $\hat{Y}=\hat{f}(X)$, we have
+For a **given** $\hat{f}$ and a set of predictors $X$ which gives $\hat{Y}=\hat{f}(X)$, we have
 
 $$\text{E}[(Y-\hat{Y})^2] = \underbrace{(f(X)-\hat{f}(X))^2}_{reducible} + \underbrace{\text{Var}(\epsilon)}_{irreducible}$$
 
@@ -681,21 +681,22 @@ Can often give good predictions |Much data are required to estimate (the complex
 **Flexible** methods:
 
 * KNN classification (M4), KNN regression, Smoothing splines (M7)
-* Bagging and boosting (M8), support vector machines (M9)
+* Bagging and boosting (M8 adn M9)
 * Neural networks (M11)
 
 ---
 
 ## Why would I ever prefer an inflexible method?
+
 $~$
 
 Example: Prediction of icome from "Years of Education" and "Seniority"\vspace{2mm}
 
 \centering
-![ISLR Figure 2.4](../../ISLR_book/Figure/Chapter2/2.4.pdf){width=45%}
+![ISLR Figure 2.4](../../ISLR/Figures/Chapter2/2.4.pdf){width=43%}
 
 
-![ISLR Figure 2.6](../../ISLR_book/Figure/Chapter2/2.6.pdf){width=45%}
+![ISLR Figure 2.6](../../ISLR/Figures/Chapter2/2.6.pdf){width=45%}
 
 A linear model vs a perfect fit.
 
@@ -746,9 +747,9 @@ print(p00)
 
 ---
 
-We impose a relationship between reponse $Y$ and covariate $x$
+We impose a relationship between response $Y$ and covariate $x$
 
-$$ Y=x^2 + \varepsilon$$
+$$ Y=x^2 + \epsilon$$
 
 with error (noise) term $\varepsilon\sim N(0,\sigma^2)$ with $\sigma=2$. It is a substitue for all the unobserved variables that are not in our equation, but that might influence $Y$.
 
@@ -1179,7 +1180,7 @@ $\rightarrow$  **Bias-Variance  trade-off**
  
 ---
 
-![ISLR Figure 2.12](../../ISLR_book/Figure/Chapter2/2.12.pdf)
+![ISLR Figure 2.12](../../ISLR/Figures/Chapter2/2.12.pdf)
 
 
 
@@ -1262,6 +1263,16 @@ p
 Overall version (averaging over 61 gridpoints of $x$).
 
 ---
+
+# Main Concepts
+
+  * Prediction and Inference
+  * Reducible and Irreducible Error
+  * Training and Test Set
+  * Bias-Variance Trade off
+
+---
+
 
 # References
 
