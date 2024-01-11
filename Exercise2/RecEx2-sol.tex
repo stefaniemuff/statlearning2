@@ -6,16 +6,19 @@
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -46,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -60,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -69,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -97,10 +100,10 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 2: Recommended Exercises - Solution},
-  pdfauthor={Emma Skarstein, Daesoo Lee, Kenneth Aase, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -115,15 +118,15 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
-\author{Emma Skarstein, Daesoo Lee, Kenneth Aase, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{January 19, 2023}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
+Lee \and Department of Mathematical Sciences, NTNU}
+\date{January 18, 2024}
 
 \begin{document}
 \maketitle
 
-Last changes: 2023-01-10
+Last changes: 2024-01-11
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -132,33 +135,40 @@ Last changes: 2023-01-10
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
+\tightlist
 \item
   Classification
+\end{enumerate}
 
-  Example 1: Cancer diagnostics. Response: cancer (yes/no). Predictors:
-  smoking, age, family history, gene expression ect. Goal: prediction.
+Example 1: Cancer diagnostics. Response: cancer (yes/no). Predictors:
+smoking, age, family history, gene expression ect. Goal: prediction.
 
-  Example 2: Stock market price direction. Response: up/down.
-  Predictors: yesterday's price movement change, two previous days price
-  movement ect. Goal: inference.
+Example 2: Stock market price direction. Response: up/down. Predictors:
+yesterday's price movement change, two previous days price movement ect.
+Goal: inference.
 
-  Example 3: Flower species. Response: species. Predictors: color,
-  height, leafes ect. Goal: prediction
+Example 3: Flower species. Response: species. Predictors: color, height,
+leafes ect. Goal: prediction
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
 \item
   Regression
-
-  Example 1: Illness classification. Response: age of death. Predictors:
-  current age, gender, resting heart rate, resting breath rate ect.
-  Goal: prediction
-
-  Example 2: House price. Response: Price. Predictors: age of house,
-  price of neighbourhood, crime rate, distance to town, distance to
-  school, ect. Goal: prediction
-
-  Example 3: What affects O2-uptake. Response: O2-uptake. Predictors:
-  gender, age, amount of weekly exercise, type of exercise, smoking,
-  heart disease, ect. Goal: inference
 \end{enumerate}
+
+Example 1: Illness classification. Response: age of death. Predictors:
+current age, gender, resting heart rate, resting breath rate ect. Goal:
+prediction
+
+Example 2: House price. Response: Price. Predictors: age of house, price
+of neighbourhood, crime rate, distance to town, distance to school, ect.
+Goal: prediction
+
+Example 3: What affects O2-uptake. Response: O2-uptake. Predictors:
+gender, age, amount of weekly exercise, type of exercise, smoking, heart
+disease, ect. Goal: inference
 
 \hypertarget{problem-2}{%
 \section{Problem 2}\label{problem-2}}
@@ -182,7 +192,7 @@ Last changes: 2023-01-10
 \item
   See figure 2.12. Underfit - low variance - high bias. Overfit - high
   variance - low bias. We wish to find a model that lies somewhere
-  inbetween, with low variance and low bias.
+  inbetween, with low variance \emph{and} low bias.
 \end{enumerate}
 
 \hypertarget{problem-3}{%
@@ -228,22 +238,22 @@ Last changes: 2023-01-10
 \end{Shaded}
 
 \begin{verbatim}
-##       mpg          cylinders      displacement     horsepower        weight      acceleration  
-##  Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613   Min.   : 8.00  
-##  1st Qu.:17.00   1st Qu.:4.000   1st Qu.:105.0   1st Qu.: 75.0   1st Qu.:2225   1st Qu.:13.78  
-##  Median :22.75   Median :4.000   Median :151.0   Median : 93.5   Median :2804   Median :15.50  
-##  Mean   :23.45   Mean   :5.472   Mean   :194.4   Mean   :104.5   Mean   :2978   Mean   :15.54  
-##  3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:275.8   3rd Qu.:126.0   3rd Qu.:3615   3rd Qu.:17.02  
-##  Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140   Max.   :24.80  
-##                                                                                                
-##       year           origin                      name    
-##  Min.   :70.00   Min.   :1.000   amc matador       :  5  
-##  1st Qu.:73.00   1st Qu.:1.000   ford pinto        :  5  
-##  Median :76.00   Median :1.000   toyota corolla    :  5  
-##  Mean   :75.98   Mean   :1.577   amc gremlin       :  4  
-##  3rd Qu.:79.00   3rd Qu.:2.000   amc hornet        :  4  
-##  Max.   :82.00   Max.   :3.000   chevrolet chevette:  4  
-##                                  (Other)           :365
+##       mpg          cylinders      displacement     horsepower        weight    
+##  Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
+##  1st Qu.:17.00   1st Qu.:4.000   1st Qu.:105.0   1st Qu.: 75.0   1st Qu.:2225  
+##  Median :22.75   Median :4.000   Median :151.0   Median : 93.5   Median :2804  
+##  Mean   :23.45   Mean   :5.472   Mean   :194.4   Mean   :104.5   Mean   :2978  
+##  3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:275.8   3rd Qu.:126.0   3rd Qu.:3615  
+##  Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140  
+##                                                                                
+##   acceleration        year           origin                      name    
+##  Min.   : 8.00   Min.   :70.00   Min.   :1.000   amc matador       :  5  
+##  1st Qu.:13.78   1st Qu.:73.00   1st Qu.:1.000   ford pinto        :  5  
+##  Median :15.50   Median :76.00   Median :1.000   toyota corolla    :  5  
+##  Mean   :15.54   Mean   :75.98   Mean   :1.577   amc gremlin       :  4  
+##  3rd Qu.:17.02   3rd Qu.:79.00   3rd Qu.:2.000   amc hornet        :  4  
+##  Max.   :24.80   Max.   :82.00   Max.   :3.000   chevrolet chevette:  4  
+##                                                  (Other)           :365
 \end{verbatim}
 
 The dimensions are 392 observations (rows) of 9 variables (columns). See
@@ -264,7 +274,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{1}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{1}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -274,7 +284,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{3}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -284,7 +294,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{4}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{4}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -294,7 +304,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{5}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -304,7 +314,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{6}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{6}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -314,7 +324,7 @@ predictors are quantitative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{range}\NormalTok{(Auto[,}\DecValTok{7}\NormalTok{])}
+\FunctionTok{range}\NormalTok{(Auto[, }\DecValTok{7}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -327,7 +337,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{quant }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{)}
+\NormalTok{quant }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{)}
 \FunctionTok{sapply}\NormalTok{(Auto[, quant], range)}
 \end{Highlighting}
 \end{Shaded}
@@ -364,7 +374,7 @@ function on the specified columns with a single line of code:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#or}
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{1}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{1}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -374,7 +384,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{3}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -384,7 +394,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{4}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{4}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -394,7 +404,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{5}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -404,7 +414,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{6}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{6}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -414,7 +424,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(Auto[,}\DecValTok{7}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(Auto[, }\DecValTok{7}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -425,7 +435,7 @@ function on the specified columns with a single line of code:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#or}
-\FunctionTok{colMeans}\NormalTok{(Auto[,quant])}
+\FunctionTok{colMeans}\NormalTok{(Auto[, quant])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -449,7 +459,7 @@ function on the specified columns with a single line of code:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#or}
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{1}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{1}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -459,7 +469,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{3}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -469,7 +479,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{4}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{4}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -479,7 +489,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{5}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -489,7 +499,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{6}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{6}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -499,7 +509,7 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sd}\NormalTok{(Auto[,}\DecValTok{7}\NormalTok{])}
+\FunctionTok{sd}\NormalTok{(Auto[, }\DecValTok{7}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -520,7 +530,7 @@ function on the specified columns with a single line of code:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#remove observations}
-\NormalTok{ReducedAuto }\OtherTok{=}\NormalTok{ Auto[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\SpecialCharTok{:}\DecValTok{85}\NormalTok{),]}
+\NormalTok{ReducedAuto }\OtherTok{\textless{}{-}}\NormalTok{ Auto[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\SpecialCharTok{:}\DecValTok{85}\NormalTok{), ]}
 
 \CommentTok{\#range, mean and sd}
 \FunctionTok{sapply}\NormalTok{(ReducedAuto[, quant], range)}
@@ -567,48 +577,24 @@ function on the specified columns with a single line of code:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(GGally)}
-\FunctionTok{ggpairs}\NormalTok{(Auto[,quant]) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## plot: [1,1] [=>-------------------------------------------------------------------------] 3% est: 0s
-## plot: [1,2] [===>-----------------------------------------------------------------------] 6% est: 1s
-## plot: [1,3] [=====>---------------------------------------------------------------------] 8% est: 1s
-## plot: [1,4] [=======>-------------------------------------------------------------------] 11% est: 1s
-## plot: [1,5] [=========>-----------------------------------------------------------------] 14% est: 1s
-## plot: [1,6] [===========>---------------------------------------------------------------] 17% est: 1s
-## plot: [2,1] [==============>------------------------------------------------------------] 19% est: 1s
-## plot: [2,2] [================>----------------------------------------------------------] 22% est: 1s
-## plot: [2,3] [==================>--------------------------------------------------------] 25% est: 1s
-## plot: [2,4] [====================>------------------------------------------------------] 28% est: 1s
-## plot: [2,5] [======================>----------------------------------------------------] 31% est: 1s
-## plot: [2,6] [========================>--------------------------------------------------] 33% est: 1s
-## plot: [3,1] [==========================>------------------------------------------------] 36% est: 1s
-## plot: [3,2] [============================>----------------------------------------------] 39% est: 1s
-## plot: [3,3] [==============================>--------------------------------------------] 42% est: 1s
-## plot: [3,4] [================================>------------------------------------------] 44% est: 1s
-## plot: [3,5] [==================================>----------------------------------------] 47% est: 1s
-## plot: [3,6] [=====================================>-------------------------------------] 50% est: 1s
-## plot: [4,1] [=======================================>-----------------------------------] 53% est: 1s
-## plot: [4,2] [=========================================>---------------------------------] 56% est: 1s
-## plot: [4,3] [===========================================>-------------------------------] 58% est: 1s
-## plot: [4,4] [=============================================>-----------------------------] 61% est: 1s
-## plot: [4,5] [===============================================>---------------------------] 64% est: 1s
-## plot: [4,6] [=================================================>-------------------------] 67% est: 1s
-## plot: [5,1] [===================================================>-----------------------] 69% est: 0s
-## plot: [5,2] [=====================================================>---------------------] 72% est: 0s
-## plot: [5,3] [=======================================================>-------------------] 75% est: 0s
-## plot: [5,4] [=========================================================>-----------------] 78% est: 0s
-## plot: [5,5] [===========================================================>---------------] 81% est: 0s
-## plot: [5,6] [=============================================================>-------------] 83% est: 0s
-## plot: [6,1] [================================================================>----------] 86% est: 0s
-## plot: [6,2] [==================================================================>--------] 89% est: 0s
-## plot: [6,3] [====================================================================>------] 92% est: 0s
-## plot: [6,4] [======================================================================>----] 94% est: 0s
-## plot: [6,5] [========================================================================>--] 97% est: 0s
-## plot: [6,6] [===========================================================================]100% est: 0s
+## Loading required package: ggplot2
 \end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggpairs}\NormalTok{(Auto[, quant]) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \includegraphics{RecEx2-sol_files/figure-latex/unnamed-chunk-7-1.pdf}
 
@@ -635,7 +621,7 @@ trends and correlation) between the pairs: \texttt{mpg} and
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(Auto, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(cylinders), mpg)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill=}\StringTok{"skyblue"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"skyblue"}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"mgp vs cylinders"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
@@ -645,7 +631,7 @@ trends and correlation) between the pairs: \texttt{mpg} and
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(Auto, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(origin), mpg)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill=}\StringTok{"skyblue"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"skyblue"}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"mgp vs origin"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
@@ -669,8 +655,8 @@ per gallon (mpg) seems to depend on these two variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{covMat }\OtherTok{=} \FunctionTok{cov}\NormalTok{(Auto[,quant])}
-\NormalTok{covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]))}
+\NormalTok{covMat }\OtherTok{\textless{}{-}} \FunctionTok{cov}\NormalTok{(Auto[, quant])}
+\NormalTok{covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -680,7 +666,7 @@ per gallon (mpg) seems to depend on these two variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{]))}
+\NormalTok{covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -690,7 +676,7 @@ per gallon (mpg) seems to depend on these two variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{]))}
+\NormalTok{covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(covMat[}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{]))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -700,18 +686,25 @@ per gallon (mpg) seems to depend on these two variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{cor}\NormalTok{(Auto[,quant])}
+\FunctionTok{cor}\NormalTok{(Auto[, quant])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##                     mpg displacement horsepower     weight acceleration       year
-## mpg           1.0000000   -0.8051269 -0.7784268 -0.8322442    0.4233285  0.5805410
-## displacement -0.8051269    1.0000000  0.8972570  0.9329944   -0.5438005 -0.3698552
-## horsepower   -0.7784268    0.8972570  1.0000000  0.8645377   -0.6891955 -0.4163615
-## weight       -0.8322442    0.9329944  0.8645377  1.0000000   -0.4168392 -0.3091199
-## acceleration  0.4233285   -0.5438005 -0.6891955 -0.4168392    1.0000000  0.2903161
-## year          0.5805410   -0.3698552 -0.4163615 -0.3091199    0.2903161  1.0000000
+##                     mpg displacement horsepower     weight acceleration
+## mpg           1.0000000   -0.8051269 -0.7784268 -0.8322442    0.4233285
+## displacement -0.8051269    1.0000000  0.8972570  0.9329944   -0.5438005
+## horsepower   -0.7784268    0.8972570  1.0000000  0.8645377   -0.6891955
+## weight       -0.8322442    0.9329944  0.8645377  1.0000000   -0.4168392
+## acceleration  0.4233285   -0.5438005 -0.6891955 -0.4168392    1.0000000
+## year          0.5805410   -0.3698552 -0.4163615 -0.3091199    0.2903161
+##                    year
+## mpg           0.5805410
+## displacement -0.3698552
+## horsepower   -0.4163615
+## weight       -0.3091199
+## acceleration  0.2903161
+## year          1.0000000
 \end{verbatim}
 
 We see that the obtained correlations coincide with the given elements
@@ -730,19 +723,22 @@ in the correlation matrix.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# simulate 1000 values from the multivariate normal distribution with mean = c(2,3) and cov(1,0,0,1)}
+\CommentTok{\# Simulate 1000 values from the multivariate normal distribution 4 times, with }
+\CommentTok{\# 4 different covariance matrices}
 \FunctionTok{library}\NormalTok{(MASS)}
-\NormalTok{set1 }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{, }\AttributeTok{mu=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)))}
-\FunctionTok{colnames}\NormalTok{(set1) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{mu }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{set1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(n, mu, }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)))}
+\FunctionTok{colnames}\NormalTok{(set1) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
 
-\NormalTok{set2 }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{, }\AttributeTok{mu=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)))}
-\FunctionTok{colnames}\NormalTok{(set2) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
+\NormalTok{set2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(n, mu, }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)))}
+\FunctionTok{colnames}\NormalTok{(set2) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
 
-\NormalTok{set3 }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{, }\AttributeTok{mu=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)))}
-\FunctionTok{colnames}\NormalTok{(set3) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
+\NormalTok{set3 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(n, mu, }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)))}
+\FunctionTok{colnames}\NormalTok{(set3) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
 
-\NormalTok{set4 }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{, }\AttributeTok{mu=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)))}
-\FunctionTok{colnames}\NormalTok{(set4) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
+\NormalTok{set4 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{mvrnorm}\NormalTok{(n, mu, }\AttributeTok{Sigma =} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)))}
+\FunctionTok{colnames}\NormalTok{(set4) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"x1"}\NormalTok{, }\StringTok{"x2"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -758,10 +754,26 @@ in the correlation matrix.
 \begin{Highlighting}[]
 \CommentTok{\#install.packages("patchwork")}
 \FunctionTok{library}\NormalTok{(patchwork)}
-\NormalTok{p1 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(set1, }\FunctionTok{aes}\NormalTok{(x1,x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set1"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p2 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(set2, }\FunctionTok{aes}\NormalTok{(x1,x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set2"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p3 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(set3, }\FunctionTok{aes}\NormalTok{(x1,x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set3"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p4 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(set4, }\FunctionTok{aes}\NormalTok{(x1,x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set4"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'patchwork'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:MASS':
+## 
+##     area
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set1, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set1"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set2, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set2"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set3, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set3"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set4, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set4"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
 \NormalTok{(p1 }\SpecialCharTok{+}\NormalTok{ p2) }\SpecialCharTok{/}\NormalTok{ (p3 }\SpecialCharTok{+}\NormalTok{ p4)}
 \end{Highlighting}
 \end{Shaded}
@@ -791,24 +803,33 @@ in the correlation matrix.
 \NormalTok{nord }\OtherTok{\textless{}{-}} \DecValTok{20} \CommentTok{\# order of polynomials}
 
 \CommentTok{\#{-}{-}{-}{-}{-}{-}}
-
-\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\AttributeTok{to =} \DecValTok{4}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{) }\CommentTok{\#We make a sequence of 61 points, x. These are the points for which we evaluate the function f(x).}
+\CommentTok{\# We make a sequence of 61 points, x.}
+\CommentTok{\# These are the points for which we evaluate the function f(x).}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\AttributeTok{to =} \DecValTok{4}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{) }
 
 \NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
-  \FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\CommentTok{\#The true f(x)=x\^{}2. }
+  \FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\CommentTok{\# The true f(x)=x\^{}2. }
 \NormalTok{\}}
-\NormalTok{true\_y }\OtherTok{\textless{}{-}} \FunctionTok{truefunc}\NormalTok{(x) }\CommentTok{\#We find f(x) for each element in vector x.}
+
+\CommentTok{\# We find f(x) for each element in vector x.}
+\NormalTok{true\_y }\OtherTok{\textless{}{-}} \FunctionTok{truefunc}\NormalTok{(x) }
+
+\CommentTok{\# Noise (epsilon) is sampled from a normal distribution and stored in this matrix.}
+\CommentTok{\# Each column corresponds to one value of x.}
 \NormalTok{error }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{*}\NormalTok{ M, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{),}
                 \AttributeTok{nrow =}\NormalTok{ M,}
-                \AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\#Noise (epsilon) is sampled from a normal distribution and stored in this matrix. Each column corresponds to one value of x.}
-\NormalTok{ymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow =}\NormalTok{ T, }\AttributeTok{nrow =}\NormalTok{ M) }\SpecialCharTok{+}\NormalTok{ error  }\CommentTok{\#The 100 samples or the observations are stored in this matrix. Each row is a simulation.}
+                \AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{) }
+
+\CommentTok{\# The 100 samples or the observations are stored in this matrix. Each row is a simulation.}
+\NormalTok{ymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ M) }\SpecialCharTok{+}\NormalTok{ error}
 
 \CommentTok{\#{-}{-}{-}{-}{-}{-}}
-
+\CommentTok{\# Based on the response y\_i and the x\_i\textquotesingle{}s, we fit a polynomial model of degree}
+\CommentTok{\# 1, ..., 20. This means that we assume y\_i\textasciitilde{}Normal(x\_i\^{}j,0). }
 \NormalTok{predictions\_list }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, matrix, }\AttributeTok{data =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{ncol =} \FunctionTok{ncol}\NormalTok{(ymat))}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord)\{}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M)\{}
-\NormalTok{    predictions\_list[[i]][j, ] }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\FunctionTok{lm}\NormalTok{(ymat[j,] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x, i, }\AttributeTok{raw =} \ConstantTok{TRUE}\NormalTok{))) }\CommentTok{\#Based on the response y\_i and the x\_i\textquotesingle{}s, we fit a polynomial model of degre 1,...,20. This means that we assume y\_i\textasciitilde{}Normal(x\_i\^{}j,0). }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord) \{}
+  \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
+\NormalTok{    predictions\_list[[i]][j, ] }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\FunctionTok{lm}\NormalTok{(ymat[j, ] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x, i, }\AttributeTok{raw =} \ConstantTok{TRUE}\NormalTok{))) }
 \NormalTok{  \}}
 \NormalTok{\}}
 
@@ -819,9 +840,11 @@ in the correlation matrix.
 
 \NormalTok{list\_of\_matrices\_with\_deg\_id }\OtherTok{\textless{}{-}} 
   \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }
-         \ControlFlowTok{function}\NormalTok{(poly\_degree)\{}\FunctionTok{cbind}\NormalTok{(predictions\_list[[poly\_degree]], }
-                                     \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M, poly\_degree)\}}
-\NormalTok{         )}
+         \ControlFlowTok{function}\NormalTok{(poly\_degree) \{}
+           \FunctionTok{cbind}\NormalTok{(predictions\_list[[poly\_degree]], }
+                 \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M, poly\_degree)}
+\NormalTok{         \}}
+\NormalTok{  )}
 \CommentTok{\# Now predictions\_list is a list with 20 entries, where each entry is a matrix }
 \CommentTok{\# with 100 rows, where each row is the predicted polynomial of that degree.}
 \CommentTok{\# We also have a column for the simulation number, and a column for polynomial degree.}
@@ -841,9 +864,9 @@ in the correlation matrix.
 
 \CommentTok{\# Now we can use ggplot2!}
 \CommentTok{\# We just want to plot for degrees 1, 2, 10 and 20.}
-
-\NormalTok{plotting\_df }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(long\_predictions\_df, }\AttributeTok{x =}\NormalTok{ x) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# adding the x{-}vector to the dataframe}
-  \FunctionTok{filter}\NormalTok{(poly\_degree }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{)) }\CommentTok{\# Select only the predictions using degree 1, 2, 10 or 20}
+\CommentTok{\# Add x{-}vector to dataframe:}
+\NormalTok{plotting\_df }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(long\_predictions\_df, }\AttributeTok{x =}\NormalTok{ x) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(poly\_degree }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{)) }\CommentTok{\# Keep only the predictions for some degrees}
 
 \FunctionTok{ggplot}\NormalTok{(plotting\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{group =}\NormalTok{ simulation\_num)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ simulation\_num)) }\SpecialCharTok{+}
@@ -879,44 +902,51 @@ predictions when assuming \(y\) is a function of polynomials up to
 \NormalTok{nord }\OtherTok{\textless{}{-}} \DecValTok{20}
 
 \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\AttributeTok{to =} \DecValTok{4}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
-\NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
   \FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \NormalTok{\}}
 \NormalTok{true\_y }\OtherTok{\textless{}{-}} \FunctionTok{truefunc}\NormalTok{(x)}
-\NormalTok{error }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{length}\NormalTok{(x)}\SpecialCharTok{*}\NormalTok{M, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{testerror }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{length}\NormalTok{(x)}\SpecialCharTok{*}\NormalTok{M, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{ymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow =}\NormalTok{ T, }\AttributeTok{nrow =}\NormalTok{ M) }\SpecialCharTok{+}\NormalTok{ error}
-\NormalTok{testymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow=}\NormalTok{T, }\AttributeTok{nrow=}\NormalTok{M) }\SpecialCharTok{+}\NormalTok{ testerror}
+\NormalTok{error }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{*}\NormalTok{ M, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{testerror }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{length}\NormalTok{(x) }\SpecialCharTok{*}\NormalTok{ M, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{), }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{ymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ M) }\SpecialCharTok{+}\NormalTok{ error}
+\NormalTok{testymat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, M), }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ M) }\SpecialCharTok{+}\NormalTok{ testerror}
 
 \NormalTok{predictions\_list }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, matrix, }\AttributeTok{data =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ M, }\AttributeTok{ncol =} \FunctionTok{ncol}\NormalTok{(ymat))}
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord)\{}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M)\{}
-\NormalTok{    predictions\_list[[i]][j, ] }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\FunctionTok{lm}\NormalTok{(ymat[j,] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x, i, }\AttributeTok{raw =} \ConstantTok{TRUE}\NormalTok{)))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord) \{}
+  \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M) \{}
+\NormalTok{    predictions\_list[[i]][j, ] }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\FunctionTok{lm}\NormalTok{(ymat[j, ] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x, i, }\AttributeTok{raw =} \ConstantTok{TRUE}\NormalTok{)))}
 \NormalTok{  \}}
 \NormalTok{\}}
 
 \NormalTok{trainMSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }
-                   \ControlFlowTok{function}\NormalTok{(poly\_degree)\{}
-                     \FunctionTok{rowMeans}\NormalTok{((predictions\_list[[poly\_degree]] }\SpecialCharTok{{-}}\NormalTok{ ymat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)\}}
-\NormalTok{                   )}
+                   \ControlFlowTok{function}\NormalTok{(poly\_degree) \{}
+                     \FunctionTok{rowMeans}\NormalTok{((predictions\_list[[poly\_degree]] }\SpecialCharTok{{-}}\NormalTok{ ymat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{                   \}}
+\NormalTok{)}
 \NormalTok{testMSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }
-                  \ControlFlowTok{function}\NormalTok{(poly\_degree)\{}
-                    \FunctionTok{rowMeans}\NormalTok{((predictions\_list[[poly\_degree]] }\SpecialCharTok{{-}}\NormalTok{ testymat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)\}}
-\NormalTok{                  )}
+                  \ControlFlowTok{function}\NormalTok{(poly\_degree) \{}
+                    \FunctionTok{rowMeans}\NormalTok{((predictions\_list[[poly\_degree]] }\SpecialCharTok{{-}}\NormalTok{ testymat)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{                  \}}
+\NormalTok{)}
 
 \CommentTok{\# Plotting {-}{-}{-}{-}{-}}
 \FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# The tidyverse contains ggplot2, as well as tidyr and dplyr, }
 \CommentTok{\# which we can use for dataframe manipulation.}
 
-\CommentTok{\# Convert each matrix in the list form wide to long (because that is the best format for ggplot2)}
-\NormalTok{list\_train\_MSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\ControlFlowTok{function}\NormalTok{(poly\_degree) }\FunctionTok{cbind}\NormalTok{(}\AttributeTok{error =}\NormalTok{ trainMSE[[poly\_degree]], }
-\NormalTok{                                                             poly\_degree, }
-                                                             \AttributeTok{error\_type =} \StringTok{"train"}\NormalTok{,}
-                                                             \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M))}
-\NormalTok{list\_test\_MSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\ControlFlowTok{function}\NormalTok{(poly\_degree) }\FunctionTok{cbind}\NormalTok{(}\AttributeTok{error =}\NormalTok{ testMSE[[poly\_degree]], }
-\NormalTok{                                                            poly\_degree, }
-                                                            \AttributeTok{error\_type =} \StringTok{"test"}\NormalTok{, }
-                                                            \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M))}
+\CommentTok{\# Convert each matrix in the list form wide to long }
+\CommentTok{\# (because that is the best format for ggplot2)}
+\NormalTok{list\_train\_MSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\ControlFlowTok{function}\NormalTok{(poly\_degree) \{}
+  \FunctionTok{cbind}\NormalTok{(}\AttributeTok{error =}\NormalTok{ trainMSE[[poly\_degree]], }
+\NormalTok{        poly\_degree, }
+        \AttributeTok{error\_type =} \StringTok{"train"}\NormalTok{,}
+        \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M)}
+\NormalTok{\})}
+\NormalTok{list\_test\_MSE }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\ControlFlowTok{function}\NormalTok{(poly\_degree) \{}
+  \FunctionTok{cbind}\NormalTok{(}\AttributeTok{error =}\NormalTok{ testMSE[[poly\_degree]], }
+\NormalTok{        poly\_degree, }
+        \AttributeTok{error\_type =} \StringTok{"test"}\NormalTok{, }
+        \AttributeTok{simulation\_num =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{M)}
+\NormalTok{\})}
 
 \CommentTok{\# Now predictions\_list is a list with 20 entries, where each entry is a matrix }
 \CommentTok{\# with 100 rows, where each row is the predicted polynomial of that degree.}
@@ -938,7 +968,8 @@ predictions when assuming \(y\) is a function of polynomials up to
 \NormalTok{stacked\_errors\_df}\SpecialCharTok{$}\NormalTok{simulation\_num }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(stacked\_errors\_df}\SpecialCharTok{$}\NormalTok{simulation\_num)}
 \NormalTok{stacked\_errors\_df}\SpecialCharTok{$}\NormalTok{poly\_degree }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(stacked\_errors\_df}\SpecialCharTok{$}\NormalTok{poly\_degree)}
 
-\NormalTok{p.all\_lines }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ stacked\_errors\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ poly\_degree, }\AttributeTok{y =}\NormalTok{ error, }\AttributeTok{group =}\NormalTok{ simulation\_num)) }\SpecialCharTok{+}
+\NormalTok{p.all\_lines }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ stacked\_errors\_df,}
+                      \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ poly\_degree, }\AttributeTok{y =}\NormalTok{ error, }\AttributeTok{group =}\NormalTok{ simulation\_num)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ simulation\_num)) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ error\_type) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Polynomial degree"}\NormalTok{) }\SpecialCharTok{+}
@@ -963,7 +994,8 @@ predictions when assuming \(y\) is a function of polynomials up to
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'error_type'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'error_type'. You can override using the
+## `.groups` argument.
 \end{verbatim}
 
 \begin{Shaded}
@@ -1015,17 +1047,19 @@ overfitted model that performs bad for test data.
 \begin{Highlighting}[]
 \NormalTok{meanmat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(x), }\AttributeTok{nrow =}\NormalTok{ nord)}
 \NormalTok{varmat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(x), }\AttributeTok{nrow =}\NormalTok{ nord)}
-\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord)\{}
-\NormalTok{  meanmat[j,] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(predictions\_list[[j]], }\DecValTok{2}\NormalTok{, mean) }\CommentTok{\# we now take the mean over the M simulations {-} to mimic E and Var at each x value and each poly model}
-\NormalTok{  varmat[j,] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(predictions\_list[[j]], }\DecValTok{2}\NormalTok{, var)}
+\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nord) \{}
+  \CommentTok{\# We now take the mean over the M simulations }
+  \CommentTok{\# {-} to mimic E and Var at each x value and each poly model}
+\NormalTok{  meanmat[j, ] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(predictions\_list[[j]], }\DecValTok{2}\NormalTok{, mean) }
+\NormalTok{  varmat[j, ] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(predictions\_list[[j]], }\DecValTok{2}\NormalTok{, var)}
 \NormalTok{\}}
 
-\CommentTok{\# nord times length(x)}
-\NormalTok{bias2mat }\OtherTok{\textless{}{-}}\NormalTok{ (meanmat }\SpecialCharTok{{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, nord), }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ nord))}\SpecialCharTok{\^{}}\DecValTok{2} \CommentTok{\#here the truth is finally used!}
+\CommentTok{\# Here the truth is finally used!}
+\NormalTok{bias2mat }\OtherTok{\textless{}{-}}\NormalTok{ (meanmat }\SpecialCharTok{{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rep}\NormalTok{(true\_y, nord), }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{nrow =}\NormalTok{ nord))}\SpecialCharTok{\^{}}\DecValTok{2} 
 
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rep}\NormalTok{(x, }\AttributeTok{each =}\NormalTok{ nord), }\AttributeTok{poly\_degree =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\FunctionTok{length}\NormalTok{(x)), }
                  \AttributeTok{bias2 =} \FunctionTok{c}\NormalTok{(bias2mat), }\AttributeTok{variance =} \FunctionTok{c}\NormalTok{(varmat), }
-                 \AttributeTok{irreducible\_error =} \FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\FunctionTok{prod}\NormalTok{(}\FunctionTok{dim}\NormalTok{(varmat)))) }\CommentTok{\#irr is just 1}
+                 \AttributeTok{irreducible\_error =} \FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\FunctionTok{prod}\NormalTok{(}\FunctionTok{dim}\NormalTok{(varmat)))) }\CommentTok{\# irr is just 1}
 
 \NormalTok{df}\SpecialCharTok{$}\NormalTok{total }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{bias2 }\SpecialCharTok{+}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{variance }\SpecialCharTok{+}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{irreducible\_error}
 
@@ -1090,7 +1124,7 @@ Compare to Figures in 2.12 on page 36 in ISL (our textbook).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{truefunc}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1098,7 +1132,7 @@ by for example
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{truefunc}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)}
+\NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1106,7 +1140,7 @@ or
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{truefunc}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(}\FunctionTok{exp}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{x))}
+\NormalTok{truefunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{return}\NormalTok{(}\FunctionTok{exp}\NormalTok{(}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ x))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1115,11 +1149,7 @@ and rerun the code. Study the results.
 If you want to set the variance to 1 for example, set \(sd=1\) in these
 parts of the code in 2a and 2b:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{rnorm(length(x)*M, mean=0, sd=1)}
-\end{Highlighting}
-\end{Shaded}
+\texttt{\{r\ rnorm(length(x)*M,\ mean=0,\ sd=1)}
 
 Also change the following part in 2c:
 
@@ -1127,7 +1157,7 @@ Also change the following part in 2c:
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rep}\NormalTok{(x, }\AttributeTok{each =}\NormalTok{ nord), }\AttributeTok{poly\_degree =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{nord, }\FunctionTok{length}\NormalTok{(x)), }
                  \AttributeTok{bias2 =} \FunctionTok{c}\NormalTok{(bias2mat), }\AttributeTok{variance =} \FunctionTok{c}\NormalTok{(varmat), }
-                 \AttributeTok{irreducible\_error =} \FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\FunctionTok{prod}\NormalTok{(}\FunctionTok{dim}\NormalTok{(varmat)))) }\CommentTok{\#irr is just 1}
+                 \AttributeTok{irreducible\_error =} \FunctionTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, }\FunctionTok{prod}\NormalTok{(}\FunctionTok{dim}\NormalTok{(varmat)))) }\CommentTok{\# irr is just 1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1159,10 +1189,10 @@ first install the following packages (only once).
 \end{Shaded}
 
 \begin{verbatim}
-##   forcats   stringr     dplyr     purrr     readr     tidyr    tibble tidyverse patchwork      MASS 
-##   "0.5.2"   "1.4.1"  "1.0.10"   "0.3.5"   "2.1.3"   "1.2.1"   "3.1.8"   "1.3.2"   "1.1.2"  "7.3-57" 
-##    GGally   ggplot2      ISLR     knitr 
-##   "2.1.2"   "3.3.6"     "1.4"    "1.40"
+##    forcats    stringr      dplyr      purrr      readr      tidyr     tibble 
+##    "0.5.2"    "1.5.0"    "1.1.2"    "1.0.1"    "2.1.3"    "1.3.0"    "3.2.1" 
+##  tidyverse  patchwork       MASS     GGally    ggplot2       ISLR 
+##    "1.3.2"    "1.1.2" "7.3-58.2"    "2.1.2"    "3.4.2"      "1.4"
 \end{verbatim}
 
 \end{document}
