@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 4: Classification"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "January 31 and February 3rd, 2022"
+date: "January 31 and February 3rd, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
