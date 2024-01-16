@@ -747,7 +747,7 @@ print(p00)
 
 ---
 
-We impose a relationship between response $Y$ and covariate $x$
+We know that the true data generating model consist in a quadratic relationship between response $Y$ and covariate $x$
 
 $$ Y=x^2 + \epsilon$$
 
@@ -766,17 +766,25 @@ print(p0)
 
 ---
 
-Try to fit a function to the observations _without_ knowing the true relationship:
+Try to fit a function to the observations _assuming we do not know_  the true relationship:
 
 $~$
 
-*  **poly1**: Simple linear model of the form $\beta_0+\beta_1 x$ fitted to the observations.  _Underfits_ the data. 
+*  **poly1**: Simple linear model of the form $\beta_0+\beta_1 x$ fitted to the observations.  
 
-* **poly2**: Quadratic polynomial fit to the data, of the form $\beta_0+\beta_1 x +\beta_2 x^2$. This fits well.
+<!-- _Underfits_ the data. -->
 
-* **poly10**: Polynomial of degree 10 fit of the form $\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{10}x^{10}$ _Overfits_ the data.
+* **poly2**: Quadratic polynomial fit to the data, of the form $\beta_0+\beta_1 x +\beta_2 x^2$. 
 
-* **poly20**: Polynomial of degree 10 fit of the form $\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{20}x^{20}$ _Overfits_ the data.
+<!-- This fits well. -->
+
+* **poly10**: Polynomial of degree 10 fit of the form $\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{10}x^{10}$
+
+<!-- _Overfits_ the data. -->
+
+* **poly20**: Polynomial of degree 10 fit of the form $\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{20}x^{20}$ 
+
+<!-- _Overfits_ the data. -->
 
 
 ---
@@ -827,7 +835,19 @@ The quality of fit can be measures as the *Training MSE* (mean squared error), u
 $$ \text{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2$$
 $~$
 
+---
 
+## What is the training MSE?
+
+```{r ,echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center"}
+p1 = ggplot(data= data, aes(x = x, y=y)) +geom_point(size=0.7) + geom_line(aes(x=x, y=predict(lm(y~x))), col="red")+ggtitle("poly1")+theme_minimal()
+p2 = ggplot(data= data, aes(x = x, y=y)) +geom_point(size=0.7) + geom_line(aes(x=x, y=predict(lm(y~poly(x,2)))), col="orange")+ggtitle("poly2")+theme_minimal()
+p3 =  ggplot(data= data, aes(x = x, y=y)) +geom_point(size=0.7) + geom_line(aes(x=x, y=predict(lm(y~poly(x, 10)))), col="pink")+ggtitle("poly10")+theme_minimal()
+p4 =  ggplot(data= data, aes(x = x, y=y)) +geom_point(size=0.7) + geom_line(aes(x=x, y=predict(lm(y~poly(x, 20)))), col="purple")+ggtitle("poly20")+theme_minimal()
+
+ggarrange(p1,p2,p3, p4)
+
+```
 
 
 ---
@@ -926,6 +946,23 @@ $$ \text{MSE}_{\text{test}}=\frac{1}{n_0}\sum_{j=1}^{n_0} (y_{0j}-\hat{f}(x_{0j}
 * Alternative notation:
 $$\text{Ave}(y_0-\hat{f}(x_0))^2$$
 (taking the average over all available test observations).
+
+---
+
+## What is the test MSE?
+
+```{r ,echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center"}
+data0 = data.frame(x0 = runif(50, min = -2, max = 4))
+data0$y0 =  data0$x0^2 + rnorm(50, sd = 2)
+
+p1 = ggplot() +geom_point(data = data0, aes(x0,y0), size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~x))), col="red")+ggtitle("poly1")+theme_minimal()
+p2 = ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x,2)))), col="orange")+ggtitle("poly2")+theme_minimal()
+p3 =  ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 10)))), col="pink")+ggtitle("poly10")+theme_minimal()
+p4 =  ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 20)))), col="purple")+ggtitle("poly20")+theme_minimal()
+
+ggarrange(p1,p2,p3, p4)
+
+```
 
 ---
 
@@ -1274,7 +1311,7 @@ Overall version (averaging over 61 gridpoints of $x$).
 ---
 
 
-# References
+<!-- # References -->
 
 <!-- # Classification (ev to be removed, with reference to see Module 4!!) -->
 

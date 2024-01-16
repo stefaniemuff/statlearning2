@@ -846,7 +846,8 @@ Consider a covariate \(x\) observed between \(x=-2, \ldots , 4\) and
 \end{frame}
 
 \begin{frame}
-We impose a relationship between response \(Y\) and covariate \(x\)
+We know that the true data generating model consist in a quadratic
+relationship between response \(Y\) and covariate \(x\)
 
 \[ Y=x^2 + \epsilon\]
 
@@ -868,26 +869,37 @@ are not in our equation, but that might influence \(Y\).
 \end{frame}
 
 \begin{frame}
-Try to fit a function to the observations \emph{without} knowing the
-true relationship:
+Try to fit a function to the observations \emph{assuming we do not know}
+the true relationship:
 
 \(~\)
 
 \begin{itemize}
+\tightlist
 \item
   \textbf{poly1}: Simple linear model of the form \(\beta_0+\beta_1 x\)
-  fitted to the observations. \emph{Underfits} the data.
+  fitted to the observations.
+\end{itemize}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{poly2}: Quadratic polynomial fit to the data, of the form
-  \(\beta_0+\beta_1 x +\beta_2 x^2\). This fits well.
+  \(\beta_0+\beta_1 x +\beta_2 x^2\).
+\end{itemize}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{poly10}: Polynomial of degree 10 fit of the form
   \(\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{10}x^{10}\)
-  \emph{Overfits} the data.
+\end{itemize}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{poly20}: Polynomial of degree 10 fit of the form
   \(\beta_0+\beta_1 x +\beta_2 x^2+\cdots +\beta_{20}x^{20}\)
-  \emph{Overfits} the data.
 \end{itemize}
 \end{frame}
 
@@ -936,6 +948,13 @@ squared error), using the data that were used to estimate \(f\):
 
 \[ \text{MSE}_{\text{train}}=\frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2\]
 \(~\)
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{What is the training MSE?}
+\protect\hypertarget{what-is-the-training-mse}{}
+\begin{center}\includegraphics{2StatLearn.1_files/figure-beamer/unnamed-chunk-3-1} \end{center}
 \end{block}
 \end{frame}
 
@@ -1009,6 +1028,13 @@ best?
   Alternative notation: \[\text{Ave}(y_0-\hat{f}(x_0))^2\] (taking the
   average over all available test observations).
 \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{What is the test MSE?}
+\protect\hypertarget{what-is-the-test-mse}{}
+\begin{center}\includegraphics{2StatLearn.1_files/figure-beamer/unnamed-chunk-4-1} \end{center}
 \end{block}
 \end{frame}
 
@@ -1283,8 +1309,7 @@ Overall version (averaging over 61 gridpoints of \(x\)).
 \end{itemize}
 \end{frame}
 
-\begin{frame}{References}
-\protect\hypertarget{references}{}
+\begin{frame}
 \end{frame}
 
 \end{document}
