@@ -27,6 +27,7 @@ header-includes: \usepackage{xcolor}
 showsolA<-TRUE
 showsolB<-TRUE
 library(knitr)
+library(patchwork)
 opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
 knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
                       cache=TRUE, size="scriptsize")
@@ -952,16 +953,23 @@ $$\text{Ave}(y_0-\hat{f}(x_0))^2$$
 ## What is the test MSE?
 
 ```{r ,echo=FALSE, fig.width=5.5, fig.height=4,fig.align = "center"}
-data0 = data.frame(x0 = runif(50, min = -2, max = 4))
+data0 = data.frame( x0 = runif(50, min = -2, max = 4))
 data0$y0 =  data0$x0^2 + rnorm(50, sd = 2)
 
-p1 = ggplot() +geom_point(data = data0, aes(x0,y0), size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~x))), col="red")+ggtitle("poly1")+theme_minimal()
-p2 = ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x,2)))), col="orange")+ggtitle("poly2")+theme_minimal()
-p3 =  ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 10)))), col="pink")+ggtitle("poly10")+theme_minimal()
-p4 =  ggplot() +geom_point(data = data0, aes(x0,y0),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 20)))), col="purple")+ggtitle("poly20")+theme_minimal()
+p1 = ggplot() + geom_point(data = data, aes(x,y, color = "training"), size=0.7, alpha = 0.4) + 
+  geom_point(data = data0, aes(x0,y0, color = "test"), size=1) + 
+  geom_line(data = data, aes(x=x, y=predict(lm(y~x))), col="red")+ggtitle("poly1")+theme_minimal()
 
-ggarrange(p1,p2,p3, p4)
+p2 = ggplot() + geom_point(data = data, aes(x,y, color = "training"), size=0.7, alpha = 0.4) +
+  geom_point(data = data0, aes(x0,y0, color = "test"),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x,2)))), col="orange")+ggtitle("poly2")+theme_minimal()
 
+p3 =  ggplot() + geom_point(data = data, aes(x,y, color = "training"), size=0.7, alpha = 0.4) +
+  geom_point(data = data0, aes(x0,y0, color = "test"),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 10)))), col="pink")+ggtitle("poly10")+theme_minimal()
+
+p4 =  ggplot() + geom_point(data = data, aes(x,y, color = "training"), size=0.7, alpha = 0.4) +
+  geom_point(data = data0, aes(x0,y0, color = "test"),size=0.7) + geom_line(data = data, aes(x=x, y=predict(lm(y~poly(x, 20)))), col="purple")+ggtitle("poly20")+theme_minimal()
+
+p1+ p2 + p3 + p4 + plot_layout(guides = "collect")
 ```
 
 ---
