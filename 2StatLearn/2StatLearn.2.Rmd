@@ -32,7 +32,8 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 # Message
 
-We need reference group members!!
+- We need reference group members!!
+- Groups
 
 
 
