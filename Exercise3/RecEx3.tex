@@ -6,16 +6,19 @@
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -46,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -60,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -69,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -97,10 +100,10 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 3: Recommended Exercises},
-  pdfauthor={Kenneth Aase, Emma Skarstein, Daesoo Lee, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -115,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
-\author{Kenneth Aase, Emma Skarstein, Daesoo Lee, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{January 26, 2023}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
+Lee \and Department of Mathematical Sciences, NTNU}
+\date{January 25, 2024}
 
 \begin{document}
 \maketitle
@@ -273,10 +276,10 @@ the QQ plot. Use the following code to repeat this six times:
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
 
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)\{}
-\NormalTok{  sim }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
-  \FunctionTok{qqnorm}\NormalTok{(sim, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
-  \FunctionTok{qqline}\NormalTok{(sim, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{1}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) \{}
+\NormalTok{    sim }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
+    \FunctionTok{qqnorm}\NormalTok{(sim, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
+    \FunctionTok{qqline}\NormalTok{(sim, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{1}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -349,25 +352,27 @@ confidence interval. Study and fill in the code where is needed
 \begin{Highlighting}[]
 \NormalTok{beta0 }\OtherTok{\textless{}{-}}\NormalTok{ ...}
 \NormalTok{beta1 }\OtherTok{\textless{}{-}}\NormalTok{ ...}
-\NormalTok{true\_beta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(beta0, beta1) }\CommentTok{\# vector of model coefficients}
-\NormalTok{true\_sd }\OtherTok{\textless{}{-}} \DecValTok{1} \CommentTok{\# choosing true sd}
+\NormalTok{true\_beta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(beta0, beta1)  }\CommentTok{\# vector of model coefficients}
+\NormalTok{true\_sd }\OtherTok{\textless{}{-}} \DecValTok{1}  \CommentTok{\# choosing true sd}
 \NormalTok{nobs }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(nobs, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{\# simulate the predictor variable X}
-\NormalTok{Xmat }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{X, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(X)) }\CommentTok{\# create design matrix}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(nobs, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)  }\CommentTok{\# simulate the predictor variable X}
+\NormalTok{Xmat }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{X, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(X))  }\CommentTok{\# create design matrix}
 
-\CommentTok{\# Count how many times the true value is within the confidence interval}
+\CommentTok{\# Count how many times the true value is within the confidence}
+\CommentTok{\# interval}
 \NormalTok{ci\_int }\OtherTok{\textless{}{-}}\NormalTok{ ci\_x }\OtherTok{\textless{}{-}} \DecValTok{0}
 \NormalTok{nsim }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nsim)\{}
-\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ nobs, }\AttributeTok{mean =}\NormalTok{ Xmat }\SpecialCharTok{\%*\%}\NormalTok{ true\_beta, }\AttributeTok{sd =} \FunctionTok{rep}\NormalTok{(true\_sd, nobs))}
-\NormalTok{  mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{x =}\NormalTok{ X))}
-\NormalTok{  ci }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(mod)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nsim) \{}
+\NormalTok{    y }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ nobs, }\AttributeTok{mean =}\NormalTok{ Xmat }\SpecialCharTok{\%*\%}\NormalTok{ true\_beta, }\AttributeTok{sd =} \FunctionTok{rep}\NormalTok{(true\_sd,}
+\NormalTok{        nobs))}
+\NormalTok{    mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{x =}\NormalTok{ X))}
+\NormalTok{    ci }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(mod)}
 
-  \CommentTok{\# if true value of beta0 is within the CI then 1 else 0}
-\NormalTok{  ci\_int[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+    \CommentTok{\# if true value of beta0 is within the CI then 1 else 0}
+\NormalTok{    ci\_int[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 
-  \CommentTok{\# if true value of beta\_1 is within the CI then 1 else 0}
-\NormalTok{  ci\_x[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+    \CommentTok{\# if true value of beta\_1 is within the CI then 1 else 0}
+\NormalTok{    ci\_x[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 \NormalTok{\}}
 
 \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(ci\_int), }\FunctionTok{mean}\NormalTok{(ci\_x))}
