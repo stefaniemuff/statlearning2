@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2022"
 title: "Module 2, Part 2: Random vectors, covariance, multivariate Normal distribution"
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 20, 2024"
+date: "January 19, 2024"
 output:
   beamer_presentation:
     keep_tex: yes
@@ -29,6 +29,13 @@ opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
 knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
                       cache=TRUE, size="scriptsize")
 ```
+
+# Message
+
+- We need reference group members!!
+- Groups
+
+
 
 
 # Overview
@@ -436,7 +443,7 @@ Hint: Is it possible that the variance of the linear combination $\boldsymbol{Y}
 
 \vspace{4mm}
 
-Quizz on www.menti.com
+Quizz on www.menti.com joint at 23 38 27 0
 
 <!-- In class - go to [https://forms.gle/HCaAFxpY2b7JoVim9](https://forms.gle/HCaAFxpY2b7JoVim9) to answer the questions on the following slides -->
 
@@ -742,7 +749,7 @@ Take a look at the contour plots - when are the contours circles, when ellipses?
 ## Multiple choice - multivariate normal
 \vspace{2mm}
 
-A second quizz on www.menti.com
+A second quizz on www.menti.com join at 1624 7290
 
 Choose the correct answer. Let's go!
 

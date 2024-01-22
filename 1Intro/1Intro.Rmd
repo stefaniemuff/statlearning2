@@ -18,7 +18,7 @@ output:
     includes:
       in_header: ../header.tex
 fontsize: 10pt
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 header-includes: \usepackage{multirow}
 ---
@@ -255,7 +255,7 @@ $~$
 
 $~$
 
-* In this **first week of the course** you will have to work through parts 1-6 of the R course on the openEdX page here: [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/)
+* In this **first week of the course** you will have to work through parts 1-6 of the R course on the openEdX page here: [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about)
 
 $~$
 
@@ -521,7 +521,7 @@ _\textcolor{red}{Required}_:
 
 \vspace{2mm}
 
-* Go through parts 1 to 6 in the online R course: https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/
+* Go through parts 1 to 6 in the online R course: https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about
 
 
 \vspace{3mm}
