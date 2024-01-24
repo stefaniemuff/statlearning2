@@ -448,7 +448,7 @@ The assumptions about the linear regression model lie in the error term
 
 \includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
 
-Note: The true regression line goes through \(\mathsf{E}(Y)\).
+Note: The true regression line goes through \(\mathsf{E}(Y|X= x)\).
 \end{block}
 \end{frame}
 
@@ -470,7 +470,7 @@ variance} \(\sigma^2\) for a given set of \((x,y)\) data.
   \vspace{2mm}
 \item
   \textbf{Aim}: We want to find the parameters \((a,b)\) of the best
-  fitting line \(Y = a + b x\).
+  fitting line \(Y = a + b x + \epsilon\).
 \end{itemize}
 
 \vspace{2mm}
@@ -580,7 +580,7 @@ where \(\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i\) and
 This is something you should have proven in your previous statistics
 classes; if you forgot how to get there, please check again, e.g.~in
 chapter 11 of the book by @walepole.etal, see
-\href{https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf}{here}.
+\href{https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf}{here}.
 \end{block}
 \end{frame}
 
@@ -602,7 +602,7 @@ f(y;\alpha,\beta,\sigma^2) = \frac{1}{\sqrt{2\sigma^2}}\exp\{-\frac{1}{2\sigma^2
 This is something you should know from TMA4240/4245; if you forgot how
 to get there, please check again, e.g.~in chapter 11 of the book by
 @walepole.etal, see
-\href{https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf}{here}.
+\href{https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf}{here}.
 \end{block}
 \end{frame}
 
@@ -842,6 +842,24 @@ the \emph{design} of the \(x_i\)'s!
   by
   \[\hat\sigma = \text{RSE}  =\sqrt{\frac{1}{n-2} \text{RSS}} = \sqrt{\frac{1}{n-2}\sum_{i=1}^n (y_i -\hat{y}_i)^2} \ .\]
 \item
+  What are the characteristcs of \(\hat\sigma^2\)?
+
+  \begin{itemize}
+  \item
+    Unbiased estimator for \(\sigma^2\)
+  \item
+    \(\frac{n-2}{\sigma^2}\hat\sigma^2\sim\chi^2_{n-2}\)
+  \end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Estimated Variance for \(\beta_1\)}
+\protect\hypertarget{estimated-variance-for-beta_1}{}
+\begin{itemize}
+\tightlist
+\item
   So actually we have
 \end{itemize}
 
@@ -896,7 +914,8 @@ not, that is: ``Is \(x\) an informative predictor or not?''
 \setcounter{enumi}{1}
 \tightlist
 \item
-  ``Which values of the parameters are compatible with the data?''
+  \textbf{``Which values of the parameters are compatible with the
+  data?''}
 \end{enumerate}
 
 \hspace{4mm} \(\rightarrow\) This leads us to determine
@@ -962,8 +981,9 @@ Here, the \emph{\textcolor{red}{alternative hypothesis}} is given by
 \begin{frame}
 \textbf{Remember}: To carry out a statistical test, we need a \emph{test
 statistic}. This is some type of \textbf{summary statistic} that follows
-a known distribution under \(H_0\). For our purpose, we use the
-so-called \textbf{\(T\)-statistic}
+a known distribution under \(H_0\).
+
+For our purpose, we use the so-called \textbf{\(T\)-statistic}
 
 \begin{equation*}
 T=\frac{\hat\beta_1 }{SE(\hat\beta_1)}\ . 
@@ -977,6 +997,30 @@ T=\frac{\hat\beta_1 }{SE(\hat\beta_1)}\ .
 \begin{equation*}
 T=\frac{\hat\beta_1 - c}{SE(\hat\beta_1)} \ .
 \end{equation*}
+
+\vspace{1cm}
+
+Where does this come from??
+\end{frame}
+
+\begin{frame}
+\begin{block}{Recap: The \(t\)-distribution}
+\protect\hypertarget{recap-the-t-distribution}{}
+\(~\)
+
+\begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-6-1} \end{center}
+
+\normalsize
+
+\begin{itemize}
+\tightlist
+\item
+  The \(t\)-distribution has heavier tails than the normal distribution.
+\item
+  For df \(\geq 30\) the \(t\) and Normal distribution are pretty
+  similar.
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -1240,6 +1284,7 @@ correlation between the two variables:
 \item
   Derive confidence intervals and test
 \item
+  Model accuracy
 \end{itemize}
 \end{frame}
 
@@ -1485,7 +1530,7 @@ estimator when we assume the normal linear regression model.
 
 \(~\)
 
-With least suqres, we minimize the RSS for a multiple linear regression
+With least squares, we minimize the RSS for a multiple linear regression
 model:
 \[\begin{aligned} \text{RSS} &=\sum_{i=1}^n (y_i - \hat y_i)^2 = \sum_{i=1}^n (y_i - \hat \beta_0 - \hat \beta_1 x_{i1} - \hat \beta_2 x_{i2} -...-\hat \beta_p x_{ip} )^2 \\
 &= \sum_{i=1}^n (y_i-{\boldsymbol x}_i^T \hat{\boldsymbol\beta})^2=({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})^T({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})\end{aligned}\]
@@ -2127,7 +2172,7 @@ observations \(Y\).
 \end{frame}
 
 \begin{frame}
-\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-22-1} \end{center}
 
 \begin{itemize}
 \tightlist
@@ -2488,7 +2533,7 @@ Question: Do the Balances differ for different Ethnicities
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.75\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-25-1}
+\includegraphics[width=0.75\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-26-1}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -2928,7 +2973,7 @@ against the fitted values. For the bodyfat data it looks like this:
 
 \(~\)
 
-\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-32-1} \end{center}
 
 \(~\)
 
@@ -2948,7 +2993,7 @@ distribution:
 
 \(~\)
 
-\begin{center}\includegraphics[width=0.4\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.4\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-33-1} \end{center}
 
 \(~\)
 
@@ -2974,7 +3019,7 @@ should be \emph{no trend}:
 
 \vspace{2mm}
 
-\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-34-1} \end{center}
 \end{block}
 \end{frame}
 
@@ -3022,7 +3067,7 @@ H_{ii} = \frac{1}{n} + \frac{(x_i-\overline{x})^2}{\sum_{i'}(x_{i'}-\overline{x}
 \textbf{Illustration}: Data points with \(x_i\) values far from the mean
 have a stronger leverage effect than when \(x_i\approx \overline{x}\):
 
-\begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-35-1} \end{center}
 
 The outlier in the middle plot ``pulls'\,' the regression line in its
 direction and biases the slope.
@@ -3038,7 +3083,7 @@ to do it manually!
 In the leverage plot, (standardized) residuals \(\tilde{r_i}\) are
 plotted against the leverage \(H_{ii}\) (still for the bodyfat):
 
-\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-36-1} \end{center}
 
 \textbf{Critical ranges} are the top and bottom right corners! Why?
 \end{frame}

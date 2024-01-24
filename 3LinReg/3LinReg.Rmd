@@ -262,7 +262,7 @@ The assumptions about the linear regression model lie in the error term $$\varep
 \vspace{-2mm}
 \includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
 
-Note: The true regression line goes through $\mathsf{E}(Y)$.
+Note: The true regression line goes through $\mathsf{E}(Y|X= x)$.
 
 
 ---
@@ -278,7 +278,7 @@ In a regression analysis, the task is to estimate the **regression coefficients*
 * **Problem:** For more than two points $(x_i,y_i)$, $i=1,\ldots, n$, there is generally no perfectly fitting line.
 \vspace{2mm}
 
-* **Aim**: We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x$. 
+* **Aim**: We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x + \epsilon$. 
 
 \vspace{2mm}
 
@@ -382,7 +382,7 @@ $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ and $\bar{x} = \frac{1}{n}\sum_{i=1}^n 
 
 \vspace{6mm}
 \scriptsize
-This is something you should have proven in your previous statistics classes; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf).
+This is something you should have proven in your previous statistics classes; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf).
 
 ---
 
@@ -404,7 +404,7 @@ This gives the same result as the previous slide.
 
 \vspace{6mm}
 \scriptsize
-This is something you should know from TMA4240/4245; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf).
+This is something you should know from TMA4240/4245; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf).
 
 
 ---
@@ -595,7 +595,15 @@ thus for a given $\sigma^2$, the standard error is only dependent on the _design
 * An estimate of $\sigma$, the residual standard error, RSE, is given by
 $$\hat\sigma = \text{RSE}  =\sqrt{\frac{1}{n-2} \text{RSS}} = \sqrt{\frac{1}{n-2}\sum_{i=1}^n (y_i -\hat{y}_i)^2} \ .$$
 
+* What are the characteristcs of $\hat\sigma^2$?
 
+  * Unbiased estimator for $\sigma^2$
+  
+  * $\frac{n-2}{\sigma^2}\hat\sigma^2\sim\chi^2_{n-2}$
+
+---
+
+## Estimated Variance for $\beta_1$  
 * So actually we have
 
 $$\hat{\text{SE}}(\hat{\beta}_1)^2 = \frac{{\hat\sigma}^2}{\sum_{i=1}^n (x_i-\bar{x})^2} \ ,$$ 
@@ -639,7 +647,7 @@ After the regression parameters and their uncertainties have been estimated, the
 
 \vspace{6mm}
 
-2. "Which values of the parameters are compatible with the data?"
+2. **"Which values of the parameters are compatible with the data?"**
 
  \hspace{4mm} $\rightarrow$ This leads us to determine  **confidence intervals**.
 
@@ -695,7 +703,9 @@ $$H_A: \quad \beta_1 \neq  0  $$
 ---
  
 
-**Remember**: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. For our purpose, we use the so-called **$T$-statistic**
+**Remember**: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. 
+
+For our purpose, we use the so-called **$T$-statistic**
 
 
 
@@ -712,7 +722,40 @@ T=\frac{\hat\beta_1 }{SE(\hat\beta_1)}\ .
 T=\frac{\hat\beta_1 - c}{SE(\hat\beta_1)} \ .
 \end{equation*}
  
+\vspace{1cm}
 
+Where does this come from??
+
+---
+
+
+## Recap: The $t$-distribution
+
+$~$
+
+```{r,echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='80%'}
+
+xx <- data.frame(seq(-4,4,0.01))
+names(xx) <- "xx"
+xx$t1 <- dt(xx$xx,1)
+xx$t3 <- dt(xx$xx,3)
+xx$t10 <- dt(xx$xx,10)
+xx$t30 <- dt(xx$xx,30)
+xx$norm <- dnorm(xx$xx)
+
+plot(xx$xx,xx$t1,lwd=2,type="l",xlab="x",ylab="density",ylim=c(0,0.4))
+lines(xx$xx,xx$t3,add=TRUE,lwd=2,col=2)
+lines(xx$xx,xx$t10,add=TRUE,lwd=2,col=3)
+lines(xx$xx,xx$t30,add=TRUE,lwd=2,col=4)
+lines(xx$xx,xx$norm,add=TRUE,lwd=2,col=5)
+legend("topright",legend=c("df=1","df=3","df=10","df=30","normal"),col=1:5,lwd=2)
+
+```
+
+\normalsize
+
+* The $t$-distribution has heavier tails than the normal distribution.
+* For df $\geq 30$ the $t$ and Normal distribution are pretty similar.
 
 ---
 
@@ -730,35 +773,7 @@ Brief recap: Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freed
 
 ---
 
-<!-- ## Recap: The $t$-distribution -->
 
-<!-- $~$ -->
-
-<!-- ```{r,echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='80%'} -->
-
-<!-- xx <- data.frame(seq(-4,4,0.01)) -->
-<!-- names(xx) <- "xx" -->
-<!-- xx$t1 <- dt(xx$xx,1) -->
-<!-- xx$t3 <- dt(xx$xx,3) -->
-<!-- xx$t10 <- dt(xx$xx,10) -->
-<!-- xx$t30 <- dt(xx$xx,30) -->
-<!-- xx$norm <- dnorm(xx$xx) -->
-
-<!-- plot(xx$xx,xx$t1,lwd=2,type="l",xlab="x",ylab="density",ylim=c(0,0.4)) -->
-<!-- lines(xx$xx,xx$t3,add=TRUE,lwd=2,col=2) -->
-<!-- lines(xx$xx,xx$t10,add=TRUE,lwd=2,col=3) -->
-<!-- lines(xx$xx,xx$t30,add=TRUE,lwd=2,col=4) -->
-<!-- lines(xx$xx,xx$norm,add=TRUE,lwd=2,col=5) -->
-<!-- legend("topright",legend=c("df=1","df=3","df=10","df=30","normal"),col=1:5,lwd=2) -->
-
-<!-- ```  -->
-
-<!-- \normalsize -->
-
-<!-- * The $t$-distribution has heavier tails than the normal distribution.  -->
-<!-- * For df $\geq 30$ the $t$ and Normal distribution are pretty similar. -->
-
-<!-- --- -->
 
 ### Hypothesis tests for bodyfat example
 
