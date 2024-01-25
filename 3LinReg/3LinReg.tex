@@ -1082,6 +1082,27 @@ So let's again go back to the bodyfat regression output:
 \end{frame}
 
 \begin{frame}
+\begin{block}{Recap: Formal definition of the \(p\)-value}
+\protect\hypertarget{recap-formal-definition-of-the-p-value}{}
+\(~\)
+
+\textbf{The \(p\)-value is} the probability to observe a data summary
+(e.g., an average) that is at least as extreme as the one observed,
+given that the Null Hypothesis is correct.
+
+\vspace{3mm}
+
+\textbf{Example} (normal distribution): Assume the observed
+test-statistic leads to a \(z\)-value = -1.96 \(\Rightarrow\)
+\(\text{P}(|z|\geq 1.96)=0.05\) and \(\text{P}(z\leq-1.96)=0.025\) .
+
+\vspace{1mm}
+
+\begin{center}\includegraphics[width=1\linewidth]{3LinReg_files/figure-beamer/pValFig-1} \end{center}
+\end{block}
+\end{frame}
+
+\begin{frame}
 \begin{block}{Cautionary notes regarding \(p\)-values:}
 \protect\hypertarget{cautionary-notes-regarding-p-values}{}
 \(~\)
@@ -1161,6 +1182,28 @@ connected to good/bad research practice, problems with
   \end{itemize}
 \end{itemize}
 \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+Doing this for the bodfat example ``by hand'\,' is not hard. We have
+\(241 (=243-2)\) degrees of freedom:
+
+\vspace{4mm}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coefs }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(r.bodyfat)}\SpecialCharTok{$}\NormalTok{coef}
+\NormalTok{beta }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{]}
+\NormalTok{sdbeta }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{]}
+\NormalTok{beta }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{qt}\NormalTok{(}\FloatTok{0.975}\NormalTok{, }\DecValTok{241}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ sdbeta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.605362 2.032195
+\end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -1430,6 +1473,10 @@ additionally
   holds. Here \(N_n\) denotes the \(n\)-dimensional multivarate normal
   distribution.
 \end{enumerate}
+
+The interpretation of the coefficients \(\beta_j\) is now as following:
+holding all other covariates fixed, what is the average effect on \(Y\)
+of a one-unit increase in the \(j\)th covariate.
 \end{block}
 \end{frame}
 
@@ -2172,7 +2219,7 @@ observations \(Y\).
 \end{frame}
 
 \begin{frame}
-\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-23-1} \end{center}
 
 \begin{itemize}
 \tightlist
@@ -2533,7 +2580,7 @@ Question: Do the Balances differ for different Ethnicities
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.75\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-26-1}
+\includegraphics[width=0.75\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-27-1}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -2973,7 +3020,7 @@ against the fitted values. For the bodyfat data it looks like this:
 
 \(~\)
 
-\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=0.5\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-33-1} \end{center}
 
 \(~\)
 
@@ -2993,7 +3040,7 @@ distribution:
 
 \(~\)
 
-\begin{center}\includegraphics[width=0.4\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=0.4\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-34-1} \end{center}
 
 \(~\)
 
@@ -3019,7 +3066,7 @@ should be \emph{no trend}:
 
 \vspace{2mm}
 
-\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-35-1} \end{center}
 \end{block}
 \end{frame}
 
@@ -3067,7 +3114,7 @@ H_{ii} = \frac{1}{n} + \frac{(x_i-\overline{x})^2}{\sum_{i'}(x_{i'}-\overline{x}
 \textbf{Illustration}: Data points with \(x_i\) values far from the mean
 have a stronger leverage effect than when \(x_i\approx \overline{x}\):
 
-\begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-36-1} \end{center}
 
 The outlier in the middle plot ``pulls'\,' the regression line in its
 direction and biases the slope.
@@ -3083,7 +3130,7 @@ to do it manually!
 In the leverage plot, (standardized) residuals \(\tilde{r_i}\) are
 plotted against the leverage \(H_{ii}\) (still for the bodyfat):
 
-\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=0.45\linewidth]{3LinReg_files/figure-beamer/unnamed-chunk-37-1} \end{center}
 
 \textbf{Critical ranges} are the top and bottom right corners! Why?
 \end{frame}
