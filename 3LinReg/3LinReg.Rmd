@@ -1292,8 +1292,18 @@ $$\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\b
 <!-- [](https://www.math.ntnu.no/emner/TMA4268/2018v/notes/PropertiesBetahatMLR.pdf) for a derivation. -->
  
  
- 
+---
 
+### Where were we?
+\vspace{2cm}
+
+  * **The Model:** $\boldsymbol{Y} = \boldsymbol{X}\beta + \epsilon$, $\epsilon\sim N_n(0,\sigma^2\boldsymbol{I})$
+  * **Parameter estimate:**
+      
+      - $$\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\bf X}^T{\bf X})^{-1}}_{\text{covariance matrix}}) \ . $$
+      
+      - $$\hat{\sigma}^2 =  \frac{\sum(y_i-\hat{y}_i)^2}{n-p-1} . $$
+  
 ---
 
 ### The covariance matrix of $\boldsymbol{\hat\beta}$ in R
@@ -1843,7 +1853,7 @@ Y_i = \left\{
 
 ---
 
-## Qualitative predictors with more than 2 levels
+## Qualitative predictors with more than 2 ( $k$ ) levels
 
 $~$
  

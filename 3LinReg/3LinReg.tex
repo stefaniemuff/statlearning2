@@ -1712,6 +1712,29 @@ to derive that
 \[\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\bf X}^T{\bf X})^{-1}}_{\text{covariance matrix}}) \ . \]
 \end{frame}
 
+\begin{frame}
+\begin{block}{Where were we?}
+\protect\hypertarget{where-were-we}{}
+\vspace{2cm}
+
+\begin{itemize}
+\item
+  \textbf{The Model:}
+  \(\boldsymbol{Y} = \boldsymbol{X}\beta + \epsilon\),
+  \(\epsilon\sim N_n(0,\sigma^2\boldsymbol{I})\)
+\item
+  \textbf{Parameter estimate:}
+
+  \begin{itemize}
+  \item
+    \[\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\bf X}^T{\bf X})^{-1}}_{\text{covariance matrix}}) \ . \]
+  \item
+    \[\hat{\sigma}^2 =  \frac{\sum(y_i-\hat{y}_i)^2}{n-p-1} . \]
+  \end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
 \begin{frame}[fragile]
 \begin{block}{The covariance matrix of \(\boldsymbol{\hat\beta}\) in R}
 \protect\hypertarget{the-covariance-matrix-of-boldsymbolhatbeta-in-r}{}
@@ -2456,8 +2479,8 @@ book.
 \end{frame}
 
 \begin{frame}
-\begin{block}{Qualitative predictors with more than 2 levels}
-\protect\hypertarget{qualitative-predictors-with-more-than-2-levels}{}
+\begin{block}{Qualitative predictors with more than 2 ( \(k\) ) levels}
+\protect\hypertarget{qualitative-predictors-with-more-than-2-k-levels}{}
 \(~\)
 
 More generally, a covariate may indicate a \textbf{category}, for
