@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Emma Skarstein, Kenneth Aase, Daesoo Lee, Stefanie Muff" />
+<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee" />
 <meta name="author" content="Department of Mathematical Sciences, NTNU" />
 
-<meta name="date" content="2023-02-02" />
+<meta name="date" content="2024-02-01" />
 
 <title>Module 4: Recommended Exercises</title>
 
@@ -1623,11 +1623,11 @@ display: none;
 
 
 <h1 class="title toc-ignore">Module 4: Recommended Exercises</h1>
-<h3 class="subtitle">TMA4268 Statistical Learning V2023</h3>
-<h4 class="author">Emma Skarstein, Kenneth Aase, Daesoo Lee, Stefanie
-Muff</h4>
+<h3 class="subtitle">TMA4268 Statistical Learning V2024</h3>
+<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
+Lee</h4>
 <h4 class="author">Department of Mathematical Sciences, NTNU</h4>
-<h4 class="date">February 2, 2023</h4>
+<h4 class="date">February 1, 2024</h4>
 
 </div>
 
@@ -1675,18 +1675,18 @@ For 1000 bank notes (500 genuine and 500 false) this gave the following
 values for the mean and the covariance matrix (using unbiased
 estimators), where the first value is the length of the bank note.</p>
 <p>Genuine bank notes: <span class="math display">\[
-   \bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\
-141.52  \end{array} \right]
+\bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array}
+\right]
 \text{ and }
-   \hat{\boldsymbol \Sigma}_G=\left[     \begin{array}{cc} 0.1502 &amp;
+\hat{\boldsymbol \Sigma}_G=\left[     \begin{array}{cc} 0.1502 &amp;
 0.0055 \\ 0.0055 &amp; 0.1998
 \end{array} \right]
 \]</span></p>
 <p>Fake bank notes: <span class="math display">\[
-   \bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\
-139.45  \end{array} \right]
+\bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\ 139.45  \end{array}
+\right]
 \text{ and }
-   \hat{\boldsymbol \Sigma}_F= \left[     \begin{array}{cc} 0.1240 &amp;
+\hat{\boldsymbol \Sigma}_F= \left[     \begin{array}{cc} 0.1240 &amp;
 0.0116 \\ 0.0116 &amp; 0.3112
 \end{array} \right]
 \]</span></p>
@@ -1760,9 +1760,9 @@ a logistic regression and produce estimated coefficient, <span class="math inlin
 </div>
 <div id="b-3" class="section level2">
 <h2>b)</h2>
-<p>How many hours would the student in part a) need to study to have a
-<span class="math inline">\(50\%\)</span> probability of getting an A in
-the class?</p>
+<p>How many hours would the student in part a) need to study to have an
+estimated <span class="math inline">\(50\%\)</span> probability of
+getting an A in the class?</p>
 </div>
 </div>
 <div id="problem-5-sensitivity-specificity-roc-and-auc" class="section level1">
@@ -1840,8 +1840,8 @@ types of mistakes made by logistic regression.<br />
 <code>yourGlmModel</code> in the code below to get the predicted
 probabilities for “Up”, the classified direction and the confusion
 matrix.</p>
-<pre class="r"><code>glm.probs_Weekly = predict(yourGlmModel, type = &quot;response&quot;)
-glm.preds_Weekly = ifelse(glm.probs_Weekly &gt; 0.5, &quot;Up&quot;, &quot;Down&quot;)
+<pre class="r"><code>glm.probs_Weekly &lt;- predict(yourGlmModel, type = &quot;response&quot;)
+glm.preds_Weekly &lt;- ifelse(glm.probs_Weekly &gt; 0.5, &quot;Up&quot;, &quot;Down&quot;)
 table(glm.preds_Weekly, Weekly$Direction)</code></pre>
 </div>
 <div id="d-1" class="section level2">
@@ -1854,9 +1854,9 @@ the held out data (that is, the data from 2009 and 2010).<br />
 train set. For predicting the direction of the test set, use
 <code>newdata = Weekly_test</code> in the <code>predict()</code>
 function.</p>
-<pre class="r"><code>Weekly_trainID = (Weekly$Year &lt; 2009)
-Weekly_train = Weekly[Weekly_trainID, ]
-Weekly_test = Weekly[!Weekly_trainID, ]</code></pre>
+<pre class="r"><code>Weekly_trainID &lt;- (Weekly$Year &lt; 2009)
+Weekly_train &lt;- Weekly[Weekly_trainID, ]
+Weekly_test &lt;- Weekly[!Weekly_trainID, ]</code></pre>
 </div>
 <div id="e" class="section level2">
 <h2>e)</h2>
@@ -1869,44 +1869,53 @@ Weekly_test = Weekly[!Weekly_trainID, ]</code></pre>
 to perform lda and qda (just replacing <code>lda</code> with
 <code>qda</code>).</p>
 <pre class="r"><code>library(MASS)
-lda.Weekly = lda(Response ~ pred1, data = youTrainData)
-lda.Weekly_pred = predict(yourModel, newdata = YourTestData)$class
-lda.Weekly_prob = predict(yourModel, newdata = YourTestData)$posterior
+lda.Weekly &lt;- lda(Response ~ pred1, data = youTrainData)
+lda.Weekly_pred &lt;- predict(yourModel, newdata = YourTestData)$class
+lda.Weekly_prob &lt;- predict(yourModel, newdata = YourTestData)$posterior
 table(lda.Weekly_pred, YourTestData$Direction)</code></pre>
 </div>
 <div id="g" class="section level2">
 <h2>g)</h2>
 <p>Repeat d) using KNN with <span class="math inline">\(K=1\)</span>.</p>
 <p><strong>R-hints:</strong> plug in you variables in the following code
-to perform KNN. The argument <code>prob=T</code> will provide the
+to perform KNN. The argument <code>prob=TRUE</code> will provide the
 probabilities for the classified direction (which you will need later).
 When there are ties (same amount of Up and Down for the nearest
 neighbors), the <code>knn</code> function picks a class at random. We
 use the <code>set.seed()</code> function such that we don’t get
 different answers for each time we run the code.</p>
 <pre class="r"><code>library(class)
-knn.train = as.matrix(YourTrainData$Lag2)
-knn.test = as.matrix(YourTestData$Lag2)
+knn.train &lt;- as.matrix(YourTrainData$Lag2)
+knn.test &lt;- as.matrix(YourTestData$Lag2)
 
 set.seed(123)
-yourKNNmodel = knn(train = knn.train, test = knn.test, cl = YourTrainData$Direction, k = YourValueOfK, prob = T)
+yourKNNmodel &lt;- knn(train = knn.train,
+                    test = knn.test,
+                    cl = YourTrainData$Direction,
+                    k = YourValueOfK,
+                    prob = TRUE)
 table(yourKNNmodel, YourTestData$Direction)</code></pre>
 </div>
 <div id="h" class="section level2">
 <h2>h)</h2>
 <p>Use the following code to find the best value of <span class="math inline">\(K\)</span>. Report the confusion matrix and
 overall fraction of correct predictions for this value of <span class="math inline">\(K\)</span>.</p>
-<pre class="r"><code># knn error:
-K = 30
-knn.error = rep(NA, K)
+<pre class="r"><code>#knn error:
+K &lt;- 30
+knn.error &lt;- rep(NA, K)
 
 set.seed(234)
 for (k in 1:K) {
-    knn.pred = knn(train = knn.train, test = knn.test, cl = Weekly_train$Direction, k = k)
-    knn.error[k] = mean(knn.pred != Weekly_test$Direction)
+  knn.pred &lt;- knn(train = knn.train,
+                  test = knn.test,
+                  cl = Weekly_train$Direction,
+                  k = k)
+  knn.error[k] &lt;- mean(knn.pred != Weekly_test$Direction)
 }
-knn.error.df = data.frame(k = 1:K, error = knn.error)
-ggplot(knn.error.df, aes(x = k, y = error)) + geom_point(col = &quot;blue&quot;) + geom_line(linetype = &quot;dotted&quot;)</code></pre>
+knn.error.df &lt;- data.frame(k = 1:K, error = knn.error)
+ggplot(knn.error.df, aes(x = k, y = error)) +
+  geom_point(col = &quot;blue&quot;) +
+  geom_line(linetype = &quot;dotted&quot;)</code></pre>
 </div>
 <div id="i" class="section level2">
 <h2>i)</h2>
@@ -1925,31 +1934,40 @@ probability for the classified direction. Note that we want <span class="math in
 ROC-curve, so we need to modify the probabilties returned from the
 <code>knn</code> function.</li>
 </ul>
-<pre class="r"><code># get the probabilities for the classified class
-yourKNNProbs = attributes(yourKNNmodel)$prob
+<pre class="r"><code>#get the probabilities for the classified class
+yourKNNProbs &lt;- attributes(yourKNNmodel)$prob
 
-# since we want the probability for Up, we need to take 1-p for the elements that gives probability for Down
-down = which(yourKNNmodel == &quot;Down&quot;)
-yourKNNProbs[down] = 1 - yourKNNProbs[down]</code></pre>
+# since we want the probability for Up, we need to take 1-p for the elements
+# that gives probability for Down
+down &lt;- which(yourKNNmodel == &quot;Down&quot;)
+yourKNNProbs[down] &lt;- 1 - yourKNNProbs[down]</code></pre>
 <ul>
 <li>Use the following code to produce ROC-curves:</li>
 </ul>
-<pre class="r"><code># install.packages(&#39;plotROC&#39;) install.packages(&#39;pROC&#39;)
+<pre class="r"><code>#install.packages(&quot;plotROC&quot;)
+#install.packages(&quot;pROC&quot;)
 library(pROC)
 library(plotROC)
 
-yourRoc = roc(response = Weekly_test$Direction, predictor = yourModelsPredictedProb, direction = &quot;&lt;&quot;)
-# you can use this function for all your methods and plot them using plot(yourRoc)
+yourRoc &lt;- roc(response = Weekly_test$Direction,
+               predictor = yourModelsPredictedProb,
+               direction = &quot;&lt;&quot;)
+#you can use this function for all your methods and plot them using plot(yourRoc)
 
-# or use ggplot2
-dat = data.frame(Direction = Weekly_test$Direction, glm = yourGlmProbs, lda = yourLDAProbs[, 2], qda = yourQDAProbs[, 2],
-    knn = yourKNNProbs)
-dat_long = melt_roc(dat, &quot;Direction&quot;, c(&quot;glm&quot;, &quot;lda&quot;, &quot;qda&quot;, &quot;knn&quot;))
-ggplot(dat_long, aes(d = D, m = M, color = name)) + geom_roc(n.cuts = F) + xlab(&quot;1-Specificity&quot;) + ylab(&quot;Sensitivity&quot;)
-# glm is very similar to lda, so the roc-curve for glm is not shown.
+#or use ggplot2 
+dat &lt;- data.frame(Direction = Weekly_test$Direction,
+                 glm = yourGlmProbs, 
+                 lda = yourLDAProbs[, 2],
+                 qda = yourQDAProbs[, 2],
+                 knn = yourKNNProbs)
+dat_long &lt;- melt_roc(dat, &quot;Direction&quot;, c(&quot;glm&quot;, &quot;lda&quot;, &quot;qda&quot;, &quot;knn&quot;))
+ggplot(dat_long, aes(d = D, m = M, color = name)) +
+  geom_roc(n.cuts = FALSE) +
+  xlab(&quot;1-Specificity&quot;) +
+  ylab(&quot;Sensitivity&quot;)
+#glm is very similar to lda, so the roc-curve for glm is not shown. 
 
-
-# AUC: yourAUC = auc(yourRoc)</code></pre>
+#AUC: yourAUC = auc(yourRoc)</code></pre>
 </div>
 </div>
 

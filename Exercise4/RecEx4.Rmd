@@ -1,9 +1,9 @@
 ---
 title: 'Module 4: Recommended Exercises'
 author: 
-  - Emma Skarstein, Kenneth Aase, Daesoo Lee, Stefanie Muff
+  - Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
   - Department of Mathematical Sciences, NTNU
-date: "February 2, 2023"
+date: "February 1, 2024"
 output:
   pdf_document:
     fig_caption: yes
@@ -14,14 +14,20 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize")
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize")
 
 ```
 
@@ -34,12 +40,15 @@ The table and plot below provides a training data set consisting of seven observ
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE,results="as-is",fig.align = "center",out.width='50%'}
 library(kableExtra)
-knnframe = data.frame(x1 = c(3, 2, 1, 0, -1, 2, 1), x2 = c(3, 0, 1, 1, 0, 1, 0),  
-                      y=as.factor(c("A", "A", "A", "B", "B", "B", "B")))
+knnframe <- data.frame(x1 = c(3, 2, 1, 0, -1, 2, 1),
+                       x2 = c(3, 0, 1, 1, 0, 1, 0),
+                       y = as.factor(c("A", "A", "A", "B", "B", "B", "B")))
 print(knnframe)
 
 library(ggplot2)
-ggplot(knnframe,aes(x=x1,y=x2)) + geom_point(aes(color=y, shape=y), size = 3) + theme_bw()
+ggplot(knnframe, aes(x = x1, y = x2)) +
+  geom_point(aes(color = y, shape = y), size = 3) +
+  theme_bw()
 ```
 
 We wish to use this data set to make a prediction for $Y$ when $X_1=1, X_2=2$ using the $K$-nearest neighbors classification method.
@@ -52,7 +61,7 @@ Use $P(Y=j\mid X=x_0) = \frac{1}{K}\sum_{I \in \mathcal{N}_0}I(Y=j)$ to predict 
 
 ## c)
 If the Bayes decision boundary in this problem is highly non-linear, would we expect the best value for $K$ to be large or small? Why?
- 
+
 
 # Problem 2: Bank notes and LDA (with calculations)
 
@@ -60,17 +69,17 @@ To distinguish between genuine and fake bank notes measurements of length and di
 
 Genuine bank notes:
 $$
-   \bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array} \right]
+\bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array} \right]
 \text{ and }
-   \hat{\boldsymbol \Sigma}_G=\left[     \begin{array}{cc} 0.1502 & 0.0055 \\ 0.0055 & 0.1998 
+\hat{\boldsymbol \Sigma}_G=\left[     \begin{array}{cc} 0.1502 & 0.0055 \\ 0.0055 & 0.1998 
 \end{array} \right]
 $$
 
 Fake bank notes:
 $$
-   \bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\ 139.45  \end{array} \right]
+\bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\ 139.45  \end{array} \right]
 \text{ and }
-   \hat{\boldsymbol \Sigma}_F= \left[     \begin{array}{cc} 0.1240 & 0.0116 \\ 0.0116 & 0.3112 
+\hat{\boldsymbol \Sigma}_F= \left[     \begin{array}{cc} 0.1240 & 0.0116 \\ 0.0116 & 0.3112 
 \end{array} \right]
 $$
 
@@ -93,8 +102,8 @@ t(v)
 # determinant of A
 det(A)
 # multiply vector and matrix / matrix and matrix
-v%*%A
-B%*%A
+v %*% A
+B %*% A
 ```
 
 ## d)
@@ -128,7 +137,7 @@ Suppose we collect data for a group of students in a statistics class with varia
 Estimate the probability that a student who studies for $40$ h and has an undergrad GPA of $3.5$ gets an A in the class.  
 
 ## b)
-How many hours would the student in part a) need to study to have a $50\%$ probability of getting an A in the class?
+How many hours would the student in part a) need to study to have an estimated $50\%$ probability of getting an A in the class?
 
 
 # Problem 5: Sensitivity, specificity, ROC and AUC
@@ -170,8 +179,8 @@ Use the full data set to perform a logistic regression with `Direction` as the r
 Compute the confusion matrix and overall fraction of correct predictions. Explain what the confusion matrix is telling you about the types of mistakes made by logistic regression.  
 **R-hints:** insert the name of your model for `yourGlmModel` in the code below to get the predicted probabilities for "Up", the classified direction and the confusion matrix.
 ```{r, eval=F}
-glm.probs_Weekly = predict(yourGlmModel, type="response")
-glm.preds_Weekly = ifelse(glm.probs_Weekly > 0.5, "Up", "Down")
+glm.probs_Weekly <- predict(yourGlmModel, type = "response")
+glm.preds_Weekly <- ifelse(glm.probs_Weekly > 0.5, "Up", "Down")
 table(glm.preds_Weekly, Weekly$Direction)
 ```
 
@@ -179,9 +188,9 @@ table(glm.preds_Weekly, Weekly$Direction)
 Now fit the logistic regression model using a training data period from 1990 to 2008, with `Lag2` as the only predictor. Compute the confusion matrix and the overall fraction of correct predictions for the held out data (that is, the data from 2009 and 2010).  
 **R-hints:** use the following code to divide into test and train set. For predicting the direction of the test set, use `newdata = Weekly_test` in the `predict()` function. 
 ```{r, eval=F}
-Weekly_trainID = (Weekly$Year < 2009)
-Weekly_train = Weekly[Weekly_trainID,]
-Weekly_test = Weekly[!Weekly_trainID,]
+Weekly_trainID <- (Weekly$Year < 2009)
+Weekly_train <- Weekly[Weekly_trainID, ]
+Weekly_test <- Weekly[!Weekly_trainID, ]
 ```
 
 ## e)
@@ -193,23 +202,27 @@ Repeat d) using QDA.
 **R-hints:** plug in you variables in the following code to perform lda and qda (just replacing `lda` with `qda`).
 ```{r, eval=F}
 library(MASS)
-lda.Weekly = lda(Response~pred1, data=youTrainData)
-lda.Weekly_pred = predict(yourModel, newdata=YourTestData)$class
-lda.Weekly_prob = predict(yourModel, newdata=YourTestData)$posterior
+lda.Weekly <- lda(Response ~ pred1, data = youTrainData)
+lda.Weekly_pred <- predict(yourModel, newdata = YourTestData)$class
+lda.Weekly_prob <- predict(yourModel, newdata = YourTestData)$posterior
 table(lda.Weekly_pred, YourTestData$Direction)
 ```
 
 ## g)
 Repeat d) using KNN with $K=1$.
 
-**R-hints:** plug in you variables in the following code to perform KNN. The argument `prob=T` will provide the probabilities for the classified direction (which you will need later). When there are ties (same amount of Up and Down for the nearest neighbors), the `knn` function picks a class at random. We use the `set.seed()` function such that we don't get different answers for each time we run the code.
+**R-hints:** plug in you variables in the following code to perform KNN. The argument `prob=TRUE` will provide the probabilities for the classified direction (which you will need later). When there are ties (same amount of Up and Down for the nearest neighbors), the `knn` function picks a class at random. We use the `set.seed()` function such that we don't get different answers for each time we run the code.
 ```{r, eval=F}
 library(class)
-knn.train = as.matrix(YourTrainData$Lag2)
-knn.test = as.matrix(YourTestData$Lag2)
+knn.train <- as.matrix(YourTrainData$Lag2)
+knn.test <- as.matrix(YourTestData$Lag2)
 
 set.seed(123)
-yourKNNmodel = knn(train = knn.train, test = knn.test, cl = YourTrainData$Direction, k=YourValueOfK, prob=T)
+yourKNNmodel <- knn(train = knn.train,
+                    test = knn.test,
+                    cl = YourTrainData$Direction,
+                    k = YourValueOfK,
+                    prob = TRUE)
 table(yourKNNmodel, YourTestData$Direction)
 ```
 
@@ -217,16 +230,21 @@ table(yourKNNmodel, YourTestData$Direction)
 Use the following code to find the best value of $K$. Report the confusion matrix and overall fraction of correct predictions for this value of $K$.
 ```{r, eval=F}
 #knn error:
-K=30
-knn.error = rep(NA,K)
+K <- 30
+knn.error <- rep(NA, K)
 
 set.seed(234)
-for(k in 1:K){
-  knn.pred = knn(train = knn.train, test = knn.test, cl = Weekly_train$Direction, k=k)
-  knn.error[k] = mean(knn.pred != Weekly_test$Direction)
+for (k in 1:K) {
+  knn.pred <- knn(train = knn.train,
+                  test = knn.test,
+                  cl = Weekly_train$Direction,
+                  k = k)
+  knn.error[k] <- mean(knn.pred != Weekly_test$Direction)
 }
-knn.error.df = data.frame(k=1:K, error = knn.error)
-ggplot(knn.error.df, aes(x=k, y=error))+geom_point(col="blue")+geom_line(linetype="dotted")
+knn.error.df <- data.frame(k = 1:K, error = knn.error)
+ggplot(knn.error.df, aes(x = k, y = error)) +
+  geom_point(col = "blue") +
+  geom_line(linetype = "dotted")
 ```
 
 ## i)
@@ -239,12 +257,13 @@ Plot the ROC curves and calculate the AUC for the four methods (using your the b
 
 * For KNN you can use `knn(...,prob=TRUE)` to get the probability for the classified direction. Note that we want $P(Direction = Up)$ when plotting the ROC-curve, so we need to modify the probabilties returned from the `knn` function.
 ```{r, eval=F}
-#get the probabilities for the classified class 
-yourKNNProbs = attributes(yourKNNmodel)$prob
+#get the probabilities for the classified class
+yourKNNProbs <- attributes(yourKNNmodel)$prob
 
-# since we want the probability for Up, we need to take 1-p for the elements that gives probability for Down
-down= which(yourKNNmodel == "Down")
-yourKNNProbs[down] = 1-yourKNNProbs[down]
+# since we want the probability for Up, we need to take 1-p for the elements
+# that gives probability for Down
+down <- which(yourKNNmodel == "Down")
+yourKNNProbs[down] <- 1 - yourKNNProbs[down]
 ```
 
 * Use the following code to produce ROC-curves:
@@ -254,17 +273,23 @@ yourKNNProbs[down] = 1-yourKNNProbs[down]
 library(pROC)
 library(plotROC)
 
-yourRoc = roc(response = Weekly_test$Direction, predictor = yourModelsPredictedProb, direction = "<")
+yourRoc <- roc(response = Weekly_test$Direction,
+               predictor = yourModelsPredictedProb,
+               direction = "<")
 #you can use this function for all your methods and plot them using plot(yourRoc)
 
 #or use ggplot2 
-dat = data.frame(Direction = Weekly_test$Direction, glm = yourGlmProbs, 
-                 lda = yourLDAProbs[,2], qda = yourQDAProbs[,2], knn = yourKNNProbs)
-dat_long = melt_roc(dat, "Direction", c("glm", "lda", "qda", "knn"))
-ggplot(dat_long, aes(d = D, m = M, color = name)) + geom_roc(n.cuts = F) +
-  xlab("1-Specificity") + ylab("Sensitivity")
+dat <- data.frame(Direction = Weekly_test$Direction,
+                 glm = yourGlmProbs, 
+                 lda = yourLDAProbs[, 2],
+                 qda = yourQDAProbs[, 2],
+                 knn = yourKNNProbs)
+dat_long <- melt_roc(dat, "Direction", c("glm", "lda", "qda", "knn"))
+ggplot(dat_long, aes(d = D, m = M, color = name)) +
+  geom_roc(n.cuts = FALSE) +
+  xlab("1-Specificity") +
+  ylab("Sensitivity")
 #glm is very similar to lda, so the roc-curve for glm is not shown. 
-
 
 #AUC: yourAUC = auc(yourRoc)
 ```
