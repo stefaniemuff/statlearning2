@@ -2144,7 +2144,7 @@ We can include interactions also between
 
 \vspace{4mm}
 
-$\rightarrow$ See problem 1 in recommended exercises 3 (important)!
+$\rightarrow$ See problem 1 in recommended exercises for module 3 (important)!
 
 \vspace{4mm}
 
