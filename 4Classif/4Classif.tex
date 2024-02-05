@@ -120,6 +120,14 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{multirow}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -171,7 +179,7 @@
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 4: Classification},
-  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -180,9 +188,9 @@
   pdfcreator={LaTeX via pandoc}}
 
 \title{Module 4: Classification}
-\subtitle{TMA4268 Statistical Learning V2022}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{January 31 and February 3rd, 2022}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
+\date{February 1st and 3rd, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -222,9 +230,9 @@
 \item
   Classification and discrimination
 \item
-  Logistic regression
-\item
   Bayes classifier, Bayes risk
+\item
+  Logistic regression
 \item
   KNN - majority vote or estimate posterior class probability?
 \item
@@ -326,6 +334,155 @@ class label from \(\mathcal{C}\) to a future unlabelled observation
 \textbf{Performance measure:} Most popular is the misclassification
 error rate (training and test version).
 \end{block}
+\end{frame}
+
+\begin{frame}{The Bayes classifier}
+\protect\hypertarget{the-bayes-classifier}{}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Idea:} probability can be used for classification.
+\end{itemize}
+
+\vspace{0mm}
+
+\begin{itemize}
+\item
+  Assume that we know the probability that a new observation \(x_0\)
+  belongs to class \(k\), for \(K\) classes
+  \(\mathcal{C} = \{c_1, c_2,\ldots, c_K\}\), with elements numbered as
+  \(1, 2, ..., K\)
+  \[p_k(x_0) = \text{Pr}(Y=k | X=x_0), \quad k = 1, 2, ... K \ .\] This
+  is the probability that \(Y=k\) given the observation \(x_0\).
+  \vspace{1mm}
+\item
+  The \emph{Bayes classifier} assigns an observation to
+  \emph{\textcolor{red}{the most likely class}}, given its predictor
+  values.
+\item
+  \textbf{Example} for two groups \(\{A, B\}\). A new observation
+  \(x_0\) will be classified to \(A\) if
+  \(\text{Pr}(Y=A | X=x_0) > 0.5\) and to class \(B\) otherwise.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Properties of the Bayes classifier}
+\protect\hypertarget{properties-of-the-bayes-classifier}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  It has the \emph{smallest \textcolor{red}{test error} rate}.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The class boundaries using the Bayes classifier is called the
+  \emph{Bayes decision boundary}.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The overall Bayes error rate is given as
+  \[1-\text{E}(\max_j \text{Pr}(Y=j\mid X))\] where the expectation is
+  over \(X\).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The Bayes error rate is comparable to the \emph{irreducible error} in
+  the regression setting.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Caveat:} We usually don't know the true conditional
+  distribution \(\text{Pr}(Y | X)\) for real data.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Some terminology}
+\protect\hypertarget{some-terminology}{}
+\vspace{2mm}
+
+\textbf{Training set:} Independent observations
+\(\{(x_1, y_1), ..., (x_n, y_n)\}\) with \emph{qualitative response}
+variable \(Y \in \{1, 2, ..., K\}\), used to construct the
+classification rule (by estimating parameters in class densities or
+posterior probabilites).
+
+\vspace{2mm}
+
+\textbf{Test set:} Independent observations of the same format as the
+training set, used to evaluate the classification rule.
+
+\vspace{2mm}
+
+\textbf{Loss function:} The misclassifications are given the loss 1 and
+the correct classifications loss 0 - this is called \emph{0/1-loss}.
+
+The proportion of mistakes that are made if we apply our estimator
+\(\hat{f}\) to the training observations,
+i.e.~\(\hat{y}_i=\hat{f}(x_i)\)
+\[\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,\] with
+indicator function I, which is defined as:
+
+\[\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
+0 \text{ else. } \end{cases}\]
+\end{frame}
+
+\begin{frame}
+\begin{block}{Training error}
+\protect\hypertarget{training-error}{}
+\(~\)
+
+\textbf{Training error rate}: The proportion of mistakes that are made
+if we apply our estimator \(\hat{f}\) to the training observations,
+i.e.~\(\hat{y}_i=\hat{f}(x_i)\)
+\[\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,\] with
+indicator function I, which is defined as:
+
+\[\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
+0 \text{ else. } \end{cases}\]
+
+\vspace{2mm}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Test error}
+\protect\hypertarget{test-error}{}
+\(~\)
+
+\textbf{Test error rate}: The fraction of misclassifications when our
+model is applied on a test set
+
+\[\frac{1}{n_0}\sum_{i=1}^{n_0} \text{I}(y_{0i} \neq \hat{y}_{0i}) \ ,\]
+where the average is over all the test observations \((x_0,y_0)\).
+
+\vspace{6mm}
+
+Remember: a \emph{\textcolor{red}{good classifier}} is a classifier that
+has a \emph{\textcolor{red}{low test error}} (why?).
+\end{block}
+\end{frame}
+
+\begin{frame}
 \end{frame}
 
 \begin{frame}
@@ -652,7 +809,7 @@ enters into \(p_i\)
 \begin{frame}
 \begin{itemize}
 \item
-  To maximize the log-likelihood function we find the \(r+1\) partial
+  To maximize the log-likelihood function we find the \(p+1\) partial
   derivatives, and set equal to 0.
 \item
   This gives us a set of \(p+1\) non-linear equations in the \(\beta\)s.
@@ -906,8 +1063,8 @@ introduced. This can be done as for linear regression.
 So in the \texttt{Default} example, we can predict the probability that
 someone defaults.
 
-For example: ``What is the estimated probability that a student defaults
-with a balance of 2000, and an income of 40000?''
+For example: ``What is the estimated probability that a student with a
+balance of 2000, and an income of 40000 will default?''
 
 \[\hat{p}(X) = \frac{e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}}{ 1+  e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}} = 0.5196\]
 \vspace{6mm}
@@ -965,9 +1122,9 @@ Using R: \scriptsize
 \begin{itemize}
 \tightlist
 \item
-  160 cases (individuals who have suffered from a conorary heart
+  160 cases (individuals who have suffered from a cororary heart
   disease) and 302 controls (individuals who have not suffered from a
-  conorary heart disease).
+  cororary heart disease).
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1076,9 +1233,7 @@ Fitting the model using all predictors in R:
 ## 
 ## Number of Fisher Scoring iterations: 4
 \end{verbatim}
-\end{frame}
 
-\begin{frame}[fragile]
 \begin{itemize}
 \item
   For which predictors do we have evidence that they are associated with
@@ -1102,142 +1257,32 @@ predicted probabilities using
 \end{Shaded}
 \end{frame}
 
-\begin{frame}{The Bayes classifier}
-\protect\hypertarget{the-bayes-classifier}{}
-\begin{itemize}
-\tightlist
-\item
-  We were going for classification, but now estimated
-  \(\hat{p}(X)=\text{Pr}(Y \mid X)\) using logistic regression. Idea:
-  probability can be used for classification.
-\end{itemize}
+\begin{frame}[fragile]
+\begin{block}{Predictions for the first patients}
+\protect\hypertarget{predictions-for-the-first-patients}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred }\OtherTok{=} \FunctionTok{predict}\NormalTok{(glm\_heart, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(d.heart, }\AttributeTok{pred =}\NormalTok{ pred))}
+\end{Highlighting}
+\end{Shaded}
 
-\vspace{0mm}
-
-\begin{itemize}
-\item
-  Assume that we know or can estimate the probability that a new
-  observation \(x_0\) belongs to class \(k\), for \(K\) classes
-  \(\mathcal{C} = \{c_1, c_2,\ldots, c_K\}\), with elements numbered as
-  \(1, 2, ..., K\)
-  \[p_k(x_0) = \text{Pr}(Y=k | X=x_0), \quad k = 1, 2, ... K \ .\] This
-  is the probability that \(Y=k\) given the observation \(x_0\).
-  \vspace{1mm}
-\item
-  The \emph{Bayes classifier assigns an observation to
-  \textcolor{red}{the most likely class}}, given its predictor values.
-\item
-  \textbf{Example} for two groups \(\{A, B\}\). A new observation
-  \(x_0\) will be classified to \(A\) if
-  \(\text{Pr}(Y=A | X=x_0) > 0.5\) and to class \(B\) otherwise.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\begin{block}{Properties of the Bayes classifier}
-\protect\hypertarget{properties-of-the-bayes-classifier}{}
-\(~\)
-
-\begin{itemize}
-\tightlist
-\item
-  It has the \emph{smallest \textcolor{red}{test error} rate}.
-\end{itemize}
-
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  The class boundaries using the Bayes classifier is called the
-  \emph{Bayes decision boundary}.
-\end{itemize}
-
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  The overall Bayes error rate is given as
-  \[1-\text{E}(\max_j \text{Pr}(Y=j\mid X))\] where the expectation is
-  over \(X\).
-\end{itemize}
-
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  The Bayes error rate is comparable to the \emph{irreducible error} in
-  the regression setting.
-\end{itemize}
-
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Caveat:} We usually don't know the true conditional
-  distribution \(\text{Pr}(Y | X)\) for real data.
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}{Some terminology}
-\protect\hypertarget{some-terminology}{}
-\vspace{2mm}
-
-\textbf{Training set:} Independent observations
-\(\{(x_1, y_1), ..., (x_n, y_n)\}\) with \emph{qualitative response}
-variable \(Y \in \{1, 2, ..., K\}\), used to construct the
-classification rule (by estimating parameters in class densities or
-posterior probabilites).
-
-\vspace{2mm}
-
-\textbf{Test set:} Independent observations of the same format as the
-training set, used to evaluate the classification rule.
-
-\vspace{2mm}
-
-\textbf{Loss function:} The misclassifications are given the loss 1 and
-the correct classifications loss 0 - this is called \emph{0/1-loss}.
-\end{frame}
-
-\begin{frame}
-\begin{block}{Training error}
-\protect\hypertarget{training-error}{}
-\(~\)
-
-\textbf{Training error rate}: The proportion of mistakes that are made
-if we apply our estimator \(\hat{f}\) to the training observations,
-i.e.~\(\hat{y}_i=\hat{f}(x_i)\)
-\[\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,\] with
-indicator function I, which is defined as:
-
-\[\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
-0 \text{ else. } \end{cases}\]
-
-\vspace{2mm}
+\begin{verbatim}
+##   sbp tobacco  ldl famhist obesity alcohol age chd      pred
+## 1 160   12.00 5.73 Present   25.30   97.20  52   1 0.7579610
+## 2 144    0.01 4.41  Absent   28.87    2.06  63   1 0.3099585
+## 3 118    0.08 3.48 Present   29.14    3.81  46   0 0.2872763
+## 4 170    7.50 6.41 Present   31.99   24.26  58   1 0.7204788
+## 5 134   13.60 3.50 Present   25.99   57.34  49   1 0.6297874
+## 6 132    6.20 6.47 Present   30.77   14.14  45   0 0.5296166
+\end{verbatim}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\begin{block}{Test error}
-\protect\hypertarget{test-error}{}
-\(~\)
-
-\textbf{Test error rate}: The fraction of misclassifications when our
-model is applied on a test set
-
-\[\frac{1}{n_0}\sum_{i=1}^{n_0} \text{I}(y_{0i} \neq \hat{y}_{0i}) \ ,\]
-where the average is over all the test observations \((x_0,y_0)\).
-
-\vspace{6mm}
-
-Remember: a \emph{\textcolor{red}{good classifier}} is a classifier that
-has a \emph{\textcolor{red}{low test error}} (why?).
-\end{block}
+With logistic regression we are able to estimate \[
+\hat{p}_i = P(Y_i = 1|X_i = x_i)
+\] but how do we predict the different classes?
 \end{frame}
 
 \begin{frame}{The K-nearest neighbour (KNN) classifier}
@@ -1316,7 +1361,7 @@ The \(K\)-nearest neighbour classifier (KNN) works in the following way:
 \begin{frame}
 Illustration:
 
-\begin{center}\includegraphics[width=0.9\linewidth]{4Classif_files/figure-beamer/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{4Classif_files/figure-beamer/unnamed-chunk-9-1} \end{center}
 
 \vspace{2mm}
 
@@ -1428,49 +1473,140 @@ different \(K\), for example by cross-validation (Module 5).
 \end{block}
 \end{frame}
 
-\begin{frame}{Bayes decision rule - two paradigms}
-\protect\hypertarget{bayes-decision-rule---two-paradigms}{}
+\begin{frame}{Module 4 - Classification}
+\protect\hypertarget{module-4---classification}{}
+\begin{itemize}
+\item
+  What is classification?
+\item
+  What is the goal with classification?
+\item
+  What did we learn yesterday?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Bayes Classifier
+  \item
+    Logistic regression (for bivariate response)
+  \item
+    KNN classification
+  \end{itemize}
+\item
+  What will we learn today?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Linear and quadratic discriminant analysis
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Logistic Regression}
+\protect\hypertarget{logistic-regression-1}{}
+Parametric model.
+
 \vspace{1mm}
 
-Two approaches to estimate \(\text{Pr}(Y=k \mid X=x)\): \vspace{1mm}
+We assume that \(Y_i|X_i-x_i\sim\text{Ber}(p_i)\), where
+\(p_i = P(Y_i =1|X_i = x_i)\) and that
 
-\begin{block}{Diagnostic paradigm}
+\[
+\text{logit}(p_i) = X^T\beta
+\] \vspace{1mm}
+
+What have we learned:
+
+\begin{itemize}
+\tightlist
+\item
+  How to estimate \(\beta\)
+\item
+  What do we mean by \emph{odds}
+\item
+  How to interpret the estimated value \(\hat{\beta}\)
+\item
+  How to make predictions using this model
+\end{itemize}
+\end{frame}
+
+\begin{frame}{KNN}
+\protect\hypertarget{knn}{}
+Non parametric model.
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Given a new observation \(x_0\) it searches for the \(K\) points in
+  our training data that are closest to it (Euclidean distance).
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
+\item
+  These points make up the neighborhood of \(x_0\), \(\mathcal{N}_0\).
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Classification is done by a \emph{\textcolor{red}{majority vote}}:
+  \(x_0\) is classified to the most occurring class among its neighbors
+  \[\text{Pr}(Y=j | X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)\ .\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Two paradigms for classification models:}
+\protect\hypertarget{two-paradigms-for-classification-models}{}
+\begin{block}{1. Diagnostic paradigm}
 \protect\hypertarget{diagnostic-paradigm}{}
-This is what we did so far: The focus was \emph{directly} estimating the
-posterior distribution for the classes \[\text{Pr}(Y=k \mid X=x)\ .\]
-\textbf{Examples:} Logistic regression. KNN classification.
+The focus was \emph{directly} estimating the posterior distribution for
+the classes \[\text{Pr}(Y=k \mid X=x)\ .\]
+
+\begin{itemize}
+\item
+  \textbf{This is what we did so far:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Logistic regression.
+  \item
+    KNN classification.
+  \end{itemize}
+\end{itemize}
 
 \vspace{2mm}
 \end{block}
 
-\begin{block}{Sampling paradigm}
+\begin{block}{2. Sampling paradigm}
 \protect\hypertarget{sampling-paradigm}{}
-\vspace{1mm}
+Here we use the Bayes theorem to \emph{derive} the posterior
+distribution for the classes \(\text{Pr}(Y=k \mid X=x)\), using
 
 \begin{itemize}
-\tightlist
 \item
-  Indirect approach: Model the conditional distribution of predictors
-  \(f_k(x)=\text{Pr}(X=x \mid Y=k)\) for each class, and the prior
-  probabilities \(\pi_k=\text{Pr}(Y=k)\).
-\end{itemize}
-
-\vspace{1mm}
-
-\begin{itemize}
-\tightlist
+  A model for the \emph{conditional distribution of predictors}
+  \(f_k(x)=\text{Pr}(X=x \mid Y=k)\) for each class,
 \item
-  Then classify to the class with the maximal product \(\pi_k f_k(x)\).
-  In this paradigm, we need to model the pdf for each class.
+  The \emph{prior probabilities} for each class
+  \(\pi_k=\text{Pr}(Y=k)\).
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
-Given a continuous \(X\) and categorical \(Y\), and
+\begin{frame}{The sampling paradigm}
+\protect\hypertarget{the-sampling-paradigm}{}
+Given a continuous \(X\) and categorical \(Y\), we model: \vspace{1mm}
 
 \begin{itemize}
-\tightlist
 \item
   the probability \emph{\textcolor{red}{density}} function
   \(f_k(x) = \text{Pr}(X=x \mid Y=k)\) for \(X\) in class \(k\).
@@ -1598,24 +1734,35 @@ X_{\text{orange}}\sim \mathcal{N}(2, 1.5^2) \]
 \begin{center}\includegraphics[width=0.6\linewidth]{4Classif_files/figure-beamer/gauss4-1} \end{center}
 
 \begin{itemize}
+\tightlist
 \item
   The Bayes decision boundary is at \(x=0\).
 \item
-  Bayes error rate: \texttt{round(pnorm(0,2,1.5))}=0.09.
+  Bayes error rate: \[
+  0.5\text{P}(X>0|Y=A) + 0.5 \text{P}(X<0|Y=B)
+  \]
+\end{itemize}
+
+\texttt{round(pnorm(0,2,1.5))}=0.09.
+
+\begin{itemize}
+\tightlist
 \item
   The Bayes classifier has the lowest test error rate.
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{How do we use this in observed data example?}
+\protect\hypertarget{how-do-we-use-this-in-observed-data-example}{}
 \vspace{2mm}
 
 In the above example we knew the true distributions \(p_k(X)\) and the
 priors \(\pi_k\). But typically we don't know these parameters, we only
 have the training data.
 
-Idea: we simply estimate the parameters and plug them into the rule.
+\textbf{Idea}: we simply estimate the parameters and plug them into the
+rule.
 \end{frame}
 
 \begin{frame}
@@ -1659,18 +1806,20 @@ Idea: we simply estimate the parameters and plug them into the rule.
 
 \textbf{Simulated example:}
 
-\vspace{2mm}
+\vspace{1mm}
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# set parameter values}
 \NormalTok{n }\OtherTok{=} \DecValTok{1000}
 \NormalTok{pi1 }\OtherTok{=}\NormalTok{ pi2 }\OtherTok{=} \FloatTok{0.5}
 \NormalTok{mu1 }\OtherTok{=} \SpecialCharTok{{-}}\DecValTok{2}
 \NormalTok{mu2 }\OtherTok{=} \DecValTok{2}
 \NormalTok{sigma }\OtherTok{=} \FloatTok{1.5}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# simulate test and training samples}
 \NormalTok{n1train }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
 \NormalTok{n2train }\OtherTok{=}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ n1train}
 \NormalTok{n1test }\OtherTok{=} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, n, pi1)}
@@ -1699,18 +1848,26 @@ and resolve for \(x\) to obtain a decision rule (boundary).
 \textbf{Exercise}: Verify that the following code will give you the
 training and test error rates:
 
-\vspace{2mm}
+\vspace{1mm}
 
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rule }\OtherTok{=} \FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(train1) }\SpecialCharTok{+} \FunctionTok{mean}\NormalTok{(train2)) }\SpecialCharTok{+}\NormalTok{ var.pool }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{log}\NormalTok{(n2train}\SpecialCharTok{/}\NormalTok{n) }\SpecialCharTok{{-}}
+\NormalTok{rule }\OtherTok{=} \FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(train1) }\SpecialCharTok{+} \FunctionTok{mean}\NormalTok{(train2)) }\SpecialCharTok{+}\NormalTok{ (var.pool) }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{log}\NormalTok{(n2train}\SpecialCharTok{/}\NormalTok{n) }\SpecialCharTok{{-}}
     \FunctionTok{log}\NormalTok{(n1train}\SpecialCharTok{/}\NormalTok{n))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{mean}\NormalTok{(train1) }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(train2))}
+\NormalTok{rule}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+## [1] -0.01343765
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{trainingError }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(train1 }\SpecialCharTok{\textgreater{}}\NormalTok{ rule) }\SpecialCharTok{+} \FunctionTok{sum}\NormalTok{(train2 }\SpecialCharTok{\textless{}}\NormalTok{ rule))}\SpecialCharTok{/}\NormalTok{n}
 \NormalTok{testError }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(test1 }\SpecialCharTok{\textgreater{}}\NormalTok{ rule) }\SpecialCharTok{+} \FunctionTok{sum}\NormalTok{(test2 }\SpecialCharTok{\textless{}}\NormalTok{ rule))}\SpecialCharTok{/}\NormalTok{n}
-
 \FunctionTok{c}\NormalTok{(trainingError, testError)}
 \end{Highlighting}
 \end{Shaded}
@@ -1842,6 +1999,17 @@ Inserting numerical values gives \(-x_1-x_2+4=0\), thus a boundary with
 functional form \[x_2=4-x_1 \ .\]
 \end{frame}
 
+\begin{frame}
+\begin{block}{What is the Bayes Error?}
+\protect\hypertarget{what-is-the-bayes-error}{}
+The Bayes error can then be found by calculation of areas for the two
+class densities on the wrong side of the boundary, or by simulating many
+test data and counting misclassifications rates.
+
+\begin{center}\includegraphics[width=0.55\linewidth]{4Classif_files/figure-beamer/unnamed-chunk-12-1} \end{center}
+\end{block}
+\end{frame}
+
 \begin{frame}[fragile]
 \begin{block}{Confusion matrix for the synthetic example}
 \protect\hypertarget{confusion-matrix-for-the-synthetic-example}{}
@@ -1856,7 +2024,8 @@ We can use the Bayes boundary to find the error rate:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{r.pred }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{X2 }\SpecialCharTok{\textless{}} \DecValTok{4} \SpecialCharTok{{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{X1, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
-\FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, r.pred)}
+\NormalTok{tab }\OtherTok{=} \FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, r.pred)}
+\NormalTok{tab}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1866,6 +2035,8 @@ We can use the Bayes boundary to find the error rate:
 ##    A 82 18
 ##    B 21 79
 \end{verbatim}
+
+Estimated error 0.195
 
 \vspace{6mm}
 
@@ -1907,18 +2078,19 @@ it from the data.
 \begin{Highlighting}[]
 \NormalTok{r.lda }\OtherTok{\textless{}{-}} \FunctionTok{lda}\NormalTok{(class }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X1 }\SpecialCharTok{+}\NormalTok{ X2, df)}
 \NormalTok{r.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(r.lda, df)}\SpecialCharTok{$}\NormalTok{class}
-\FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, }\AttributeTok{predicted =}\NormalTok{ r.pred)}
+\NormalTok{tab }\OtherTok{=} \FunctionTok{table}\NormalTok{(}\AttributeTok{real =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{class, }\AttributeTok{predicted =}\NormalTok{ r.pred)}
+\NormalTok{tab}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##     predicted
-## real  A  B
-##    A 87 13
-##    B 18 82
+## real   A   B
+##    A 171  29
+##    B  30 170
 \end{verbatim}
 
-\(~\)
+Estimated error 0.1475 \(~\)
 
 \normalsize
 
@@ -2024,10 +2196,6 @@ covariance matrices.
   Should we not always prefer QDA to LDA?
 \end{itemize}
 \end{block}
-\end{frame}
-
-\begin{frame}
-\textbf{A:}
 \end{frame}
 
 \begin{frame}
@@ -2812,6 +2980,50 @@ in the test set:
   Sensitivity: \(\frac{41}{41+45}=0.477\), specificity =
   \(\frac{118}{118+27}=0.814.\)
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Why is this important?}
+\protect\hypertarget{why-is-this-important}{}
+In many cases looking just at the total error is misleading:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3056}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1111}}@{}}
+\toprule\noalign{}
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+Pred. Status
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3333} + 4\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+True Status
+\end{minipage}} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tot
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+0 & 9644 & 252 & 9896 \\
+1 & 23 & 81 & 104 \\
+Tot & 9667 & 333 & 1000 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{itemize}
+\item
+  Total Prediction error: \(\frac{252+23}{1000} = 0.275\)
+\item
+  Sensitivity: \(\frac{81}{333} = 0.24\)
+\item
+  Specificity: \(\frac{9644}{9667} = 0.997\)
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
