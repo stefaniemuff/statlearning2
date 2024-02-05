@@ -6,16 +6,19 @@
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -46,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -60,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -69,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -97,10 +100,10 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 5: Recommended Exercises},
-  pdfauthor={Kenneth Aase, Emma Skarstein, Daesoo Lee, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -115,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
-\author{Kenneth Aase, Emma Skarstein, Daesoo Lee, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{February 9, 2023}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
+Lee \and Department of Mathematical Sciences, NTNU}
+\date{February 8, 2024}
 
 \begin{document}
 \maketitle
@@ -203,7 +206,7 @@ Generate data
 \item
   Simulate high dimensional data (\(p = 5000\) predictors) from
   independent or correlated normal variables, but with few samples
-  (\(n = 50\)).
+  (\(n = 100\)).
 \item
   Randomly assign class labels (here only \(2\)). This means that the
   ``truth'' is that the misclassification rate can not get very small.
@@ -215,7 +218,7 @@ Classification task:
 \begin{itemize}
 \tightlist
 \item
-  We choose a few (for example \(d = 25\)) of the predictors (those with
+  We choose a few (for example \(d = 10\)) of the predictors (those with
   the highest correlation to the outcome).
 \item
   Perform a classification rule (here: logistic empirical Bayes) on
@@ -239,16 +242,18 @@ We start by generating data for \(n=50\) observations
 \FunctionTok{library}\NormalTok{(boot)}
 \CommentTok{\# GENERATE DATA; use a seed for reproducibility}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{50}  \CommentTok{\# Number of observations}
-\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{5000}  \CommentTok{\# Number of predictors}
-\NormalTok{d }\OtherTok{\textless{}{-}} \DecValTok{25}  \CommentTok{\# Top correlated predictors chosen}
+\NormalTok{n }\OtherTok{=} \DecValTok{100}  \CommentTok{\#number of observations}
+\NormalTok{p }\OtherTok{=} \DecValTok{5000}  \CommentTok{\#number of predictors}
+\NormalTok{d }\OtherTok{=} \DecValTok{10}  \CommentTok{\#top correlated predictors chosen}
 
 \CommentTok{\# Generating predictor data}
-\NormalTok{xs }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p, }\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{), ncol }\OtherTok{\textless{}{-}}\NormalTok{ p, nrow }\OtherTok{\textless{}{-}}\NormalTok{ n)  }\CommentTok{\# Independent predictors}
+\NormalTok{xs }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{ncol =}\NormalTok{ p, }\AttributeTok{nrow =}\NormalTok{ n)  }\CommentTok{\#simple way to to uncorrelated predictors}
 \FunctionTok{dim}\NormalTok{(xs)  }\CommentTok{\# n times p}
+\NormalTok{xs[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+
 \CommentTok{\# Generate class labels independent of predictors {-} so if all}
-\CommentTok{\# classifies as class 1 we expect 50\% errors in general.}
-\NormalTok{ys }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))  }\CommentTok{\# now really 50\% of each}
+\CommentTok{\# classifies as class 1 we expect 50\% errors in general}
+\NormalTok{ys }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))  }\CommentTok{\#now really 50\% of each}
 \FunctionTok{table}\NormalTok{(ys)}
 \end{Highlighting}
 \end{Shaded}
@@ -258,10 +263,13 @@ CV.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{corrs }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(xs, }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ ys)}
+\NormalTok{corrs }\OtherTok{=} \FunctionTok{apply}\NormalTok{(xs, }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ ys)}
 \FunctionTok{hist}\NormalTok{(corrs)}
-\NormalTok{selected }\OtherTok{\textless{}{-}} \FunctionTok{order}\NormalTok{(corrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d]  }\CommentTok{\# Top d correlated selected}
-\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(ys, xs[, selected])}
+
+
+\NormalTok{selected }\OtherTok{=} \FunctionTok{order}\NormalTok{(corrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d]}
+
+\NormalTok{data }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(ys, xs[, selected])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -278,7 +286,7 @@ regression and built in \texttt{cv.glm()} function
 \end{Highlighting}
 \end{Shaded}
 
-Observe a zero misclassification rate!
+Observe a misclassification rate of about 20\%.
 
 \textbf{CORRECT CV}: Do not pre-select predictors outside the CV, but as
 part of the CV. In order words, the entire analysis is done within the
@@ -352,8 +360,9 @@ regression model.
 \subsection{Problem 6}\label{problem-6}}
 
 Implement your algorithm from 5 both using for-loop and using the
-\texttt{boot} function. Hint: see page 195 of our ISLR book. Use our
-SLID data set and provide standard errors for the coefficient for age.
+\texttt{boot} function. Hint: See section 5.3.4 (the Lab on the
+bootstrap) in our ISLR book. Use our SLID data set from the \texttt{car}
+R package and provide standard errors for the coefficient for age.
 Compare with the theoretical value
 \(({\bf X}^\top{\bf X})^{-1}\hat{\sigma}^2\) that you find in the output
 from the regression model.

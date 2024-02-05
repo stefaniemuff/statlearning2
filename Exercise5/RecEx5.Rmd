@@ -1,9 +1,9 @@
 ---
 title: 'Module 5: Recommended Exercises'
 author:
-- Kenneth Aase, Emma Skarstein, Daesoo Lee, Stefanie Muff
+- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
 - Department of Mathematical Sciences, NTNU
-date: "February 9, 2023"
+date: "February 8, 2024"
 output:
   html_document:
     df_print: paged
@@ -14,7 +14,7 @@ output:
     keep_tex: yes
     toc: no
     toc_depth: 2
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
