@@ -1,9 +1,9 @@
 ---
 title: 'Module 4: Solutions to Recommended Exercises'
 author: 
-  - Emma Skarstein, Kenneth Aase, Daesoo Lee, Stefanie Muff
+  - Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
   - Department of Mathematical Sciences, NTNU
-date: "February 2, 2023"
+date: "February 1, 2024"
 output:
   pdf_document:
     toc: no
@@ -12,14 +12,20 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize")
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize")
 ```
 
 <!-- rmarkdown::render("RecEx4-sol.Rmd","all",encoding="UTF-8") -->
@@ -30,11 +36,13 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 The table and plot below provides a training data set consisting of seven observations, two predictors and one qualitative response variable.
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE,results="as-is", fig.align = "center",out.width='70%'}
-knnframe = data.frame(x1 = c(3, 2, 1, 0, -1, 2, 1), x2 = c(3, 0, 1, 1, 0, 1, 0),  
-                      y=as.factor(c("A", "A", "A", "B", "B", "B", "B")))
+knnframe <- data.frame(x1 = c(3, 2, 1, 0, -1, 2, 1),
+                       x2 = c(3, 0, 1, 1, 0, 1, 0),
+                       y = as.factor(c("A", "A", "A", "B", "B", "B", "B")))
 print(knnframe)
 library(ggplot2)
-ggplot(knnframe,aes(x=x1,y=x2)) + geom_point(aes(color=y, shape=y), size = 3)
+ggplot(knnframe, aes(x = x1, y = x2)) +
+  geom_point(aes(color = y, shape = y), size = 3)
 ```
 
 We wish to use this data set to make a prediction for $Y$ when $X_1=1, X_2=2$ using the $K$-nearest neighbors classification method.
@@ -70,28 +78,28 @@ and we classify the point as B.
 Using all observations for classification with KNN, we will always choose the class that are most represented in the data (B in this case), and the predicted class will be B regardless of the position of the new point.
 
 ## c)
-If the Bayes decision boundary is highly non-linear, we would choose a $K$ that is not to big, as the decision boundary becomes approximately linear when $K$ tends to infinity.
+If the Bayes decision boundary is highly non-linear, then the optimal $K$ would be small, as the decision boundary becomes approximately linear when $K$ tends to infinity.
 
 # Problem 2: Bank notes and LDA
 Here we have measures of the length and the diagonal of an image part of $n_G = 500$ genuine bank notes and $n_F = 500$ false bank notes, with the following mean and covariance matrices,
 $$
-  \mu_G = \bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array} \right]
+\mu_G = \bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array} \right]
 \text{ and }
-   \boldsymbol{\hat\Sigma}_G=\left[     \begin{array}{cc} 0.1502 & 0.0055 \\ 0.0055 & 0.1998 
+\boldsymbol{\hat\Sigma}_G=\left[     \begin{array}{cc} 0.1502 & 0.0055 \\ 0.0055 & 0.1998 
 \end{array} \right]
 $$
 $$
-   \mu_F = \bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\ 139.45  \end{array} \right]
+\mu_F = \bar{\bf x}_F= \left[     \begin{array}{c} 214.82 \\ 139.45  \end{array} \right]
 \text{ and }
-   \boldsymbol{\hat\Sigma}_F= \left[     \begin{array}{cc} 0.1240 & 0.0116 \\ 0.0116 & 0.3112 
+\boldsymbol{\hat\Sigma}_F= \left[     \begin{array}{cc} 0.1240 & 0.0116 \\ 0.0116 & 0.3112 
 \end{array} \right]
 $$
 
 ## a) 
 Assuming the observations $x_G$ and $x_F$ are independent observations from normal distribution with the same covariance matrix $\boldsymbol \Sigma = \boldsymbol \Sigma_G = \boldsymbol \Sigma_F$, and all observations are independent of each other, we can find the estimated pooled covariance matrix as
 $$\begin{aligned}
-  \hat{\boldsymbol \Sigma} &= \frac{(n_G - 1)\hat{\boldsymbol \Sigma}_G + (n_F - 1)\hat{\boldsymbol \Sigma}_F}{n_G + n_F - 2} \\
-  &= \left[     \begin{array}{cc} 0.13710 & 0.00855 \\ 0.00855 & 0.25550 
+\hat{\boldsymbol \Sigma} &= \frac{(n_G - 1)\hat{\boldsymbol \Sigma}_G + (n_F - 1)\hat{\boldsymbol \Sigma}_F}{n_G + n_F - 2} \\
+&= \left[     \begin{array}{cc} 0.13710 & 0.00855 \\ 0.00855 & 0.25550 
 \end{array} \right]
 \end{aligned}$$
 
@@ -100,9 +108,9 @@ For LDA we assume that the class conditional distributions are normal (Gaussian)
 Assuming the same covariance matrix for both classes (G and F), we classify the new observation, $x_0$ based on which of the discriminant functions that are the largest,
 $$\delta_k(\bf{x}) = {\bf x}^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_k - \frac{1}{2}\boldsymbol\mu_k^T \boldsymbol{\Sigma}^{-1}\boldsymbol\mu_k + \log \pi_k.$$
 
-We have not been given any information of the prior probabilites - but we would believe that the probability of a fake bank note is much smaller than the probability of a genuine bank note.
+We have not been given any information of the prior probabilities - but we would believe that the probability of a fake bank note is much smaller than the probability of a genuine bank note.
 
-However, since our training data is 50% fake and genuine, we might use that to estimate prior probabilites, $\hat{\pi}_G =\hat{\pi}_F =\frac{n_F}{n} = 0.5.$ Inserting the pooled covariance matrix and the estimated mean values, we have that
+However, since our training data is 50% fake and genuine, we might use that to estimate prior probabilities, $\hat{\pi}_G =\hat{\pi}_F =\frac{n_F}{n} = 0.5.$ Inserting the pooled covariance matrix and the estimated mean values, we have that
 $$\delta_G({\bf x_0}) = {\bf x_0}^T \hat{\boldsymbol{\Sigma}}^{-1}\boldsymbol\mu_G - \frac{1}{2}\boldsymbol\mu_G^T \hat{\boldsymbol{\Sigma}}^{-1}\boldsymbol\mu_G + \log \pi_G.$$
 and 
 $$\delta_F({\bf x_0}) = {\bf x_0}^T \hat{\boldsymbol{\Sigma}}^{-1}\boldsymbol\mu_F - \frac{1}{2}\boldsymbol\mu_F^T \hat{\boldsymbol{\Sigma}}^{-1}\boldsymbol\mu_F + \log \pi_F.$$
@@ -142,15 +150,15 @@ Since $\delta_F({\bf x_0})$ is larger than $\delta_G({\bf x_0})$, we classify th
 
 Doing all these calulations in R:
 ```{r, echo = T, eval = F}
-xg = c(214.97, 141.52)
-xf = c(214.82, 139.45)
-sigmaG = matrix(c(0.1502, 0.0055, 0.0055, 0.1998), byrow = T, ncol=2)
-sigmaF = matrix(c(0.1240, 0.0116, 0.0116, 0.3112), byrow = T, ncol=2)
-sigma = (499*sigmaG + 499*sigmaF)/(998)
-x = c(214.0, 140.4)
+xg <- c(214.97, 141.52)
+xf <- c(214.82, 139.45)
+sigmaG <- matrix(c(0.1502, 0.0055, 0.0055, 0.1998), byrow = TRUE, ncol = 2)
+sigmaF <- matrix(c(0.1240, 0.0116, 0.0116, 0.3112), byrow = TRUE, ncol = 2)
+sigma <- (499 * sigmaG + 499 * sigmaF) / 998
+x <- c(214.0, 140.4)
 #lda discriminant function
-a = t(x)%*%solve(sigma)%*%xg -0.5*t(xg)%*%solve(sigma)%*%xg - log(0.5)
-b = t(x)%*%solve(sigma)%*%xf -0.5*t(xf)%*%solve(sigma)%*%xf - log(0.5)
+a <- t(x) %*% solve(sigma) %*% xg - 0.5 * t(xg) %*% solve(sigma) %*% xg - log(0.5)
+b <- t(x) %*% solve(sigma) %*% xf - 0.5 * t(xf) %*% solve(sigma) %*% xf - log(0.5)
 ```
 
 
@@ -211,10 +219,10 @@ R code to get to these results:
 
 ```{r, echo = T, eval = F}
 #qda discriminant function
-a = -0.5*t(x)%*%solve(sigmaG)%*%x + t(x)%*%solve(sigmaG)%*%xg - 
-  0.5*t(xg)%*%solve(sigmaG)%*%xg - 0.5*log(det(sigmaG)) -log(2)
-b = -0.5*t(x)%*%solve(sigmaF)%*%x + t(x)%*%solve(sigmaF)%*%xf -
-  0.5*t(xf)%*%solve(sigmaF)%*%xf - 0.5*log(det(sigmaF)) -log(2)
+a <- -0.5 * t(x) %*% solve(sigmaG) %*% x + t(x) %*% solve(sigmaG) %*% xg -
+  0.5 * t(xg) %*% solve(sigmaG) %*% xg - 0.5 * log(det(sigmaG)) - log(2)
+b <- -0.5 * t(x) %*% solve(sigmaF) %*% x + t(x) %*% solve(sigmaF) %*% xf -
+  0.5 * t(xf) %*% solve(sigmaF) %*% xf - 0.5 * log(det(sigmaF)) - log(2)
 ```
 
 
@@ -252,11 +260,15 @@ We start by denoting the number of true diseased as $P$ and the number of true n
 ```{r, echo=FALSE, warning=FALSE}
 library(knitr)
 #library(kableExtra)
-row1 = c("Predicted non-diseased -", "Predicted diseased +","Total")
-row2 = c("TN","FP","N")
-row3 = c("FN","TP", "P")
-row4 = c("N$^*$", "P$^*$","n")
-kable(rbind("True non-diseased -" = row2, "True diseased +" = row3, "Total" = row4), row.names=TRUE, col.names = row1)
+row1 <- c("Predicted non-diseased -", "Predicted diseased +", "Total")
+row2 <- c("TN", "FP", "N")
+row3 <- c("FN", "TP", "P")
+row4 <- c("N$^*$", "P$^*$", "n")
+kable(rbind("True non-diseased -" = row2,
+            "True diseased +" = row3,
+            "Total" = row4),
+      row.names = TRUE,
+      col.names = row1)
 ```
 
 where TN (true negative) is the number of predicted non-diseased that are actually non-diseased, FP (false positive) is the number of predicted diseased that are actually non-diseased, FN (false negative) is the number of predicted non-diseased that are actually diseased and TP (true positive) is the number of predicted diseased that are actually diseased. Using the confusion table, we can calculate the sensitivity and specificity where
@@ -292,7 +304,9 @@ Now make a summary of the `Weekly` data set using the `summary` function and pai
 data("Weekly")
 ?Weekly
 summary(Weekly)
-ggpairs(Weekly, aes(color=Direction), lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)))
+ggpairs(Weekly,
+        aes(color = Direction),
+        lower = list(continuous = wrap("points", alpha = 0.3, size = 0.2)))
 ```
 
 We can observe that the variables `Year` and `Volume` are highly correlated and it might look like the `Volume` increases quadratically with increasing `Year`. No other clear patterns are observed.
@@ -300,7 +314,9 @@ We can observe that the variables `Year` and `Volume` are highly correlated and 
 ## b)
 We fit a logistic regression model using the `glm` function and specifying that we want to fit a binomial function by giving `function="binomial"` as an argument. 
 ```{r}
-glm.Weekly = glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, data = Weekly, family="binomial")
+glm.Weekly <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+                  data = Weekly,
+                  family = "binomial")
 summary(glm.Weekly)
 ```
 
@@ -309,8 +325,8 @@ summary(glm.Weekly)
 ## c)
 We use our fitted model to calculate the probabilities for `Direction="Up"` for the response variable and compare the predictions with the true classes of the response variable. To find the confusion matrix, the function `table` can be used. 
 ```{r}
-glm.probs_Weekly = predict(glm.Weekly, type="response")
-glm.preds_Weekly = ifelse(glm.probs_Weekly > 0.5, "Up", "Down")
+glm.probs_Weekly <- predict(glm.Weekly, type = "response")
+glm.preds_Weekly <- ifelse(glm.probs_Weekly > 0.5, "Up", "Down")
 table(glm.preds_Weekly, Weekly$Direction)
 ```
 
@@ -319,12 +335,12 @@ The fraction of correct predictions is $$\frac{54+557}{1089} = 0.561 \ ,$$ which
 ## d)
 We start by dividing the `Weekly` data set into a train and a test set, where the training set consists of all observations in the period from 1990 to 2008, while the test set consists of the observations from the period 2009 to 2010. We then fit a logistic regression model to the training data set, make predictions for the test set, and calculate the confusion matrix.
 ```{r}
-Weekly_trainID = (Weekly$Year < 2009)
-Weekly_train = Weekly[Weekly_trainID,]
-Weekly_test = Weekly[!Weekly_trainID,]
-glm.Weekly2 = glm(Direction~Lag2, family="binomial", data=Weekly_train)
-glm.Weekly2_prob = predict(glm.Weekly2, newdata=Weekly_test, type="response")
-glm.Weekly2_pred = ifelse(glm.Weekly2_prob > 0.5, "Up", "Down")
+Weekly_trainID <- (Weekly$Year < 2009)
+Weekly_train <- Weekly[Weekly_trainID, ]
+Weekly_test <- Weekly[!Weekly_trainID, ]
+glm.Weekly2 <- glm(Direction ~ Lag2, family = "binomial", data = Weekly_train)
+glm.Weekly2_prob <- predict(glm.Weekly2, newdata = Weekly_test, type = "response")
+glm.Weekly2_pred <- ifelse(glm.Weekly2_prob > 0.5, "Up", "Down")
 table(glm.Weekly2_pred, Weekly_test$Direction)
 ```
 
@@ -334,9 +350,9 @@ The fraction of correct predictions on the test set is $$\frac{9+56}{104} = 0.62
 The `lda` function is available in the `MASS` library, thus we need to start by loading the library. We proceed by fitting a LDA model to the training set. We then use this model to make predictions for the test set and then compare the predicted and true classes using the confusion matrix.
 ```{r}
 library(MASS)
-lda.Weekly = lda(Direction~Lag2, data=Weekly_train)
-lda.Weekly_pred = predict(lda.Weekly, newdata=Weekly_test)$class
-lda.Weekly_prob = predict(lda.Weekly, newdata=Weekly_test)$posterior
+lda.Weekly <- lda(Direction ~ Lag2, data = Weekly_train)
+lda.Weekly_pred <- predict(lda.Weekly, newdata = Weekly_test)$class
+lda.Weekly_prob <- predict(lda.Weekly, newdata = Weekly_test)$posterior
 table(lda.Weekly_pred, Weekly_test$Direction)
 ```
 
@@ -345,9 +361,9 @@ The fraction of correct classifications is $$\frac{9+56}{104} = 0.625.$$
 ## f)
 We follow the same procedure and test an QDA classifier on the data:
 ```{r}
-qda.Weekly = qda(Direction~Lag2, data=Weekly_train)
-qda.Weekly_pred = predict(qda.Weekly, newdata=Weekly_test)$class
-qda.Weekly_prob = predict(qda.Weekly, newdata=Weekly_test)$posterior
+qda.Weekly <- qda(Direction ~ Lag2, data = Weekly_train)
+qda.Weekly_pred <- predict(qda.Weekly, newdata = Weekly_test)$class
+qda.Weekly_prob <- predict(qda.Weekly, newdata = Weekly_test)$posterior
 table(qda.Weekly_pred, Weekly_test$Direction)
 ```
 
@@ -360,10 +376,14 @@ The KNN classifier is implemented in the `knn` function of the `class` library. 
 
 ```{r}
 library(class)
-knn.train = as.matrix(Weekly_train$Lag2)
-knn.test = as.matrix(Weekly_test$Lag2)
+knn.train <- as.matrix(Weekly_train$Lag2)
+knn.test <- as.matrix(Weekly_test$Lag2)
 set.seed(123)
-knn1.Weekly = knn(train = knn.train, test = knn.test, cl = Weekly_train$Direction, k=1, prob=T)
+knn1.Weekly <- knn(train = knn.train,
+                   test = knn.test,
+                   cl = Weekly_train$Direction,
+                   k = 1,
+                   prob = TRUE)
 table(knn1.Weekly, Weekly_test$Direction)
 ```
 
@@ -373,29 +393,38 @@ The fraction of correct classifications for the KNN classifier with $K=1$ is $$\
 To find the value of $K$ giving the smallest error, we make a for-loop where we store the error for each iteration and plot the error against the value of $K$.
 ```{r}
 #knn error:
-K=30
-knn.error = rep(NA,K)
+K <- 30
+knn.error <- rep(NA, K)
 set.seed(321)
-for(k in 1:K){
-  knn.pred = knn(train = knn.train, test = knn.test, cl = Weekly_train$Direction, k=k)
-  knn.error[k] = mean(knn.pred != Weekly_test$Direction)
+for (k in 1:K) {
+  knn.pred <- knn(train = knn.train,
+                  test = knn.test,
+                  cl = Weekly_train$Direction,
+                  k = k)
+  knn.error[k] <- mean(knn.pred != Weekly_test$Direction)
 }
-knn.error.df = data.frame(k=1:K, error = knn.error)
-ggplot(knn.error.df, aes(x=k, y=error))+geom_point(col="blue")+geom_line(linetype="dotted")
+knn.error.df <- data.frame(k = 1:K, error = knn.error)
+ggplot(knn.error.df, aes(x = k, y = error)) +
+  geom_point(col = "blue") +
+  geom_line(linetype = "dotted")
 ```
 
 From the plot, we see that $K=4$ gives the smallest error. We create a confusion matrix and store the probabilities of `Direction="Up"` for this model. 
 ```{r}
 library(class)
 set.seed(234)
-knn4.Weekly = knn(train = knn.train, test = knn.test, cl = Weekly_train$Direction, k=4, prob=T)
+knn4.Weekly <- knn(train = knn.train,
+                   test = knn.test,
+                   cl = Weekly_train$Direction,
+                   k = 4,
+                   prob = TRUE)
 table(knn4.Weekly, Weekly_test$Direction)
-#get the probabilities for the classified class 
-knn4.Weekly_prob = attributes(knn4.Weekly)$prob
-# since we want the probability for Up, we need to take 1-p for the elements that 
+#get the probabilities for the classified class
+knn4.Weekly_prob <- attributes(knn4.Weekly)$prob
+# since we want the probability for Up, we need to take 1-p for the elements that
 #gives probability for Down
-down= which(knn4.Weekly == "Down")
-knn4.Weekly_prob[down] = 1-knn4.Weekly_prob[down]
+down <- which(knn4.Weekly == "Down")
+knn4.Weekly_prob[down] <- 1 - knn4.Weekly_prob[down]
 ```
 
 The fraction of correct classifications for the KNN classifier is $$\frac{19+37}{104}=0.538$$
@@ -411,20 +440,33 @@ To make ROC-curves and calculate AUC we use the packages `pROC` and `plotROC`.
 #install.packages("pROC")
 library(pROC)
 library(plotROC)
-glmroc = roc(response = Weekly_test$Direction, predictor = glm.Weekly2_prob, direction = "<")
-ldaroc = roc(response = Weekly_test$Direction, predictor = lda.Weekly_prob[,2], direction = "<")
-qdaroc = roc(response = Weekly_test$Direction, predictor = qda.Weekly_prob[,2], direction = "<")
-knnroc = roc(response = Weekly_test$Direction, predictor = knn4.Weekly_prob, direction = "<")
+glmroc <- roc(response = Weekly_test$Direction,
+              predictor = glm.Weekly2_prob,
+              direction = "<")
+ldaroc <- roc(response = Weekly_test$Direction,
+              predictor = lda.Weekly_prob[, 2],
+              direction = "<")
+qdaroc <- roc(response = Weekly_test$Direction,
+              predictor = qda.Weekly_prob[, 2],
+              direction = "<")
+knnroc <- roc(response = Weekly_test$Direction,
+              predictor = knn4.Weekly_prob,
+              direction = "<")
 auc(glmroc)
 auc(ldaroc)
 auc(qdaroc)
 auc(knnroc)
-dat = data.frame(Direction = Weekly_test$Direction, glm = glm.Weekly2_prob, lda = lda.Weekly_prob[,2],
-                 qda = qda.Weekly_prob[,2], knn = knn4.Weekly_prob)
-dat_long = melt_roc(dat, "Direction", c("glm", "lda", "qda", "knn"))
-ggplot(dat_long, aes(d = D, m = M, color = name)) + geom_roc(n.cuts = F) +
-  xlab("1-Specificity") + ylab("Sensitivity")
-#glm is very similar to lda, so the roc-curve for glm is not shown. 
+dat <- data.frame(Direction = Weekly_test$Direction,
+                  glm = glm.Weekly2_prob,
+                  lda = lda.Weekly_prob[, 2],
+                  qda = qda.Weekly_prob[, 2],
+                  knn = knn4.Weekly_prob)
+dat_long <- melt_roc(dat, "Direction", c("glm", "lda", "qda", "knn"))
+ggplot(dat_long, aes(d = D, m = M, color = name)) +
+  geom_roc(n.cuts = FALSE) +
+  xlab("1-Specificity") +
+  ylab("Sensitivity")
+#glm is very similar to lda, so the roc-curve for glm is not shown.
 ```
 
 Note first that the ROC-curve for glm is very similar to lda, so the glm-ROC-curve is not visible behind the lda curve. The ROC-curves with the corresponding AUCs tells us that none of our models perform well when classifying the test set. The ROC-curves are very close to the diagonal line, representing the "no information" classifier, thus the AUC values are very close to 0.5. A good classifier would hug the left upper corner in the ROC-plot and have a AUC value close to 1. 
