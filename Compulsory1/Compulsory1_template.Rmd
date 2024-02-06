@@ -1,5 +1,5 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2023"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Compulsory exercise 1: Group XYZ (add your group number here)"
 author: "NN1, NN2 and NN3 (full names of all group members)"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -56,13 +56,14 @@ For this problem you will need to include some LaTex code. Please install latex 
 
 Here is a code chunk:
 
-```{r desc, fig.width=6, fig.height=6, fig.cap="Pairs plot of the academic salary data set."}
-library(carData)
+```{r, eval=FALSE, echo=TRUE}
+# load the boston housing price dataset
+data(Boston)
 
-?Salaries
-
-GGally::ggpairs(Salaries)
+# fit the linear regression model
+lm_model <- ...
 ```
+
 
 
 ## a)
@@ -70,6 +71,8 @@ GGally::ggpairs(Salaries)
 ## b) 
  
 ## c)
+
+...
 
 
 # Problem 3
