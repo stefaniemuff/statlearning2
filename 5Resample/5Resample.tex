@@ -169,7 +169,7 @@
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 5: Resampling},
-  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -179,8 +179,8 @@
 
 \title{Module 5: Resampling}
 \subtitle{TMA4268 Statistical Learning V2023}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{February 6 and 9, 2023}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
+\date{February 8 and 9, 2023}
 
 \begin{document}
 \frame{\titlepage}
@@ -335,6 +335,11 @@ In order to define how we measure error, we must first decide for a
   \(j=1,\ldots,K\):
   \[\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ .\]
 \end{itemize}
+
+\vspace{2mm}
+
+\textbf{NB:} These are just two of the possible loss functions, there
+are several model to be found in the literature
 \end{block}
 \end{frame}
 
@@ -564,6 +569,10 @@ gallon) using polynomial function of \texttt{horsepower} (of engine),
 \end{frame}
 
 \begin{frame}
+\includegraphics[width=0.7\linewidth]{5Resample_files/figure-beamer/unnamed-chunk-1-1}
+\end{frame}
+
+\begin{frame}
 But what if we select another split into two parts? Many splits:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{5Resample_files/figure-beamer/auto2-1} \end{center}
@@ -722,8 +731,6 @@ squares fit.
 \(~\)
 
 \(~\)
-
-See Compulsory exercise 1.
 \end{block}
 \end{frame}
 
@@ -975,7 +982,7 @@ Let us look at a data set from Chapter 2:
 
 \centering
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{213.pdf}
+\includegraphics[width=0.8\textwidth,height=\textheight]{../../ISLR/Figures/Chapter2/2.13.pdf}
 \end{frame}
 
 \begin{frame}
@@ -984,7 +991,7 @@ depending on the degree of of the regression model:
 
 \centering
 
-\includegraphics[width=0.5\textwidth,height=\textheight]{../../ISLR/Figures/Chapter5/57.pdf}
+\includegraphics[width=0.5\textwidth,height=\textheight]{../../ISLR/Figures/Chapter5/5.7.pdf}
 
 \flushleft
 
@@ -1004,7 +1011,7 @@ Which degree of the logistic regression polynomial is best?
 
 \centering
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{58.pdf}
+\includegraphics[width=0.6\textwidth,height=\textheight]{../../ISLR/Figures/Chapter5/5.8.pdf}
 
 \flushleft
 
@@ -1127,18 +1134,12 @@ microarray gene-expression data}
 Article by \href{http://www.pnas.org/content/99/10/6562}{Christophe
 Ambroise and Geoffrey J. McLachlan, PNAS 2002}.
 
-\includegraphics{pnas.pdf}
-
 \vspace{10mm}
 
 See also this nice
 \href{https://www.youtube.com/watch?v=r64tRyHFAJ8\&list=PLAOUn-KLSAVNz3lv4a957qRpfPWH2EOg4\&index=3}{anecdote
 at about 7min 15 in the video}.
 \end{block}
-\end{frame}
-
-\begin{frame}
-We are looking together at Problem 3 of the recommended exercises 5.
 \end{frame}
 
 \begin{frame}{The Bootstrap}
@@ -1889,7 +1890,7 @@ is equal to 4.
 This is what we have done in the YAML-header to include todays date on
 your submission:
 
-` r format(Sys.time(), `\%d \%B, \%Y')` gives 08 January, 2024.
+` r format(Sys.time(), `\%d \%B, \%Y')` gives 07 February, 2024.
 \end{block}
 \end{frame}
 
