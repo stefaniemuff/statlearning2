@@ -550,7 +550,7 @@ rmse_mean <- mean(as.numeric(rmse_list))
 cat("rmse_mean:", rmse_mean, "\n")
 ```
 
-ii) (1p) Do the same evaluation as c) except for using LOOCV instead of 5-fold cross-validation
+ii) (1p) Do the same evaluation as i) except for using LOOCV instead of 5-fold cross-validation
 by changing *one line of the code*.
 
 
