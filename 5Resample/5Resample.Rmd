@@ -908,6 +908,19 @@ See also this nice [anecdote at about 7min 15 in the video](https://www.youtube.
 
 # The Bootstrap
 
+\centering
+
+![](Dr_Martens_black_old){width=80%}
+
+
+\tiny{{\tt http://tradingconsequences.blogs.edina.ac.uk/files/2013/10/Dr\_Martens\_black\_old.jpg}}}
+
+
+
+---
+
+
+
 \vspace{2mm}
 
 * Flexible and powerful statistical tool that
@@ -919,17 +932,23 @@ can be used to quantify _uncertainty_ associated with an estimator or statistica
 
 \vspace{2mm}
 
-* We will look at getting an estimate for the standard error of a sample median and of a regression coefficient.
+* The inventor: Bradley Efron in 1979 - [see interview](https://www.youtube.com/watch?v=6l9V1sINzhE).
+
+
+<!-- * We will look at getting an estimate for the standard error of a sample median and of a regression coefficient. -->
 
 
 ---
 
-* The inventor: Bradley Efron in 1979 - [see interview](https://www.youtube.com/watch?v=6l9V1sINzhE).
 
 * The name? _To pull oneself up by one's bootstraps_ from "The Surprising
 Adventures of Baron Munchausen" by Rudolph Erich Raspe:
 
 $~$
+
+![](muenchhausen){width=20%}
+
+
 
 > The Baron had fallen to the bottom of a deep lake. Just
 when it looked like all was lost, he thought to pick himself
@@ -940,7 +959,43 @@ $~$
 
 * **Idea: Use the data itself to get more information about a statistic (an estimator).**
 
-<!-- --- -->
+---
+
+# Example
+
+```{r, echo = FALSE}
+data = tibble(time = c(94,197,16,38,99,141,23,52,104,146, 10,51,30,40,27,46),
+          group = c(rep("treatment",7),rep("control",9)))
+control = c(52,104,146, 10,51,30,40,27,46)
+treat = c(94,197,16,38,99,141,23)
+dd = data.frame(Type = c("Treatment","Control"),
+           Life_length = c( knitr::combine_words(treat, sep = ",", and = ""),  knitr::combine_words(control, sep = ",", and = "")),
+           Mean = c(mean(treat),mean(control))
+           )
+knitr::kable(dd, digits = 2)
+```
+
+
+  * Is the difference between _means_ significant?
+  
+  * In the difference between _medians_ significant?
+  
+
+---
+
+```{r, echo = FALSE}
+
+m1 =  mean(treat)
+m2 =  mean(control)
+diff_mean = m1-m2
+
+
+## boxplot of the data
+data %>% ggplot() + geom_boxplot(aes(group,time)) +
+  geom_hline(yintercept = c(m1,m2), color  = c("red", "blue"))
+
+```
+
 
 <!-- ## Example: The mean $\bar{X}$ -->
 
@@ -957,53 +1012,24 @@ $~$
 
 <!-- $$ \bar{X}\pm t_{0.025,n-1}\frac{S}{\sqrt{n}}$$ -->
 
----
-
-## Example: the standard deviation of the sample median?
-
-$~$
-
-* Assume that we observe a random sample $X_1, X_2, \ldots, X_n$ from an unknown probability distribution $f$. We are interested in saying something about the population median, thus we calculate the sample median $\tilde{X}$.  
-$\rightarrow$ Q: How accurate is $\tilde{X}$ as an estimator?
-
-\vspace{2mm}
-
-* If we would know our distribution $F$, we could sample from $F$, and use simulations to answer our question.
-
-\vspace{2mm}
-
-* However, without knowledge of the distribution, we cannot calculate the standard deviation of our estimator, thus $\text{SD}(\tilde{X})$.
-
-\vspace{2mm}
-
-* That's where the bootstrap method comes into play.
 
 ---
 
-Let's first assume we would know $f$, for example $X\sim N(0,1)$. Then we can repeatedly take samples and calculate the standard deviation of all medians to obtain an estimate:
+* For the means we can derive analytical solutions but not for the median
 
-$~$
+* If we would know the median  distribution $F$ , we could sample from $F$ ,
+and use simulations to answer our question.
 
-\scriptsize
-```{r,eval=TRUE, echo=TRUE}
-set.seed(123)
-n=101
-B=1000
-estimator=rep(NA,B)
-for (b in 1:B)
-{
-  xs=rnorm(n)
-  estimator[b]=median(xs)
-}
-sd(estimator)
-```
+* However, without knowledge of the distribution, we cannot
+calculate the standard deviation of our estimator
 
----
+* That’s where the bootstrap method comes into play
 
-```{r boot1, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'}
-ggplot(data=data.frame(x=estimator),aes(x=x))+
-  geom_density()
-```
+
+<!-- ```{r boot1, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'} -->
+<!-- ggplot(data=data.frame(x=estimator),aes(x=x))+ -->
+<!--   geom_density() -->
+<!-- ``` -->
 
 ---
 
@@ -1027,23 +1053,23 @@ $~$
 
 ---
 
-Compare the sample median
-
+Compute one bootstrap sample for the control group
 $~$
 
+The original median:
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 set.seed(123)
 n=101
-original=rnorm(n)
-median(original)
+print(control)
+median(control)
 ```
 
 \normalsize
-to the median from **one bootstrap-sample**: 
+The median from **one bootstrap-sample**: 
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
-boot1=sample(x=original,size=n,replace=TRUE)
+boot1=sample(x=control,size=length(control),replace=TRUE)
 median(boot1)
 ```
 
@@ -1082,9 +1108,8 @@ Simulate data:
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 set.seed(123)
-n=101
-original=rnorm(n)
-median(original)
+
+c(median(treat), median(control))
 ```
 
 $~$
@@ -1097,13 +1122,15 @@ Then take 1000 bootstrap samples and repeatedly estimate the median to get a sta
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 B=1000
-estimator=rep(NA,B)
+estimator_control=estimator_treat = rep(NA,B)
 for (b in 1:B)
   {
-  thisboot=sample(x=original,size=n,replace=TRUE)
-  estimator[b]=median(thisboot)
+  thisboot=sample(x=control,size=length(control),replace=TRUE)
+  estimator_control[b]=median(thisboot)
+  thisboot=sample(x=treat,size=length(treat),replace=TRUE)
+  estimator_treat[b]=median(thisboot)
 }
-sd(estimator)
+c(sd(estimator_control), sd(estimator_treat))
 ```
 
 
@@ -1114,8 +1141,9 @@ The distribution of the 1000 sampled estimates:
 $~$
 
 ```{r boot2, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'}
-ggplot(data=data.frame(x=estimator),aes(x=x))+
-  geom_density()
+ggplot()+
+  geom_histogram(data=data.frame(x=estimator_treat),aes(x=x, fill = "treatment"), alpha = 0.5) + 
+  geom_histogram(data=data.frame(x=estimator_control),aes(x=x, fill = "control"), alpha = 0.5) 
 
 ```
 
@@ -1130,7 +1158,7 @@ $~$
 library(boot)
 boot.median=function(data,index) return(median(data[index]))
 B=1000
-boot(original,boot.median,R=B)
+boot(control,boot.median,R=B)
 ```
 
 ---
@@ -1237,9 +1265,9 @@ $$\text{Var}(\bar{X})=\frac{\sigma^2}{B} \ .$$
 # Excursion: R Markdown and `knitr`
 
 
-* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/).
+* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about).
 
-* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2023v/subpage6](https://wiki.math.ntnu.no/tma4268/2023v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
+* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2024v/subpage6](https://wiki.math.ntnu.no/tma4268/2024v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
 
  
 
