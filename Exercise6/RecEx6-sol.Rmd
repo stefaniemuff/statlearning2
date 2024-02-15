@@ -9,9 +9,9 @@ output:
     toc: no
     toc_float: yes
     toc_depth: 2
-  # pdf_document:
-  #   toc: no
-  #   toc_depth: '2'
+  pdf_document:
+    toc: no
+    toc_depth: '2'
 subtitle: 'Module 6: Solution sketches'
 ---
 
