@@ -38,9 +38,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, cache = TRUE)
 library(boot)
 
 #' GENERATE DATA; use a seed for reproducibility
-set.seed(4268)
+set.seed(4258)
 n=100 #number of observations
-p=5000 #number of predictors
+p=7000 #number of predictors
 d=10 #top correlated predictors chosen
 #' 
 #' 

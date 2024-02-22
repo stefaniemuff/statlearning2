@@ -1,8 +1,8 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 5: Resampling"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "February 6 and 9, 2023"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "February 8 and 9, 2023"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -130,6 +130,11 @@ $$\text{MSE}=\frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}({\boldsymbol x}_i))^2 \ .$$
 
 * _\textcolor{red}{Misclassification rate}_ (0/1 loss) for classification problems where we classify to the class with the highest probability $P(Y=j\mid {\boldsymbol x}_0)$ for $j=1,\ldots,K$:
 $$\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ .$$ 
+
+\vspace{2mm}
+
+**NB:** These are just two of the possible loss functions, there are several model to be found in the literature
+
 
 ---
 
@@ -297,14 +302,20 @@ This can be done by:
 Auto data set (library `ISLR`): predict `mpg` (miles pr gallon) using polynomial function of `horsepower` (of engine), $n=392$. What do you see?
  
 
-```{r chunkName, echo=FALSE, fig.width=4, fig.height=3,fig.align = "center",out.width='70%'}
+```{r chunkName, echo=FALSE, fig.width=8, fig.height=4,fig.align = "center",out.width='70%'}
 library(ISLR)
 library(ggplot2)
 library(ggpubr)
 library(reshape2)
+library(tidyverse)
 set.seed(123)
 n=dim(Auto)[1]
 
+
+
+
+xx = seq(45,232)
+fits = data.frame(horsepower = xx, matrix(nrow = length(xx), ncol = 11))
 testMSEmat=matrix(ncol=11,nrow=10)
 for (newsample in 1:11)
 {
@@ -312,12 +323,29 @@ for (newsample in 1:11)
   for (polydeg in 1:10)
   {
     lm.fit=lm(mpg~poly(horsepower,polydeg),data=Auto,subset=trainid)
+    
+
+    
     lm.pred=predict(lm.fit,Auto)[-trainid]
+    
+    fits[,polydeg+1] = predict(lm.fit, data.frame(horsepower =  xx))
     testMSEmat[polydeg,newsample]=mean((Auto$mpg[-trainid]-lm.pred)^2)
   }
 }
 yrange=c(15,28)
 
+fits %>% pivot_longer(-horsepower) %>%
+  ggplot() + 
+   geom_point(data = Auto %>% mutate(sel = sample(c(0,1),n, replace = T)), aes(horsepower, mpg, shape = factor(sel),
+                               alpha = sel)) + 
+  geom_line(aes(horsepower, value, group = name, color = name)) + scale_alpha(guide = 'none')
+ 
+```
+
+---
+
+
+```{r, echo=FALSE,out.width='70%'}
 plotdf=data.frame("testMSE"=testMSEmat[,1],"degree"=1:10)
 g0=ggplot(plotdf,aes(x=degree))+geom_line(y=testMSEmat[,1])+scale_y_continuous(limits = yrange)+scale_x_continuous(breaks=1:10)+labs(y="Validation set", x="Degree of polynomial")
 g0+theme_minimal()
@@ -384,7 +412,6 @@ Leave-one-out cross-validation (LOOCV) addresses the limitations of the validati
 $$\text{MSE}_i=(y_i-\hat{y}_i)^2 \ .$$
 
 * The **total prediction error** is the mean across these $n$ models
-
 
 
 $$\text{CV}_{n}=\frac{1}{n}\sum_{i=1}^n \text{MSE}_i \ .$$
@@ -483,7 +510,7 @@ $~$
 
 $~$
 
-See Compulsory exercise 1.
+<!-- See Compulsory exercise 1. -->
 
 ---
 
@@ -742,14 +769,14 @@ $$\text{CV}_{n}=\frac{1}{n} \sum_{i=1}^n {\text{Err}_i}$$
 Let us look at a data set from Chapter 2: 
 
 \centering
-![](213.pdf){width=80%}
+![](../../ISLR/Figures/Chapter2/2.13.pdf){width=80%}
 
 ---
 
 We can fit logistic regression and look at the decision boundary, depending on the degree of of the regression model:
 
 \centering
-![](../../ISLR/Figures/Chapter5/57.pdf){width=50%}
+![](../../ISLR/Figures/Chapter5/5.7.pdf){width=50%}
 
 \flushleft
 
@@ -764,7 +791,7 @@ Which degree of the logistic regression polynomial is best?
 $\rightarrow$ Cross-validation!
 
 \centering
-![](58.pdf){width=60%}
+![](../../ISLR/Figures/Chapter5/5.8.pdf){width=60%}
 
 \flushleft
 
@@ -845,7 +872,7 @@ Article by [Christophe Ambroise and Geoffrey J. McLachlan, PNAS 2002](http://www
 
 
 
-![Training vs test error](pnas.pdf){width=105%, align=center}
+<!-- ![Training vs test error](pnas.pdf){width=105%, align=center} -->
 
 
 
@@ -870,9 +897,9 @@ Article by [Christophe Ambroise and Geoffrey J. McLachlan, PNAS 2002](http://www
 See also this nice [anecdote at about 7min 15 in the video](https://www.youtube.com/watch?v=r64tRyHFAJ8&list=PLAOUn-KLSAVNz3lv4a957qRpfPWH2EOg4&index=3).
 
 
----
+<!-- --- -->
 
-We are looking together at Problem 3 of the recommended exercises 5.
+<!-- We are looking together at Problem 3 of the recommended exercises 5. -->
 
 ---
 
@@ -880,6 +907,19 @@ We are looking together at Problem 3 of the recommended exercises 5.
 
 
 # The Bootstrap
+
+\centering
+
+![](Dr_Martens_black_old){width=80%}
+
+
+\tiny{{\tt http://tradingconsequences.blogs.edina.ac.uk/files/2013/10/Dr\_Martens\_black\_old.jpg}}}
+
+
+
+---
+
+
 
 \vspace{2mm}
 
@@ -892,17 +932,23 @@ can be used to quantify _uncertainty_ associated with an estimator or statistica
 
 \vspace{2mm}
 
-* We will look at getting an estimate for the standard error of a sample median and of a regression coefficient.
+* The inventor: Bradley Efron in 1979 - [see interview](https://www.youtube.com/watch?v=6l9V1sINzhE).
+
+
+<!-- * We will look at getting an estimate for the standard error of a sample median and of a regression coefficient. -->
 
 
 ---
 
-* The inventor: Bradley Efron in 1979 - [see interview](https://www.youtube.com/watch?v=6l9V1sINzhE).
 
 * The name? _To pull oneself up by one's bootstraps_ from "The Surprising
 Adventures of Baron Munchausen" by Rudolph Erich Raspe:
 
 $~$
+
+![](muenchhausen){width=20%}
+
+
 
 > The Baron had fallen to the bottom of a deep lake. Just
 when it looked like all was lost, he thought to pick himself
@@ -913,7 +959,43 @@ $~$
 
 * **Idea: Use the data itself to get more information about a statistic (an estimator).**
 
-<!-- --- -->
+---
+
+# Example
+
+```{r, echo = FALSE}
+data = tibble(time = c(94,197,16,38,99,141,23,52,104,146, 10,51,30,40,27,46),
+          group = c(rep("treatment",7),rep("control",9)))
+control = c(52,104,146, 10,51,30,40,27,46)
+treat = c(94,197,16,38,99,141,23)
+dd = data.frame(Type = c("Treatment","Control"),
+           Life_length = c( knitr::combine_words(treat, sep = ",", and = ""),  knitr::combine_words(control, sep = ",", and = "")),
+           Mean = c(mean(treat),mean(control))
+           )
+knitr::kable(dd, digits = 2)
+```
+
+
+  * Is the difference between _means_ significant?
+  
+  * In the difference between _medians_ significant?
+  
+
+---
+
+```{r, echo = FALSE}
+
+m1 =  mean(treat)
+m2 =  mean(control)
+diff_mean = m1-m2
+
+
+## boxplot of the data
+data %>% ggplot() + geom_boxplot(aes(group,time)) +
+  geom_hline(yintercept = c(m1,m2), color  = c("red", "blue"))
+
+```
+
 
 <!-- ## Example: The mean $\bar{X}$ -->
 
@@ -930,53 +1012,24 @@ $~$
 
 <!-- $$ \bar{X}\pm t_{0.025,n-1}\frac{S}{\sqrt{n}}$$ -->
 
----
-
-## Example: the standard deviation of the sample median?
-
-$~$
-
-* Assume that we observe a random sample $X_1, X_2, \ldots, X_n$ from an unknown probability distribution $f$. We are interested in saying something about the population median, thus we calculate the sample median $\tilde{X}$.  
-$\rightarrow$ Q: How accurate is $\tilde{X}$ as an estimator?
-
-\vspace{2mm}
-
-* If we would know our distribution $F$, we could sample from $F$, and use simulations to answer our question.
-
-\vspace{2mm}
-
-* However, without knowledge of the distribution, we cannot calculate the standard deviation of our estimator, thus $\text{SD}(\tilde{X})$.
-
-\vspace{2mm}
-
-* That's where the bootstrap method comes into play.
 
 ---
 
-Let's first assume we would know $f$, for example $X\sim N(0,1)$. Then we can repeatedly take samples and calculate the standard deviation of all medians to obtain an estimate:
+* For the means we can derive analytical solutions but not for the median
 
-$~$
+* If we would know the median  distribution $F$ , we could sample from $F$ ,
+and use simulations to answer our question.
 
-\scriptsize
-```{r,eval=TRUE, echo=TRUE}
-set.seed(123)
-n=101
-B=1000
-estimator=rep(NA,B)
-for (b in 1:B)
-{
-  xs=rnorm(n)
-  estimator[b]=median(xs)
-}
-sd(estimator)
-```
+* However, without knowledge of the distribution, we cannot
+calculate the standard deviation of our estimator
 
----
+* That’s where the bootstrap method comes into play
 
-```{r boot1, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'}
-ggplot(data=data.frame(x=estimator),aes(x=x))+
-  geom_density()
-```
+
+<!-- ```{r boot1, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'} -->
+<!-- ggplot(data=data.frame(x=estimator),aes(x=x))+ -->
+<!--   geom_density() -->
+<!-- ``` -->
 
 ---
 
@@ -1000,23 +1053,23 @@ $~$
 
 ---
 
-Compare the sample median
-
+Compute one bootstrap sample for the control group
 $~$
 
+The original median:
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 set.seed(123)
 n=101
-original=rnorm(n)
-median(original)
+print(control)
+median(control)
 ```
 
 \normalsize
-to the median from **one bootstrap-sample**: 
+The median from **one bootstrap-sample**: 
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
-boot1=sample(x=original,size=n,replace=TRUE)
+boot1=sample(x=control,size=length(control),replace=TRUE)
 median(boot1)
 ```
 
@@ -1055,9 +1108,8 @@ Simulate data:
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 set.seed(123)
-n=101
-original=rnorm(n)
-median(original)
+
+c(median(treat), median(control))
 ```
 
 $~$
@@ -1070,13 +1122,15 @@ Then take 1000 bootstrap samples and repeatedly estimate the median to get a sta
 \scriptsize
 ```{r, eval=TRUE, echo=TRUE}
 B=1000
-estimator=rep(NA,B)
+estimator_control=estimator_treat = rep(NA,B)
 for (b in 1:B)
   {
-  thisboot=sample(x=original,size=n,replace=TRUE)
-  estimator[b]=median(thisboot)
+  thisboot=sample(x=control,size=length(control),replace=TRUE)
+  estimator_control[b]=median(thisboot)
+  thisboot=sample(x=treat,size=length(treat),replace=TRUE)
+  estimator_treat[b]=median(thisboot)
 }
-sd(estimator)
+c(sd(estimator_control), sd(estimator_treat))
 ```
 
 
@@ -1087,8 +1141,9 @@ The distribution of the 1000 sampled estimates:
 $~$
 
 ```{r boot2, echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='70%'}
-ggplot(data=data.frame(x=estimator),aes(x=x))+
-  geom_density()
+ggplot()+
+  geom_histogram(data=data.frame(x=estimator_treat),aes(x=x, fill = "treatment"), alpha = 0.5) + 
+  geom_histogram(data=data.frame(x=estimator_control),aes(x=x, fill = "control"), alpha = 0.5) 
 
 ```
 
@@ -1103,7 +1158,7 @@ $~$
 library(boot)
 boot.median=function(data,index) return(median(data[index]))
 B=1000
-boot(original,boot.median,R=B)
+boot(control,boot.median,R=B)
 ```
 
 ---
@@ -1210,9 +1265,9 @@ $$\text{Var}(\bar{X})=\frac{\sigma^2}{B} \ .$$
 # Excursion: R Markdown and `knitr`
 
 
-* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/).
+* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about).
 
-* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2023v/subpage6](https://wiki.math.ntnu.no/tma4268/2023v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
+* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2024v/subpage6](https://wiki.math.ntnu.no/tma4268/2024v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
 
  
 

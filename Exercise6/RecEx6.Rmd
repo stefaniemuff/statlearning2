@@ -1,9 +1,9 @@
 ---
 title: "TMA4268 Statistical Learning"
 author:
-- Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff
+- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
 - Department of Mathematical Sciences, NTNU
-date: "Spring 2023"
+date: "February 22, 2024"
 output:
   pdf_document:
     toc: no
@@ -21,13 +21,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Recommended exercise 1
 
-1. Show that the least square estimator of a standard linear model is given by
+1. Show that the least square estimator of a standard linear regression model is given by
 $$ \hat{\boldsymbol \beta} =(\boldsymbol X^T \boldsymbol X)^{-1} \boldsymbol X^T \boldsymbol Y$$
-2. Show that the maximum likelihood estimator is equal to the least square estimator for the standard linear model.
+2. Show that the maximum likelihood estimator is equal to the least square estimator for the standard linear regression model.
 
 # Recommended exercise 2
 
-Write R code to create a similar representation of the Credit data figure shown below.
+Write `R` code to create a similar representation of the `Credit` data set in the `ISLR`-package, as in the figure shown below.
 
 ![Credit data figure](credit_card_data.png){width=50%}
 
