@@ -6,16 +6,19 @@
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -46,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -60,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -69,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -97,10 +100,10 @@
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 7: Recommended Exercises},
-  pdfauthor={Emma Skarstein, Daesoo Lee, Kenneth Aase, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -115,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
-\author{Emma Skarstein, Daesoo Lee, Kenneth Aase, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{Mar 02, 2023}
+\subtitle{TMA4268 Statistical Learning V2024}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
+Lee \and Department of Mathematical Sciences, NTNU}
+\date{Feb 29, 2024}
 
 \begin{document}
 \maketitle
@@ -134,8 +137,8 @@ per gallon \texttt{mpg} by engine horsepower \texttt{horsepower}.
 Separate the observations into training and test. A training set is
 plotted below.
 
-Perform polynomial regression of degree 1, 2, 3 and 4. Use
-\texttt{lines()} to add the fitted values to the plot below.
+Perform polynomial regression of degree \(1\), \(2\), \(3\) and \(4\).
+Use \texttt{lines()} to add the fitted values to the plot below.
 
 Also plot the test error depending on polynomial degree.
 
@@ -143,13 +146,13 @@ Also plot the test error depending on polynomial degree.
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ISLR)}
 \CommentTok{\# extract only the two variables from Auto}
-\NormalTok{ds }\OtherTok{=}\NormalTok{ Auto[}\FunctionTok{c}\NormalTok{(}\StringTok{"horsepower"}\NormalTok{, }\StringTok{"mpg"}\NormalTok{)]}
-\NormalTok{n }\OtherTok{=} \FunctionTok{nrow}\NormalTok{(ds)}
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ Auto[}\FunctionTok{c}\NormalTok{(}\StringTok{"horsepower"}\NormalTok{, }\StringTok{"mpg"}\NormalTok{)]}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(ds)}
 \CommentTok{\# which degrees we will look at}
-\NormalTok{deg }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}
+\NormalTok{deg }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \CommentTok{\# training ids for training set}
-\NormalTok{tr }\OtherTok{=} \FunctionTok{sample.int}\NormalTok{(n, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{tr }\OtherTok{\textless{}{-}} \FunctionTok{sample.int}\NormalTok{(n, n }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
 \CommentTok{\# plot of training data}
 \FunctionTok{plot}\NormalTok{(ds[tr, ], }\AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Polynomial regression"}\NormalTok{)}
 \end{Highlighting}
@@ -161,20 +164,20 @@ Also plot the test error depending on polynomial degree.
 \subsection{Problem 2}\label{problem-2}}
 
 We will continue working with the \texttt{Auto} data set. The variable
-\texttt{origin} is 1,2 or 3, corresponding to American, European or
-Japanese origin. Use \texttt{factor(origin)} for conversion to a factor
-variable. Predict \texttt{mpg} by origin with a linear model. Plot the
-fitted values and approximative 95 percent confidence intervals.
-Selecting \texttt{se\ =\ T} in \texttt{predict()} gives standard errors
-of the prediction.
+\texttt{origin} is \(1\), \(2\) or \(3\), corresponding to American,
+European or Japanese origin, respectively. Use \texttt{factor(origin)}
+for conversion to a factor variable. Predict \texttt{mpg} by origin with
+a linear model. Plot the fitted values and approximative \(95\%\)
+confidence intervals. Selecting \texttt{se\ =\ T} in \texttt{predict()}
+gives standard errors of the prediction.
 
 \begin{itemize}
 \item
-  Hint: make a new dataframe of the three origins (as factors) and use
-  this new data in your predict function.
+  Hint: make a new \texttt{data.frame} of the three origins (as factors)
+  and use this new data in your predict function.
 \item
   Hint: to plot the confidence intervals, you can add
-  \texttt{geom\_segment(aes(x=origin,\ y=lwr,\ xend\ =\ origin,\ yend=upr))}
+  \texttt{geom\_segment(aes(x\ =\ origin,\ y\ =\ lwr,\ xend\ =\ origin,\ yend\ =\ upr))}
   to your ggplot, where \texttt{origin}, \texttt{lwr} and \texttt{upr}
   comes from a dataframe with \texttt{lwr} as the lower bound and
   \texttt{upr} as the upper bound.
@@ -185,11 +188,11 @@ of the prediction.
 
 Now, let us look at the \texttt{Wage} data set. The section on Additive
 Models
-\href{https://github.com/stefaniemuff/statlearning/blob/master/7BeyondLinear/7BeyondLinear.pdf}{(slides
-28-34 in the pdf)} explains how we can create an AM by adding components
-together. One component we saw is a natural spline in \texttt{year} with
-one knot. Derive the expression for the design matrix \(\mathbf X_2\)
-from the natural spline basis: \[
+\href{https://github.com/stefaniemuff/statlearning2/blob/master/7BeyondLinear/7BeyondLinear_2024.pdf}{(in
+this week's slides)} explains how we can create an additive model by
+adding components together. One component we saw is a natural spline in
+\texttt{year} with one knot. Derive the expression for the design matrix
+\(\mathbf X_2\) from the natural spline basis: \[
 b_1(x_i) = x_i, \quad b_{k+2}(x_i) = d_k(x_i)-d_K(x_i),\; k = 0, \ldots, K - 1,\\
 \] \[
 d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k}.
@@ -198,8 +201,9 @@ d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k}.
 \hypertarget{problem-4}{%
 \subsection{Problem 4}\label{problem-4}}
 
-We will continue working with the same AM as in problem 3. The R call
-\texttt{model.matrix(\textasciitilde{}\ bs(age,knots=c(40,60))\ +\ ns(year,knots=2006)\ +\ education)}
+We will continue working with the same AM as in problem 3. The
+\texttt{R} call
+\texttt{model.matrix(\textasciitilde{}\ bs(age,\ knots\ =\ c(40,\ 60))\ +\ ns(year,\ knots\ =\ 2006)\ +\ education)}
 gives a design matrix for the AM. This matrix is what \texttt{gam()}
 uses. However, it does not equal our design matrix for AM
 \(\mathbf X = (\mathbf{1}, \mathbf{X}_1, \mathbf{X}_2, \mathbf{X}_3)\).
@@ -210,20 +214,20 @@ Write code that produces \(\mathbf X\). The code below may be useful.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# X\_1}
-\NormalTok{mybs }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
-    \FunctionTok{cbind}\NormalTok{(x, x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, x}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, }\FunctionTok{sapply}\NormalTok{(knots, }\ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ y)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{))}
+\NormalTok{mybs }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
+  \FunctionTok{cbind}\NormalTok{(x, x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, x}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, }\FunctionTok{sapply}\NormalTok{(knots, }\ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ y)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{))}
 \NormalTok{\}}
 
-\NormalTok{d }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(c, cK, x) (}\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ c)}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ cK)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(cK }\SpecialCharTok{{-}}\NormalTok{ c)}
+\NormalTok{d }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(c, cK, x) (}\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ c)}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ cK)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (cK }\SpecialCharTok{{-}}\NormalTok{ c)}
 \CommentTok{\# X\_2}
-\NormalTok{myns }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
-\NormalTok{    kn }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{min}\NormalTok{(x), knots, }\FunctionTok{max}\NormalTok{(x))}
-\NormalTok{    K }\OtherTok{=} \FunctionTok{length}\NormalTok{(kn)}
-\NormalTok{    sub }\OtherTok{=} \FunctionTok{d}\NormalTok{(kn[K }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], kn[K], x)}
-    \FunctionTok{cbind}\NormalTok{(x, }\FunctionTok{sapply}\NormalTok{(kn[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(K }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)], d, kn[K], x) }\SpecialCharTok{{-}}\NormalTok{ sub)}
+\NormalTok{myns }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
+\NormalTok{  kn }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{min}\NormalTok{(x), knots, }\FunctionTok{max}\NormalTok{(x))}
+\NormalTok{  K }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(kn)}
+\NormalTok{  sub }\OtherTok{\textless{}{-}} \FunctionTok{d}\NormalTok{(kn[K }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], kn[K], x)}
+  \FunctionTok{cbind}\NormalTok{(x, }\FunctionTok{sapply}\NormalTok{(kn[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(K }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)], d, kn[K], x) }\SpecialCharTok{{-}}\NormalTok{ sub)}
 \NormalTok{\}}
 \CommentTok{\# X\_3}
-\NormalTok{myfactor }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{myfactor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ x)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -235,15 +239,15 @@ should be the same as when using the built-in R function \texttt{gam()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# install.packages(\textquotesingle{}gam\textquotesingle{})}
+\CommentTok{\# install.packages("gam")}
 \FunctionTok{library}\NormalTok{(gam)}
 \FunctionTok{library}\NormalTok{(ISLR)}
 \CommentTok{\# Figure out how to define your X{-}matrix (this is perhaps a bit tricky!)}
-\NormalTok{X }\OtherTok{=}\NormalTok{ ...}
+\NormalTok{X }\OtherTok{\textless{}{-}}\NormalTok{ ...}
 \CommentTok{\# fitted model with our X}
-\NormalTok{myhat }\OtherTok{=} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{fit}
+\NormalTok{myhat }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{fit}
 \CommentTok{\# fitted model with gam}
-\NormalTok{yhat }\OtherTok{=} \FunctionTok{gam}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education)}\SpecialCharTok{$}\NormalTok{fit}
+\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{gam}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education)}\SpecialCharTok{$}\NormalTok{fit}
 \CommentTok{\# are they equal?}
 \FunctionTok{all.equal}\NormalTok{(myhat, yhat)}
 \end{Highlighting}
@@ -256,8 +260,8 @@ differ?
 \subsection{Problem 5}\label{problem-5}}
 
 In this exercise we take a quick look at different non-linear regression
-methods. We continue using the Auto dataset from above, but with more
-variables.
+methods. We continue using the \texttt{Auto} dataset from above, but
+with more variables.
 
 Fit an additive model using the function \texttt{gam} from package
 \texttt{gam}. Call the result \texttt{gamobject}.
@@ -274,8 +278,8 @@ Fit an additive model using the function \texttt{gam} from package
 \item
   \texttt{weight} is a linear function,
 \item
-  \texttt{acceleration} is a smoothing spline with \texttt{df=3} (hint:
-  \texttt{s}),
+  \texttt{acceleration} is a smoothing spline with \texttt{df\ =\ 3}
+  (hint: \texttt{s}),
 \item
   \texttt{origin} is a categorical variable (which can be interpreted as
   a step function, which can be seen from the dummy variable coding).
@@ -283,7 +287,7 @@ Fit an additive model using the function \texttt{gam} from package
 
 Plot the resulting curves. Comment on what you see.
 
-\textbf{R-hints:} first set \texttt{par(mfrow=c(2,3)} and then
-\texttt{plot(gamobject,se=TRUE,col="blue")}).
+\textbf{R-hints:} first set \texttt{par(mfrow\ =\ c(2,\ 3)} and then
+\texttt{plot(gamobject,\ se\ =\ TRUE,\ col\ =\ "blue")}).
 
 \end{document}
