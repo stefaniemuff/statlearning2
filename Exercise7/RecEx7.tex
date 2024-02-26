@@ -168,8 +168,8 @@ We will continue working with the \texttt{Auto} data set. The variable
 European or Japanese origin, respectively. Use \texttt{factor(origin)}
 for conversion to a factor variable. Predict \texttt{mpg} by origin with
 a linear model. Plot the fitted values and approximative \(95\%\)
-confidence intervals. Selecting \texttt{se\ =\ T} in \texttt{predict()}
-gives standard errors of the prediction.
+confidence intervals. Selecting \texttt{se\ =\ TRUE} in
+\texttt{predict()} gives standard errors of the prediction.
 
 \begin{itemize}
 \item
@@ -190,24 +190,31 @@ Now, let us look at the \texttt{Wage} data set. The section on Additive
 Models
 \href{https://github.com/stefaniemuff/statlearning2/blob/master/7BeyondLinear/7BeyondLinear_2024.pdf}{(in
 this week's slides)} explains how we can create an additive model by
-adding components together. One component we saw is a natural spline in
-\texttt{year} with one knot. Derive the expression for the design matrix
-\(\mathbf X_2\) from the natural spline basis: \[
+adding components together. One type of component we saw is natural
+cubic splines. Derive the design matrix \(\mathbf{X}\) for a natural
+cubic spline with one internal knot at \texttt{year} \(= 2006\), from
+the natural cubic spline basis:
+
+\[
 b_1(x_i) = x_i, \quad b_{k+2}(x_i) = d_k(x_i)-d_K(x_i),\; k = 0, \ldots, K - 1,\\
-\] \[
+\]
+
+\[
 d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k}.
 \]
 
 \hypertarget{problem-4}{%
 \subsection{Problem 4}\label{problem-4}}
 
-We will continue working with the same AM as in problem 3. The
-\texttt{R} call
+We will continue working with the same additive model as in problem 3,
+but we now also include a cubic spline for the covariate \texttt{age},
+and a linear term for \texttt{education}. The \texttt{R} call
 \texttt{model.matrix(\textasciitilde{}\ bs(age,\ knots\ =\ c(40,\ 60))\ +\ ns(year,\ knots\ =\ 2006)\ +\ education)}
-gives a design matrix for the AM. This matrix is what \texttt{gam()}
-uses. However, it does not equal our design matrix for AM
+gives a design matrix for the model. This matrix is what \texttt{gam()}
+uses. However, it does not equal our design matrix for the additive
+model
 \(\mathbf X = (\mathbf{1}, \mathbf{X}_1, \mathbf{X}_2, \mathbf{X}_3)\).
-The predicted responses will still be the same.
+Despite this, the predicted responses will still be the same.
 
 Write code that produces \(\mathbf X\). The code below may be useful.
 

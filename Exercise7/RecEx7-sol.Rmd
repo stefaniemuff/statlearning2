@@ -143,17 +143,22 @@ ggplot(dat, aes(x = origin, y = mpg)) +
 
 ## Problem 3
 
-The request is a design matrix for a natural spline with $X =$ `year` and one knot $c_1 = 2006$. The boundary knots should be the extreme values of `year`, that is $c_0 = 2003$ and $c_2 = 2009$. A general basis for a natural spline is
-
+The request is a design matrix $X$ for a natural cubic spline with $X =$ `year` and one internal knot at $2006$.
+The definition of the basis for a natural cubic spline is
 $$
 b_1(x_i) = x_i, \quad b_{k+2}(x_i) = d_k(x_i)-d_K(x_i),\; k = 0, \ldots, K - 1,\\
 $$
 
 $$
-d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k}.
+d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k},
 $$
 
-In our case we have one internal knot, that is $K=1$. Thus, $k$ takes only the value $0$. The two basis functions are
+where $K$ is the number of internal knots, $c_k$ is the location of the $k^\text{th}$ knot, and $(.)_+$ denotes $\max (., 0)$.
+In our case we have one internal knot at $c_1 = 2006$, thus $K = 1$.
+Since this is a natural spline, the boundary knots should be the extreme values of `year`, that is $c_0 = 2003$ and $c_2 = 2009$.
+Since $K=1$, the index $k$ takes only the value $0$, so we end up with only having to find $b_1(x_i)$ and $b_2(x_i)$.
+
+By inserting into the above expressions, we find that the two basis functions are
 
 \begin{align*}
 b_1(x_i) &= x_i,\\
@@ -163,10 +168,24 @@ b_2(x_i) &= d_0(x_i)-d_1(x_i)\\
 &= \frac{1}{6}(x_i-2003)^3_+ - \frac{1}{3}(x_i-2006)^3_+ + \frac{1}{6}(x_i-2009)^3_+.
 \end{align*}
 
-The design matrix is obtained by $\{\mathbf X_2\}_{ij} = b_j(x_i)$. We can simplify the second basis function more by using the fact that the boundary knots are the extreme values of $x_i$, that is $2003 \leq x_i \leq 2009$, and thus $\frac{1}{6}(x_i-2009)^3_+=0$. Thus,
+We can simplify the final term in the second basis function by using the fact that the boundary knots are the extreme values of $x_i$, that is $2003 \leq x_i \leq 2009$, and thus $\frac{1}{6}(x_i-2009)^3_+=0$. Thus,
+
 $$
 b_2(x_i) = \frac{1}{6}(x_i-2003)^3 - \frac{1}{3}(x_i-2006)^3_+.
 $$
+
+The design matrix (here also including an intercept term) is given by
+
+$$
+\mathbf X = \begin{pmatrix}
+1 & b_{1}(x_1) & b_{2}(x_1) \\
+1 & b_{1}(x_2) & b_{2}(x_2) \\
+\vdots & \vdots & \vdots \\
+1 & b_{1}(x_n) & b_{2}(x_n) \\
+\end{pmatrix},
+$$
+
+where $b_1(x_i)$ and $b_2(x_i)$ are as found above.
 
 ## Problem 4
 

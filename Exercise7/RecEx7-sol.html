@@ -1741,17 +1741,28 @@ ggplot(dat, aes(x = origin, y = mpg)) +
 </div>
 <div id="problem-3" class="section level2">
 <h2>Problem 3</h2>
-<p>The request is a design matrix for a natural spline with <span class="math inline">\(X =\)</span> <code>year</code> and one knot <span class="math inline">\(c_1 = 2006\)</span>. The boundary knots should be
-the extreme values of <code>year</code>, that is <span class="math inline">\(c_0 = 2003\)</span> and <span class="math inline">\(c_2 = 2009\)</span>. A general basis for a natural
-spline is</p>
-<p><span class="math display">\[
+<p>The request is a design matrix <span class="math inline">\(X\)</span>
+for a natural cubic spline with <span class="math inline">\(X =\)</span>
+<code>year</code> and one internal knot at <span class="math inline">\(2006\)</span>. The definition of the basis for a
+natural cubic spline is <span class="math display">\[
 b_1(x_i) = x_i, \quad b_{k+2}(x_i) = d_k(x_i)-d_K(x_i),\; k = 0, \ldots,
 K - 1,\\
 \]</span></p>
 <p><span class="math display">\[
-d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k}.
+d_k(x_i) = \frac{(x_i-c_k)^3_+-(x_i-c_{K+1})^3_+}{c_{K+1}-c_k},
 \]</span></p>
-<p>In our case we have one internal knot, that is <span class="math inline">\(K=1\)</span>. Thus, <span class="math inline">\(k\)</span> takes only the value <span class="math inline">\(0\)</span>. The two basis functions are</p>
+<p>where <span class="math inline">\(K\)</span> is the number of
+internal knots, <span class="math inline">\(c_k\)</span> is the location
+of the <span class="math inline">\(k^\text{th}\)</span> knot, and <span class="math inline">\((.)_+\)</span> denotes <span class="math inline">\(\max (., 0)\)</span>. In our case we have one
+internal knot at <span class="math inline">\(c_1 = 2006\)</span>, thus
+<span class="math inline">\(K = 1\)</span>. Since this is a natural
+spline, the boundary knots should be the extreme values of
+<code>year</code>, that is <span class="math inline">\(c_0 =
+2003\)</span> and <span class="math inline">\(c_2 = 2009\)</span>. Since
+<span class="math inline">\(K=1\)</span>, the index <span class="math inline">\(k\)</span> takes only the value <span class="math inline">\(0\)</span>, so we end up with only having to find
+<span class="math inline">\(b_1(x_i)\)</span> and <span class="math inline">\(b_2(x_i)\)</span>.</p>
+<p>By inserting into the above expressions, we find that the two basis
+functions are</p>
 <p><span class="math display">\[\begin{align*}
 b_1(x_i) &amp;= x_i,\\
 b_2(x_i) &amp;= d_0(x_i)-d_1(x_i)\\
@@ -1762,11 +1773,22 @@ b_2(x_i) &amp;= d_0(x_i)-d_1(x_i)\\
 &amp;= \frac{1}{6}(x_i-2003)^3_+ - \frac{1}{3}(x_i-2006)^3_+ +
 \frac{1}{6}(x_i-2009)^3_+.
 \end{align*}\]</span></p>
-<p>The design matrix is obtained by <span class="math inline">\(\{\mathbf X_2\}_{ij} = b_j(x_i)\)</span>. We can
-simplify the second basis function more by using the fact that the
-boundary knots are the extreme values of <span class="math inline">\(x_i\)</span>, that is <span class="math inline">\(2003 \leq x_i \leq 2009\)</span>, and thus <span class="math inline">\(\frac{1}{6}(x_i-2009)^3_+=0\)</span>. Thus, <span class="math display">\[
+<p>We can simplify the final term in the second basis function by using
+the fact that the boundary knots are the extreme values of <span class="math inline">\(x_i\)</span>, that is <span class="math inline">\(2003 \leq x_i \leq 2009\)</span>, and thus <span class="math inline">\(\frac{1}{6}(x_i-2009)^3_+=0\)</span>. Thus,</p>
+<p><span class="math display">\[
 b_2(x_i) = \frac{1}{6}(x_i-2003)^3 - \frac{1}{3}(x_i-2006)^3_+.
 \]</span></p>
+<p>The design matrix (here also including an intercept term) is given
+by</p>
+<p><span class="math display">\[
+\mathbf X = \begin{pmatrix}
+1 &amp; b_{1}(x_1) &amp; b_{2}(x_1) \\
+1 &amp; b_{1}(x_2) &amp; b_{2}(x_2) \\
+\vdots &amp; \vdots &amp; \vdots \\
+1 &amp; b_{1}(x_n) &amp; b_{2}(x_n) \\
+\end{pmatrix},
+\]</span></p>
+<p>where <span class="math inline">\(b_1(x_i)\)</span> and <span class="math inline">\(b_2(x_i)\)</span> are as found above.</p>
 </div>
 <div id="problem-4" class="section level2">
 <h2>Problem 4</h2>
