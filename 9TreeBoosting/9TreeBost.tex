@@ -182,7 +182,7 @@
 \title{Module 9: Boosting and additive trees}
 \subtitle{TMA4268 Statistical Learning V2024}
 \author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{March xx and yy, 2024}
+\date{March 14 and 15, 2024}
 
 \begin{document}
 \frame{\titlepage}
@@ -207,7 +207,7 @@
   Learning, Chapter 10
 \end{itemize}
 
-\vspace{2mm}
+\vspace{8mm}
 
 Check out:
 
@@ -221,22 +221,14 @@ Check out:
 \end{frame}
 
 \begin{frame}
-\begin{block}{What will you learn? (todo: update)}
-\protect\hypertarget{what-will-you-learn-todo-update}{}
+\begin{block}{What will you learn?}
+\protect\hypertarget{what-will-you-learn}{}
 \(~\)
 
 \begin{itemize}
 \tightlist
 \item
   Boosting methods -- general terms
-\end{itemize}
-
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  Boosting of linear models
 \end{itemize}
 
 \vspace{2mm}
@@ -260,6 +252,14 @@ Check out:
 \begin{itemize}
 \tightlist
 \item
+  Stochastic gradient boosting
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
   XGBoost: eXtreme Gradient Boosting
 \end{itemize}
 
@@ -268,7 +268,15 @@ Check out:
 \begin{itemize}
 \tightlist
 \item
-  Maybe an outlook to modern methods: Light GBM, catboost, ngboost
+  Outlook to modern methods: Light GBM, catboost, ngboost
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Boosting of linear models
 \end{itemize}
 \end{block}
 \end{frame}
@@ -291,7 +299,7 @@ Check out:
 \tightlist
 \item
   First ideas in the 1990s and early 2000s (\emph{e.g.}, Freund and
-  Schapire (1997), Ridgeway (1999), Friedman, Hastie, and Tibshirani
+  Schapire (1997), Ridgeway (1999), J. Friedman, Hastie, and Tibshirani
   (2000))
 \end{itemize}
 
@@ -738,18 +746,17 @@ one split).
     to the training data.\\
   \item
     Update \(\hat{f}\) by adding in a shrunken version of the new tree:
-    \[\hat{f}(x) \leftarrow \hat{f}(x)+\lambda \hat{f}^b(x).\]\\
+    \[\hat{f}(x) \leftarrow \hat{f}(x)+\eta \hat{f}^b(x).\]\\
   \item
     Update the residuals,
-    \[r_i \leftarrow r_i - \lambda \hat{f}^b(x_i).\]\\
+    \[r_i \leftarrow r_i - \eta \hat{f}^b(x_i).\]\\
   \end{enumerate}
 \item
-  The boosted model is
-  \(\hat{f}(x) = \sum_{b=1}^B \lambda \hat{f}^b(x).\)
+  The boosted model is \(\hat{f}(x) = \sum_{b=1}^B \eta \hat{f}^b(x).\)
 \end{enumerate}
 
 Boosting has three tuning parameters which need to be set (\(B\),
-\(\lambda\), \(d\)), and can be found using cross-validation.
+\(\eta\), \(d\)), and can be found using cross-validation.
 \end{frame}
 
 \begin{frame}
@@ -762,12 +769,11 @@ Boosting has three tuning parameters which need to be set (\(B\),
   information is unused (remember that boosting is a slow learner),
   whereas a too large value of \(B\) may lead to overfitting.
 \item
-  \textbf{Shrinkage parameter \(\lambda\)}. Controls the rate at which
-  boosting learns. \(\lambda\) scales the new information from the
-  \(b\)-th tree, when added to the existing tree \(\hat{f}\). Choosing a
-  small value for \(\lambda\) ensures that the algorithm learns slowly,
-  but will require a larger \(B\). Typical values of \(\lambda\) is 0.1
-  or 0.01.
+  \textbf{Shrinkage parameter \(\eta\)}. Controls the rate at which
+  boosting learns. \(\eta\) scales the new information from the \(b\)-th
+  tree, when added to the existing tree \(\hat{f}\). Choosing a small
+  value for \(\eta\) ensures that the algorithm learns slowly, but will
+  require a larger \(B\). Typical values of \(\eta\) is 0.1 or 0.01.
 \item
   \textbf{Interaction depth \(d\)}: The number of splits in each tree.
   This parameter controls the complexity of the boosted tree ensemble
@@ -826,9 +832,9 @@ allow the interaction depth (number of splits per tree) to be of degree
 \begin{itemize}
 \item
   Calculate the MSE on the test set, first for the model with
-  \(\lambda=0.001\) (default), then with \(\lambda=0.2\).
+  \(\eta=0.001\) (default), then with \(\eta=0.2\).
 \item
-  Ideally, we should do a cross-validation to find the best \(\lambda\)
+  Ideally, we should do a cross-validation to find the best \(\eta\)
   over a grid (comes later), but here it seems not to make a big
   difference.
 \end{itemize}
@@ -1035,7 +1041,7 @@ the previous tree. Motivated by steepest descent.
 \begin{itemize}
 \tightlist
 \item
-  \emph{\textcolor{red}{Steepest descent}} is a general numerical
+  \emph{\textcolor{red}{Steepest descent}} is a \emph{general} numerical
   optimization technique.
 \end{itemize}
 
@@ -1295,12 +1301,12 @@ classes}
 \protect\hypertarget{gradient-tree-boosting-for-classification-into-k-classes}{}
 \(~\)
 
-Replace the squared error loss by the
+For \(K>2\) classes, use as loss function the
 \emph{\textcolor{red}{K-class multinomial deviance}}
 
 \begin{align}
 L(y,f(x)) &= -\sum_{k=1}^K I(y = k) \log (p_k(x)) \\ 
- & = -\sum_{k=1}^K I(y = k) f_k(x) + \log(\sum_{l=1}^K e^{f_l(x)})
+ & = -\sum_{k=1}^K I(y = k) f_k(x) + \log(\sum_{l=1}^K e^{f_l(x)}) \ ,
  \end{align}
 
 with class probabilities
@@ -1331,16 +1337,13 @@ corresponding functions \(f(x)\).
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Practical considerations}
+\protect\hypertarget{practical-considerations}{}
 The three main ingredients of gradient boosting:
 
 \vspace{2mm}
 
 \begin{itemize}
-\item
-  \emph{\textcolor{red}{Loss Function}}: The function we want to
-  minimize. Its role is to estimate how good the model is at making
-  predictions with the given data.
 \item
   \emph{\textcolor{red}{Weak Learner}}: A weak learner is one that
   classifies our data but does so poorly, perhaps no better than random
@@ -1352,6 +1355,10 @@ The three main ingredients of gradient boosting:
   sequential approach of adding the trees (weak learners) one step at a
   time. After each iteration, we need to be closer to our final model,
   since each iteration should reduce the value of our loss function.
+\item
+  \emph{\textcolor{red}{Loss Function}}: The function we want to
+  minimize. Its role is to estimate how good the model is at making
+  predictions with the given data.
 \end{itemize}
 \end{frame}
 
@@ -1359,32 +1366,348 @@ The three main ingredients of gradient boosting:
 \protect\hypertarget{parameter-tuning}{}
 \(~\)
 
-\begin{itemize}
-\item
-  Tree size in each iteration
-\item
-  Number of boosting iterations
-\end{itemize}
-\end{frame}
+\textbf{Tree hyperparameters (weak learner):}
 
-\begin{frame}
-\begin{block}{Finding the right tree depth in boosting}
-\protect\hypertarget{finding-the-right-tree-depth-in-boosting}{}
+\begin{enumerate}
+[a)]
+\item
+  Tree size (depth) in each iteration
+\item
+  Minimum observations in terminal nodes
+\end{enumerate}
+
 \(~\)
 
-See 10.11 in the Elements book
+\textbf{Boosting hyperparameters (additive model):}
+
+\begin{enumerate}
+[a)]
+\setcounter{enumi}{2}
+\item
+  Number of trees, i.e., the number of boosting iterations
+\item
+  The learning rate
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{a) Finding the right tree depth in boosting}
+\protect\hypertarget{a-finding-the-right-tree-depth-in-boosting}{}
+(10.11 in the Elements book)
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  Historically, large trees were grown, followed by pruning, in each
+  iteration of the boosting process.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  However, this assumes that each tree is the last one in the algorithm
+  (why?).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Better strategy: All trees are the same size.
+\end{itemize}
+
+\pause
+
+\vspace{6mm}
+
+Given that \(J\) is the number of leaves (\(J-\)terminal node tree):
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{which size should we then choose?}
+\item
+  \textbf{Why?}
+\end{itemize}
+
+\vspace{2mm}
+
+Discuss!
 \end{block}
 \end{frame}
 
 \begin{frame}
-\begin{block}{Other (more general) tuning considerations}
-\protect\hypertarget{other-more-general-tuning-considerations}{}
+Some considerations / drawings:
+
+\(~\)
+
+In the end, \(J\) is a tuning parameters, but does usually not give much
+better results than when using \(J\approx 4 \text{ to } 6\).
+
+\vspace{50mm}
+\end{frame}
+
+\begin{frame}
+\begin{block}{b) Minimum number of observations in terminal nodes}
+\protect\hypertarget{b-minimum-number-of-observations-in-terminal-nodes}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  This hyper-parameter is less relevant for large data sets.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Moreover, by giving tree depth and tuning the number of trees, we can
+  hope to get this parameter ``for free''.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  A reason to care anyway is that larger number of observations per leaf
+  are needed to get a good mean estimates.
+\end{itemize}
+
+\(~\)
+
+\(~\)
 \end{block}
 \end{frame}
 
 \begin{frame}
-\begin{block}{Stochastic GBMs}
-\protect\hypertarget{stochastic-gbms}{}
+\begin{block}{c) The number of tress (regularization strategy 1)}
+\protect\hypertarget{c-the-number-of-tress-regularization-strategy-1}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  When the number of trees \(M\) is growing, the training error is
+  reduced.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  For too large \(M\), we will overfit the training data.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Therefore, need to monitor prediction error on a validation sample and
+  do ``early stopping''.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Alternative: Cross-validation
+\end{itemize}
+
+\vspace{6mm}
+
+\(\rightarrow\) \(M\) is a tuning parameter and there is an optimal
+\(M\).
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{d) The learning rate (regularization strategy 2)}
+\protect\hypertarget{d-the-learning-rate-regularization-strategy-2}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  The contribution of each tree is scaled with a learning rate \(\eta\):
+\end{itemize}
+
+\[f_m(x) = f_{m-1}(x) + \eta \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .\]
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\eta\) and \(M\) are connected: Smaller \(\eta\) requires larger
+  \(M\), and vice versa.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Empirically, it was found that small \(\eta\) (i.e., \(\eta<0.1\)) is
+  more robust.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Possible strategy: Fix \(\eta\) and then choose \(M\) by early
+  stopping.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{Application: Ames housing data}
+\protect\hypertarget{application-ames-housing-data}{}
+Inspired by Boehmke and Greenwell (2020)
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  The Ames housing data is a data set available from the
+  \texttt{AmesHousing} R
+  package\footnote{https://cran.r-project.org/web/packages/AmesHousing/index.html}.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Response: House prices, with 80 predictor variables (age, style,
+  condition, area,..).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  2930 observations
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AmesHousing)  }\CommentTok{\# contains the data}
+\FunctionTok{library}\NormalTok{(gbm)  }\CommentTok{\# for original implementation of regular and stochastic GBMs}
+\FunctionTok{library}\NormalTok{(rsample)  }\CommentTok{\# to subsample training and test sets}
+
+\CommentTok{\# Data preparation}
+\NormalTok{ames }\OtherTok{\textless{}{-}}\NormalTok{ AmesHousing}\SpecialCharTok{::}\FunctionTok{make\_ames}\NormalTok{()}
+
+\CommentTok{\# Stratified sampling with the rsample package}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(ames, }\AttributeTok{prop =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{strata =} \StringTok{"Sale\_Price"}\NormalTok{)}
+\CommentTok{\# Training and testing data:}
+\NormalTok{ames\_train }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(split)}
+\NormalTok{ames\_test }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(split)}
+
+\NormalTok{response }\OtherTok{\textless{}{-}} \StringTok{"Sale\_Price"}
+\NormalTok{predictors }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(ames\_train), response)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# run a basic GBM model}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)  }\CommentTok{\# for reproducibility}
+\NormalTok{ames\_gbm1 }\OtherTok{\textless{}{-}} \FunctionTok{gbm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+  \AttributeTok{data =}\NormalTok{ ames\_train,}
+  \AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,  }\CommentTok{\# SSE loss function}
+  \AttributeTok{n.trees =} \DecValTok{3000}\NormalTok{,}
+  \AttributeTok{shrinkage =} \FloatTok{0.1}\NormalTok{, }\CommentTok{\# learning rate}
+  \AttributeTok{interaction.depth =} \DecValTok{3}\NormalTok{,}
+  \AttributeTok{n.minobsinnode =} \DecValTok{10}\NormalTok{, }\CommentTok{\# minimual number of observations in terminal nodes}
+  \AttributeTok{cv.folds =} \DecValTok{10}\NormalTok{,}
+  \AttributeTok{bag.fraction =}\DecValTok{1} \CommentTok{\# The default is 0.5, but here we want to have all data in each iteration}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+Find index for number trees with minimum CV error and then calculate
+RMSE for it:
+
+\vspace{2mm}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(best }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(ames\_gbm1}\SpecialCharTok{$}\NormalTok{cv.error))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1168
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(ames\_gbm1}\SpecialCharTok{$}\NormalTok{cv.error[best])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 22600.12
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+Plot error curve with training black and cross-validated MSE (green):
+
+\vspace{2mm}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{gbm.perf}\NormalTok{(ames\_gbm1, }\AttributeTok{method =} \StringTok{"cv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{9TreeBost_files/figure-beamer/unnamed-chunk-12-1} \end{center}
+
+\begin{verbatim}
+## [1] 1168
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Stochastic GBMs (regularization strategy 3)}
+\protect\hypertarget{stochastic-gbms-regularization-strategy-3}{}
 \scriptsize
 
 See Boehmke and Greenwell (2020)
@@ -1395,7 +1718,16 @@ See Boehmke and Greenwell (2020)
 \tightlist
 \item
   Stochastic gradient boosting: chose a random subsample of the training
-  data for each tree.
+  data for building each tree (J. H. Friedman 2002).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Typical value for the proportion \(\eta\) is \(N/2\), but can be much
+  smaller when \(N\) is large.
 \end{itemize}
 
 \vspace{2mm}
@@ -1406,6 +1738,24 @@ See Boehmke and Greenwell (2020)
   Again, the idea is to \emph{reduce variance}.
 \end{itemize}
 
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  In addition: Reduction of computation time!
+\end{itemize}
+
+\(~\)
+
+The proportion \(\eta\) is \emph{another hyper-parameter} that can be
+tuned\ldots{}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{Variants of stochastic GBMs}
+\protect\hypertarget{variants-of-stochastic-gbms}{}
 \(~\)
 
 There are a few variants of stochastic gradient boosting that can be
@@ -1433,6 +1783,279 @@ used, all of which have additional hyperparameters:
 \tightlist
 \item
   Subsample columns before considering each split in each tree
+\end{itemize}
+
+\(~\)
+
+Here we only look at the case where we subsample rows (i.e., entire data
+samples), which is available in the \texttt{gbm()} package.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+We use \texttt{bag.fraction=0.5} to subsample 50\% of the rows each time
+we build a tree: \vspace{2mm}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)  }\CommentTok{\# for reproducibility}
+\NormalTok{ames\_gbm2 }\OtherTok{\textless{}{-}} \FunctionTok{gbm}\NormalTok{(}
+  \AttributeTok{formula =}\NormalTok{ Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+  \AttributeTok{data =}\NormalTok{ ames\_train,}
+  \AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,  }\CommentTok{\# SSE loss function}
+  \AttributeTok{n.trees =} \DecValTok{3000}\NormalTok{,}
+  \AttributeTok{shrinkage =} \FloatTok{0.1}\NormalTok{, }\CommentTok{\# learning rate}
+  \AttributeTok{interaction.depth =} \DecValTok{3}\NormalTok{,}
+  \AttributeTok{n.minobsinnode =} \DecValTok{10}\NormalTok{, }\CommentTok{\# minimual number of observations in terminal nodes}
+  \AttributeTok{cv.folds =} \DecValTok{10}\NormalTok{,}
+  \AttributeTok{bag.fraction=}\FloatTok{0.5}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+Same as before:
+
+\vspace{2mm}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(best2 }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(ames\_gbm2}\SpecialCharTok{$}\NormalTok{cv.error))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1119
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(ames\_gbm2}\SpecialCharTok{$}\NormalTok{cv.error[best2])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 22402.07
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{XGBoost: Extreme Gradient Boosting}
+\protect\hypertarget{xgboost-extreme-gradient-boosting}{}
+Suggested by Chen and Guestrin (2016) and implemented in the R package
+\texttt{xgboost}.
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  XGBoost is the state-of-the-art for tree boosting and the basis for
+  many competition-wining approaches, see for example Kaggle
+  competitions (\texttt{https://www.kaggle.com/}).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  It combines many tricks into a very efficient toolbox:
+  Parallelization, smart approximations, shrinkage, sub-sampling, etc.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+Core ideas of XGBoost:
+
+\begin{itemize}
+\item
+  \emph{\textcolor{red}{Second-order gradients}}: Replace pure first
+  order gradient boosting by a second-order (Taylor series) expansion.
+\item
+  \emph{\textcolor{red}{Parallelization}}: The model is implemented to
+  train with multiple CPU cores. Finding new branches is the part that
+  is parallelized. Different cores search in different areas of the
+  data.
+\item
+  \emph{\textcolor{red}{Approximation}} of the greedy algorithm for each
+  tree by not checking each possible split.
+\item
+  \emph{\textcolor{red}{Regularization}}: XGBoost includes different
+  regularization penalties to avoid overfitting. Each new tree is
+  regularized with two terms: The number of leafs (pruning) and the
+  weights on the leafs. The total penalizing term is typically given by
+  \[\Omega(f) = \gamma |T| + \frac{1}{2}\lambda||w||^2  \text{ (L2 regularization)} \]
+  or
+  \[\Omega(f) = \gamma |T| +  \alpha ||w|| \text{ (L1 regularization)}  \ .  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Some words on regularization in XGBoost}
+\protect\hypertarget{some-words-on-regularization-in-xgboost}{}
+\(~\)
+
+Previous slide:
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Pruning parameter \(\gamma\): the new tree is grown to the specified
+  depth, and then pruned to find and remove splits according to the
+  contraint imposes by \(\gamma\).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda\) and \(\alpha\): Constrain model complexity in the same way
+  as ridge or Lasso (L2 and L1).
+\end{itemize}
+
+\vspace{4mm}
+
+Additional regularization:
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The learning rate \(\eta\).
+\end{itemize}
+
+\vspace{3mm}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Dropout}: Randomly drop trees to avoid that the first trees
+  dominate the result.
+\end{itemize}
+
+\vspace{3mm}
+
+All these lead to additional hyperparameters.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{Ames house pricing example continued}
+\protect\hypertarget{ames-house-pricing-example-continued}{}
+\vspace{2mm}
+
+We apply XGBoost via the \texttt{xgboost} library on the same dataset as
+before. Start by some data preparation:
+
+\(~\)
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(xgboost)}
+\FunctionTok{library}\NormalTok{(recipes)}
+
+\CommentTok{\# Training data and response}
+\NormalTok{xgb\_prep }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ames\_train) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_train, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{juice}\NormalTok{()}
+
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(xgb\_prep[}\FunctionTok{setdiff}\NormalTok{(}\FunctionTok{names}\NormalTok{(xgb\_prep), }\StringTok{"Sale\_Price"}\NormalTok{)])}
+\NormalTok{Y }\OtherTok{\textless{}{-}}\NormalTok{ xgb\_prep}\SpecialCharTok{$}\NormalTok{Sale\_Price}
+
+\CommentTok{\# Test data and test response}
+\NormalTok{xgb\_prep\_test }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ames\_test) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_test, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{juice}\NormalTok{()}
+\NormalTok{X\_test }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(xgb\_prep\_test[}\FunctionTok{setdiff}\NormalTok{(}\FunctionTok{names}\NormalTok{(xgb\_prep\_test), }\StringTok{"Sale\_Price"}\NormalTok{)])}
+\NormalTok{Y\_test }\OtherTok{\textless{}{-}}\NormalTok{ xgb\_prep\_test}\SpecialCharTok{$}\NormalTok{Sale\_Price}
+\end{Highlighting}
+\end{Shaded}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+Run on training data with a set of hyperparameters that were
+pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.html}
+
+\(~\)
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ames\_xgb }\OtherTok{\textless{}{-}} \FunctionTok{xgboost}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ X,}
+  \AttributeTok{label =}\NormalTok{ Y,}
+  \AttributeTok{nrounds =} \DecValTok{6000}\NormalTok{,}
+  \AttributeTok{objective =} \StringTok{"reg:squarederror"}\NormalTok{,}
+  \AttributeTok{early\_stopping\_rounds =} \DecValTok{50}\NormalTok{,   }
+  
+  \AttributeTok{params =} \FunctionTok{list}\NormalTok{( }
+    \AttributeTok{eta =} \FloatTok{0.1}\NormalTok{,}
+    \AttributeTok{lambda=}\FloatTok{0.01}\NormalTok{,}
+    \AttributeTok{max\_depth =} \DecValTok{3}\NormalTok{,}
+    \AttributeTok{min\_child\_weight =} \DecValTok{3}\NormalTok{,}
+    \AttributeTok{subsample =} \FloatTok{0.8}\NormalTok{,}
+    \AttributeTok{colsample\_bytree =} \FloatTok{0.5}\NormalTok{,}
+    \AttributeTok{nthread=}\DecValTok{12}\NormalTok{),}
+  \AttributeTok{verbose =} \DecValTok{0}
+\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X.pred.test }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(ames\_xgb, }\AttributeTok{newdata =}\NormalTok{ X\_test)}
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{((X.pred.test }\SpecialCharTok{{-}}\NormalTok{ Y\_test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(X\_test))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19935.63
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Hyperparameter tuning}
+\protect\hypertarget{hyperparameter-tuning}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  Hyperparameters in many dimensions.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Tuning the models become very slow! We refer to Boehmke and Greenwell
+  (2020) for parameter tuning runs:\\
+  \url{https://bradleyboehmke.github.io/HOML/gbm.html}
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  See exercise session.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1538,9 +2161,11 @@ Both frameworks are available in R.
 
 \begin{frame}{Can we use boosting for simple linear regression models?}
 \protect\hypertarget{can-we-use-boosting-for-simple-linear-regression-models}{}
+\(~\)
+
 Yes!
 
-(ev mention this early, or then here at the end)
+Didrik Lindløv Sand, a current master student, will present his work.
 \end{frame}
 
 \begin{frame}{References}
@@ -1551,12 +2176,22 @@ Yes!
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-boehmke_greenwell2020}{}}%
 Boehmke, B., and B. Greenwell. 2020. \emph{Hands-on Machine Learning
-with r}. Boca Raton: CRC press, Taylor \& Francis group.
+with {R}}. https://bradleyboehmke.github.io/HOML/: CRC press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chen2016xgboost}{}}%
+Chen, Tianqi, and Carlos Guestrin. 2016. {``Xgboost: A Scalable Tree
+Boosting System.''} In \emph{Proceedings of the 22nd Acm Sigkdd
+International Conference on Knowledge Discovery and Data Mining},
+785--94.
 
 \leavevmode\vadjust pre{\hypertarget{ref-freund1997decision}{}}%
 Freund, Yoav, and Robert E Schapire. 1997. {``A Decision-Theoretic
 Generalization of on-Line Learning and an Application to Boosting.''}
 \emph{Journal of Computer and System Sciences} 55 (1): 119--39.
+
+\leavevmode\vadjust pre{\hypertarget{ref-friedman2002}{}}%
+Friedman, Jerome H. 2002. {``Stochastic Gradient Boosting.''}
+\emph{Computational Statistics \& Data Analysis} 38: 367--78.
 
 \leavevmode\vadjust pre{\hypertarget{ref-friedman2000additive}{}}%
 Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2000.

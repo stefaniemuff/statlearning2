@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 9: Boosting and additive trees"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "March xx and yy, 2024"
+date: "March 14 and 15, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -47,7 +47,7 @@ $~$
 
 * @hastie_etal2009: The Elements of Statistical Learning, Chapter 10
 
-\vspace{2mm}
+\vspace{8mm}
 
 Check out: 
 
@@ -57,15 +57,13 @@ Check out:
  
 ---
 
-## What will you learn? (todo: update)
+## What will you learn?
 
 $~$
 
 * Boosting methods -- general terms
 
-\vspace{2mm}
 
-* Boosting of linear models
 
 \vspace{2mm}
 
@@ -77,12 +75,19 @@ $~$
 
 \vspace{2mm}
 
+* Stochastic gradient boosting
+
+\vspace{2mm}
+
 * XGBoost: eXtreme Gradient Boosting
 
 \vspace{2mm}
 
-* Maybe an outlook to modern methods: Light GBM, catboost, ngboost
+* Outlook to modern methods: Light GBM, catboost, ngboost
 
+\vspace{2mm}
+
+* Boosting of linear models
 
 ---
 
@@ -378,11 +383,11 @@ The procedure is repeated until some stopping criterion is reached. Each of the 
 1. Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all $i$ in the training set.
 2. For $b=1,2,...,B$, repeat:  
     a) Fit a tree $\hat{f}^b$ with $d$ splits ($d+1$ terminal nodes) to the training data.  
-    b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\lambda \hat{f}^b(x).$$  
-    c) Update the residuals, $$r_i \leftarrow r_i - \lambda \hat{f}^b(x_i).$$  
-3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \lambda \hat{f}^b(x).$
+    b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\eta \hat{f}^b(x).$$  
+    c) Update the residuals, $$r_i \leftarrow r_i - \eta \hat{f}^b(x_i).$$  
+3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \eta \hat{f}^b(x).$
 
-Boosting has three tuning parameters which need to be set ($B$, $\lambda$, $d$), and can be found using cross-validation.
+Boosting has three tuning parameters which need to be set ($B$, $\eta$, $d$), and can be found using cross-validation.
 
 ---
 
@@ -390,7 +395,7 @@ Boosting has three tuning parameters which need to be set ($B$, $\lambda$, $d$),
 
 * **Number of trees $B$**. Could be chosen using cross-validation. A too small value of $B$ would imply that much information is unused (remember that boosting is a slow learner), whereas a too large value of $B$ may lead to overfitting. 
 
-* **Shrinkage parameter $\lambda$**. Controls the rate at which boosting learns. $\lambda$ scales the new information from the $b$-th tree, when added to the existing tree $\hat{f}$. Choosing a small value for $\lambda$ ensures that the algorithm learns slowly, but will require a larger $B$. Typical values of $\lambda$ is 0.1 or 0.01.
+* **Shrinkage parameter $\eta$**. Controls the rate at which boosting learns. $\eta$ scales the new information from the $b$-th tree, when added to the existing tree $\hat{f}$. Choosing a small value for $\eta$ ensures that the algorithm learns slowly, but will require a larger $B$. Typical values of $\eta$ is 0.1 or 0.01.
 
 * **Interaction depth $d$**: The number of splits in each tree. This parameter controls the complexity of the boosted tree ensemble (the level of interaction between variables that we may estimate). By choosing $d=1$ a tree stump will be fitted at each step and this gives an additive model.
 
@@ -427,9 +432,9 @@ summary(boost.boston,plotit=FALSE)
  
 **Prediction on the test set**
 
-* Calculate the MSE on the test set, first for the model with $\lambda=0.001$ (default), then with $\lambda=0.2$.
+* Calculate the MSE on the test set, first for the model with $\eta=0.001$ (default), then with $\eta=0.2$.
 
-* Ideally, we should do a cross-validation to find the best $\lambda$ over a grid (comes later), but here it seems not to make a big difference.
+* Ideally, we should do a cross-validation to find the best $\eta$ over a grid (comes later), but here it seems not to make a big difference.
 
 $~$
 
@@ -573,7 +578,7 @@ $~$
 
 $~$
 
-* _\textcolor{red}{Steepest descent}_ is a general numerical optimization technique.
+* _\textcolor{red}{Steepest descent}_ is a _general_ numerical optimization technique.
 
 \vspace{2mm}
 
@@ -749,11 +754,11 @@ $~$
 
 $~$
 
-Replace the squared error loss by the _\textcolor{red}{K-class multinomial deviance}_
+For $K>2$ classes, use as loss function the _\textcolor{red}{K-class multinomial deviance}_
 
 \begin{align}
 L(y,f(x)) &= -\sum_{k=1}^K I(y = k) \log (p_k(x)) \\ 
- & = -\sum_{k=1}^K I(y = k) f_k(x) + \log(\sum_{l=1}^K e^{f_l(x)})
+ & = -\sum_{k=1}^K I(y = k) f_k(x) + \log(\sum_{l=1}^K e^{f_l(x)}) \ ,
  \end{align}
 
 with class probabilities 
@@ -777,54 +782,274 @@ $~$
 
 ---
 
+# Practical considerations
+
 The three main ingredients of gradient boosting:
 
 \vspace{2mm}
 
-* _\textcolor{red}{Loss Function}_: The function we want to minimize. Its role is to estimate how good the model is at making predictions with the given data.  
 
 * _\textcolor{red}{Weak Learner}_: A weak learner is one that classifies our data but does so poorly, perhaps no better than random guessing. In other words, it has a high error rate. These are typically decision trees (also called decision stumps, because they are less complicated than typical decision trees).
 
 * _\textcolor{red}{Additive Model}_: This is the iterative and sequential approach of adding the trees (weak learners) one step at a time. After each iteration, we need to be closer to our final model, since each iteration should reduce the value of our loss function.
 
+* _\textcolor{red}{Loss Function}_: The function we want to minimize. Its role is to estimate how good the model is at making predictions with the given data.  
 
 ---
 
 # Parameter tuning
 
-$~$
 
-* Tree size in each iteration
-
-* Number of boosting iterations
-
----
-
-## Finding the right tree depth in boosting
 
 $~$
 
-See 10.11 in the Elements book
+**Tree hyperparameters (weak learner):**
+
+a) Tree size (depth) in each iteration
+
+b) Minimum observations in terminal nodes 
+
+$~$
+
+**Boosting hyperparameters (additive model):**
+
+
+c) Number of trees, i.e., the number of boosting iterations
+
+d) The learning rate 
+
+
 
 ---
 
-## Other (more general) tuning considerations
+## a) Finding the right tree depth in boosting
+(10.11 in the Elements book)
+
+$~$
+
+* Historically, large trees were grown, followed by pruning, in each iteration of the boosting process.
+
+\vspace{2mm}
+
+* However, this assumes that each tree is the last one in the algorithm (why?).
+
+\vspace{2mm}
+
+* Better strategy: All trees are the same size.
+
+\pause
+
+\vspace{6mm}
+
+Given that $J$ is the number of leaves ($J-$terminal node tree): 
+
+\vspace{2mm}  
+  
+* **which size should we then choose?**
+* **Why?**   
+
+\vspace{2mm} 
+
+Discuss!
+
+<!-- Note that the tree depth reflects the depth of interactions between covariates. J=2 means the tree has two terminal nodes, for example, thus contains only one split.  -->
+
+<!-- $J=3$, for examples, means that we allow for two-way interactions. It will rarely be reasonable to use $J>6$. In the Elements book, they say that in their experience, $4\leq J \leq 8$  --> 
+
+---
+
+Some considerations / drawings:
+
+$~$
+
+In the end, $J$ is a tuning parameters, but does usually not give much better results than when using $J\approx 4 \text{ to } 6$.
+
+\vspace{50mm}
+
+<!-- Draw some trees with different $J$ and explain how $J=2$ is different in terms of intractions from $J=3$, for example. -->
+
+---
+
+## b) Minimum number of observations in terminal nodes
+
+$~$
+
+* This hyper-parameter is less relevant for large data sets.
+
+\vspace{2mm}
+
+* Moreover, by giving tree depth and tuning the number of trees, we can hope to get this parameter "for free".
+
+\vspace{2mm}
+
+* A reason to care anyway is that larger number of observations per leaf are needed to get a good mean estimates.
+
+$~$
+
+$~$
+
+---
+
+## c) The number of tress (regularization strategy 1)
+
+$~$
+
+* When the number of trees $M$ is growing, the training error is reduced. 
+
+\vspace{2mm}
+
+* For too large $M$, we will overfit the training data.
+
+\vspace{2mm}
+
+* Therefore, need to monitor prediction error on a validation sample and do "early stopping".
+
+\vspace{2mm}
+
+* Alternative: Cross-validation
+
+
+\vspace{6mm}
+
+$\rightarrow$ $M$ is a tuning parameter and there is an optimal $M$.
 
 
 ---
 
-## Stochastic GBMs
+## d) The learning rate (regularization strategy 2)
+
+$~$
+
+* The contribution of each tree is scaled with a learning rate $\eta$: 
+
+$$f_m(x) = f_{m-1}(x) + \eta \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .$$
+
+\vspace{2mm}
+
+* $\eta$ and $M$ are connected: Smaller $\eta$ requires larger $M$, and vice versa. 
+
+\vspace{2mm}
+
+* Empirically, it was found that small $\eta$ (i.e., $\eta<0.1$) is more robust. 
+
+\vspace{2mm}
+
+* Possible strategy: Fix $\eta$ and then choose $M$ by early stopping. 
+
+---
+
+## Application: Ames housing data
+Inspired by @boehmke_greenwell2020
+
+$~$
+
+* The Ames housing data is a data set available from the `AmesHousing` R package\footnote{https://cran.r-project.org/web/packages/AmesHousing/index.html}.
+
+\vspace{2mm}
+
+* Response: House prices, with 80 predictor variables (age, style, condition, area,..). 
+
+\vspace{2mm}
+
+* 2930 observations
+
+---
+
+\scriptsize
+```{r , echo=TRUE}
+library(AmesHousing) # contains the data
+library(gbm) # for original implementation of regular and stochastic GBMs
+library(rsample) # to subsample training and test sets
+
+# Data preparation
+ames <- AmesHousing::make_ames()
+
+# Stratified sampling with the rsample package
+set.seed(123)
+split <- initial_split(ames, prop = 0.7, 
+                       strata = "Sale_Price")
+# Training and testing data:
+ames_train  <- training(split)
+ames_test   <- testing(split)
+
+response <- "Sale_Price"
+predictors <- setdiff(colnames(ames_train), response)
+```
+
+---
+
+\scriptsize
+```{r , echo=TRUE}
+# run a basic GBM model
+set.seed(123)  # for reproducibility
+ames_gbm1 <- gbm(
+  formula = Sale_Price ~ .,
+  data = ames_train,
+  distribution = "gaussian",  # SSE loss function
+  n.trees = 3000,
+  shrinkage = 0.1, # learning rate
+  interaction.depth = 3,
+  n.minobsinnode = 10, # minimual number of observations in terminal nodes
+  cv.folds = 10,
+  bag.fraction =1 # The default is 0.5, but here we want to have all data in each iteration
+)
+```
+
+
+\normalsize
+Find index for number trees with minimum CV error and then calculate RMSE for it:
+
+\vspace{2mm}
+
+\scriptsize
+
+```{r , echo=TRUE}
+(best <- which.min(ames_gbm1$cv.error))
+sqrt(ames_gbm1$cv.error[best])
+```
+
+---
+
+Plot error curve with training black and cross-validated MSE (green):
+
+\vspace{2mm}
+
+\scriptsize
+```{r , echo=TRUE, fig.width=5,fig.height=4.5,out.width="70%", fig.align = 'center'}
+gbm.perf(ames_gbm1, method = "cv")
+```
+
+---
+
+## Stochastic GBMs (regularization strategy 3)
 \scriptsize
 See @boehmke_greenwell2020 
 
 $~$
 \normalsize
 
-* Stochastic gradient boosting: chose a random subsample of the training data for each tree.
+* Stochastic gradient boosting: chose a random subsample of the training data for building each tree [@friedman2002].
+
+\vspace{2mm}
+
+* Typical value for the proportion $\eta$ is $N/2$, but can be much smaller when $N$ is large.
 
 \vspace{2mm}
 
 * Again, the idea is to _reduce variance_. 
+
+\vspace{2mm}
+
+* In addition: Reduction of computation time!
+
+$~$
+
+The proportion $\eta$ is _another hyper-parameter_ that can be tuned...
+
+
+---
+ 
+## Variants of stochastic GBMs
 
 $~$
 
@@ -842,6 +1067,200 @@ There are a few variants of stochastic gradient boosting that can be used, all o
   
   *   Subsample columns before considering each split in each tree  
 
+$~$
+
+Here we only look at the case where we subsample rows (i.e., entire data samples), which is available in the `gbm()` package.
+
+
+---
+
+We use `bag.fraction=0.5` to subsample 50\% of the rows each time we build a tree:
+\vspace{2mm}
+
+\scriptsize
+```{r , echo=TRUE}
+set.seed(123)  # for reproducibility
+ames_gbm2 <- gbm(
+  formula = Sale_Price ~ .,
+  data = ames_train,
+  distribution = "gaussian",  # SSE loss function
+  n.trees = 3000,
+  shrinkage = 0.1, # learning rate
+  interaction.depth = 3,
+  n.minobsinnode = 10, # minimual number of observations in terminal nodes
+  cv.folds = 10,
+  bag.fraction=0.5
+)
+```
+
+
+
+\normalsize
+Same as before: 
+
+\vspace{2mm}
+
+\scriptsize
+
+```{r , echo=TRUE}
+(best2 <- which.min(ames_gbm2$cv.error))
+sqrt(ames_gbm2$cv.error[best2])
+```
+
+---
+
+# XGBoost: Extreme Gradient Boosting
+Suggested by @chen2016xgboost and implemented in the R package `xgboost`. 
+
+$~$
+
+* XGBoost is the state-of-the-art for tree boosting and the basis for many competition-wining approaches, see for example Kaggle competitions (`https://www.kaggle.com/`).
+
+\vspace{2mm}
+
+
+* It combines many tricks into a very efficient toolbox: Parallelization, smart approximations, shrinkage, sub-sampling, etc.
+ 
+
+---
+
+
+Core ideas of XGBoost:
+
+* _\textcolor{red}{Second-order gradients}_: Replace pure first order gradient boosting by a second-order (Taylor series) expansion. 
+
+* _\textcolor{red}{Parallelization}_: The model is implemented to train with multiple CPU cores. Finding new branches is the part that is parallelized. Different cores search in different areas of the data.
+
+* _\textcolor{red}{Approximation}_ of the greedy algorithm for each tree by not checking each possible split.
+
+* _\textcolor{red}{Regularization}_: XGBoost includes different regularization penalties to avoid overfitting. Each new tree is regularized with two terms: The number of leafs (pruning) and the weights on the leafs. The total penalizing term is typically given by
+$$\Omega(f) = \gamma |T| + \frac{1}{2}\lambda||w||^2  \text{ (L2 regularization)} $$ 
+or 
+ $$\Omega(f) = \gamma |T| +  \alpha ||w|| \text{ (L1 regularization)}  \ .  $$    
+
+ 
+---
+
+## Some words on regularization in XGBoost 
+
+$~$
+
+Previous slide:
+
+\vspace{2mm}
+
+* Pruning parameter $\gamma$: the new tree is grown to the specified depth, and then pruned to find and remove splits according to the contraint imposes by $\gamma$.
+
+\vspace{2mm}
+
+* $\lambda$ and $\alpha$: Constrain model complexity in the same way as ridge or Lasso (L2 and L1).
+
+\vspace{4mm}
+
+Additional regularization: 
+
+\vspace{2mm}
+
+* The learning rate $\eta$. 
+
+\vspace{3mm}
+
+
+
+* _Dropout_: Randomly drop trees to avoid that the first trees dominate the result.
+
+\vspace{3mm}
+
+All these lead to additional hyperparameters. 
+
+---
+
+## Ames house pricing example continued
+
+\vspace{2mm}
+
+We apply XGBoost via the `xgboost` library on the same dataset as before. Start by some data preparation:
+
+$~$
+
+\scriptsize
+
+```{r}
+library(xgboost)
+library(recipes)
+ 
+# Training data and response
+xgb_prep <- recipe(Sale_Price ~ ., data = ames_train) %>%
+  step_integer(all_nominal()) %>%
+  prep(training = ames_train, retain = TRUE) %>%
+  juice()
+
+X <- as.matrix(xgb_prep[setdiff(names(xgb_prep), "Sale_Price")])
+Y <- xgb_prep$Sale_Price
+
+# Test data and test response
+xgb_prep_test <- recipe(Sale_Price ~ ., data = ames_test) %>%
+  step_integer(all_nominal()) %>%
+  prep(training = ames_test, retain = TRUE) %>%
+  juice()
+X_test <- as.matrix(xgb_prep_test[setdiff(names(xgb_prep_test), "Sale_Price")])
+Y_test <- xgb_prep_test$Sale_Price
+```
+
+
+---
+
+
+Run on training data with a set of hyperparameters that were pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.html}
+
+$~$
+
+\scriptsize
+
+```{r , echo=TRUE}
+set.seed(123)
+ames_xgb <- xgboost(
+  data = X,
+  label = Y,
+  nrounds = 6000,
+  objective = "reg:squarederror",
+  early_stopping_rounds = 50,   
+  
+  params = list( 
+    eta = 0.1,
+    lambda=0.01,
+    max_depth = 3,
+    min_child_weight = 3,
+    subsample = 0.8,
+    colsample_bytree = 0.5,
+    nthread=12),
+  verbose = 0
+)  
+```
+
+```{r}
+X.pred.test <- predict(ames_xgb,newdata = X_test)
+sqrt(sum((X.pred.test - Y_test)^2)/nrow(X_test))
+
+```
+
+
+---
+
+## Hyperparameter tuning
+
+$~$
+
+* Hyperparameters in many dimensions.
+
+\vspace{2mm}
+
+* Tuning the models become very slow! We refer to @boehmke_greenwell2020 for parameter tuning runs:   
+https://bradleyboehmke.github.io/HOML/gbm.html
+
+\vspace{2mm}
+
+* See exercise session.
 
 ---
 
@@ -907,10 +1326,11 @@ Both frameworks are available in R.
 
 # Can we use boosting for simple linear regression models?
 
+$~$
+
 Yes!
 
-(ev mention this early, or then here at the end)
-
+Didrik Lindløv Sand, a current master student, will present his work.
 
 ---
 
