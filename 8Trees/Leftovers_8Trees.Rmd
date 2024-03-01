@@ -1,0 +1,232 @@
+---
+subtitle: "TMA4268 Statistical Learning V2021"
+title: "Module 8: Tree-based Methods"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "March 8 and 9, 2021"
+fontsize: 10pt
+output:
+  beamer_presentation:
+    keep_tex: yes
+    fig_caption: false
+    latex_engine: xelatex
+    theme: "Singapore"
+    colortheme: "default"
+    font: "serif"
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+urlcolor: blue
+bibliography: refs.bib
+header-includes: \usepackage{multirow}
+
+---
+
+```{r setup, include=FALSE}
+showsol<-TRUE
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
+knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+                      cache=TRUE, size="scriptsize")
+whichformat="latex"
+```
+
+
+## Example 2: Detection of Minor Head Injury
+\tiny
+(Artificial data)
+\vspace{2mm}
+
+\normalsize
+
+* Data from patients that enter hospital. The aim is to quickly assess whether a patient as a brain injury or not (binary outcome = classification problem).
+
+* Patients are investigated and (possible) asked questions.
+
+* Our job: To build a good model to predict quickly if someone has a brain injury. The method should be 
+
+    +  **easy** to interpret for the medical personell that are not skilled in statistics, and 
+
+    + **fast**, such that the medical personell quickly can identify a patient that needs treatment. 
+    
+
+    
+$\rightarrow$ This can be done by using tree-based methods. 
+
+
+
+\vspace{4mm}
+
+\small
+Note: Of course, the model should be built _before_ a new emergency patient arrives, using data that is already available.
+
+
+---
+
+
+The dataset includes data about 1321 patients and is a modified and smaller version of the (simulated) dataset `headInjury` from the `DAAG` library. 
+
+\footnotesize
+
+```{r,echo=FALSE}
+library(DAAG)
+options(digits=6)
+headInjury2=read.table("headInjury2.txt",header=TRUE)
+colnames(headInjury2)=c("amnesia","bskullf","GCSdecr","GCS.13","GCS.15","risk","consc","oskullf","vomit","brain.injury","age")
+
+n=nrow(headInjury2)
+set.seed(1)
+train=sample(1:nrow(headInjury2),850)
+test=setdiff(1:nrow(headInjury2),train)
+headInjury2$brain.injury=factor(headInjury2$brain.injury)
+for (i in 1:9) headInjury2[[i]]=as.factor(headInjury2[[i]])
+#head(headInjury2[,c(1:9,11,10)])
+head(headInjury2)
+```
+\normalsize
+
+---
+
+
+* The variable `brain.injury` will be the response of our model (=1 if a person has an acute brain injury, =0 otherwise). 
+
+\vspace{0mm}
+
+* 250 (19%) of the patients have a clinically important brain injury. 
+
+\vspace{0mm}
+
+* The 10 variables used as explanatory variables describe the state of the patient, for example
+
+    + Is he/she vomiting?
+    + Is the Glasgow Coma Scale (GCS) score\footnote{The GCS scale goes back to an article in the Lancet in 1974, and is used to describe the level of consciousness of patients with an acute brain injury. See <https://www.glasgowcomascale.org/what-is-gcs/>} after 2 hours equal to 15 (or not)?
+    + Has he/she an open scull fracture?
+    + Has he/she had a loss of consciousness?
+    + and so on. 
+
+
+
+
+---
+
+The classification tree made from a training set of 850 randomly drawn observations (training set) for the head injury example looks like this:
+
+
+
+
+```{r injury1, echo=FALSE, fig.width=7, fig.height=6,fig.align = "center",out.width='70%'}
+library(tree)
+headtree=tree(brain.injury~.,headInjury2,subset=train)
+plot(headtree, type="uniform")
+text(headtree,pretty=1)
+```
+
+ 
+
+\small
+Note: The split criterion at each node is to the left. For example, "GCS.15:0" means that "GCS.15=0" goes left, and "GCS.15=1" goes right.
+
+---
+
+\footnotesize
+```{r,echo=TRUE,eval=TRUE}
+print(headtree)
+```
+\normalsize
+
+---
+
+* By using simple decision rules related to the most important explanatory variables the medical staff can now assess the probability of a brain injury. 
+
+* The decision can go "top down", because the most informative predictors are usually split first. 
+
+* Example: The staff might check if the Glasgow Coma Scale of the patient is 15 after 2h, and if it was 13 at the beginning. In that case, the probability of brain injury is estimated to be 0.944 (node 7 in printout). 
+
+
+**Advantages**:
+
+* Decision trees are easier to interpret than many of the classification (and regression) methods that we have studied so far.
+
+* Decision trees provide an easy way to visualize the data for non-statisticians.
+
+---
+
+---
+
+## Iris example -- bagging
+\tiny
+(borrowed from \url{https://gist.github.com/ramhiser/6dec3067f087627a7a85})
+
+\vspace{3mm}
+
+\scriptsize
+
+```{r, echo=FALSE}
+library(dplyr)
+```
+
+```{r,echo=showsol,eval=TRUE}
+rf_out <- randomForest(Species ~ ., data=iris, mtry=4, ntree=500)
+rf_out$confusion
+```
+
+\vspace{3mm}
+
+```{r iris, echo=FALSE, fig.width=8, fig.height=4,fig.align = "center",out.width='60%'}
+# Extracts variable importance (Mean Decrease in Gini Index)
+# Sorts by variable importance and relevels factors to match ordering
+var_importance <- data_frame(variable=setdiff(colnames(iris), "Species"),
+                             importance=as.vector(importance(rf_out)))
+var_importance <- arrange(var_importance, desc(importance))
+var_importance$variable <- factor(var_importance$variable, levels=var_importance$variable)
+
+p <- ggplot(var_importance, aes(x=variable, weight=importance, fill=variable))
+p <- p + geom_bar() + ggtitle("Variable Importance from Random Forest Fit")
+p <- p + xlab("Demographic Attribute") + ylab("Mean Decrease in Gini Index")
+p <- p + scale_fill_discrete(name="Variable Name")
+p=p + theme(axis.text.x=element_blank(),
+          axis.text.y=element_text(size=12),
+          axis.title=element_text(size=16),
+          plot.title=element_text(size=18),
+          legend.title=element_text(size=16),
+          legend.text=element_text(size=12))
+p
+```
+
+---
+
+
+## Iris example -- random forest
+\tiny
+(borrowed from \url{https://gist.github.com/ramhiser/6dec3067f087627a7a85})
+
+\vspace{3mm}
+
+
+\scriptsize
+
+```{r,echo=showsol,eval=TRUE}
+rf_out=randomForest(Species~.,data=iris,mtry=2,ntree=500)
+rf_out$confusion
+```
+
+\vspace{3mm}
+
+```{r iris2, echo=FALSE, fig.width=8, fig.height=4,fig.align = "center",out.width='60%'}
+var_importance <- data_frame(variable=setdiff(colnames(iris), "Species"),
+                             importance=as.vector(importance(rf_out)))
+var_importance <- arrange(var_importance, desc(importance))
+var_importance$variable <- factor(var_importance$variable, levels=var_importance$variable)
+
+pp <- ggplot(var_importance, aes(x=variable, weight=importance, fill=variable))
+pp <- pp + geom_bar() + ggtitle("Variable Importance from Random Forest Fit")
+pp <- pp + xlab("Demographic Attribute") + ylab("Mean Decrease in Gini Index")
+pp <- pp + scale_fill_discrete(name="Variable Name")
+pp=pp + theme(axis.text.x=element_blank(),
+          axis.text.y=element_text(size=12),
+          axis.title=element_text(size=16),
+          plot.title=element_text(size=18),
+          legend.title=element_text(size=16),
+          legend.text=element_text(size=12))
+pp
+```

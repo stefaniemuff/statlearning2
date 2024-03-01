@@ -1,10 +1,16 @@
+And the variable importance plots
+
 \scriptsize
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(yhat.boost, boston.test, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{varImpPlot}\NormalTok{(rf.boston, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.6\linewidth]{8Trees_files/figure-beamer/boston8-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{8Trees_files/figure-beamer/boston6-1} \end{center}
+
+\normalsize
+
+To understand what this means, please check again the meaning of the
+variables by typing \texttt{?Boston}.

@@ -1,0 +1,546 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            pdftitle={Module 8: Recommended Exercises},
+            pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Module 8: Recommended Exercises}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{TMA4268 Statistical Learning V2020}
+  \author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{March xx, 2020}
+
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Recommended exercises}\label{recommended-exercises}
+
+\subsection{1. Theoretical questions:}\label{theoretical-questions}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Show that each bootstrap sample will contain on average approximately
+  \(2/3\) of the observations.
+\end{enumerate}
+
+\subsection{2. Understanding the concepts and
+algorithms:}\label{understanding-the-concepts-and-algorithms}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Do Exercise 1 in our book (page 332)
+\end{enumerate}
+
+Draw an example (of your own invention) of a partition of
+two-dimensional feature space that could result from recursive binary
+splitting. Your example should contain at least six regions. Draw a
+decision tree corresponding to this partition. Be sure to label all
+aspects of your figures, including the regions R1,R2,\ldots{}, the
+cutpoints t1,t2,\ldots{}, and so forth.
+
+If the class border of the two dimensional space is linear, how can that
+be done with recursive binary splitting?
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Do Exercise 4 in the book (page 332).
+\end{enumerate}
+
+Suppose that we want to build a regression tree based on the following
+dataset:
+
+\begin{longtable}[]{@{}ccc@{}}
+\toprule
+\(i\) & \((x_{i1},x_{i2})\) & \(y\)\tabularnewline
+\midrule
+\endhead
+1 & (1,3) & 2\tabularnewline
+2 & (2,2) & 5\tabularnewline
+3 & (3,2) & 3\tabularnewline
+4 & (3,4) & 7\tabularnewline
+\bottomrule
+\end{longtable}
+
+Answer the following questions without using \(R\):
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+  Find the optimal splitting variable and split point for the first
+  binary splitting for these data according to the recursive binary
+  splitting algorithm. \(Hint\): Draw a figure and look at possible
+  divisions.
+\item
+  Continue the tree construction for the toy data until each terminal
+  node in the tree corresponds to one single observation. Let the
+  resulting tree be denoted \(T_0\).
+\item
+  For what values of \(\alpha\) in the cost-complexity criterion
+  \(C_{\alpha}(T)\) will the unpruned tree \(T_0\) be the optimal tree?
+  \(Hint:\) Prune the tree by cost complexity pruning.
+\item
+  Suppose that we want to predict the response \(y\) for a new
+  observation at \textbf{x}=(2,3). What is the predicted value when
+  using the tree \(T_0\) constructed above?
+\end{enumerate}
+
+\subsection{3. Implementation:}\label{implementation}
+
+In this exercise you are going to implement a spam filter for e-mails by
+using tree-based methods. Data from 4601 e-mails are collected and can
+be uploaded from the kernlab library as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(kernlab)}
+
+\KeywordTok{data}\NormalTok{(spam)}
+\end{Highlighting}
+\end{Shaded}
+
+Each e-mail is classified by \emph{type} (\emph{spam} or
+\emph{nonspam}), and this will be the response in our model. In addition
+there are 57 predictors in the dataset. The predictors describe the
+frequency of different words in the e-mails and orthography
+(capitalization, spelling, punctuation and so on).
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Study the dataset by writing \emph{?spam} in R.
+\item
+  Create a training set and a test set for the dataset.
+\item
+  Fit a tree to the training data with \emph{type} as the response and
+  the rest of the variables as predictors. Study the results by using
+  the \emph{summary()} function. Also create a plot of the tree. How
+  many terminal nodes does it have?
+\item
+  Predict the response on the test data. What is the misclassification
+  rate?
+\item
+  Use the \emph{cv.tree()} function to find the optimal tree size. Prune
+  the tree according to the optimal tree size by using the
+  \emph{prune.misclass()} function and plot the result. Predict the
+  response on the test data by using the pruned tree. What is the
+  misclassification rate in this case?
+\item
+  Create a decision tree by using the bagging approach. Use the function
+  \emph{randomForest()} and consider all of the predictors in each
+  split. Predict the response on the test data and report the
+  misclassification rate.
+\item
+  Apply the \emph{randomForest()} function again, but this time consider
+  only a subset of the predictors in each split. This corresponds to the
+  random forest-algorithm. Study the importance of each variable by
+  using the function \emph{importance()}. Are the results as expected
+  based on earlier results? Again, predict the response for the test
+  data and report the misclassification rate.
+\item
+  Use \emph{gbm()} to construct a boosted classification tree. Predict
+  the response for the test data and report the misclassification rate.
+\item
+  Compare the misclassification rates in d-h. Which method gives the
+  lowest misclassification rate for the test data? Are the results as
+  expected?
+\end{enumerate}
+
+\subsection{Compulsory exercise 3 from 2018 - Classification with
+trees}\label{compulsory-exercise-3-from-2018---classification-with-trees}
+
+We will use the \emph{German credit data set} from the
+\href{https://archive.ics.uci.edu/ml/index.php}{UC Irvine machine
+learning repository}. Our aim is to classify a customer as \emph{good}
+or \emph{bad} with respect to credit risk. A set of 20 covariates
+(attributes) are available (both numerical and categorical) for 300
+customers with bad credit risk and 700 customers with good credit risk.
+
+More information on the 20 covariates are found that the UCI archive
+\href{https://archive.ics.uci.edu/ml/datasets/Statlog+\%28German+Credit+Data\%29}{data
+set description}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\CommentTok{# read data, divide into train and test}
+\NormalTok{germancredit =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"http://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(germancredit) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"checkaccount"}\NormalTok{, }\StringTok{"duration"}\NormalTok{, }\StringTok{"credithistory"}\NormalTok{, }
+    \StringTok{"purpose"}\NormalTok{, }\StringTok{"amount"}\NormalTok{, }\StringTok{"saving"}\NormalTok{, }\StringTok{"presentjob"}\NormalTok{, }\StringTok{"installmentrate"}\NormalTok{, }\StringTok{"sexstatus"}\NormalTok{, }
+    \StringTok{"otherdebtor"}\NormalTok{, }\StringTok{"resident"}\NormalTok{, }\StringTok{"property"}\NormalTok{, }\StringTok{"age"}\NormalTok{, }\StringTok{"otherinstall"}\NormalTok{, }\StringTok{"housing"}\NormalTok{, }
+    \StringTok{"ncredits"}\NormalTok{, }\StringTok{"job"}\NormalTok{, }\StringTok{"npeople"}\NormalTok{, }\StringTok{"telephone"}\NormalTok{, }\StringTok{"foreign"}\NormalTok{, }\StringTok{"response"}\NormalTok{)}
+\NormalTok{germancredit}\OperatorTok{$}\NormalTok{response =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(germancredit}\OperatorTok{$}\NormalTok{response)  }\CommentTok{#2=bad}
+\KeywordTok{table}\NormalTok{(germancredit}\OperatorTok{$}\NormalTok{response)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   1   2 
+## 700 300
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(germancredit)  }\CommentTok{# to see factors and integers, numerics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    1000 obs. of  21 variables:
+##  $ checkaccount   : Factor w/ 4 levels "A11","A12","A13",..: 1 2 4 1 1 4 4 2 4 2 ...
+##  $ duration       : int  6 48 12 42 24 36 24 36 12 30 ...
+##  $ credithistory  : Factor w/ 5 levels "A30","A31","A32",..: 5 3 5 3 4 3 3 3 3 5 ...
+##  $ purpose        : Factor w/ 10 levels "A40","A41","A410",..: 5 5 8 4 1 8 4 2 5 1 ...
+##  $ amount         : int  1169 5951 2096 7882 4870 9055 2835 6948 3059 5234 ...
+##  $ saving         : Factor w/ 5 levels "A61","A62","A63",..: 5 1 1 1 1 5 3 1 4 1 ...
+##  $ presentjob     : Factor w/ 5 levels "A71","A72","A73",..: 5 3 4 4 3 3 5 3 4 1 ...
+##  $ installmentrate: int  4 2 2 2 3 2 3 2 2 4 ...
+##  $ sexstatus      : Factor w/ 4 levels "A91","A92","A93",..: 3 2 3 3 3 3 3 3 1 4 ...
+##  $ otherdebtor    : Factor w/ 3 levels "A101","A102",..: 1 1 1 3 1 1 1 1 1 1 ...
+##  $ resident       : int  4 2 3 4 4 4 4 2 4 2 ...
+##  $ property       : Factor w/ 4 levels "A121","A122",..: 1 1 1 2 4 4 2 3 1 3 ...
+##  $ age            : int  67 22 49 45 53 35 53 35 61 28 ...
+##  $ otherinstall   : Factor w/ 3 levels "A141","A142",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ housing        : Factor w/ 3 levels "A151","A152",..: 2 2 2 3 3 3 2 1 2 2 ...
+##  $ ncredits       : int  2 1 1 1 2 1 1 1 1 2 ...
+##  $ job            : Factor w/ 4 levels "A171","A172",..: 3 3 2 3 3 2 3 4 2 4 ...
+##  $ npeople        : int  1 1 2 2 2 2 1 1 1 1 ...
+##  $ telephone      : Factor w/ 2 levels "A191","A192": 2 1 1 1 1 2 1 2 1 1 ...
+##  $ foreign        : Factor w/ 2 levels "A201","A202": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ response       : Factor w/ 2 levels "1","2": 1 2 1 1 2 1 1 1 1 2 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)  }\CommentTok{#keep this -easier to grade work}
+\NormalTok{in.train <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(germancredit}\OperatorTok{$}\NormalTok{response, }\DataTypeTok{p =} \FloatTok{0.75}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\CommentTok{# 75% for training, one split}
+\NormalTok{germancredit.train <-}\StringTok{ }\NormalTok{germancredit[in.train, ]}
+\KeywordTok{dim}\NormalTok{(germancredit.train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 750  21
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{germancredit.test <-}\StringTok{ }\NormalTok{germancredit[}\OperatorTok{-}\NormalTok{in.train, ]}
+\KeywordTok{dim}\NormalTok{(germancredit.test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 250  21
+\end{verbatim}
+
+We will now look at classification trees, bagging, and random forests.
+
+Remark: in description of the data set it is hinted that we may use
+unequal cost of misclassification for the two classes, but we have not
+covered unequal misclassification costs in this course, and will
+therefore not address that in this problem set.
+
+\subsubsection{a) Full classification tree {[}1
+point{]}}\label{a-full-classification-tree-1-point}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# construct full tree}
+\KeywordTok{library}\NormalTok{(tree)}
+\KeywordTok{library}\NormalTok{(pROC)}
+\NormalTok{fulltree =}\StringTok{ }\KeywordTok{tree}\NormalTok{(response }\OperatorTok{~}\StringTok{ }\NormalTok{., germancredit.train, }\DataTypeTok{split =} \StringTok{"deviance"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(fulltree)}
+\KeywordTok{plot}\NormalTok{(fulltree)}
+\KeywordTok{text}\NormalTok{(fulltree)}
+\KeywordTok{print}\NormalTok{(fulltree)}
+\NormalTok{fullpred =}\StringTok{ }\KeywordTok{predict}\NormalTok{(fulltree, germancredit.test, }\DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\NormalTok{testres =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ fullpred, }\DataTypeTok{reference =}\NormalTok{ germancredit.test}\OperatorTok{$}\NormalTok{response)}
+\KeywordTok{print}\NormalTok{(testres)}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(testres}\OperatorTok{$}\NormalTok{table))}\OperatorTok{/}\NormalTok{(}\KeywordTok{sum}\NormalTok{(testres}\OperatorTok{$}\NormalTok{table))}
+\NormalTok{predfulltree =}\StringTok{ }\KeywordTok{predict}\NormalTok{(fulltree, germancredit.test, }\DataTypeTok{type =} \StringTok{"vector"}\NormalTok{)}
+\NormalTok{testfullroc =}\StringTok{ }\KeywordTok{roc}\NormalTok{(germancredit.test}\OperatorTok{$}\NormalTok{response }\OperatorTok{==}\StringTok{ "2"}\NormalTok{, predfulltree[, }\DecValTok{2}\NormalTok{])}
+\KeywordTok{auc}\NormalTok{(testfullroc)}
+\KeywordTok{plot}\NormalTok{(testfullroc)}
+\end{Highlighting}
+\end{Shaded}
+
+Run the code and study the output.
+
+\begin{itemize}
+\tightlist
+\item
+  Q1. Explain briefly how \texttt{fulltree} is constructed. The
+  explanation should include the words: greedy, binary, deviance, root,
+  leaves.
+\end{itemize}
+
+\subsubsection{b) Pruned classification tree {[}1
+point{]}}\label{b-pruned-classification-tree-1-point}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# prune the full tree}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
+\NormalTok{fullcv =}\StringTok{ }\KeywordTok{cv.tree}\NormalTok{(fulltree, }\DataTypeTok{FUN =}\NormalTok{ prune.misclass, }\DataTypeTok{K =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(fullcv}\OperatorTok{$}\NormalTok{size, fullcv}\OperatorTok{$}\NormalTok{dev, }\DataTypeTok{type =} \StringTok{"b"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Terminal nodes"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"misclassifications"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(fullcv)}
+\NormalTok{prunesize =}\StringTok{ }\NormalTok{fullcv}\OperatorTok{$}\NormalTok{size[}\KeywordTok{which.min}\NormalTok{(fullcv}\OperatorTok{$}\NormalTok{dev)]}
+\NormalTok{prunetree =}\StringTok{ }\KeywordTok{prune.misclass}\NormalTok{(fulltree, }\DataTypeTok{best =}\NormalTok{ prunesize)}
+\KeywordTok{plot}\NormalTok{(prunetree)}
+\KeywordTok{text}\NormalTok{(prunetree, }\DataTypeTok{pretty =} \DecValTok{1}\NormalTok{)}
+\NormalTok{predprunetree =}\StringTok{ }\KeywordTok{predict}\NormalTok{(prunetree, germancredit.test, }\DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\NormalTok{prunetest =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ predprunetree, }\DataTypeTok{reference =}\NormalTok{ germancredit.test}\OperatorTok{$}\NormalTok{response)}
+\KeywordTok{print}\NormalTok{(prunetest)}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(prunetest}\OperatorTok{$}\NormalTok{table))}\OperatorTok{/}\NormalTok{(}\KeywordTok{sum}\NormalTok{(prunetest}\OperatorTok{$}\NormalTok{table))}
+\NormalTok{predprunetree =}\StringTok{ }\KeywordTok{predict}\NormalTok{(prunetree, germancredit.test, }\DataTypeTok{type =} \StringTok{"vector"}\NormalTok{)}
+\NormalTok{testpruneroc =}\StringTok{ }\KeywordTok{roc}\NormalTok{(germancredit.test}\OperatorTok{$}\NormalTok{response }\OperatorTok{==}\StringTok{ "2"}\NormalTok{, predprunetree[, }
+    \DecValTok{2}\NormalTok{])}
+\KeywordTok{auc}\NormalTok{(testpruneroc)}
+\KeywordTok{plot}\NormalTok{(testpruneroc)}
+\end{Highlighting}
+\end{Shaded}
+
+Run the code and study the output.
+
+\begin{itemize}
+\tightlist
+\item
+  Q2. Why do we want to prune the full tree?
+\item
+  Q3. How is amount of pruning decided in the code?
+\item
+  Q4. Compare the the full and pruned tree classification method with
+  focus on interpretability and the ROC curves (AUC).
+\end{itemize}
+
+\subsubsection{c) Bagged trees {[}1
+point{]}}\label{c-bagged-trees-1-point}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(randomForest)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
+\NormalTok{bag =}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(response }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ germancredit, }\DataTypeTok{subset =}\NormalTok{ in.train, }
+    \DataTypeTok{mtry =} \DecValTok{20}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{500}\NormalTok{, }\DataTypeTok{importance =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{bag}\OperatorTok{$}\NormalTok{confusion}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(bag}\OperatorTok{$}\NormalTok{confusion))}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(bag}\OperatorTok{$}\NormalTok{confusion[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{])}
+\NormalTok{yhat.bag =}\StringTok{ }\KeywordTok{predict}\NormalTok{(bag, }\DataTypeTok{newdata =}\NormalTok{ germancredit.test)}
+\NormalTok{misclass.bag =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(yhat.bag, germancredit.test}\OperatorTok{$}\NormalTok{response)}
+\KeywordTok{print}\NormalTok{(misclass.bag)}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(misclass.bag}\OperatorTok{$}\NormalTok{table))}\OperatorTok{/}\NormalTok{(}\KeywordTok{sum}\NormalTok{(misclass.bag}\OperatorTok{$}\NormalTok{table))}
+\NormalTok{predbag =}\StringTok{ }\KeywordTok{predict}\NormalTok{(bag, germancredit.test, }\DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)}
+\NormalTok{testbagroc =}\StringTok{ }\KeywordTok{roc}\NormalTok{(germancredit.test}\OperatorTok{$}\NormalTok{response }\OperatorTok{==}\StringTok{ "2"}\NormalTok{, predbag[, }\DecValTok{2}\NormalTok{])}
+\KeywordTok{auc}\NormalTok{(testbagroc)}
+\KeywordTok{plot}\NormalTok{(testbagroc)}
+\KeywordTok{varImpPlot}\NormalTok{(bag, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Run the code and study the output.
+
+\begin{itemize}
+\tightlist
+\item
+  Q5. What is the main motivation behind bagging?
+\item
+  Q6. Explain what the importance plots show, and give your
+  interpretation for the data set.
+\item
+  Q7. Compare the performance of bagging with the best of the full and
+  pruned tree model above with focus on interpretability and the ROC
+  curves (AUC).
+\end{itemize}
+
+\subsubsection{d) Random forest {[}1
+point{]}}\label{d-random-forest-1-point}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
+\NormalTok{rf =}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(response }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ germancredit, }\DataTypeTok{subset =}\NormalTok{ in.train, }
+    \DataTypeTok{mtry =} \DecValTok{4}\NormalTok{, }\DataTypeTok{ntree =} \DecValTok{500}\NormalTok{, }\DataTypeTok{importance =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{rf}\OperatorTok{$}\NormalTok{confusion}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(rf}\OperatorTok{$}\NormalTok{confusion))}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(rf}\OperatorTok{$}\NormalTok{confusion[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{])}
+\NormalTok{yhat.rf =}\StringTok{ }\KeywordTok{predict}\NormalTok{(rf, }\DataTypeTok{newdata =}\NormalTok{ germancredit.test)}
+\NormalTok{misclass.rf =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(yhat.rf, germancredit.test}\OperatorTok{$}\NormalTok{response)}
+\KeywordTok{print}\NormalTok{(misclass.rf)}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{diag}\NormalTok{(misclass.rf}\OperatorTok{$}\NormalTok{table))}\OperatorTok{/}\NormalTok{(}\KeywordTok{sum}\NormalTok{(misclass.rf}\OperatorTok{$}\NormalTok{table))}
+\NormalTok{predrf =}\StringTok{ }\KeywordTok{predict}\NormalTok{(rf, germancredit.test, }\DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)}
+\NormalTok{testrfroc =}\StringTok{ }\KeywordTok{roc}\NormalTok{(germancredit.test}\OperatorTok{$}\NormalTok{response }\OperatorTok{==}\StringTok{ "2"}\NormalTok{, predrf[, }\DecValTok{2}\NormalTok{])}
+\KeywordTok{auc}\NormalTok{(testrfroc)}
+\KeywordTok{plot}\NormalTok{(testrfroc)}
+\KeywordTok{varImpPlot}\NormalTok{(rf, }\DataTypeTok{pch =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Run the code and study the output.
+
+\begin{itemize}
+\tightlist
+\item
+  Q8. The parameter \texttt{mtry=4} is used. What does this parameter
+  mean, and what is the motivation behind choosing exactly this value?
+\item
+  Q9. The value of the parameter \texttt{mtry} is the only difference
+  between bagging and random forest. What is the effect of choosing
+  \texttt{mtry} to be a value less than the number of covariates?
+\item
+  Q10. Would you prefer to use bagging or random forest to classify the
+  credit risk data?
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Exam problems}\label{exam-problems}
+
+\subsection{V2018 Problem 4 Classification of diabetes
+cases}\label{v2018-problem-4-classification-of-diabetes-cases}
+
+\subsubsection{c)}\label{c}
+
+Q20: Explain how we build a bagged set of trees, and why we would want
+to fit more than one tree.\\
+Q21: Assume we have a data set of size \(n\), calculate the probability
+that a given observation is in a given bootstrap sample.\\
+Q22: What is an OOB sample?
+
+
+\end{document}

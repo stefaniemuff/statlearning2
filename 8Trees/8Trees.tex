@@ -46,19 +46,22 @@
   \frame{\subsectionpage}
 }
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
+\usepackage{lmodern}
 \usetheme[]{Singapore}
 \usefonttheme{serif}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
@@ -88,13 +91,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -102,7 +105,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -111,7 +114,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -158,12 +161,14 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{multirow}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Module 8: Tree-based Methods},
   pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
@@ -175,15 +180,14 @@
   pdfcreator={LaTeX via pandoc}}
 
 \title{Module 8: Tree-based Methods}
-\subtitle{TMA4268 Statistical Learning V2023}
+\subtitle{TMA4268 Statistical Learning V2024}
 \author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{March 6 and 9, 2023}
+\date{March 7 and 8, 2024}
 
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}{Introduction}
-\protect\hypertarget{introduction}{}
+\begin{frame}
 \begin{block}{Learning material for this module}
 \protect\hypertarget{learning-material-for-this-module}{}
 \vspace{2mm}
@@ -202,9 +206,11 @@
 \begin{frame}
 \begin{block}{What will you learn?}
 \protect\hypertarget{what-will-you-learn}{}
-\vspace{2mm}
+\(~\)
 
 You will get to know
+
+\vspace{2mm}
 
 \begin{itemize}
 \tightlist
@@ -216,23 +222,45 @@ You will get to know
   \item
     Regression trees\\
   \item
-    Classification trees\\
+    Classification trees
   \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
-  Pruning a tree
+  Pruning trees
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
   Bagging
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
   Variable importance
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
   Random forests
-\item
-  Boosting
 \end{itemize}
 
 \(~\)
 
-and learn how to apply all that.
+\ldots{} and how to apply all that.
 \end{block}
 \end{frame}
 
@@ -390,7 +418,7 @@ predicted value for a new observations that falls into region \(j\).
 To do this we need to consider every partition of the predictor space,
 and compute the RSS for each partition.
 
-\textbf{But}: An exhaustive search over possible splits is
+\textbf{But}: An exhaustive search over all possible splits is
 \emph{computationally infeasible}!
 \footnote{In fact, constructing optimal binary decision trees is an NP-complete problem (Hyafil and Rivest, 1976).}
 \end{frame}
@@ -836,9 +864,13 @@ Alternatively, this method, with proofs, are given in B. D. Ripley
 \begin{frame}[fragile]
 \begin{block}{Pruning the ozone tree}
 \protect\hypertarget{pruning-the-ozone-tree}{}
+\(~\)
+
 Let us start with the tree with many leaves, and then prune it with
 5-fold CV. We can then plot the CV error as a function of tree size
 (instead of \(\alpha\) -- why?):
+
+\vspace{2mm}
 
 \scriptsize
 
@@ -1308,8 +1340,9 @@ Study the confusion matrices on the previous slides:
 \begin{itemize}
 \tightlist
 \item
-  Algorithm 8.1 can be used with misclassification, the Gini index, or
-  cross-entropy instead of the RSS as quality measure.
+  Algorithm 8.1 (including the pruning step) can be used with
+  misclassification, the Gini index, or cross-entropy instead of the RSS
+  as quality measure.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1342,7 +1375,7 @@ so\footnote{While trees should be built using the deviance or the Gini index, pr
 
 \begin{frame}[fragile]
 The function \texttt{cv.tree} automatically does \(10\)-fold
-cross-validation. \texttt{dev} is here the number of misclassifications.
+cross-validation. \texttt{dev} denotes the number of misclassifications.
 
 \vspace{3mm}
 
@@ -1478,6 +1511,93 @@ increasing/decreasing the number of terminal nodes, i.e:
 \end{block}
 \end{frame}
 
+\begin{frame}
+\begin{block}{Other issues: Categorical predictors}
+\protect\hypertarget{other-issues-categorical-predictors}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  If a predictor has \(q\) unordered levels, there are \(2^{q-1} -1\)
+  possible partitions into groups.
+\end{itemize}
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  In case of a \emph{binary outcome}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Order the predictor classes according to the proportion in outcome
+    class 1.
+  \item
+    Then, use it as an ordered predictor. \vspace{1mm}\\
+    \(\rightarrow\) This gives the optimal split according to Gini
+    index.
+  \end{itemize}
+\end{itemize}
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  For \emph{multicategory and continuous outcomes}, this is not
+  possible. Try to avoid predictors with very many levels!
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Other issues: Missing predictor values}
+\protect\hypertarget{other-issues-missing-predictor-values}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  Predictor variables can have missing instances. Discarding those
+  observations can lead to serious depletion of the training data.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  We can \emph{impute} missing values, e.g., by taking the mean over the
+  observed values.
+\end{itemize}
+
+\(~\)
+
+\textbf{Two better solutions for trees:}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Idea 1: Make a separate category for ``missing''.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Idea 2: Use the observed values in each variable for finding the
+  split, but also create so-called ``surrogate splits'': Store next-best
+  split options using other variables at that point.
+\end{itemize}
+\end{block}
+\end{frame}
+
 \begin{frame}{Trees versus linear models}
 \protect\hypertarget{trees-versus-linear-models}{}
 \begin{itemize}
@@ -1506,8 +1626,7 @@ increasing/decreasing the number of terminal nodes, i.e:
   Tree-growing algorithms scale well to large \(n\), growing a tree
   greedily.
 \item
-  Trees can handle mixed features (continouos, categorical) seamlessly,
-  and can deal with missing data.
+  Trees can handle mixed features (continouos, categorical) seamlessly.
 \item
   Small trees are easy to interpret and explain to people.
 \item
@@ -1550,7 +1669,8 @@ Several of the above listed disadvantages can be addressed by
 \item
   \textbf{Boosting}: make one tree, then another based on the residuals
   from the previous, repeat. The final predictor is a weighted sum of
-  these trees.
+  these trees.\\
+  \(\rightarrow\) See more extensive discussion in module 9.
 \end{itemize}
 
 \vspace{2mm}
@@ -2131,10 +2251,10 @@ Check: \(\rho=0\) and \(\rho=1\)?
   \end{itemize}
 \end{itemize}
 
-\vspace{2mm}
+\vspace{3mm}
 
-The general idea is that for very correlated predictors \(m\) is chosen
-to be small.
+Generally, \(m\) should be chosen small if the predictors are very
+correlated.
 \end{frame}
 
 \begin{frame}
@@ -2270,89 +2390,26 @@ with \texttt{bskullf} (basal skull facture) and \texttt{age}. This means
 that most of the trees will have these predictors in the top split.
 \end{frame}
 
-\begin{frame}{Boosting}
-\protect\hypertarget{boosting}{}
+\begin{frame}{Gradient boosting}
+\protect\hypertarget{gradient-boosting}{}
+\(~\)
+
 \emph{Boosting} is an alternative approach for improving the predictions
-resulting from a decision tree. We will only consider the description of
-boosting regression trees (and not classification trees) in this course.
+resulting from a so-called \emph{weak learner}.
 
-The trees are grown \emph{sequentially} so that each tree is grown using
-information from the previous tree.
+\vspace{2mm}
 
-\begin{enumerate}
-\tightlist
-\item
-  Build a decision tree with \(d\) splits (and \(d+1\) terminal notes).
-\item
-  Improve the model in areas where the model didn't perform well. This
-  is done by fitting a decision tree to the \emph{residuals of the
-  model}. This procedure is called \emph{learning slowly}.
-\item
-  The first decision tree is then updated based on the residual tree,
-  but with a weight.
-\end{enumerate}
+Typically, boosting is applied to regression and classification trees,
+because they are (on their own) not very good prediction methods.
 
-The procedure is repeated until some stopping criterion is reached. Each
-of the trees can be very small, with just a few terminal nodes (or just
-one split).
-\end{frame}
+\vspace{2mm}
 
-\begin{frame}
-\textbf{Algorithm 8.2: Boosting for regression trees}
+Main idea: The trees are grown \emph{sequentially} so that each tree is
+grown using information from the previous tree.
 
-\begin{enumerate}
-\tightlist
-\item
-  Set \(\hat{f}(x) = 0\) and \(r_i = y_i\) for all \(i\) in the training
-  set.
-\item
-  For \(b=1,2,...,B\), repeat:
+\(~\)
 
-  \begin{enumerate}
-  [a)]
-  \tightlist
-  \item
-    Fit a tree \(\hat{f}^b\) with \(d\) splits (\(d+1\) terminal nodes)
-    to the training data.\\
-  \item
-    Update \(\hat{f}\) by adding in a shrunken version of the new tree:
-    \[\hat{f}(x) \leftarrow \hat{f}(x)+\lambda \hat{f}^b(x).\]\\
-  \item
-    Update the residuals,
-    \[r_i \leftarrow r_i - \lambda \hat{f}^b(x_i).\]\\
-  \end{enumerate}
-\item
-  The boosted model is
-  \(\hat{f}(x) = \sum_{b=1}^B \lambda \hat{f}^b(x).\)
-\end{enumerate}
-
-Boosting has three tuning parameters which need to be set (\(B\),
-\(\lambda\), \(d\)), and can be found using cross-validation.
-\end{frame}
-
-\begin{frame}
-\textbf{Tuning parameters}
-
-\begin{itemize}
-\item
-  \textbf{Number of trees \(B\)}. Could be chosen using
-  cross-validation. A too small value of \(B\) would imply that much
-  information is unused (remember that boosting is a slow learner),
-  whereas a too large value of \(B\) may lead to overfitting.
-\item
-  \textbf{Shrinkage parameter \(\lambda\)}. Controls the rate at which
-  boosting learns. \(\lambda\) scales the new information from the
-  \(b\)-th tree, when added to the existing tree \(\hat{f}\). Choosing a
-  small value for \(\lambda\) ensures that the algorithm learns slowly,
-  but will require a larger \(B\). Typical values of \(\lambda\) is 0.1
-  or 0.01.
-\item
-  \textbf{Interaction depth \(d\)}: The number of splits in each tree.
-  This parameter controls the complexity of the boosted tree ensemble
-  (the level of interaction between variables that we may estimate). By
-  choosing \(d=1\) a tree stump will be fitted at each step and this
-  gives an additive model.
-\end{itemize}
+We will look at gradient boosting in Module 9!
 \end{frame}
 
 \begin{frame}
@@ -2708,133 +2765,13 @@ To understand what this means, please check again the meaning of the
 variables by typing \texttt{?Boston}.
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 \begin{block}{Boosting}
-\protect\hypertarget{boosting-1}{}
+\protect\hypertarget{boosting}{}
 \vspace{2mm}
 
-And finally, we are boosing the Boston trees! We boost with 5000 trees
-and allow the interaction depth (number of splits per tree) to be of
-degree 4:
-
-\vspace{2mm}
-
-\scriptsize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(gbm)}
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{boost.boston }\OtherTok{=} \FunctionTok{gbm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ Boston[train, ], }\AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,}
-    \AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }\AttributeTok{interaction.depth =} \DecValTok{4}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(boost.boston, }\AttributeTok{plotit =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##             var   rel.inf
-## rm           rm 43.991933
-## lstat     lstat 33.121694
-## crim       crim  4.260417
-## dis         dis  4.011109
-## nox         nox  3.435302
-## black     black  2.826755
-## age         age  2.611394
-## ptratio ptratio  2.540303
-## tax         tax  1.456565
-## indus     indus  0.800874
-## rad         rad  0.654640
-## zn           zn  0.144615
-## chas       chas  0.144399
-\end{verbatim}
+See Module 9.
 \end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-\textbf{Partial dependency plots - integrating out other variables }
-
-\small
-
-\texttt{rm} (number of rooms) and \texttt{lstat} (\% of lower status
-population) are the most important predictors. Partial dependency plots
-show the effect of individual predictors, integrated over the other
-predictors see Hastie, Tibshirani, and Friedman (2009), Section 10.13.2.
-
-\vspace{2mm}
-
-\scriptsize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(boost.boston, }\AttributeTok{i =} \StringTok{"rm"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"medv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.4\linewidth]{8Trees_files/figure-beamer/boston7-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(boost.boston, }\AttributeTok{i =} \StringTok{"lstat"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"medv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.4\linewidth]{8Trees_files/figure-beamer/boston7-2} \end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\textbf{Prediction on test set}
-
-\begin{itemize}
-\item
-  Calculate the MSE on the test set, first for the model with
-  \(\lambda=0.001\) (default), then with \(\lambda=0.2\).
-\item
-  We could have done cross-validation to find the best \(\lambda\) over
-  a grid, but it seems not to make a big difference.
-\end{itemize}
-
-\(~\)
-
-\scriptsize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(boost.boston, }\AttributeTok{newdata =}\NormalTok{ Boston[}\SpecialCharTok{{-}}\NormalTok{train, ], }\AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{((yhat.boost }\SpecialCharTok{{-}}\NormalTok{ boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 18.8471
-\end{verbatim}
-
-\vspace{2mm}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{boost.boston }\OtherTok{=} \FunctionTok{gbm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ Boston[train, ], }\AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,}
-    \AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }\AttributeTok{interaction.depth =} \DecValTok{4}\NormalTok{, }\AttributeTok{shrinkage =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{verbose =}\NormalTok{ F)}
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(boost.boston, }\AttributeTok{newdata =}\NormalTok{ Boston[}\SpecialCharTok{{-}}\NormalTok{train, ], }\AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{((yhat.boost }\SpecialCharTok{{-}}\NormalTok{ boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 18.3345
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\scriptsize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(yhat.boost, boston.test, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=0.6\linewidth]{8Trees_files/figure-beamer/boston8-1} \end{center}
 \end{frame}
 
 \begin{frame}{Further reading}
@@ -2859,11 +2796,6 @@ predictors see Hastie, Tibshirani, and Friedman (2009), Section 10.13.2.
 \leavevmode\vadjust pre{\hypertarget{ref-Breiman1996}{}}%
 Breiman, Leo. 1996. {``Bagging Predictors.''} \emph{Machine Learning}
 24: 123--40.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hastie_etal2009}{}}%
-Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. \emph{The
-Elements of Statistical Learning}. Vol. 2. Springer series in statistics
-New York.
 
 \leavevmode\vadjust pre{\hypertarget{ref-tree2019}{}}%
 Ripley, Brian. 2019. \emph{Tree: Classification and Regression Trees}.

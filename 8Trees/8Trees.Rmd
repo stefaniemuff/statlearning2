@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2023"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 8: Tree-based Methods"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "March 6 and 9, 2023"
+date: "March 7 and 8, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -18,7 +18,10 @@ output:
     toc_depth: 2
 urlcolor: blue
 bibliography: refs.bib
-header-includes: \usepackage{multirow}
+header-includes: 
+- \usepackage{multirow}
+- \setbeamertemplate{navigation symbols}{}
+- \setbeamertemplate{footline}[page number]
 
 ---
 
@@ -33,8 +36,6 @@ whichformat="latex"
 
 
 ---
-
-# Introduction 
 
 ## Learning material for this module
 
@@ -51,22 +52,35 @@ whichformat="latex"
 
 ## What will you learn?
 
-\vspace{2mm}
+$~$
 
 You will get to know
+
+\vspace{2mm}
 
 * Decision trees
     * Regression trees  
     * Classification trees  
-* Pruning a tree
+
+\vspace{1mm}    
+    
+* Pruning trees
+
+\vspace{1mm}   
+
 * Bagging
+
+\vspace{1mm}   
+
 * Variable importance
+
+\vspace{1mm}   
+
 * Random forests
-* Boosting
 
 $~$
 
-and learn how to apply all that.
+... and how to apply all that.
 
 --- 
 
@@ -179,7 +193,7 @@ where $\hat{y}_{R_j}$ is the mean response for the training observations in regi
 
 To do this we need to consider every partition of the predictor space, and compute the RSS for each partition.
 
-**But**: An exhaustive search over possible splits is _computationally infeasible_! \footnote{In fact, constructing optimal binary decision trees is an NP-complete problem (Hyafil and Rivest, 1976).}
+**But**: An exhaustive search over all possible splits is _computationally infeasible_! \footnote{In fact, constructing optimal binary decision trees is an NP-complete problem (Hyafil and Rivest, 1976).}
 
 ---
 
@@ -232,7 +246,7 @@ space, we split only _\textcolor{red}{one of the previously identified regions}_
 
 \vspace{2mm}
 
-Consider the `ozone` data set from the `ElemStatLearn` library. The data set consists of 111 observations on the following variables:
+Consider the `ozone` dataset from the `ElemStatLearn` library. The dataset consists of 111 observations on the following variables:
 
 * `ozone` : the concentration of ozone in ppb
 * `radiation`: the solar radiation (langleys)
@@ -294,7 +308,7 @@ Observe that we can split on the same variable several times.
 <!-- Answer: $J=5$ (= the number of leaf nodes). -->
 
 <!-- \vspace{2mm} -->
-<!-- Below we see the partition of the `ozone` data set given in the `ozone.tree`, where  -->
+<!-- Below we see the partition of the `ozone` dataset given in the `ozone.tree`, where  -->
 
 <!-- * the ozone levels have been color-coded, where a darker color corresponds to a higher ozone concentration.  -->
 <!-- * each rectangle corresponds to one leaf node.  -->
@@ -433,7 +447,7 @@ _\textcolor{red}{How do we know if our tree performs good, or if there would be 
 
 # Pruning 
 
-* If we have a data set with many predictors or choose a stringent stopping criterion, we may fit a (too) large tree.  $\rightarrow$ _\textcolor{red}{overfitting}_? 
+* If we have a dataset with many predictors or choose a stringent stopping criterion, we may fit a (too) large tree.  $\rightarrow$ _\textcolor{red}{overfitting}_? 
 
 
 * A smaller tree with fewer splits leads to fewer regions $R_1, \ldots, R_J$ with more observations. $\rightarrow$ Lower variance and better interpretation, but more bias.
@@ -521,7 +535,11 @@ observations into $k$ folds. For each $k = 1,\ldots, K$:
 
 ### Pruning the ozone tree
 
+$~$
+
 Let us start with the tree with many leaves, and then prune it with 5-fold CV. We can then plot the CV error as a function of tree size (instead of $\alpha$ -- why?):
+
+\vspace{2mm}
 
 \scriptsize
 ```{r ozonecv, echo=TRUE, fig.width=6, fig.height=5,fig.align = "center",out.width='50%'}
@@ -849,7 +867,7 @@ $~$
 
 \vspace{2mm}
 
-* Algorithm 8.1 can be used with misclassification, the Gini index, or cross-entropy instead of the RSS as quality measure.
+* Algorithm 8.1 (including the pruning step) can be used with misclassification, the Gini index, or cross-entropy instead of the RSS as quality measure.
 
 ---
 
@@ -877,7 +895,7 @@ plot(cv.head$size,cv.head$dev,type="b",
 
 ---
 
-The function `cv.tree` automatically does $10$-fold cross-validation. `dev` is here the number of misclassifications.
+The function `cv.tree` automatically does $10$-fold cross-validation. `dev` denotes the number of misclassifications.
 
 \vspace{3mm}
 
@@ -991,6 +1009,51 @@ Discuss the _bias-variance tradeoff of a regression tree_ when increasing/decrea
 
 ---
 
+### Other issues: Categorical predictors
+
+$~$
+
+
+* If a predictor has $q$ unordered levels, there are $2^{q-1} -1$ possible partitions into groups.  
+
+$~$
+
+* In case of a _binary outcome_: 
+    * Order the predictor classes according to the proportion in outcome class 1. 
+    * Then, use it as an ordered predictor.  \vspace{1mm}  
+$\rightarrow$ This gives the optimal split according to Gini index.
+
+$~$
+
+* For _multicategory and continuous outcomes_, this is not possible. Try to avoid predictors with very many levels!
+
+
+---
+
+### Other issues: Missing predictor values
+
+$~$
+
+* Predictor variables can have missing instances. Discarding those observations can lead to serious depletion of the training data.
+
+\vspace{2mm}
+
+* We can _impute_ missing values, e.g., by taking the mean over the observed values. 
+
+$~$
+
+**Two better solutions for trees:** 
+
+\vspace{2mm}
+
+* Idea 1: Make a separate category for "missing". 
+
+\vspace{2mm}
+
+* Idea 2: Use the observed values in each variable for finding the split, but also create so-called "surrogate splits": Store next-best split options using other variables at that point. 
+
+---
+
 # Trees versus linear models
 
 
@@ -1014,7 +1077,7 @@ Discuss the _bias-variance tradeoff of a regression tree_ when increasing/decrea
 
 * Trees automatically select variables.
 * Tree-growing algorithms scale well to large $n$, growing a tree greedily.
-* Trees can handle mixed features (continouos, categorical) seamlessly, and can deal with missing data.
+* Trees can handle mixed features (continouos, categorical) seamlessly.
 * Small trees are easy to interpret and explain to people.
 * Some believe that decision trees mirror human decision making.
 * Trees can be displayed graphically.
@@ -1039,7 +1102,8 @@ Several of the above listed disadvantages can be addressed by
 
 * **Random forests**: inject more randomness (and even less variance) by just allowing a random selection of predictors to be used for the splits at each node.
 
-* **Boosting**: make one tree, then another based on the residuals from the previous, repeat. The final predictor is a weighted sum of these trees.
+* **Boosting**: make one tree, then another based on the residuals from the previous, repeat. The final predictor is a weighted sum of these trees.  
+$\rightarrow$ See more extensive discussion in module 9.
 
 \vspace{2mm}
 
@@ -1161,7 +1225,7 @@ $~$
 * For decision trees, if we have $B$ training sets, we could estimate $\hat{f}_1({\boldsymbol x}),\hat{f}_2({\boldsymbol x}),\ldots, \hat{f}_B({\boldsymbol x})$ and average them as
 $$ \hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .$$
 
-However, we do not have many independent data set - so we use _bootstrapping_ to construct $B$ data sets.
+However, we do not have many independent dataset - so we use _bootstrapping_ to construct $B$ datasets.
 
 ---
 
@@ -1173,7 +1237,7 @@ However, we do not have many independent data set - so we use _bootstrapping_ to
 
 \vspace{2mm}
 
-* We repeat this $B$ times and get $B$ bootstrap samples - that we use as our $B$ data sets.
+* We repeat this $B$ times and get $B$ bootstrap samples - that we use as our $B$ datasets.
 
 \vspace{2mm}
 
@@ -1500,9 +1564,9 @@ The split is allowed to use only one of those m predictors.
     * $m\approx \sqrt p$ (classification),  
     * $m=p/3$ (regression).
 
-\vspace{2mm}
+\vspace{3mm}
 
-The general idea is that for very correlated predictors $m$ is chosen to be small.
+Generally, $m$ should be chosen small if the predictors are very correlated.
 
 
 
@@ -1528,11 +1592,11 @@ The general idea is that for very correlated predictors $m$ is chosen to be smal
 
 ---
 
-ISLR Figure 8.10, gene expression data set with 15 classes and 500 predictors:
+ISLR Figure 8.10, gene expression dataset with 15 classes and 500 predictors:
 \vspace{-3mm}
 
 \centering
-![ISLR Figure 8.10, gene expression data set with 15 classes and 500 predictors](../../ISLR/Figures/Chapter8/810.png){width=80%}
+![ISLR Figure 8.10, gene expression dataset with 15 classes and 500 predictors](../../ISLR/Figures/Chapter8/810.png){width=80%}
 
 ---
 
@@ -1601,41 +1665,25 @@ As expected `GCS.15` (GCS=15 at 2h) is a strong predictor along with `bskullf` (
 
 ---
 
-# Boosting 
+# Gradient boosting 
 
-_Boosting_ is an alternative approach for improving the predictions resulting from a decision tree. 
-We will only consider the description of boosting regression trees (and not classification trees) in this course.
+$~$
 
-The trees are grown _sequentially_ so that each tree is grown using information from the previous tree. 
+_Boosting_ is an alternative approach for improving the predictions resulting from a so-called _weak learner_.
 
-1. Build a decision tree with $d$ splits (and $d+1$ terminal notes).
-2. Improve the model in areas where the model didn't perform well. This is done by fitting a decision tree to the _residuals of the model_. This procedure is called _learning slowly_. 
-3. The first decision tree is then updated based on the residual tree, but with a weight. 
+\vspace{2mm}
 
-The procedure is repeated until some stopping criterion is reached. Each of the trees can be very small, with just a few terminal nodes (or just one split).
+Typically, boosting is applied to regression and classification trees, because they are (on their own) not very good prediction methods.
 
----
+\vspace{2mm}
 
-**Algorithm 8.2: Boosting for regression trees**
+Main idea: The trees are grown _sequentially_ so that each tree is grown using information from the previous tree. 
 
-1. Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all $i$ in the training set.
-2. For $b=1,2,...,B$, repeat:  
-    a) Fit a tree $\hat{f}^b$ with $d$ splits ($d+1$ terminal nodes) to the training data.  
-    b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\lambda \hat{f}^b(x).$$  
-    c) Update the residuals, $$r_i \leftarrow r_i - \lambda \hat{f}^b(x_i).$$  
-3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \lambda \hat{f}^b(x).$
 
-Boosting has three tuning parameters which need to be set ($B$, $\lambda$, $d$), and can be found using cross-validation.
+$~$
 
----
+We will look at gradient boosting in Module 9!
 
-**Tuning parameters**
-
-* **Number of trees $B$**. Could be chosen using cross-validation. A too small value of $B$ would imply that much information is unused (remember that boosting is a slow learner), whereas a too large value of $B$ may lead to overfitting. 
-
-* **Shrinkage parameter $\lambda$**. Controls the rate at which boosting learns. $\lambda$ scales the new information from the $b$-th tree, when added to the existing tree $\hat{f}$. Choosing a small value for $\lambda$ ensures that the algorithm learns slowly, but will require a larger $B$. Typical values of $\lambda$ is 0.1 or 0.01.
-
-* **Interaction depth $d$**: The number of splits in each tree. This parameter controls the complexity of the boosted tree ensemble (the level of interaction between variables that we may estimate). By choosing $d=1$ a tree stump will be fitted at each step and this gives an additive model.
 
 ---
 
@@ -1645,12 +1693,12 @@ www.menti.com, Code  1641 4606
 
 ---
 
-# Example: Boston data set 
+# Example: Boston dataset 
 \tiny
 (ISLR book, Sections 8.3.2 to 8.3.4.)
 
 \normalsize
-Remember the data set: The aim is to predict the median value of owner-occupied homes (in 1000\$)
+Remember the dataset: The aim is to predict the median value of owner-occupied homes (in 1000\$)
 
 We first run through trees, bagging and random forests - before arriving at boosting. 
 
@@ -1851,71 +1899,9 @@ To understand what this means, please check again the meaning of the variables b
 
 \vspace{2mm}
 
-And finally, we are boosing the Boston trees! We boost with 5000 trees and allow the interaction depth (number of splits per tree) to be of degree 4:
+See Module 9.
 
-\vspace{2mm}
 
-\scriptsize
-
-```{r}
-library(gbm)
-set.seed(1)
-boost.boston=gbm(medv~.,data=Boston[train,],
-                 distribution="gaussian",
-                 n.trees=5000,interaction.depth=4)
-summary(boost.boston,plotit=FALSE)
-```
-
----
-
-**Partial dependency plots - integrating out other variables **
-
-\small
-`rm` (number of rooms) and `lstat` (% of lower status population) are the most important predictors. Partial dependency plots show the effect of individual predictors, integrated over the other predictors see @hastie_etal2009, Section 10.13.2.
-
-\vspace{2mm}
-
-\scriptsize
-
-```{r boston7, echo=TRUE, fig.width=5, fig.height=3,fig.align = "center",out.width='40%'}
-plot(boost.boston,i="rm",ylab="medv")
-plot(boost.boston,i="lstat",ylab="medv")
-```
-
----
-
-**Prediction on test set**
-
-* Calculate the MSE on the test set, first for the model with $\lambda=0.001$ (default), then with $\lambda=0.2$.
-
-* We could have done cross-validation to find the best $\lambda$ over a grid, but it seems not to make a big difference.
-
-$~$
-
-\scriptsize
-
-```{r}
-yhat.boost=predict(boost.boston,newdata=Boston[-train,],n.trees=5000)
-mean((yhat.boost-boston.test)^2)
-```
-
-\vspace{2mm}
-
-```{r}
-boost.boston=gbm(medv~.,data=Boston[train,],distribution="gaussian",
-                 n.trees=5000,interaction.depth=4,shrinkage=0.2,verbose=F)
-yhat.boost=predict(boost.boston,newdata=Boston[-train,],n.trees=5000)
-mean((yhat.boost-boston.test)^2)
-```
-
----
-
-\scriptsize
-
-```{r boston8, echo=TRUE, fig.width=5, fig.height=4,fig.align = "center",out.width='60%'}
-plot(yhat.boost,boston.test,pch=20)
-abline(0,1)
-```
 
 
 
@@ -1939,7 +1925,7 @@ abline(0,1)
 
 <!-- --- -->
 
-
+---
  
 # Further reading
 
