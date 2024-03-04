@@ -1669,27 +1669,30 @@ As expected `GCS.15` (GCS=15 at 2h) is a strong predictor along with `bskullf` (
 
 $~$
 
-_Boosting_ is an alternative approach for improving the predictions resulting from a so-called _weak learner_.
+* _Boosting_ is an alternative approach for improving the predictions resulting from a so-called _weak learner_.
 
 \vspace{2mm}
 
-Typically, boosting is applied to regression and classification trees, because they are (on their own) not very good prediction methods.
+* Typically, boosting is applied to regression and classification trees, because they are (on their own) not very good prediction methods.
 
 \vspace{2mm}
 
-Main idea: The trees are grown _sequentially_ so that each tree is grown using information from the previous tree. 
+* Main idea: The trees are grown _sequentially_ so that each tree is grown using information from the previous tree. 
 
+\vspace{2mm}
+
+* Since each tree improves the previous model, the number of trees $B$ is a tuning parameter (in contrast to bagging and random forest).
 
 $~$
 
-We will look at gradient boosting in Module 9!
+$\rightarrow$ We will look at gradient boosting in Module 9!
 
 
 ---
 
 ### Short quizz poll 
 
-www.menti.com, Code  1641 4606
+www.menti.com
 
 ---
 
