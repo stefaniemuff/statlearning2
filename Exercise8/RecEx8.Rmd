@@ -14,7 +14,7 @@ output:
     toc: no
     toc_depth: '2'
     df_print: paged
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
@@ -116,18 +116,7 @@ rf.Carseats = randomForest(Sales~., ... , mtry = 3, ntree = 500, importance = TR
 ```
 
 
-f) Finally use boosting with 500 trees, an interaction depth $d=4$ and a shrinkage factor $\lambda=0.1$ (default in the `gbm()` function) on our data. Compare the MSE to all other methods.
-
-**R-hints**
-
-```{r, eval=F, echo=T}
-library(gbm)
-r.boost=gbm(Sales~., Carseats.train,
-                 distribution=...,
-                 n.trees= ... ,interaction.depth= ..., shrinkage = ...)
-```
-
-g) What is the effect of the number of trees (`ntree`) on the test error? Plot the test MSE as a function of `ntree` for both the bagging and the random forest method.
+f) What is the effect of the number of trees (`ntree`) on the test error? Plot the test MSE as a function of `ntree` for both the bagging and the random forest method.
 
 
 ## Problem 3 -- Classification
@@ -153,6 +142,8 @@ f) Create a decision tree by using the bagging approach with $B=500$. Use the fu
 
 g) Apply the `randomForest()` function again with 500 trees, but this time consider only a subset of the predictors in each split. This corresponds to the random forest-algorithm. Study the importance of each variable by using the function `importance()`. Are the results as expected based on earlier results? Again, predict the response for the test data and report the misclassification rate.
 
-h) Use `gbm()` to construct a boosted classification tree using 5000 trees, an interaction depth of $d=3$ and a shrinkage parameter of $\lambda=0.001$. Predict the response for the test data and report the misclassification rate.
+<!-- h) Use `gbm()` to construct a boosted classification tree using 5000 trees, an interaction depth of $d=3$ and a shrinkage parameter of $\lambda=0.001$. Predict the response for the test data and report the misclassification rate. -->
 
-i) Compare the misclassification rates in d-h. Which method gives the lowest misclassification rate for the test data? Are the results as expected?
+h) Compare the misclassification rates in d-g. 
+Which method gives the lowest misclassification rate for the test data? 
+Are the results as expected?
