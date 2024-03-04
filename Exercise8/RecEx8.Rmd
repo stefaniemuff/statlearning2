@@ -1,9 +1,9 @@
 ---
 title: 'Module 8: Recommended Exercises'
 author:
-- Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff
+- Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff
 - Department of Mathematical Sciences, NTNU
-date: "March 9, 2023"
+date: "March 7, 2024"
 output:
   pdf_document:
     fig_caption: yes
@@ -43,7 +43,25 @@ How can we evaluate the importance of the different predictors for these methods
 
 ## Problem 2 -- Regression (Book Ex. 8)
 
-In the lab, a classification tree was applied to the Carseats data set after converting the variable `Sales` into a qualitative response variable. Now we will seek to predict `Sales` using regression trees and related approaches, treating the response as a quantitative variable.
+In the lab (8.3 Lab: Decision Trees), the Carseats dataset is used. 
+This dataset comprises sales data for child car seats at 400 different stores. The dataset includes a mix of quantitative and qualitative predictors.
+
+Key attributes of the dataset include:
+
+- Sales: The number of car seats sold at each location, serving as the response variable for regression analyses.
+- CompPrice: The price charged by competitors at each location.
+- Income: The community income level where the store is located.
+- Advertising: The budget for advertising in each location.
+- Population: The population size in the region around the store.
+- Price: The price of the car seats at each store.
+- ShelveLoc: A qualitative variable indicating the quality of the shelving location at the store (Good, Medium, Bad).
+- Age: The average age of the local population.
+- Education: The education level at each location.
+- Urban: A qualitative variable indicating whether the store is in an urban or rural location.
+- US: A qualitative variable indicating whether the store is in the US or not.
+
+In the lab, a classification tree was applied to the Carseats dataset after converting the variable `Sales` into a qualitative response variable. 
+Now we will seek to predict `Sales` using regression trees and related approaches, treating the response as a quantitative variable.
 
 a) Split the data set into a training set and a test set. (Hint: Use 70% of the data as training set and the rest 30% as testing set)
 

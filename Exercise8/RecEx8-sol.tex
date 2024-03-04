@@ -1,7 +1,7 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[
 ]{article}
@@ -34,6 +34,18 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Module 8: Solutions to Recommended Exercises},
+  pdfauthor={Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -95,18 +107,6 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
-\hypersetup{
-  pdftitle={Module 8: Solutions to Recommended Exercises},
-  pdfauthor={Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff; Department of Mathematical Sciences, NTNU},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={blue},
-  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 8: Solutions to Recommended Exercises}
 \usepackage{etoolbox}
@@ -116,9 +116,9 @@
 }
 \makeatother
 \subtitle{TMA4268 Statistical Learning V2023}
-\author{Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie
+\author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
 Muff \and Department of Mathematical Sciences, NTNU}
-\date{March 9, 2023}
+\date{March 7, 2024}
 
 \begin{document}
 \maketitle
@@ -152,7 +152,7 @@ Muff \and Department of Mathematical Sciences, NTNU}
 
 \[\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,\]
 
-where \(|T|\) is the numb er of terminal nodes.
+where \(|T|\) is the number of terminal nodes.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -184,8 +184,8 @@ where \(|T|\) is the numb er of terminal nodes.
   \(\alpha.\)
 \end{enumerate}
 
-For a \textbf{classification} tree we replace RSS with Gini index or
-entropy.
+For a \textbf{classification} tree, we replace RSS with Gini index or
+cross entropy.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -210,10 +210,12 @@ entropy.
 
 \begin{itemize}
 \item
-  The predictive accuracy is usualy not very high
+  The predictive accuracy is usually not very high. This limitation
+  often leads practitioners to use ensemble methods like Random Forests
+  or Boosting to improve accuracy.
 \item
-  They are non-robust. That is a small change in the data can cause a
-  large change in the estimated tree
+  They are non-robust. That is, a small change in the data can cause a
+  large change in the estimated tree.
 \end{itemize}
 
 \begin{enumerate}
@@ -223,14 +225,15 @@ entropy.
 \item
 \end{enumerate}
 
-Decision trees suffer from high variance. Recall that if we have \(B\)
-\(i.i.d\) observations of a random variable \(X\) with the same mean and
-variance \(\sigma^2.\) We calculate the mean
-\(\bar{X} = \frac{1}{B} \sum_{b=1}^B X_b,\) and the variance of the mean
-is \(\text{Var}(\bar{X}) = \frac{\sigma^2}{B}.\) That is by averaging we
-get reduced variance.
+\emph{Limitation of decision trees}: Decision trees suffer from high
+variance. Recall that if we have \(B\) \(i.i.d\) observations of a
+random variable \(X\) with the same mean and variance \(\sigma^2.\) We
+calculate the mean \(\bar{X} = \frac{1}{B} \sum_{b=1}^B X_b,\) and the
+variance of the mean is \(\text{Var}(\bar{X}) = \frac{\sigma^2}{B}.\)
+That is by averaging we get reduced variance.
 
-For decision trees, if we have \(B\) training sets, we could estimate
+\emph{Idea behind bagging}: For decision trees, if we have \(B\)
+training sets, we could estimate
 \(\hat{f}_1({\boldsymbol x}),\hat{f}_2({\boldsymbol x}),\ldots, \hat{f}_B({\boldsymbol x})\)
 and average them as
 \[\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .\]
@@ -239,11 +242,12 @@ bootstraping to create \(B\) datasets. These datasets are however not
 completely independent and the reduction in variance is therefore not as
 large as for independent training sets.
 
-To make the different trees that are built from each bootstrapped
-dataset more different, random forests use a random subset of the
-predictors to split the tree into new branches at each step. This
-decorrelates the different trees that are built from the \(B\)
-bootstrapped datasets, and consequently reduces variance.
+\emph{How do random forests improve that idea?}: To make the different
+trees that are built from each bootstrapped dataset more different,
+random forests use a random subset of the predictors to split the tree
+into new branches at each step. This decorrelates the different trees
+that are built from the \(B\) bootstrapped datasets, and consequently
+reduces variance.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -257,18 +261,29 @@ bootstrapped datasets, and consequently reduces variance.
 
 \textbf{Variable importance based on node impurity}
 
-\textbf{Regression Trees}: The total amount that the RSS is decreased
-due to splits of each predictor, averaged over the B trees.
-
-\textbf{Classification Trees}: The importance is the mean decrease (over
-all B trees) in the Gini index by splits of a predictor.
+\begin{itemize}
+\tightlist
+\item
+  \emph{Regression Trees}: The total amount that the RSS is decreased
+  due to splits of each predictor, averaged over the B trees.
+\item
+  \emph{Classification Trees}: The importance is the mean decrease (over
+  all B trees) in impurity (often measured by the Gini index) by splits
+  of a predictor. A higher decrease indicates a more significant role of
+  the predictor in partitioning the data into homogeneous groups,
+  thereby enhancing classification accuracy.
+\end{itemize}
 
 \textbf{Variable importance based on randomization}
 
-This measure is based on how much the predictive accuracy (MSE or gini
-indiex) is decreased when the variable is replaced by a permuted version
-of it. You find a drawing
-\href{https://github.com/stefaniemuff/statlearning/blob/master/8Trees/M8_variableImportanceRandomization.pdf}{here}.
+\begin{itemize}
+\tightlist
+\item
+  This measure is based on how much the predictive accuracy (MSE or gini
+  indiex) is decreased when the variable is replaced by a permuted
+  version of it. You find a drawing
+  \href{https://github.com/stefaniemuff/statlearning/blob/master/8Trees/M8_variableImportanceRandomization.pdf}{here}.
+\end{itemize}
 
 \hypertarget{problem-2-regression-book-ex.-8}{%
 \subsection{Problem 2 -- Regression (Book Ex.
@@ -329,18 +344,35 @@ of it. You find a drawing
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-3-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-4-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Shelf location (`ShelveLoc') is should be one of the important
+  predictors, with bad/medium locations correlating with lower sales
+  while good location leads to higher sales in general.
+\item
+  Age criteria suggests that younger customers tend to contribue higher
+  sales.
+\item
+  For higher prices, Advertising becomes relevant, indicating that
+  higher marketing efforts result in higher sales.
+\item
+  etc.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{yhat }\OtherTok{=} \FunctionTok{predict}\NormalTok{(tree.mod, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
 \NormalTok{mse }\OtherTok{=} \FunctionTok{mean}\NormalTok{((yhat }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-\NormalTok{mse}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"test MSE:"}\NormalTok{, mse)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4.585249
+## test MSE: 4.585249
 \end{verbatim}
 
 \begin{enumerate}
@@ -361,7 +393,7 @@ of it. You find a drawing
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{RecEx8-sol_files/figure-latex/unnamed-chunk-4-1.pdf}
+\includegraphics{RecEx8-sol_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 We see that trees with sizes 11, 12, 16 and 17 have similar deviance
 values. We might choose the tree of size 11 as it gives the simpler
@@ -375,7 +407,7 @@ tree.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-5-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-7-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -452,7 +484,7 @@ importance plots we might conclude that \texttt{Price}and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-8-1}
+\includegraphics[width=0.8\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-10-1}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -504,7 +536,7 @@ Variables are again \texttt{Price}and \texttt{ShelveLoc}.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-10-1}
+\includegraphics[width=0.8\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-12-1}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -554,7 +586,7 @@ We see a further decrease in MSE by boosting our trees.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-12-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-14-1}
 
 \hypertarget{problem-3-classification}{%
 \subsection{Problem 3 --
@@ -614,7 +646,7 @@ Classification}\label{problem-3-classification}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-16-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-18-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -686,7 +718,7 @@ Classification}\label{problem-3-classification}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-18-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-20-1}
 
 According to the plot the optimal number of terminal nodes is 6 (or
 larger). We choose 6 as this gives the simplest tree, and prune the tree
@@ -701,7 +733,7 @@ according to this value.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-19-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-21-1}
 
 We predict the response for the test data:
 
@@ -812,7 +844,7 @@ large, the corresponding covariate is important.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.9\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-27-1}
+\includegraphics[width=0.9\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-29-1}
 
 In this plot we see that \texttt{charExclamation} is the most important
 covariate, followed by \texttt{remove} and \texttt{charDollar}. This is

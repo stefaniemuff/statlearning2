@@ -1,9 +1,9 @@
 ---
 title: 'Module 8: Solutions to Recommended Exercises'
 author:
-- Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff
+- Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff
 - Department of Mathematical Sciences, NTNU
-date: "March 9, 2023"
+date: "March 7, 2024"
 output:
   pdf_document:
     fig_caption: yes
@@ -45,7 +45,7 @@ a)
 
 $$\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,$$
 
-where $|T|$ is the numb er of terminal nodes.
+where $|T|$ is the number of terminal nodes.
 
 3. _$K$-fold cross-validation_ to choose $\alpha$. For each fold:
 
@@ -55,7 +55,7 @@ where $|T|$ is the numb er of terminal nodes.
 
 4. Return the subtree from Step 2 that corresponds to the chosen value of $\alpha.$
 
-For a **classification** tree we replace RSS with Gini index or entropy.
+For a **classification** tree, we replace RSS with Gini index or cross entropy.
 
 b) 
 
@@ -69,21 +69,25 @@ $\color{green}{\text{Advantages}}$
 
 $\color{red}{\text{Disadvantages}}$
 
-* The predictive accuracy is usualy not very high
+<!-- * The predictive accuracy is usually not very high -->
+* The predictive accuracy is usually not very high. This limitation often leads practitioners to use ensemble methods like Random Forests or Boosting to improve accuracy.
 
-* They are non-robust. That is a small change in the data can cause a large change in the estimated tree
+* They are non-robust. That is, a small change in the data can cause a large change in the estimated tree.
 
 
 c) 
 
+*Limitation of decision trees*:
 Decision trees suffer from high variance. Recall that if we have $B$ $i.i.d$ observations of a random variable $X$ with the same mean and variance $\sigma^2.$
 We calculate the mean $\bar{X} = \frac{1}{B} \sum_{b=1}^B X_b,$ and the variance of the mean is $\text{Var}(\bar{X}) = \frac{\sigma^2}{B}.$
 That is by averaging we get reduced variance. 
 
+*Idea behind bagging*:
 For decision trees, if we have $B$ training  sets, we could estimate $\hat{f}_1({\boldsymbol x}),\hat{f}_2({\boldsymbol x}),\ldots, \hat{f}_B({\boldsymbol x})$ and average them as
 $$\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .$$
 However we do not have many data independent data sets, and we bootstraping to create $B$ datasets. These datasets are however not completely independent and the reduction in variance is therefore not as large as for independent training sets.
 
+*How do random forests improve that idea?*:
 To make the different trees that are built from each bootstrapped dataset more different, random forests use a random subset of the predictors to split the tree into new branches at each step. This decorrelates the different trees that are built from the $B$ bootstrapped datasets, and consequently reduces variance.
 
 d) An OOB is the set of observations that were not chosen to be in a specific bootstrap sample. From RecEx5-Problem 4c we have that on average $1-0.632 = 0.368$ are included in the OOB sample.
@@ -92,13 +96,12 @@ e)
 
 **Variable importance based on node impurity**
 
-**Regression Trees**: The total amount that the RSS is decreased due to splits of each predictor, averaged over the B trees.
-
-**Classification Trees**: The importance is the mean decrease (over all B trees) in the Gini index by splits of a predictor.
+- *Regression Trees*: The total amount that the RSS is decreased due to splits of each predictor, averaged over the B trees.
+- *Classification Trees*: The importance is the mean decrease (over all B trees) in impurity (often measured by the Gini index) by splits of a predictor. A higher decrease indicates a more significant role of the predictor in partitioning the data into homogeneous groups, thereby enhancing classification accuracy.
 
 **Variable importance based on randomization**
 
-This measure is based on how much the predictive accuracy (MSE or gini indiex) is decreased when the variable is replaced by a permuted version of it. You find a drawing [here](https://github.com/stefaniemuff/statlearning/blob/master/8Trees/M8_variableImportanceRandomization.pdf). 
+- This measure is based on how much the predictive accuracy (MSE or gini indiex) is decreased when the variable is replaced by a permuted version of it. You find a drawing [here](https://github.com/stefaniemuff/statlearning/blob/master/8Trees/M8_variableImportanceRandomization.pdf). 
 
 ## Problem 2 -- Regression (Book Ex. 8)
 
@@ -123,12 +126,25 @@ b)
 library(tree)
 tree.mod = tree(Sales~., Carseats, subset = train)
 summary(tree.mod)
+```
+
+```{r,fig.width=10, fig.height=8,out.width='70%'}
 plot(tree.mod)
 text(tree.mod, pretty = 0)
+```
 
+- Shelf location ('ShelveLoc') is should be one of the important predictors, with bad/medium locations correlating with lower sales while good location leads to higher sales in general.
+<!-- - Price is the primary splitting criterion, indicating it's a significant predictor. -->
+<!-- - Lower prices generally lead to lower predicted values, implying a potential increase in car seat sales or a related outcome at lower prices. -->
+- Age criteria suggests that younger customers tend to contribue higher sales.
+- For higher prices, Advertising becomes relevant, indicating that higher marketing efforts result in higher sales.
+- etc.
+
+```{r,fig.width=10, fig.height=8,out.width='70%'}
 yhat = predict(tree.mod, newdata = Carseats.test)
 mse = mean((yhat - Carseats.test$Sales)^2)
-mse
+
+cat("test MSE:", mse)
 ```
 
 c) 

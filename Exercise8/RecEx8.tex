@@ -1,7 +1,7 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[
 ]{article}
@@ -34,6 +34,18 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Module 8: Recommended Exercises},
+  pdfauthor={Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -95,18 +107,6 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
-\hypersetup{
-  pdftitle={Module 8: Recommended Exercises},
-  pdfauthor={Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff; Department of Mathematical Sciences, NTNU},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={blue},
-  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 8: Recommended Exercises}
 \usepackage{etoolbox}
@@ -116,9 +116,9 @@
 }
 \makeatother
 \subtitle{TMA4268 Statistical Learning V2023}
-\author{Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie
+\author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
 Muff \and Department of Mathematical Sciences, NTNU}
-\date{March 9, 2023}
+\date{March 7, 2024}
 
 \begin{document}
 \maketitle
@@ -154,11 +154,48 @@ Muff \and Department of Mathematical Sciences, NTNU}
 \subsection{Problem 2 -- Regression (Book Ex.
 8)}\label{problem-2-regression-book-ex.-8}}
 
-In the lab, a classification tree was applied to the Carseats data set
-after converting the variable \texttt{Sales} into a qualitative response
-variable. Now we will seek to predict \texttt{Sales} using regression
-trees and related approaches, treating the response as a quantitative
-variable.
+In the lab (8.3 Lab: Decision Trees), the Carseats dataset is used. This
+dataset comprises sales data for child car seats at 400 different
+stores. The dataset includes a mix of quantitative and qualitative
+predictors.
+
+Key attributes of the dataset include:
+
+\begin{itemize}
+\tightlist
+\item
+  Sales: The number of car seats sold at each location, serving as the
+  response variable for regression analyses.
+\item
+  CompPrice: The price charged by competitors at each location.
+\item
+  Income: The community income level where the store is located.
+\item
+  Advertising: The budget for advertising in each location.
+\item
+  Population: The population size in the region around the store.
+\item
+  Price: The price of the car seats at each store.
+\item
+  ShelveLoc: A qualitative variable indicating the quality of the
+  shelving location at the store (Good, Medium, Bad).
+\item
+  Age: The average age of the local population.
+\item
+  Education: The education level at each location.
+\item
+  Urban: A qualitative variable indicating whether the store is in an
+  urban or rural location.
+\item
+  US: A qualitative variable indicating whether the store is in the US
+  or not.
+\end{itemize}
+
+In the lab (8.3 Lab: Decision Trees), a classification tree was applied
+to the Carseats dataset after converting the variable \texttt{Sales}
+into a qualitative response variable. Now we will seek to predict
+\texttt{Sales} using regression trees and related approaches, treating
+the response as a quantitative variable.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
