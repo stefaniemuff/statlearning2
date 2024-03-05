@@ -49,11 +49,20 @@ $~$
 
 \vspace{8mm}
 
-Check out: 
+<!-- Check out:  -->
 
-* https://arogozhnikov.github.io/2016/04/28/demonstrations-for-ml-courses.html
+<!-- * https://arogozhnikov.github.io/2016/04/28/demonstrations-for-ml-courses.html -->
+
+In addition, some material we use is from the book by @boehmke_greenwell2020
+
+\vspace{2mm}
 
 * https://bradleyboehmke.github.io/HOML/gbm.html
+ 
+ 
+
+<!-- https://arogozhnikov.github.io/2016/06/24/gradient_boosting_explained.html  -->
+
  
 ---
 
@@ -111,7 +120,7 @@ $~$
 
 \vspace{2mm}
 
-* It is also possible to boost, e.g., linear or penalized regression models.
+* It is also possible to boost, e.g., linear or penalized regression models (see presentation by a master student on Friday).
 
 
 ---
@@ -125,8 +134,13 @@ $~$
 
 $~$
 
+* Kaggle is a website where you find open competitions -- many of them are won by tree-based methods. 
 
-Mention some kaggle competitions here
+$~$
+
+* Maybe you will earn a living from this in the future...? See here:  
+https://www.kaggle.com/competitions
+
 
 ---
 
@@ -156,10 +170,32 @@ https://hal.science/hal-03723551v2
 
 ---
  
-## Recap: Regression trees and random forests
+## Recap: Trees and random forests
  
- 
+$~$
 
+* See Module 8: Regression and classification trees.
+
+\vspace{2mm}
+
+* Trees are simple, but not very good in predicting.
+
+\vspace{2mm}
+
+* Improvements via bagging and random forests. 
+
+\vspace{2mm}
+
+* Bagging: Build trees on bagged datasets and average over predictions.
+
+\vspace{2mm}
+
+* Random forests: Same as bagging, but only use a subset of all variables for each new split. Regression: $p/3$, classification $\sqrt{p}$ of all variables. 
+
+\vspace{2mm}
+
+
+* Loss of interpretability is compensated by variable importance measures. 
 
 
 ---
@@ -173,11 +209,11 @@ $~$
 
 $~$
 
-* For example, rather than performing variance reduction on complex trees, can we decrease the bias of simple trees?
+* For example, rather than performing variance reduction on complex trees, can we decrease the bias by only using simple trees?
 
 $~$
 
-* A solution to this problem, making an good model from simple trees, is another class of ensemble methods called boosting.
+* A solution to this problem, making a good model from simple trees, is another class of ensemble methods called boosting.
 
 $~$
 
@@ -193,7 +229,7 @@ Chapter 10.1 in @hastie_etal2009, including Fig 10.1 and Algorithm 10.1
 
 $~$
 
-* Assume we have a binary classification problem for $Y\in \{-1,-1\}$, a vector of predictor variables $X$, and a classifier $G(X)$. 
+* Assume we have a binary classification problem for $Y\in \{-1,1\}$, a vector of predictor variables $X$, and a classifier $G(X)$. 
 
 \vspace{2mm}
 
@@ -225,7 +261,7 @@ $$\text{err} =\frac{1}{N} \sum_{i=1}^N I(y_i \neq G(x_i)) \ .$$
 
 \vspace{2mm}
 
-* How do we then find the sequence $G_m(x)$?
+* How do we then find the sequence $G_m(x)$ and the corresponding weights $\alpha_m$?
 
 ---
 
@@ -265,7 +301,7 @@ Explanations:
 
 $~$
  
- * Weights $\alpha_m$: assigns larger overall weight to good classifiers.
+ * Weights $\alpha_m$: assigns larger overall weight to good classifiers\footnote{Note: When $\text{err}_m<0.5$, then $\alpha_m>0$. Otherwise, the classifier needs to be inverted and $\alpha<0$ makes sense.}.
  
  * Weights $w_i$ modify the original data. This ensures that observations $i$ with wrong classification in $G_{m-1}(x)$ obtain larger weights, namely 
  \begin{align*} 
@@ -282,6 +318,8 @@ $~$
 $~$
 
 Inspired by (10.2) in the Elements book:
+
+\vspace{2mm}
 
 * Generate features $X_1, \ldots, X_{10}$ multivariate Gaussian.
 * Classify $y=1$ if $\sum_{j=1}^{10}X_j^2 > 9.34$, $y=-1$ otherwise.
@@ -305,19 +343,21 @@ hist(y,title="")
 
 ---
 
-Fit AdaBoost on the training data using the function `ada()` from the `ada` R package. We use default choice for tree depth:
+Fit AdaBoost on the training data using the function `ada()` from the `ada` R package. The function uses classification trees as weak learners. We use default choice for tree depth (tree depth is decided on a case-by-case basis):
 
-$~$
-
-\centering
+\vspace{2mm}
 
 \scriptsize
-```{r,echo=TRUE,fig.width=6,fig.height=5,out.width="60%"}
+\centering
+
+```{r,echo=TRUE,fig.width=6,fig.height=5,out.width="50%"}
 library(ada)
 dd <- data.frame(X,y)
 dd.train <- dd[1:1000,]
 dd.test <- dd[1001:5000,]
-r.ada <- ada(y~.,dd.train,iter=400,type="discrete", control=rpart.control())
+
+set.seed(4268)
+r.ada <- ada(y~.,dd.train,iter=400,type="discrete", loss="ada", control=rpart.control())
 plot(r.ada)
 ```
 
@@ -370,6 +410,8 @@ $~$
 
 In tree boosting, trees are grown _sequentially_ so that each tree is grown using information from the previous tree. 
 
+\vspace{2mm}
+
 1. Build a decision tree with $d$ splits (and $d+1$ terminal notes).
 2. Improve the model in areas where the model didn't perform well. This is done by fitting a decision tree to the _residuals of the model_. This procedure is called _learning slowly_. 
 3. The first decision tree is then updated based on the residual tree, but with a weight. 
@@ -383,11 +425,11 @@ The procedure is repeated until some stopping criterion is reached. Each of the 
 1. Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all $i$ in the training set.
 2. For $b=1,2,...,B$, repeat:  
     a) Fit a tree $\hat{f}^b$ with $d$ splits ($d+1$ terminal nodes) to the training data.  
-    b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\eta \hat{f}^b(x).$$  
-    c) Update the residuals, $$r_i \leftarrow r_i - \eta \hat{f}^b(x_i).$$  
-3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \eta \hat{f}^b(x).$
+    b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\nu \hat{f}^b(x).$$  
+    c) Update the residuals, $$r_i \leftarrow r_i - \nu \hat{f}^b(x_i).$$  
+3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \nu \hat{f}^b(x).$
 
-Boosting has three tuning parameters which need to be set ($B$, $\eta$, $d$), and can be found using cross-validation.
+Boosting has three tuning parameters which need to be set ($B$, $\nu$, $d$), and can be found using cross-validation.
 
 ---
 
@@ -395,9 +437,16 @@ Boosting has three tuning parameters which need to be set ($B$, $\eta$, $d$), an
 
 * **Number of trees $B$**. Could be chosen using cross-validation. A too small value of $B$ would imply that much information is unused (remember that boosting is a slow learner), whereas a too large value of $B$ may lead to overfitting. 
 
-* **Shrinkage parameter $\eta$**. Controls the rate at which boosting learns. $\eta$ scales the new information from the $b$-th tree, when added to the existing tree $\hat{f}$. Choosing a small value for $\eta$ ensures that the algorithm learns slowly, but will require a larger $B$. Typical values of $\eta$ is 0.1 or 0.01.
+* **Shrinkage parameter $\nu$**. Controls the rate at which boosting learns. $\nu$ scales the new information from the $b$-th tree, when added to the existing tree $\hat{f}$. Choosing a small value for $\nu$ ensures that the algorithm learns slowly, but will require a larger $B$. Typical values of $\nu$ is 0.1 or 0.01.
 
 * **Interaction depth $d$**: The number of splits in each tree. This parameter controls the complexity of the boosted tree ensemble (the level of interaction between variables that we may estimate). By choosing $d=1$ a tree stump will be fitted at each step and this gives an additive model.
+
+
+---
+
+A very simple illustration of this idea can be found here:
+
+https://arogozhnikov.github.io/2016/06/24/gradient_boosting_explained.html 
 
 
 ---
@@ -432,9 +481,9 @@ summary(boost.boston,plotit=FALSE)
  
 **Prediction on the test set**
 
-* Calculate the MSE on the test set, first for the model with $\eta=0.001$ (default), then with $\eta=0.2$.
+* Calculate the MSE on the test set, first for the model with $\nu=0.001$ (default), then with $\nu=0.2$.
 
-* Ideally, we should do a cross-validation to find the best $\eta$ over a grid (comes later), but here it seems not to make a big difference.
+* Ideally, we should do a cross-validation to find the best $\nu$ over a grid (comes later), but here it seems not to make a big difference.
 
 $~$
 
@@ -480,6 +529,16 @@ $~$
 
 * We therefore step a bit back and look at boosting methods in more generality.
 
+\vspace{2mm}
+
+* In general terms, we are looking for expansions that take the form
+$$f(x) = \sum_{m=1}^M \beta_m b(\mathbf{x};\gamma) \ , $$
+where $b(\mathbf{x};\gamma)$ are (simple) _basis functions_ in $\mathbf{x}$ characterized by a set of parameters $\gamma$, and $\beta_m$ are the corresponding expansion coefficients. 
+
+\vspace{2mm}
+
+* In the following, we focus on the case where $b(\mathbf{x};\gamma)$ correspond to trees.
+
 
 ---
 
@@ -511,7 +570,7 @@ $~$
 
 \vspace{2mm}
 
-2) **Finding the regions $R_j$**: This is the hard part. Usually approximative via greeding algorithm. Often, use smoother approximations of the optimization criterion 
+2) **Finding the regions $R_j$**: This is the hard part. Usually approximative via a greedy algorithm. Often, use smoother approximations of the optimization criterion 
 \begin{equation}\label{eq:approx}
 \tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
 \end{equation}
@@ -522,9 +581,15 @@ and then use $\hat{R}_j=\tilde{R}_j$ to find $\gamma_j$ using the original crite
 
 ## From single trees to boosting
 
+\label{sl:toBoosting}
+
 $~$
 
-* The result of boosting is a sum of $M$ trees
+* Previous slide summarizes how to find _one tree_.
+
+\vspace{2mm}
+
+* The result of boosting is a _sum of $M$ trees_
 $$f_M(x) = \sum_{m=1}^M T(x;\Theta_m) \ .$$
 \vspace{2mm}
 
@@ -546,7 +611,7 @@ $~$
 
 $~$
 
-* For _\textcolor{red}{binary classification}_ and **exponential loss** 
+* For _\textcolor{red}{binary classification}_ with $Y\in \{-1,1\}$ and **exponential loss** 
 $$L(y,f(x))=\exp(-yf(x)) \ ,$$ 
 we get AdaBoost (Algorithm 10.1).
 
@@ -564,7 +629,7 @@ $~$
 
 \vspace{2mm}
 
-* It is then sometimes better to approximate the loss function as $\tilde{L}(f)$ in the tree-building step (see \eqref{eq:approx}) and use $L(f)$ only to determine the $\gamma_{jm}$ values in each tree $m$. 
+* It is then sometimes better to approximate the loss function as $\tilde{L}(f)$ in the tree-building step (step \eqref{eq:approx} on slide \ref{sl:regions}) and use $L(f)$ only to determine the $\gamma_{jm}$ values in each tree $m$. 
 
 $~$
 
@@ -585,13 +650,15 @@ $~$
 * When trying to find the best function $f(x)$ that minimizes a loss function 
 $$L(f) = \sum_{i=1}^N L(y_i,f(x_i)) \ ,$$
 the direction of steepest descent is given by an $n$-dimensional vector with entries
-$$g_{im} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ ,$$
-with gradient vector $\mathbf{g_m}^\top = (g_{1m},g_{2m},\ldots, g_{Nm})$.
+$$g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ ,$$
+with gradient vector $\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})$.
 
 
 ---
 
+* If we repeat this iteratively, we can denote the gradient at step $m$ as $\mathbf{g}_m^\top = (g_{1m},g_{2m},\ldots, g_{Nm})$.
 
+\vspace{2mm}
 
 * To update from $\mathbf{f}_{m-1}$ to $\mathbf{f}_m$\footnote{$\mathbf{f}_m = (f_m(x_1),f_m(x_2),\ldots, f_m(x_N))^\top$ }, we search for the largest decrease in the loss function as
 
@@ -628,7 +695,7 @@ That is: Fit a tree $T$ to the negative gradient using least squares!
 
 \vspace{2mm}
 
-* This leads to regions $\tilde{R}_{jm}$ that are close (enough) to the optimal regions $R_{jm}$ from \eqref{eq:boosted}.  
+* This leads to regions $\tilde{R}_{jm}$ that are close (enough) to the optimal regions $R_{jm}$ from equation \eqref{eq:boosted} on slide \eqref{sl:toBoosting}.  
 \vspace{2mm}
 $\rightarrow$ This corresponds to the step to find the regions $\hat{R}_{jm}=\tilde{R}_{jm}$ (step 2 on slide \ref{sl:regions}).
 
@@ -688,16 +755,21 @@ $r_{im} = - \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right]$ are t
 
 \vspace{8mm}
 
-* Look at the (scaeled) **quadratic loss function** $$L(y_i,f(x_i)) = \frac{1}{2} (y_i-f(x_i))^2.$$
+* Look at the (scaled) **quadratic loss function** $$L(y_i,f(x_i)) = \frac{1}{2} (y_i-f(x_i))^2.$$
 
 \vspace{2mm}
 
-* Then $-\partial L(y_i,f(x_i))/\partial f(x_i) = y_i - f(x_i)$, which is the residual.
+* Then 
+$$-\partial L(y_i,f(x_i))/\partial f(x_i) = y_i - f(x_i) \ , $$ 
+which is the residual.
 
 \vspace{2mm}
 
 * Gradient boosting is thus equivalent to reducing the quadratic loss function as fast as possible ("steepest descent"). 
 
+\vspace{2mm}
+
+* However: Gradient boosting works for _any loss function_. 
 
 ---
 
@@ -735,7 +807,7 @@ $$
 
 $~$
 
- Replace the squared error loss by the _binomial deviance_
+ Replace the squared error loss by the _binomial deviance_ (now with $y\in \{0,1\}$):
 
 $$L(y,f(x)) = -I(y=1) \log(p(x)) - I(y=0) \log(1-p(x)) \ , $$
 with $$p(x) = \frac{e^{f(x)}}{1+e^{f(x)}} \ .$$
@@ -780,11 +852,15 @@ $~$
 * In step 3., we aggregate the class probabilities for each class $k$.
 
 
+
+
+
+
 ---
 
 # Practical considerations
 
-The three main ingredients of gradient boosting:
+The three main ingredients of gradient boosting, which we need to determine in practice:
 
 \vspace{2mm}
 
@@ -799,7 +875,9 @@ The three main ingredients of gradient boosting:
 
 # Parameter tuning
 
+$~$
 
+Given a loss function, we can tune the following parameters:
 
 $~$
 
@@ -814,9 +892,9 @@ $~$
 **Boosting hyperparameters (additive model):**
 
 
-c) Number of trees, i.e., the number of boosting iterations
+c) Number of trees $M$, i.e., the number of boosting iterations
 
-d) The learning rate 
+d) The learning rate $\nu$
 
 
 
@@ -860,6 +938,8 @@ Discuss!
 
 Some considerations / drawings:
 
+\vspace{60mm}
+
 $~$
 
 In the end, $J$ is a tuning parameters, but does usually not give much better results than when using $J\approx 4 \text{ to } 6$.
@@ -890,7 +970,7 @@ $~$
 
 ---
 
-## c) The number of tress (regularization strategy 1)
+## c) The number of trees (regularization strategy 1)
 
 $~$
 
@@ -920,26 +1000,29 @@ $\rightarrow$ $M$ is a tuning parameter and there is an optimal $M$.
 
 $~$
 
-* The contribution of each tree is scaled with a learning rate $\eta$: 
+* The contribution of each tree is scaled with a learning rate $\nu$: 
 
-$$f_m(x) = f_{m-1}(x) + \eta \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .$$
-
-\vspace{2mm}
-
-* $\eta$ and $M$ are connected: Smaller $\eta$ requires larger $M$, and vice versa. 
+$$f_m(x) = f_{m-1}(x) + \nu \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .$$
 
 \vspace{2mm}
 
-* Empirically, it was found that small $\eta$ (i.e., $\eta<0.1$) is more robust. 
+* $\nu$ and $M$ are connected: Smaller $\nu$ requires larger $M$, and vice versa. 
 
 \vspace{2mm}
 
-* Possible strategy: Fix $\eta$ and then choose $M$ by early stopping. 
+* Empirically, it was found that small $\nu$ (i.e., $\nu<0.1$) is more robust. 
+
+\vspace{2mm}
+
+* Possible strategy: Fix $\nu$ and then choose $M$ by early stopping. 
 
 ---
 
 ## Application: Ames housing data
+\scriptsize
 Inspired by @boehmke_greenwell2020
+
+\normalsize 
 
 $~$
 
@@ -952,6 +1035,11 @@ $~$
 \vspace{2mm}
 
 * 2930 observations
+
+\vspace{2mm}
+
+* The dataset is one for a continuously running competition on Kaggle (for newcomers): https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data
+
 
 ---
 
@@ -1044,7 +1132,9 @@ $~$
 
 $~$
 
-The proportion $\eta$ is _another hyper-parameter_ that can be tuned...
+$~$
+
+$\rightarrow$ The proportion $\eta$ is _another hyper-parameter_ that can be tuned...
 
 
 ---
@@ -1066,6 +1156,8 @@ There are a few variants of stochastic gradient boosting that can be used, all o
   \vspace{2mm}
   
   *   Subsample columns before considering each split in each tree  
+
+$~$
 
 $~$
 
@@ -1149,7 +1241,7 @@ Previous slide:
 
 \vspace{2mm}
 
-* Pruning parameter $\gamma$: the new tree is grown to the specified depth, and then pruned to find and remove splits according to the contraint imposes by $\gamma$.
+* Pruning parameter $\gamma$: the new tree is grown to the specified depth, and then pruned to find and remove splits according to the contraint imposed by $\gamma$.
 
 \vspace{2mm}
 
@@ -1161,7 +1253,7 @@ Additional regularization:
 
 \vspace{2mm}
 
-* The learning rate $\eta$. 
+* The learning rate $\nu$. 
 
 \vspace{3mm}
 
@@ -1227,12 +1319,12 @@ ames_xgb <- xgboost(
   early_stopping_rounds = 50,   
   
   params = list( 
-    eta = 0.1,
-    lambda=0.01,
+    eta = 0.1, # learning rate (nu)
+    lambda=0.01, # L2 regularization term
     max_depth = 3,
     min_child_weight = 3,
-    subsample = 0.8,
-    colsample_bytree = 0.5,
+    subsample = 0.8, # Proportion of datapoints used for each tree
+    colsample_bytree = 0.5, # subsample ratio of columns when constructing each tree
     nthread=12),
   verbose = 0
 )  
@@ -1255,12 +1347,26 @@ $~$
 
 \vspace{2mm}
 
-* Tuning the models become very slow! We refer to @boehmke_greenwell2020 for parameter tuning runs:   
+* Tuning the models becomes very slow! We refer to @boehmke_greenwell2020 for parameter tuning runs:   
 https://bradleyboehmke.github.io/HOML/gbm.html
 
 \vspace{2mm}
 
 * See exercise session.
+
+---
+
+# Most recent advances: LightBGM, CatBoost
+
+From https://bradleyboehmke.github.io/HOML/gbm.html: 
+
+* LightGBM (Ke et al. 2017) is a gradient boosting framework that focuses on leaf-wise tree growth versus the traditional level-wise tree growth. This means as a tree is grown deeper, it focuses on extending a single branch versus growing multiple branches 
+
+* CatBoost (Dorogush, Ershov, and Gulin 2018) is another gradient boosting framework that focuses on using efficient methods for encoding categorical features during the gradient boosting process. 
+
+
+Both frameworks are available in R.
+
 
 ---
 
@@ -1280,19 +1386,24 @@ $~$
 
 \vspace{2mm}
 
-* Another way to gain interpretability back is via _\textcolor{red}{partial dependency plots}_. They show the effect of individual predictors, where the effect of the other predictor variables is integrated out (see @hastie_etal2009, Section 10.13.2).
+* Another way to gain interpretability back is via _\textcolor{red}{partial dependence plots}_. They show the effect of individual predictors, where the effect of the other predictor variables is integrated out (see @hastie_etal2009, Section 10.13.2).
 
 ---
 
-### Partial dependency plots
+### Partial dependence plots
 
+\scriptsize
+(Section 10.13.2 in the Elements book @hastie_etal2009)
 $~$
 
-Quick theory from Section 10.13.2
+
+\normalsize
+
+
 
 ---
 
-### Partial dependency plots for the Boston example
+### Partial dependence plots for the Boston example
 
 $~$
 
@@ -1309,28 +1420,19 @@ plot(boost.boston,i="lstat",ylab="medv")
 
 
 
----
 
-# Most recent advances: LightBGM, CatBoost
-
-From https://bradleyboehmke.github.io/HOML/gbm.html: 
-
-* LightGBM (Ke et al. 2017) is a gradient boosting framework that focuses on leaf-wise tree growth versus the traditional level-wise tree growth. This means as a tree is grown deeper, it focuses on extending a single branch versus growing multiple branches 
-
-* CatBoost (Dorogush, Ershov, and Gulin 2018) is another gradient boosting framework that focuses on using efficient methods for encoding categorical features during the gradient boosting process. 
-
-
-Both frameworks are available in R.
 
 ---
 
-# Can we use boosting for simple linear regression models?
+# Can we use boosting for linear regression models?
 
 $~$
 
 Yes!
 
 Didrik Lindløv Sand, a current master student, will present his work.
+
+
 
 ---
 

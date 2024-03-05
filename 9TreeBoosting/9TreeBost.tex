@@ -209,11 +209,13 @@
 
 \vspace{8mm}
 
-Check out:
+In addition, some material we use is from the book by Boehmke and
+Greenwell (2020)
+
+\vspace{2mm}
 
 \begin{itemize}
-\item
-  \url{https://arogozhnikov.github.io/2016/04/28/demonstrations-for-ml-courses.html}
+\tightlist
 \item
   \url{https://bradleyboehmke.github.io/HOML/gbm.html}
 \end{itemize}
@@ -327,7 +329,7 @@ Check out:
 \tightlist
 \item
   It is also possible to boost, e.g., linear or penalized regression
-  models.
+  models (see presentation by a master student on Friday).
 \end{itemize}
 \end{block}
 \end{frame}
@@ -346,7 +348,22 @@ Check out:
 
 \(~\)
 
-Mention some kaggle competitions here
+\begin{itemize}
+\tightlist
+\item
+  Kaggle is a website where you find open competitions -- many of them
+  are won by tree-based methods.
+\end{itemize}
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  Maybe you will earn a living from this in the future\ldots? See
+  here:\\
+  \url{https://www.kaggle.com/competitions}
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -376,8 +393,58 @@ See here to access the paper:
 \end{frame}
 
 \begin{frame}
-\begin{block}{Recap: Regression trees and random forests}
-\protect\hypertarget{recap-regression-trees-and-random-forests}{}
+\begin{block}{Recap: Trees and random forests}
+\protect\hypertarget{recap-trees-and-random-forests}{}
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  See Module 8: Regression and classification trees.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Trees are simple, but not very good in predicting.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Improvements via bagging and random forests.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Bagging: Build trees on bagged datasets and average over predictions.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Random forests: Same as bagging, but only use a subset of all
+  variables for each new split. Regression: \(p/3\), classification
+  \(\sqrt{p}\) of all variables.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Loss of interpretability is compensated by variable importance
+  measures.
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -399,7 +466,7 @@ See here to access the paper:
 \tightlist
 \item
   For example, rather than performing variance reduction on complex
-  trees, can we decrease the bias of simple trees?
+  trees, can we decrease the bias by only using simple trees?
 \end{itemize}
 
 \(~\)
@@ -407,7 +474,7 @@ See here to access the paper:
 \begin{itemize}
 \tightlist
 \item
-  A solution to this problem, making an good model from simple trees, is
+  A solution to this problem, making a good model from simple trees, is
   another class of ensemble methods called boosting.
 \end{itemize}
 
@@ -435,7 +502,7 @@ Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
 \begin{itemize}
 \tightlist
 \item
-  Assume we have a binary classification problem for \(Y\in \{-1,-1\}\),
+  Assume we have a binary classification problem for \(Y\in \{-1,1\}\),
   a vector of predictor variables \(X\), and a classifier \(G(X)\).
 \end{itemize}
 
@@ -502,7 +569,8 @@ Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
 \begin{itemize}
 \tightlist
 \item
-  How do we then find the sequence \(G_m(x)\)?
+  How do we then find the sequence \(G_m(x)\) and the corresponding
+  weights \(\alpha_m\)?
 \end{itemize}
 \end{frame}
 
@@ -573,7 +641,7 @@ Explanations:
 \begin{itemize}
 \item
   Weights \(\alpha_m\): assigns larger overall weight to good
-  classifiers.
+  classifiers\footnote{Note: When $\text{err}_m<0.5$, then $\alpha_m>0$. Otherwise, the classifier needs to be inverted and $\alpha<0$ makes sense.}.
 \item
   Weights \(w_i\) modify the original data. This ensures that
   observations \(i\) with wrong classification in \(G_{m-1}(x)\) obtain
@@ -593,6 +661,8 @@ Explanations:
 \(~\)
 
 Inspired by (10.2) in the Elements book:
+
+\vspace{2mm}
 
 \begin{itemize}
 \tightlist
@@ -618,9 +688,9 @@ Yields roughly half/half of each category:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(mvtnorm)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rmvnorm}\NormalTok{(}\DecValTok{5000}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{))}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{rowSums}\NormalTok{(X}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\textgreater{}} \FloatTok{9.34}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
-\FunctionTok{hist}\NormalTok{(y, }\AttributeTok{title =} \StringTok{""}\NormalTok{)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rmvnorm}\NormalTok{(}\DecValTok{5000}\NormalTok{,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{rowSums}\NormalTok{(X}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{\textgreater{}}\FloatTok{9.34}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(y,}\AttributeTok{title=}\StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -630,26 +700,29 @@ Yields roughly half/half of each category:
 
 \begin{frame}[fragile]
 Fit AdaBoost on the training data using the function \texttt{ada()} from
-the \texttt{ada} R package. We use default choice for tree depth:
+the \texttt{ada} R package. The function uses classification trees as
+weak learners. We use default choice for tree depth (tree depth is
+decided on a case-by-case basis):
 
-\(~\)
-
-\centering
+\vspace{2mm}
 
 \scriptsize
+\centering
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ada)}
-\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(X, y)}
-\NormalTok{dd.train }\OtherTok{\textless{}{-}}\NormalTok{ dd[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{, ]}
-\NormalTok{dd.test }\OtherTok{\textless{}{-}}\NormalTok{ dd[}\DecValTok{1001}\SpecialCharTok{:}\DecValTok{5000}\NormalTok{, ]}
-\NormalTok{r.ada }\OtherTok{\textless{}{-}} \FunctionTok{ada}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., dd.train, }\AttributeTok{iter =} \DecValTok{400}\NormalTok{, }\AttributeTok{type =} \StringTok{"discrete"}\NormalTok{, }\AttributeTok{control =} \FunctionTok{rpart.control}\NormalTok{())}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(X,y)}
+\NormalTok{dd.train }\OtherTok{\textless{}{-}}\NormalTok{ dd[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{1000}\NormalTok{,]}
+\NormalTok{dd.test }\OtherTok{\textless{}{-}}\NormalTok{ dd[}\DecValTok{1001}\SpecialCharTok{:}\DecValTok{5000}\NormalTok{,]}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
+\NormalTok{r.ada }\OtherTok{\textless{}{-}} \FunctionTok{ada}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,dd.train,}\AttributeTok{iter=}\DecValTok{400}\NormalTok{,}\AttributeTok{type=}\StringTok{"discrete"}\NormalTok{, }\AttributeTok{loss=}\StringTok{"ada"}\NormalTok{, }\AttributeTok{control=}\FunctionTok{rpart.control}\NormalTok{())}
 \FunctionTok{plot}\NormalTok{(r.ada)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.6\linewidth]{9TreeBost_files/figure-beamer/unnamed-chunk-2-1}
+\includegraphics[width=0.5\linewidth]{9TreeBost_files/figure-beamer/unnamed-chunk-2-1}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -665,13 +738,13 @@ AdaBoost test error:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ada.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(r.ada, dd.test)}
-\FunctionTok{sum}\NormalTok{(dd.test}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{!=}\NormalTok{ ada.pred)}\SpecialCharTok{/}\DecValTok{4000}
+\NormalTok{ada.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(r.ada,dd.test)}
+\FunctionTok{sum}\NormalTok{(dd.test}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{!=}\NormalTok{ada.pred)}\SpecialCharTok{/}\DecValTok{4000}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0955
+## [1] 0.099
 \end{verbatim}
 
 \(~\)
@@ -690,9 +763,10 @@ Random forest test error:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(randomForest)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{rf.boston }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(y) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., dd.train, }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{1000}\NormalTok{)}
-\NormalTok{rf.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rf.boston, }\AttributeTok{newdata =}\NormalTok{ dd.test)}
-\FunctionTok{sum}\NormalTok{(dd.test}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{!=}\NormalTok{ rf.pred)}\SpecialCharTok{/}\DecValTok{4000}
+\NormalTok{rf.boston}\OtherTok{=}\FunctionTok{randomForest}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(y)}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,dd.train,}\AttributeTok{mtry=}\DecValTok{3}\NormalTok{,}
+                       \AttributeTok{ntree=}\DecValTok{1000}\NormalTok{)}
+\NormalTok{rf.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rf.boston,}\AttributeTok{newdata=}\NormalTok{dd.test)}
+\FunctionTok{sum}\NormalTok{(dd.test}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{!=}\NormalTok{rf.pred)}\SpecialCharTok{/}\DecValTok{4000}
 \end{Highlighting}
 \end{Shaded}
 
@@ -708,6 +782,8 @@ Random forest test error:
 
 In tree boosting, trees are grown \emph{sequentially} so that each tree
 is grown using information from the previous tree.
+
+\vspace{2mm}
 
 \begin{enumerate}
 \tightlist
@@ -746,17 +822,16 @@ one split).
     to the training data.\\
   \item
     Update \(\hat{f}\) by adding in a shrunken version of the new tree:
-    \[\hat{f}(x) \leftarrow \hat{f}(x)+\eta \hat{f}^b(x).\]\\
+    \[\hat{f}(x) \leftarrow \hat{f}(x)+\nu \hat{f}^b(x).\]\\
   \item
-    Update the residuals,
-    \[r_i \leftarrow r_i - \eta \hat{f}^b(x_i).\]\\
+    Update the residuals, \[r_i \leftarrow r_i - \nu \hat{f}^b(x_i).\]\\
   \end{enumerate}
 \item
-  The boosted model is \(\hat{f}(x) = \sum_{b=1}^B \eta \hat{f}^b(x).\)
+  The boosted model is \(\hat{f}(x) = \sum_{b=1}^B \nu \hat{f}^b(x).\)
 \end{enumerate}
 
 Boosting has three tuning parameters which need to be set (\(B\),
-\(\eta\), \(d\)), and can be found using cross-validation.
+\(\nu\), \(d\)), and can be found using cross-validation.
 \end{frame}
 
 \begin{frame}
@@ -769,11 +844,11 @@ Boosting has three tuning parameters which need to be set (\(B\),
   information is unused (remember that boosting is a slow learner),
   whereas a too large value of \(B\) may lead to overfitting.
 \item
-  \textbf{Shrinkage parameter \(\eta\)}. Controls the rate at which
-  boosting learns. \(\eta\) scales the new information from the \(b\)-th
+  \textbf{Shrinkage parameter \(\nu\)}. Controls the rate at which
+  boosting learns. \(\nu\) scales the new information from the \(b\)-th
   tree, when added to the existing tree \(\hat{f}\). Choosing a small
-  value for \(\eta\) ensures that the algorithm learns slowly, but will
-  require a larger \(B\). Typical values of \(\eta\) is 0.1 or 0.01.
+  value for \(\nu\) ensures that the algorithm learns slowly, but will
+  require a larger \(B\). Typical values of \(\nu\) is 0.1 or 0.01.
 \item
   \textbf{Interaction depth \(d\)}: The number of splits in each tree.
   This parameter controls the complexity of the boosted tree ensemble
@@ -781,6 +856,12 @@ Boosting has three tuning parameters which need to be set (\(B\),
   choosing \(d=1\) a tree stump will be fitted at each step and this
   gives an additive model.
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+A very simple illustration of this idea can be found here:
+
+\url{https://arogozhnikov.github.io/2016/06/24/gradient_boosting_explained.html}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -801,9 +882,10 @@ allow the interaction depth (number of splits per tree) to be of degree
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(gbm)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{boost.boston }\OtherTok{=} \FunctionTok{gbm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ Boston[train, ], }\AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,}
-    \AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }\AttributeTok{interaction.depth =} \DecValTok{4}\NormalTok{)}
-\FunctionTok{summary}\NormalTok{(boost.boston, }\AttributeTok{plotit =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{boost.boston}\OtherTok{=}\FunctionTok{gbm}\NormalTok{(medv}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{Boston[train,],}
+                 \AttributeTok{distribution=}\StringTok{"gaussian"}\NormalTok{,}
+                 \AttributeTok{n.trees=}\DecValTok{5000}\NormalTok{,}\AttributeTok{interaction.depth=}\DecValTok{4}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(boost.boston,}\AttributeTok{plotit=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -832,11 +914,10 @@ allow the interaction depth (number of splits per tree) to be of degree
 \begin{itemize}
 \item
   Calculate the MSE on the test set, first for the model with
-  \(\eta=0.001\) (default), then with \(\eta=0.2\).
+  \(\nu=0.001\) (default), then with \(\nu=0.2\).
 \item
-  Ideally, we should do a cross-validation to find the best \(\eta\)
-  over a grid (comes later), but here it seems not to make a big
-  difference.
+  Ideally, we should do a cross-validation to find the best \(\nu\) over
+  a grid (comes later), but here it seems not to make a big difference.
 \end{itemize}
 
 \(~\)
@@ -845,8 +926,8 @@ allow the interaction depth (number of splits per tree) to be of degree
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(boost.boston, }\AttributeTok{newdata =}\NormalTok{ Boston[}\SpecialCharTok{{-}}\NormalTok{train, ], }\AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{((yhat.boost }\SpecialCharTok{{-}}\NormalTok{ boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{yhat.boost}\OtherTok{=}\FunctionTok{predict}\NormalTok{(boost.boston,}\AttributeTok{newdata=}\NormalTok{Boston[}\SpecialCharTok{{-}}\NormalTok{train,],}\AttributeTok{n.trees=}\DecValTok{5000}\NormalTok{)}
+\FunctionTok{mean}\NormalTok{((yhat.boost}\SpecialCharTok{{-}}\NormalTok{boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -858,10 +939,10 @@ allow the interaction depth (number of splits per tree) to be of degree
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{boost.boston }\OtherTok{=} \FunctionTok{gbm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ Boston[train, ], }\AttributeTok{distribution =} \StringTok{"gaussian"}\NormalTok{,}
-    \AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }\AttributeTok{interaction.depth =} \DecValTok{4}\NormalTok{, }\AttributeTok{shrinkage =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{verbose =}\NormalTok{ F)}
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(boost.boston, }\AttributeTok{newdata =}\NormalTok{ Boston[}\SpecialCharTok{{-}}\NormalTok{train, ], }\AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{((yhat.boost }\SpecialCharTok{{-}}\NormalTok{ boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{boost.boston}\OtherTok{=}\FunctionTok{gbm}\NormalTok{(medv}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{Boston[train,],}\AttributeTok{distribution=}\StringTok{"gaussian"}\NormalTok{,}
+                 \AttributeTok{n.trees=}\DecValTok{5000}\NormalTok{,}\AttributeTok{interaction.depth=}\DecValTok{4}\NormalTok{,}\AttributeTok{shrinkage=}\FloatTok{0.2}\NormalTok{,}\AttributeTok{verbose=}\NormalTok{F)}
+\NormalTok{yhat.boost}\OtherTok{=}\FunctionTok{predict}\NormalTok{(boost.boston,}\AttributeTok{newdata=}\NormalTok{Boston[}\SpecialCharTok{{-}}\NormalTok{train,],}\AttributeTok{n.trees=}\DecValTok{5000}\NormalTok{)}
+\FunctionTok{mean}\NormalTok{((yhat.boost}\SpecialCharTok{{-}}\NormalTok{boston.test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -888,6 +969,27 @@ allow the interaction depth (number of splits per tree) to be of degree
 \item
   We therefore step a bit back and look at boosting methods in more
   generality.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  In general terms, we are looking for expansions that take the form
+  \[f(x) = \sum_{m=1}^M \beta_m b(\mathbf{x};\gamma) \ , \] where
+  \(b(\mathbf{x};\gamma)\) are (simple) \emph{basis functions} in
+  \(\mathbf{x}\) characterized by a set of parameters \(\gamma\), and
+  \(\beta_m\) are the corresponding expansion coefficients.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  In the following, we focus on the case where \(b(\mathbf{x};\gamma)\)
+  correspond to trees.
 \end{itemize}
 \end{frame}
 
@@ -936,7 +1038,7 @@ The optimization problem is split into two parts:
 \tightlist
 \item
   \textbf{Finding the regions \(R_j\)}: This is the hard part. Usually
-  approximative via greeding algorithm. Often, use smoother
+  approximative via a greedy algorithm. Often, use smoother
   approximations of the optimization criterion
   \begin{equation}\label{eq:approx}
   \tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
@@ -948,11 +1050,21 @@ The optimization problem is split into two parts:
 \begin{frame}
 \begin{block}{From single trees to boosting}
 \protect\hypertarget{from-single-trees-to-boosting}{}
+\label{sl:toBoosting}
+
 \(~\)
 
 \begin{itemize}
+\tightlist
 \item
-  The result of boosting is a sum of \(M\) trees
+  Previous slide summarizes how to find \emph{one tree}.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\item
+  The result of boosting is a \emph{sum of \(M\) trees}
   \[f_M(x) = \sum_{m=1}^M T(x;\Theta_m) \ .\] \vspace{2mm}
 \item
   Tree boosting is about \emph{how to find each tree}.
@@ -988,9 +1100,9 @@ The optimization problem is split into two parts:
 \begin{itemize}
 \tightlist
 \item
-  For \emph{\textcolor{red}{binary classification}} and
-  \textbf{exponential loss} \[L(y,f(x))=\exp(-yf(x)) \ ,\] we get
-  AdaBoost (Algorithm 10.1).
+  For \emph{\textcolor{red}{binary classification}} with
+  \(Y\in \{-1,1\}\) and \textbf{exponential loss}
+  \[L(y,f(x))=\exp(-yf(x)) \ ,\] we get AdaBoost (Algorithm 10.1).
 \end{itemize}
 
 \(~\)
@@ -1022,9 +1134,9 @@ The optimization problem is split into two parts:
 \tightlist
 \item
   It is then sometimes better to approximate the loss function as
-  \(\tilde{L}(f)\) in the tree-building step (see \eqref{eq:approx}) and
-  use \(L(f)\) only to determine the \(\gamma_{jm}\) values in each tree
-  \(m\).
+  \(\tilde{L}(f)\) in the tree-building step (step \eqref{eq:approx} on
+  slide \ref{sl:regions}) and use \(L(f)\) only to determine the
+  \(\gamma_{jm}\) values in each tree \(m\).
 \end{itemize}
 
 \(~\)
@@ -1053,14 +1165,23 @@ the previous tree. Motivated by steepest descent.
   When trying to find the best function \(f(x)\) that minimizes a loss
   function \[L(f) = \sum_{i=1}^N L(y_i,f(x_i)) \ ,\] the direction of
   steepest descent is given by an \(n\)-dimensional vector with entries
-  \[g_{im} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ ,\]
+  \[g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ ,\]
   with gradient vector
-  \(\mathbf{g_m}^\top = (g_{1m},g_{2m},\ldots, g_{Nm})\).
+  \(\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})\).
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
+\begin{itemize}
+\tightlist
+\item
+  If we repeat this iteratively, we can denote the gradient at step
+  \(m\) as \(\mathbf{g}_m^\top = (g_{1m},g_{2m},\ldots, g_{Nm})\).
+\end{itemize}
+
+\vspace{2mm}
+
 \begin{itemize}
 \tightlist
 \item
@@ -1117,7 +1238,8 @@ That is: Fit a tree \(T\) to the negative gradient using least squares!
 \tightlist
 \item
   This leads to regions \(\tilde{R}_{jm}\) that are close (enough) to
-  the optimal regions \(R_{jm}\) from \eqref{eq:boosted}.\\
+  the optimal regions \(R_{jm}\) from equation \eqref{eq:boosted} on
+  slide \eqref{sl:toBoosting}.\\
   \vspace{2mm} \(\rightarrow\) This corresponds to the step to find the
   regions \(\hat{R}_{jm}=\tilde{R}_{jm}\) (step 2 on slide
   \ref{sl:regions}).
@@ -1210,7 +1332,7 @@ are the components of the negative gradient. We call them
 \begin{itemize}
 \tightlist
 \item
-  Look at the (scaeled) \textbf{quadratic loss function}
+  Look at the (scaled) \textbf{quadratic loss function}
   \[L(y_i,f(x_i)) = \frac{1}{2} (y_i-f(x_i))^2.\]
 \end{itemize}
 
@@ -1219,8 +1341,8 @@ are the components of the negative gradient. We call them
 \begin{itemize}
 \tightlist
 \item
-  Then \(-\partial L(y_i,f(x_i))/\partial f(x_i) = y_i - f(x_i)\), which
-  is the residual.
+  Then \[-\partial L(y_i,f(x_i))/\partial f(x_i) = y_i - f(x_i) \ , \]
+  which is the residual.
 \end{itemize}
 
 \vspace{2mm}
@@ -1230,6 +1352,14 @@ are the components of the negative gradient. We call them
 \item
   Gradient boosting is thus equivalent to reducing the quadratic loss
   function as fast as possible (``steepest descent'').
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  However: Gradient boosting works for \emph{any loss function}.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1281,7 +1411,8 @@ Popular alternatives:
 \protect\hypertarget{gradient-tree-boosting-for-binary-classification}{}
 \(~\)
 
-Replace the squared error loss by the \emph{binomial deviance}
+Replace the squared error loss by the \emph{binomial deviance} (now with
+\(y\in \{0,1\}\)):
 
 \[L(y,f(x)) = -I(y=1) \log(p(x)) - I(y=0) \log(1-p(x)) \ , \] with
 \[p(x) = \frac{e^{f(x)}}{1+e^{f(x)}} \ .\]
@@ -1339,7 +1470,8 @@ corresponding functions \(f(x)\).
 
 \begin{frame}{Practical considerations}
 \protect\hypertarget{practical-considerations}{}
-The three main ingredients of gradient boosting:
+The three main ingredients of gradient boosting, which we need to
+determine in practice:
 
 \vspace{2mm}
 
@@ -1366,6 +1498,10 @@ The three main ingredients of gradient boosting:
 \protect\hypertarget{parameter-tuning}{}
 \(~\)
 
+Given a loss function, we can tune the following parameters:
+
+\(~\)
+
 \textbf{Tree hyperparameters (weak learner):}
 
 \begin{enumerate}
@@ -1384,9 +1520,9 @@ The three main ingredients of gradient boosting:
 [a)]
 \setcounter{enumi}{2}
 \item
-  Number of trees, i.e., the number of boosting iterations
+  Number of trees \(M\), i.e., the number of boosting iterations
 \item
-  The learning rate
+  The learning rate \(\nu\)
 \end{enumerate}
 \end{frame}
 
@@ -1446,6 +1582,8 @@ Discuss!
 \begin{frame}
 Some considerations / drawings:
 
+\vspace{60mm}
+
 \(~\)
 
 In the end, \(J\) is a tuning parameters, but does usually not give much
@@ -1490,8 +1628,8 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \end{frame}
 
 \begin{frame}
-\begin{block}{c) The number of tress (regularization strategy 1)}
-\protect\hypertarget{c-the-number-of-tress-regularization-strategy-1}{}
+\begin{block}{c) The number of trees (regularization strategy 1)}
+\protect\hypertarget{c-the-number-of-trees-regularization-strategy-1}{}
 \(~\)
 
 \begin{itemize}
@@ -1541,17 +1679,17 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  The contribution of each tree is scaled with a learning rate \(\eta\):
+  The contribution of each tree is scaled with a learning rate \(\nu\):
 \end{itemize}
 
-\[f_m(x) = f_{m-1}(x) + \eta \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .\]
+\[f_m(x) = f_{m-1}(x) + \nu \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .\]
 
 \vspace{2mm}
 
 \begin{itemize}
 \tightlist
 \item
-  \(\eta\) and \(M\) are connected: Smaller \(\eta\) requires larger
+  \(\nu\) and \(M\) are connected: Smaller \(\nu\) requires larger
   \(M\), and vice versa.
 \end{itemize}
 
@@ -1560,7 +1698,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  Empirically, it was found that small \(\eta\) (i.e., \(\eta<0.1\)) is
+  Empirically, it was found that small \(\nu\) (i.e., \(\nu<0.1\)) is
   more robust.
 \end{itemize}
 
@@ -1569,7 +1707,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  Possible strategy: Fix \(\eta\) and then choose \(M\) by early
+  Possible strategy: Fix \(\nu\) and then choose \(M\) by early
   stopping.
 \end{itemize}
 \end{block}
@@ -1578,7 +1716,11 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{frame}[fragile]
 \begin{block}{Application: Ames housing data}
 \protect\hypertarget{application-ames-housing-data}{}
+\scriptsize
+
 Inspired by Boehmke and Greenwell (2020)
+
+\normalsize
 
 \(~\)
 
@@ -1606,6 +1748,16 @@ Inspired by Boehmke and Greenwell (2020)
 \item
   2930 observations
 \end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The dataset is one for a continuously running competition on Kaggle
+  (for newcomers):
+  \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -1614,19 +1766,20 @@ Inspired by Boehmke and Greenwell (2020)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(AmesHousing)  }\CommentTok{\# contains the data}
-\FunctionTok{library}\NormalTok{(gbm)  }\CommentTok{\# for original implementation of regular and stochastic GBMs}
-\FunctionTok{library}\NormalTok{(rsample)  }\CommentTok{\# to subsample training and test sets}
+\FunctionTok{library}\NormalTok{(AmesHousing) }\CommentTok{\# contains the data}
+\FunctionTok{library}\NormalTok{(gbm) }\CommentTok{\# for original implementation of regular and stochastic GBMs}
+\FunctionTok{library}\NormalTok{(rsample) }\CommentTok{\# to subsample training and test sets}
 
 \CommentTok{\# Data preparation}
 \NormalTok{ames }\OtherTok{\textless{}{-}}\NormalTok{ AmesHousing}\SpecialCharTok{::}\FunctionTok{make\_ames}\NormalTok{()}
 
 \CommentTok{\# Stratified sampling with the rsample package}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(ames, }\AttributeTok{prop =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{strata =} \StringTok{"Sale\_Price"}\NormalTok{)}
+\NormalTok{split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(ames, }\AttributeTok{prop =} \FloatTok{0.7}\NormalTok{, }
+                       \AttributeTok{strata =} \StringTok{"Sale\_Price"}\NormalTok{)}
 \CommentTok{\# Training and testing data:}
-\NormalTok{ames\_train }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(split)}
-\NormalTok{ames\_test }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(split)}
+\NormalTok{ames\_train  }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(split)}
+\NormalTok{ames\_test   }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(split)}
 
 \NormalTok{response }\OtherTok{\textless{}{-}} \StringTok{"Sale\_Price"}
 \NormalTok{predictors }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(ames\_train), response)}
@@ -1748,8 +1901,10 @@ See Boehmke and Greenwell (2020)
 
 \(~\)
 
-The proportion \(\eta\) is \emph{another hyper-parameter} that can be
-tuned\ldots{}
+\(~\)
+
+\(\rightarrow\) The proportion \(\eta\) is \emph{another
+hyper-parameter} that can be tuned\ldots{}
 \end{block}
 \end{frame}
 
@@ -1784,6 +1939,8 @@ used, all of which have additional hyperparameters:
 \item
   Subsample columns before considering each split in each tree
 \end{itemize}
+
+\(~\)
 
 \(~\)
 
@@ -1909,7 +2066,7 @@ Previous slide:
 \item
   Pruning parameter \(\gamma\): the new tree is grown to the specified
   depth, and then pruned to find and remove splits according to the
-  contraint imposes by \(\gamma\).
+  contraint imposed by \(\gamma\).
 \end{itemize}
 
 \vspace{2mm}
@@ -1930,7 +2087,7 @@ Additional regularization:
 \begin{itemize}
 \tightlist
 \item
-  The learning rate \(\eta\).
+  The learning rate \(\nu\).
 \end{itemize}
 
 \vspace{3mm}
@@ -1964,21 +2121,21 @@ before. Start by some data preparation:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(xgboost)}
 \FunctionTok{library}\NormalTok{(recipes)}
-
+ 
 \CommentTok{\# Training data and response}
 \NormalTok{xgb\_prep }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ames\_train) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_train, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{juice}\NormalTok{()}
+  \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_train, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{juice}\NormalTok{()}
 
 \NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(xgb\_prep[}\FunctionTok{setdiff}\NormalTok{(}\FunctionTok{names}\NormalTok{(xgb\_prep), }\StringTok{"Sale\_Price"}\NormalTok{)])}
 \NormalTok{Y }\OtherTok{\textless{}{-}}\NormalTok{ xgb\_prep}\SpecialCharTok{$}\NormalTok{Sale\_Price}
 
 \CommentTok{\# Test data and test response}
 \NormalTok{xgb\_prep\_test }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ames\_test) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_test, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{juice}\NormalTok{()}
+  \FunctionTok{step\_integer}\NormalTok{(}\FunctionTok{all\_nominal}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{prep}\NormalTok{(}\AttributeTok{training =}\NormalTok{ ames\_test, }\AttributeTok{retain =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{juice}\NormalTok{()}
 \NormalTok{X\_test }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(xgb\_prep\_test[}\FunctionTok{setdiff}\NormalTok{(}\FunctionTok{names}\NormalTok{(xgb\_prep\_test), }\StringTok{"Sale\_Price"}\NormalTok{)])}
 \NormalTok{Y\_test }\OtherTok{\textless{}{-}}\NormalTok{ xgb\_prep\_test}\SpecialCharTok{$}\NormalTok{Sale\_Price}
 \end{Highlighting}
@@ -2005,12 +2162,12 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
   \AttributeTok{early\_stopping\_rounds =} \DecValTok{50}\NormalTok{,   }
   
   \AttributeTok{params =} \FunctionTok{list}\NormalTok{( }
-    \AttributeTok{eta =} \FloatTok{0.1}\NormalTok{,}
-    \AttributeTok{lambda=}\FloatTok{0.01}\NormalTok{,}
+    \AttributeTok{eta =} \FloatTok{0.1}\NormalTok{, }\CommentTok{\# learning rate (nu)}
+    \AttributeTok{lambda=}\FloatTok{0.01}\NormalTok{, }\CommentTok{\# L2 regularization term}
     \AttributeTok{max\_depth =} \DecValTok{3}\NormalTok{,}
     \AttributeTok{min\_child\_weight =} \DecValTok{3}\NormalTok{,}
-    \AttributeTok{subsample =} \FloatTok{0.8}\NormalTok{,}
-    \AttributeTok{colsample\_bytree =} \FloatTok{0.5}\NormalTok{,}
+    \AttributeTok{subsample =} \FloatTok{0.8}\NormalTok{, }\CommentTok{\# Proportion of datapoints used for each tree}
+    \AttributeTok{colsample\_bytree =} \FloatTok{0.5}\NormalTok{, }\CommentTok{\# subsample ratio of columns when constructing each tree}
     \AttributeTok{nthread=}\DecValTok{12}\NormalTok{),}
   \AttributeTok{verbose =} \DecValTok{0}
 \NormalTok{)  }
@@ -2019,7 +2176,7 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{X.pred.test }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(ames\_xgb, }\AttributeTok{newdata =}\NormalTok{ X\_test)}
+\NormalTok{X.pred.test }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(ames\_xgb,}\AttributeTok{newdata =}\NormalTok{ X\_test)}
 \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{((X.pred.test }\SpecialCharTok{{-}}\NormalTok{ Y\_test)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(X\_test))}
 \end{Highlighting}
 \end{Shaded}
@@ -2045,7 +2202,7 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \begin{itemize}
 \tightlist
 \item
-  Tuning the models become very slow! We refer to Boehmke and Greenwell
+  Tuning the models becomes very slow! We refer to Boehmke and Greenwell
   (2020) for parameter tuning runs:\\
   \url{https://bradleyboehmke.github.io/HOML/gbm.html}
 \end{itemize}
@@ -2058,6 +2215,25 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
   See exercise session.
 \end{itemize}
 \end{block}
+\end{frame}
+
+\begin{frame}{Most recent advances: LightBGM, CatBoost}
+\protect\hypertarget{most-recent-advances-lightbgm-catboost}{}
+From \url{https://bradleyboehmke.github.io/HOML/gbm.html}:
+
+\begin{itemize}
+\item
+  LightGBM (Ke et al.~2017) is a gradient boosting framework that
+  focuses on leaf-wise tree growth versus the traditional level-wise
+  tree growth. This means as a tree is grown deeper, it focuses on
+  extending a single branch versus growing multiple branches
+\item
+  CatBoost (Dorogush, Ershov, and Gulin 2018) is another gradient
+  boosting framework that focuses on using efficient methods for
+  encoding categorical features during the gradient boosting process.
+\end{itemize}
+
+Both frameworks are available in R.
 \end{frame}
 
 \begin{frame}{Interpretation of tree ensembles}
@@ -2094,7 +2270,7 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \tightlist
 \item
   Another way to gain interpretability back is via
-  \emph{\textcolor{red}{partial dependency plots}}. They show the effect
+  \emph{\textcolor{red}{partial dependence plots}}. They show the effect
   of individual predictors, where the effect of the other predictor
   variables is integrated out (see Hastie, Tibshirani, and Friedman
   (2009), Section 10.13.2).
@@ -2102,17 +2278,20 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \end{frame}
 
 \begin{frame}
-\begin{block}{Partial dependency plots}
-\protect\hypertarget{partial-dependency-plots}{}
-\(~\)
+\begin{block}{Partial dependence plots}
+\protect\hypertarget{partial-dependence-plots}{}
+\scriptsize
 
-Quick theory from Section 10.13.2
+(Section 10.13.2 in the Elements book Hastie, Tibshirani, and Friedman
+(2009)) \(~\)
+
+\normalsize
 \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{block}{Partial dependency plots for the Boston example}
-\protect\hypertarget{partial-dependency-plots-for-the-boston-example}{}
+\begin{block}{Partial dependence plots for the Boston example}
+\protect\hypertarget{partial-dependence-plots-for-the-boston-example}{}
 \(~\)
 
 \texttt{rm} (number of rooms) and \texttt{lstat} (\% of lower status
@@ -2124,7 +2303,7 @@ population) are the most important predictors.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(boost.boston, }\AttributeTok{i =} \StringTok{"rm"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"medv"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(boost.boston,}\AttributeTok{i=}\StringTok{"rm"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"medv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2132,7 +2311,7 @@ population) are the most important predictors.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(boost.boston, }\AttributeTok{i =} \StringTok{"lstat"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"medv"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(boost.boston,}\AttributeTok{i=}\StringTok{"lstat"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"medv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2140,27 +2319,8 @@ population) are the most important predictors.
 \end{block}
 \end{frame}
 
-\begin{frame}{Most recent advances: LightBGM, CatBoost}
-\protect\hypertarget{most-recent-advances-lightbgm-catboost}{}
-From \url{https://bradleyboehmke.github.io/HOML/gbm.html}:
-
-\begin{itemize}
-\item
-  LightGBM (Ke et al.~2017) is a gradient boosting framework that
-  focuses on leaf-wise tree growth versus the traditional level-wise
-  tree growth. This means as a tree is grown deeper, it focuses on
-  extending a single branch versus growing multiple branches
-\item
-  CatBoost (Dorogush, Ershov, and Gulin 2018) is another gradient
-  boosting framework that focuses on using efficient methods for
-  encoding categorical features during the gradient boosting process.
-\end{itemize}
-
-Both frameworks are available in R.
-\end{frame}
-
-\begin{frame}{Can we use boosting for simple linear regression models?}
-\protect\hypertarget{can-we-use-boosting-for-simple-linear-regression-models}{}
+\begin{frame}{Can we use boosting for linear regression models?}
+\protect\hypertarget{can-we-use-boosting-for-linear-regression-models}{}
 \(~\)
 
 Yes!
