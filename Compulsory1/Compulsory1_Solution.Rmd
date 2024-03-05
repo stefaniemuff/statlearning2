@@ -883,9 +883,9 @@ vi) (1p)
 ```{r,echo=FALSE,fig.width=7,fig.height=5,out.width="80%"}
 library(pROC)
 
-roc_logReg <- roc(response=titanic_test$Survived, predictor=predict(logReg, titanic_test, type="response"))
-roc_lda <- roc(response=titanic_test$Survived, predictor=predict(lda_model, titanic_test)$posterior[,2])
-roc_qda <- roc(response=titanic_test$Survived, predictor=predict(qda_model, titanic_test)$posterior[,2])
+roc_logReg <- roc(response=titanic_test$Survived, predictor=predict(logReg, titanic_test, type="response"), direction="<")
+roc_lda <- roc(response=titanic_test$Survived, predictor=predict(lda_model, titanic_test)$posterior[,2], direction="<")
+roc_qda <- roc(response=titanic_test$Survived, predictor=predict(qda_model, titanic_test)$posterior[,2], direction="<")
 
 plot(roc_logReg, col = "blue", main = "ROC curves", xlab = "1-Specificity", ylab = "Senstivity")
 plot(roc_lda, col = "red", add = TRUE)
@@ -896,9 +896,13 @@ legend("bottomright", legend = c("Logistic Regression", "LDA", "QDA"), col = c("
 
 vii) (1p) Print AUC scores
 ```{r}
-(auc_logReg <- auc(roc_logReg))
-(auc_lda <- auc(roc_lda))
-(auc_qda <- auc(roc_qda))
+auc_logReg <- auc(roc_logReg)
+auc_lda <- auc(roc_lda)
+auc_qda <- auc(roc_qda)
+
+cat("auc_logReg:", auc_logReg)
+cat("auc_lda:", auc_lda)
+cat("auc_qda:", auc_qda)
 ```
 
 viii) (1p)
