@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.5)  5 MAR 2024 19:35
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.5)  5 MAR 2024 19:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**9TreeBost.tex
-(./9TreeBost.tex
+**9TreeBoosting.tex
+(./9TreeBoosting.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21> (/usr/share/texlive/texmf-dist/tex/latex/beam
 er/beamer.cls
@@ -787,8 +787,8 @@ File: bkm-dvipdfm.def 2020-11-06 v1.29 bookmark driver for dvipdfm (HO)
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 180.
-(./9TreeBost.aux)
-\openout1 = `9TreeBost.aux'.
+(./9TreeBoosting.aux)
+\openout1 = `9TreeBoosting.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 187.
 LaTeX Font Info:    ... okay on input line 187.
@@ -1164,7 +1164,7 @@ Package microtype Info: No adjustment of kerning.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
 File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Mod
 ern Roman (RS)
-) (./9TreeBost.nav) [1
+) (./9TreeBoosting.nav) [1
 
 ]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
@@ -1259,14 +1259,14 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 [14
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb
+(./9TreeBoosting.vrb
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <7> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 31.
-File: 9TreeBost_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic file (type pd
-f)
-<use 9TreeBost_files/figure-beamer/unnamed-chunk-1-1.pdf>
+File: 9TreeBoosting_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic file (typ
+e pdf)
+<use 9TreeBoosting_files/figure-beamer/unnamed-chunk-1-1.pdf>
 )
 Overfull \vbox (18.55724pt too high) detected at line 699
  []
@@ -1274,12 +1274,12 @@ Overfull \vbox (18.55724pt too high) detected at line 699
 [15
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb
-File: 9TreeBost_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (type pd
-f)
-<use 9TreeBost_files/figure-beamer/unnamed-chunk-2-1.pdf>
+(./9TreeBoosting.vrb
+File: 9TreeBoosting_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (typ
+e pdf)
+<use 9TreeBoosting_files/figure-beamer/unnamed-chunk-2-1.pdf>
 )
 Overfull \vbox (10.06488pt too high) detected at line 726
  []
@@ -1287,9 +1287,9 @@ Overfull \vbox (10.06488pt too high) detected at line 726
 [16
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [17
+(./9TreeBoosting.vrb) [17
 
 ] [18
 
@@ -1300,14 +1300,14 @@ Overfull \vbox (10.06488pt too high) detected at line 726
 ] [21
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [22
+(./9TreeBoosting.vrb) [22
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [23
+(./9TreeBoosting.vrb) [23
 
 ] [24
 
@@ -1376,59 +1376,59 @@ Overfull \vbox (124.50989pt too high) detected at line 1593
 ] [49
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [50
-
-]
-\openout4 = `9TreeBost.vrb'.
-
-(./9TreeBost.vrb) [51
+(./9TreeBoosting.vrb) [50
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [52
+(./9TreeBoosting.vrb) [51
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb
-File: 9TreeBost_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file (type p
-df)
-<use 9TreeBost_files/figure-beamer/unnamed-chunk-12-1.pdf>
+(./9TreeBoosting.vrb) [52
+
+]
+\openout4 = `9TreeBoosting.vrb'.
+
+(./9TreeBoosting.vrb
+File: 9TreeBoosting_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file (ty
+pe pdf)
+<use 9TreeBoosting_files/figure-beamer/unnamed-chunk-12-1.pdf>
 ) [53
 
 ] [54
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [55
-
-]
-\openout4 = `9TreeBost.vrb'.
-
-(./9TreeBost.vrb) [56
+(./9TreeBoosting.vrb) [55
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [57
+(./9TreeBoosting.vrb) [56
+
+]
+\openout4 = `9TreeBoosting.vrb'.
+
+(./9TreeBoosting.vrb) [57
 
 ] [58
 
 ] [59
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [60
+(./9TreeBoosting.vrb) [60
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb) [61
+(./9TreeBoosting.vrb) [61
 
 ] [62
 
@@ -1439,13 +1439,13 @@ df)
 ] [65
 
 ]
-\openout4 = `9TreeBost.vrb'.
+\openout4 = `9TreeBoosting.vrb'.
 
-(./9TreeBost.vrb
-File: 9TreeBost_files/figure-beamer/boston7-1.pdf Graphic file (type pdf)
-<use 9TreeBost_files/figure-beamer/boston7-1.pdf>
-File: 9TreeBost_files/figure-beamer/boston7-2.pdf Graphic file (type pdf)
-<use 9TreeBost_files/figure-beamer/boston7-2.pdf>
+(./9TreeBoosting.vrb
+File: 9TreeBoosting_files/figure-beamer/boston7-1.pdf Graphic file (type pdf)
+<use 9TreeBoosting_files/figure-beamer/boston7-1.pdf>
+File: 9TreeBoosting_files/figure-beamer/boston7-2.pdf Graphic file (type pdf)
+<use 9TreeBoosting_files/figure-beamer/boston7-2.pdf>
 ) [66
 
 ] [67
@@ -1454,22 +1454,22 @@ File: 9TreeBost_files/figure-beamer/boston7-2.pdf Graphic file (type pdf)
 
 ]
 \tf@nav=\write6
-\openout6 = `9TreeBost.nav'.
+\openout6 = `9TreeBoosting.nav'.
 
 \tf@toc=\write7
-\openout7 = `9TreeBost.toc'.
+\openout7 = `9TreeBoosting.toc'.
 
 \tf@snm=\write8
-\openout8 = `9TreeBost.snm'.
+\openout8 = `9TreeBoosting.snm'.
 
-(./9TreeBost.aux) ) 
+(./9TreeBoosting.aux) ) 
 Here is how much of TeX's memory you used:
  31083 strings out of 478142
- 633025 string characters out of 5852610
- 1077013 words of memory out of 5000000
+ 633397 string characters out of 5852610
+ 1077025 words of memory out of 5000000
  51028 multiletter control sequences out of 15000+600000
  476767 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 128i,15n,122p,1006b,869s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 128i,15n,122p,1010b,869s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 9TreeBost.pdf (68 pages).
+Output written on 9TreeBoosting.pdf (68 pages).
