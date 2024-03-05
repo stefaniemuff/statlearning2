@@ -115,7 +115,7 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
+\subtitle{TMA4268 Statistical Learning V2024}
 \author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
 Muff \and Department of Mathematical Sciences, NTNU}
 \date{March 7, 2024}
@@ -191,11 +191,11 @@ Key attributes of the dataset include:
   or not.
 \end{itemize}
 
-In the lab (8.3 Lab: Decision Trees), a classification tree was applied
-to the Carseats dataset after converting the variable \texttt{Sales}
-into a qualitative response variable. Now we will seek to predict
-\texttt{Sales} using regression trees and related approaches, treating
-the response as a quantitative variable.
+In the lab, a classification tree was applied to the Carseats dataset
+after converting the variable \texttt{Sales} into a qualitative response
+variable. Now we will seek to predict \texttt{Sales} using regression
+trees and related approaches, treating the response as a quantitative
+variable.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -303,27 +303,6 @@ the response as a quantitative variable.
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Finally use boosting with 500 trees, an interaction depth \(d=4\) and
-  a shrinkage factor \(\lambda=0.1\) (default in the \texttt{gbm()}
-  function) on our data. Compare the MSE to all other methods.
-\end{enumerate}
-
-\textbf{R-hints}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(gbm)}
-\NormalTok{r.boost}\OtherTok{=}\FunctionTok{gbm}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., Carseats.train,}
-                 \AttributeTok{distribution=}\NormalTok{...,}
-                 \AttributeTok{n.trees=}\NormalTok{ ... ,}\AttributeTok{interaction.depth=}\NormalTok{ ..., }\AttributeTok{shrinkage =}\NormalTok{ ...)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{6}
-\tightlist
-\item
   What is the effect of the number of trees (\texttt{ntree}) on the test
   error? Plot the test MSE as a function of \texttt{ntree} for both the
   bagging and the random forest method.
@@ -383,13 +362,14 @@ the frequency of different words in the e-mails and orthography
   each variable by using the function \texttt{importance()}. Are the
   results as expected based on earlier results? Again, predict the
   response for the test data and report the misclassification rate.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{7}
+\tightlist
 \item
-  Use \texttt{gbm()} to construct a boosted classification tree using
-  5000 trees, an interaction depth of \(d=3\) and a shrinkage parameter
-  of \(\lambda=0.001\). Predict the response for the test data and
-  report the misclassification rate.
-\item
-  Compare the misclassification rates in d-h. Which method gives the
+  Compare the misclassification rates in d-g. Which method gives the
   lowest misclassification rate for the test data? Are the results as
   expected?
 \end{enumerate}

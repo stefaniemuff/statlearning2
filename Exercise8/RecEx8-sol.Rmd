@@ -14,7 +14,7 @@ output:
     toc: no
     toc_depth: '2'
     df_print: paged
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
@@ -26,6 +26,11 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 
 ```{r, eval=FALSE,echo=FALSE}
+install.packages("ISLR")
+install.packages("tree")
+install.packages("randomForest")
+install.packages("kernlab")
+install.packages("gbm")
 install.packages("gamlss.data")
 install.packages("tidyverse")
 install.packages("GGally")
@@ -213,38 +218,26 @@ importance(rf.Carseats)
 varImpPlot(rf.Carseats)
 ```
 
-f)
-
-```{r}
-library(gbm)
-r.boost=gbm(Sales~., Carseats.train,
-                 distribution="gaussian",
-                 n.trees=500,interaction.depth=4, shrinkage =0.1)
-yhat.boost = predict(r.boost, newdata = Carseats.test,n.trees=500)
-mse_boost <- mean((yhat.boost - Carseats.test$Sales)^2)
-mse_boost
-```
-
-We see a further decrease in MSE by boosting our trees.
-
-
-g) 
+f) 
 
 ```{r,fig.width=4.5, fig.height=4,out.width='70%'}
+set.seed(123)
+
 train.predictors = Carseats.train[,-1]
 test.predictors = Carseats.test[,-1]
 Y.train = Carseats.train[,1]
 Y.test = Carseats.test[,1]
 
-bag.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 10, ntree = 500)
-rf.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 3, ntree = 500)
-plot(1:500, bag.Car$test$mse, col = "blue", type = "l", xlab = "Number of Trees", ylab = "Test MSE",ylim=c(2,2.8))
-lines(1:500, rf.Car$test$mse, col = "green")
+ntree <- 500
+bag.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 10, ntree = ntree)
+rf.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 3, ntree = ntree)
+plot(1:ntree, bag.Car$test$mse, col = "blue", type = "l", xlab = "Number of Trees", ylab = "Test MSE",ylim=c(2,2.8))
+lines(1:ntree, rf.Car$test$mse, col = "green")
 
 legend("topright", c("m = p", "m = p/3"), col = c("blue", "green"), cex = 1, lty = 1)
 ```
 
-
+NB! Typically, RandomForest models outperform Bagging models due to their decorrealtion property stemming from a limited selection of predictors.
 
 
 ## Problem 3 -- Classification
@@ -392,42 +385,5 @@ misclass.rf
 ```
 
 h) 
-
-The `gbm()` function does not allow factors, so we have to use '1' and '0' instead of `spam` and `nonspam`
-
-```{r}
-library(gbm)
-set.seed(4268)
-
-spamboost = spam
-spamboost$type = c()
-spamboost$type[spam$type == "spam"] = 1
-spamboost$type[spam$type == "nonspam"] = 0
-
-boost.spam = gbm(type ~ ., data = spamboost[train, ], distribution = "bernoulli", 
-    n.trees = 5000, interaction.depth = 3, shrinkage = 0.001)
-```
-
-We predict the response for the test data
-
-```{r}
-yhat.boost = predict(boost.spam, newdata = spamboost[-train, ], n.trees = 5000, 
-    distribution = "bernoulli", type = "response")
-
-yhat.boost = ifelse(yhat.boost > 0.5, 1, 0)  #Transform to 0 and 1 (nonspam and spam).
-
-misclass.boost = table(yhat.boost, spamboost$type[test])
-
-misclass.boost
-
-```
-
-and the misclassification rate is
-
-```{r}
-1 - sum(diag(misclass.boost))/sum(misclass.boost)
-```
-
-i) 
-
-We get lower missclassification rates for bagging, random forest and boosting than for a simple tree, which is expected.
+The ranks of missclassification rates: 1) random forest, 2) bagging, 3) decision tree, with a higher rank indicating a lower missclassification rate.
+This order is what we expected.

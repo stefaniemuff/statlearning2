@@ -115,7 +115,7 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2023}
+\subtitle{TMA4268 Statistical Learning V2024}
 \author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
 Muff \and Department of Mathematical Sciences, NTNU}
 \date{March 7, 2024}
@@ -547,46 +547,28 @@ Variables are again \texttt{Price}and \texttt{ShelveLoc}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(gbm)}
-\NormalTok{r.boost}\OtherTok{=}\FunctionTok{gbm}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., Carseats.train,}
-                 \AttributeTok{distribution=}\StringTok{"gaussian"}\NormalTok{,}
-                 \AttributeTok{n.trees=}\DecValTok{500}\NormalTok{,}\AttributeTok{interaction.depth=}\DecValTok{4}\NormalTok{, }\AttributeTok{shrinkage =}\FloatTok{0.1}\NormalTok{)}
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(r.boost, }\AttributeTok{newdata =}\NormalTok{ Carseats.test,}\AttributeTok{n.trees=}\DecValTok{500}\NormalTok{)}
-\NormalTok{mse\_boost }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((yhat.boost }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-\NormalTok{mse\_boost}
-\end{Highlighting}
-\end{Shaded}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
 
-\begin{verbatim}
-## [1] 2.151292
-\end{verbatim}
-
-We see a further decrease in MSE by boosting our trees.
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{6}
-\tightlist
-\item
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{train.predictors }\OtherTok{=}\NormalTok{ Carseats.train[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
 \NormalTok{test.predictors }\OtherTok{=}\NormalTok{ Carseats.test[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
 \NormalTok{Y.train }\OtherTok{=}\NormalTok{ Carseats.train[,}\DecValTok{1}\NormalTok{]}
 \NormalTok{Y.test }\OtherTok{=}\NormalTok{ Carseats.test[,}\DecValTok{1}\NormalTok{]}
 
-\NormalTok{bag.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{10}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{)}
-\NormalTok{rf.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{)}
-\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{500}\NormalTok{, bag.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Number of Trees"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Test MSE"}\NormalTok{,}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\FloatTok{2.8}\NormalTok{))}
-\FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{500}\NormalTok{, rf.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{)}
+\NormalTok{ntree }\OtherTok{\textless{}{-}} \DecValTok{500}
+\NormalTok{bag.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{10}\NormalTok{, }\AttributeTok{ntree =}\NormalTok{ ntree)}
+\NormalTok{rf.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =}\NormalTok{ ntree)}
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntree, bag.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Number of Trees"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Test MSE"}\NormalTok{,}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\FloatTok{2.8}\NormalTok{))}
+\FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntree, rf.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{)}
 
 \FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"m = p"}\NormalTok{, }\StringTok{"m = p/3"}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"green"}\NormalTok{), }\AttributeTok{cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-14-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-13-1}
+
+NB! Typically, RandomForest models outperform Bagging models due to
+their decorrealtion property stemming from a limited selection of
+predictors.
 
 \hypertarget{problem-3-classification}{%
 \subsection{Problem 3 --
@@ -646,7 +628,7 @@ Classification}\label{problem-3-classification}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-18-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-17-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -718,7 +700,7 @@ Classification}\label{problem-3-classification}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-20-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-19-1}
 
 According to the plot the optimal number of terminal nodes is 6 (or
 larger). We choose 6 as this gives the simplest tree, and prune the tree
@@ -733,7 +715,7 @@ according to this value.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-21-1}
+\includegraphics[width=0.7\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-20-1}
 
 We predict the response for the test data:
 
@@ -844,7 +826,7 @@ large, the corresponding covariate is important.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.9\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-29-1}
+\includegraphics[width=0.9\linewidth]{RecEx8-sol_files/figure-latex/unnamed-chunk-28-1}
 
 In this plot we see that \texttt{charExclamation} is the most important
 covariate, followed by \texttt{remove} and \texttt{charDollar}. This is
@@ -886,67 +868,9 @@ The misclassification rate is given by
 \setcounter{enumi}{7}
 \tightlist
 \item
+  The ranks of missclassification rates: 1) random forest, 2) bagging,
+  3) decision tree, with a higher rank indicating a lower
+  missclassification rate. This order is what we expected.
 \end{enumerate}
-
-The \texttt{gbm()} function does not allow factors, so we have to use
-`1' and `0' instead of \texttt{spam} and \texttt{nonspam}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(gbm)}
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-
-\NormalTok{spamboost }\OtherTok{=}\NormalTok{ spam}
-\NormalTok{spamboost}\SpecialCharTok{$}\NormalTok{type }\OtherTok{=} \FunctionTok{c}\NormalTok{()}
-\NormalTok{spamboost}\SpecialCharTok{$}\NormalTok{type[spam}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \StringTok{"spam"}\NormalTok{] }\OtherTok{=} \DecValTok{1}
-\NormalTok{spamboost}\SpecialCharTok{$}\NormalTok{type[spam}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \StringTok{"nonspam"}\NormalTok{] }\OtherTok{=} \DecValTok{0}
-
-\NormalTok{boost.spam }\OtherTok{=} \FunctionTok{gbm}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ spamboost[train, ], }\AttributeTok{distribution =} \StringTok{"bernoulli"}\NormalTok{, }
-    \AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }\AttributeTok{interaction.depth =} \DecValTok{3}\NormalTok{, }\AttributeTok{shrinkage =} \FloatTok{0.001}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-We predict the response for the test data
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{predict}\NormalTok{(boost.spam, }\AttributeTok{newdata =}\NormalTok{ spamboost[}\SpecialCharTok{{-}}\NormalTok{train, ], }\AttributeTok{n.trees =} \DecValTok{5000}\NormalTok{, }
-    \AttributeTok{distribution =} \StringTok{"bernoulli"}\NormalTok{, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-
-\NormalTok{yhat.boost }\OtherTok{=} \FunctionTok{ifelse}\NormalTok{(yhat.boost }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)  }\CommentTok{\#Transform to 0 and 1 (nonspam and spam).}
-
-\NormalTok{misclass.boost }\OtherTok{=} \FunctionTok{table}\NormalTok{(yhat.boost, spamboost}\SpecialCharTok{$}\NormalTok{type[test])}
-
-\NormalTok{misclass.boost}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##           
-## yhat.boost   0   1
-##          0 812  52
-##          1  36 481
-\end{verbatim}
-
-and the misclassification rate is
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.boost))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(misclass.boost)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.06372194
-\end{verbatim}
-
-\begin{enumerate}
-\def\labelenumi{\roman{enumi})}
-\tightlist
-\item
-\end{enumerate}
-
-We get lower missclassification rates for bagging, random forest and
-boosting than for a simple tree, which is expected.
 
 \end{document}
