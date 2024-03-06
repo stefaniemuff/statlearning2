@@ -1390,12 +1390,43 @@ $~$
 
 ---
 
-### Partial dependence plots
+## Partial dependence plots
 
 \scriptsize
 (Section 10.13.2 in the Elements book @hastie_etal2009)
+
+\normalsize
 $~$
 
+* Motivation: We would like to have a _qualitative description_ of how a single variable affects the response. 
+
+\vspace{3mm}
+
+* Partial dependence plots provide such a description. They can be used to interpret results from any "black box" method. 
+
+\vspace{3mm}
+
+* For input variable $X_j$, the _partial dependence_ of $f(X)$ on $X_j$ is given as
+$$\text{E}_{X_j} f(X_j, X_{-j}) \ , $$
+where $X_{-j}$ denotes the set of all variables _except_ $X_j$. 
+
+ 
+
+
+
+---
+
+
+
+\vspace{2mm}
+
+* For boosted trees, we estimate the partial dependence by taking the average over all observations
+$$\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{j},(X_{-j})_i)$$
+for a set of values for $X_j$, where we evaluate the estimated tree value $f(X_{j},(X_{-j})_i$ for each data point $i$. 
+
+\vspace{4mm}
+
+* Note: The partial dependence function represents the effects of $X_j$ on $f(X)$ _after_ accounting for the effects of the other variables. They are not the effects of $X_j$ on $f(X)$ independent of the other variables!
 
 \normalsize
 

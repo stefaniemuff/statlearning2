@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.5)  5 MAR 2024 19:44
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.5)  6 MAR 2024 09:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1438,6 +1438,8 @@ pe pdf)
 
 ] [65
 
+] [66
+
 ]
 \openout4 = `9TreeBoosting.vrb'.
 
@@ -1446,11 +1448,11 @@ File: 9TreeBoosting_files/figure-beamer/boston7-1.pdf Graphic file (type pdf)
 <use 9TreeBoosting_files/figure-beamer/boston7-1.pdf>
 File: 9TreeBoosting_files/figure-beamer/boston7-2.pdf Graphic file (type pdf)
 <use 9TreeBoosting_files/figure-beamer/boston7-2.pdf>
-) [66
-
-] [67
+) [67
 
 ] [68
+
+] [69
 
 ]
 \tf@nav=\write6
@@ -1464,12 +1466,12 @@ File: 9TreeBoosting_files/figure-beamer/boston7-2.pdf Graphic file (type pdf)
 
 (./9TreeBoosting.aux) ) 
 Here is how much of TeX's memory you used:
- 31083 strings out of 478142
- 633397 string characters out of 5852610
- 1077025 words of memory out of 5000000
- 51028 multiletter control sequences out of 15000+600000
+ 31085 strings out of 478142
+ 633415 string characters out of 5852610
+ 1077081 words of memory out of 5000000
+ 51030 multiletter control sequences out of 15000+600000
  476767 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,15n,122p,1010b,869s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 9TreeBoosting.pdf (68 pages).
+Output written on 9TreeBoosting.pdf (69 pages).

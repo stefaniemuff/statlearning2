@@ -2283,10 +2283,65 @@ Both frameworks are available in R.
 \scriptsize
 
 (Section 10.13.2 in the Elements book Hastie, Tibshirani, and Friedman
-(2009)) \(~\)
+(2009))
 
 \normalsize
+
+\(~\)
+
+\begin{itemize}
+\tightlist
+\item
+  Motivation: We would like to have a \emph{qualitative description} of
+  how a single variable affects the response.
+\end{itemize}
+
+\vspace{3mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Partial dependence plots provide such a description. They can be used
+  to interpret results from any ``black box'' method.
+\end{itemize}
+
+\vspace{3mm}
+
+\begin{itemize}
+\tightlist
+\item
+  For input variable \(X_j\), the \emph{partial dependence} of \(f(X)\)
+  on \(X_j\) is given as \[\text{E}_{X_j} f(X_j, X_{-j}) \ , \] where
+  \(X_{-j}\) denotes the set of all variables \emph{except} \(X_j\).
+\end{itemize}
 \end{block}
+\end{frame}
+
+\begin{frame}
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  For boosted trees, we estimate the partial dependence by taking the
+  average over all observations
+  \[\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{j},(X_{-j})_i)\] for a
+  set of values for \(X_j\), where we evaluate the estimated tree value
+  \(f(X_{j},(X_{-j})_i\) for each data point \(i\).
+\end{itemize}
+
+\vspace{4mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Note: The partial dependence function represents the effects of
+  \(X_j\) on \(f(X)\) \emph{after} accounting for the effects of the
+  other variables. They are not the effects of \(X_j\) on \(f(X)\)
+  independent of the other variables!
+\end{itemize}
+
+\normalsize
 \end{frame}
 
 \begin{frame}[fragile]
