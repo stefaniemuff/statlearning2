@@ -1,0 +1,253 @@
+---
+title: 'Module 9: Recommended Exercises'
+author:
+- Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie Muff
+- Department of Mathematical Sciences, NTNU
+date: "March 14, 2024"
+output:
+  html_document:
+    df_print: paged
+    toc: no
+    toc_depth: '2'
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    toc: no
+    toc_depth: 2
+subtitle: TMA4268 Statistical Learning V2023
+urlcolor: blue
+---
+
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts = list(width.cutoff = 68), tidy = FALSE)
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize")
+```
+
+
+---
+
+**We recommend you to work through the Section 8.3.4 in the course book (Lab: Boosting)**
+
+---
+
+
+## Problem 1
+
+Both **bagging** and **boosting** are *ensemble* methods.
+
+* What is an ensemble method?
+
+Any model that builds on many models.
+
+* What are the main conceptual differences between bagging and boosting?
+
+Bagging: Bootstrap aggregation. Based on building many models *independently of each other*, and combining the results.
+Boosting: Based on building many models *sequentially*, where we let each model focus more on the parts of the problem that the model in the previous iteration struggled with.
+
+## Problem 2
+
+Consider the Gradient Tree Boosting Algorithm (given on slide 35 in this week's lectures).
+
+Explain the meaning behind each of the following symbols. If relevant, also explain what the impact of changing them will be, and explain how one might find or choose them.
+
+* $L(.)$
+
+This is the loss function we are trying to minimize when fitting the base learners in each iteration. Our choice of loss function will of course depend on the type of data we are modelling (i.e., regression vs. classification), but the choice can also be highly impactful on the robustness of our method - for example, the quadratic loss function might place too much weight on extreme observations.
+
+* $f_m(.)$
+
+This is our boosted gradient tree at the $m^{\text{th}}$ iteration of the algorithm. It is found by fitting a tree to the pseudo-residuals $r_{im}$, and within the terminal regions of that tree, adding a "correction" ($\gamma_{jm}$ for terminal region $j$) to the current $f_{m-1}$ in a way that minimizes the loss function $L$. For details on how to fit the individual trees, see the previous module.
+
+* $M$
+
+This is the number of trees (base learners) that we fit. This is a hyperparameter that should be tuned with e.g. cross-validation, or chosen adaptively with some stopping criterion. Too low $M$ leads to underfitting (we don't have enough base learners to capture the structure in the data), while too high $M$ leads to overfitting.
+
+* $J_m$
+
+This is the number of terminal regions of the tree we fit in iteration $m$. $J_m$ will be determined by the procedure we use to fit each base learner, but we commonly constrain what the maximum value of $J_m$ can be. This constraint (the maximum value of $J_m$) is a hyperparameter that should be tuned with e.g. cross-validation. The lower we set the maximum allowed $J_m$ to be, the less complex each tree will be - i.e. the simpler the *base learners* in the ensemble will be. And vice versa. More complicated base learners will also mean a higher computational cost.
+
+
+# Problem 3 - Learning rate
+
+The algorithm mentioned in Problem 2 does not include the so-called *learning rate* parameter $\nu$. In the context of boosting methods, what is the interpretation behind this parameter, and how would one choose it? If you were to include the parameter in the Gradient Tree Boosting Algorithm, which equation(s) in the algorithm would you change and how?
+
+The learning rate $0<\nu<1$ is a factor that we use to scale the base learner at each iteration of the boosting algorithm. Thus, the lower its value, the less impact each base learner will have on the ensemble. Empirically, this parameter is often found to be crucial in determining the accuracy of the model. The smaller the value of this parameter, the higher we need $M$ to be, since we slow down the learning. $\nu$ can be chosen by cross-validation, or set to a fixed (small) value if $M$ is chosen adaptively (see above).
+
+The learning rate would be added to step 2d), so that it would read
+
+$$
+\text{Update} \quad f_m(x)=f_{m-1}(x) + \nu \sum_{j=1}^{J_m} \gamma_{jm}I(x\in R_{jm}).
+$$
+
+## Problem 4 - Boosting methods
+
+Below we simulate data meant to mimic a genomic data set for a set of markers (locations in the human genome) that underlie a complex trait (such as height, or whether you have cancer or not). You don't need to understand the details of the simulation, but the main takeaways are
+
+* $y$ is a continuous response, representing some biological trait (for example height) depending on both genetic (the predictors) and environmental (here included as random noise) factors.
+* We have many more predictors (genetic markers) $M$ than observations (individuals) $N$.
+* The predictors have a complicated structure: most of them have a very small effect on $y$, but a few of them have a larger effect.
+
+```{r}
+# install.packages("DirichletReg")
+# install.packages("magrittr")
+library(DirichletReg)
+library(magrittr)
+
+# Simulate 
+set.seed(1)
+N <- 1000 # number of individuals
+M <- 10000 # number of genotyped markers
+p <- rbeta(n = M, shape1 = 2.3, shape2 = 7.4) # Allele frequencies
+p %<>% ifelse(. < 0.5, ., 1 - .)
+X <- sapply(p, rbinom, n = N, size = 2) # genotype matrix
+
+effect_weights <- rdirichlet(M, c(0.9, 0.08, 0.015, 0.005))
+
+marker_effects <- apply(effect_weights, 1, function(w) {
+  effects <- c(0, sapply(sqrt(c(1e-4, 1e-3, 1e-2)), rnorm, n = 1, mean = 0))
+  sum(w * effects)
+})
+
+genetics <- as.vector(X %*% marker_effects)
+environment <- rnorm(N, sd = sqrt(var(genetics) / 2))
+y <- genetics + environment
+dat <- cbind(y, as.data.frame(X))
+```
+
+We will now try to predict $y$ using various tree boosting methods, adapted from code provided in \url{https://bradleyboehmke.github.io/HOML/gbm.html}.
+
+### a) A basic GBM
+
+```{r, eval=FALSE}
+# install.packages("dplyr")
+library(dplyr)    # for general data wrangling needs
+
+# Modeling packages
+# install.packages("gbm")
+# install.packages("h2o")
+# install.packages("xgboost")
+library(gbm)      # for original implementation of regular and stochastic GBMs
+library(h2o)      # for a java-based implementation of GBM variants
+library(xgboost)  # for fitting extreme gradient boosting
+
+h2o.init(max_mem_size = "13g")
+
+```
+
+```{r, eval=FALSE}
+
+gbm1 <- gbm(
+  formula = y ~ .,
+  data = dat,
+  distribution = "gaussian",  # SSE loss function
+  n.trees = 10,
+  shrinkage = 0.1,
+  interaction.depth = 7,
+  n.minobsinnode = 10,
+  cv.folds = 10
+)
+
+gbm.perf(gbm1, method = "cv")
+
+```
+
+We note that running the above code block is very slow - even for a *very* low number of trees $M=10$. How could we modify the algorithm to be less computationally intensive?
+
+We could for example: 
+
+* We could reduce the allowed complexity of each base learner
+* We could subsample observations (like in bagging) and/or predictors (like in random forest). In other words, go for a stochastic gradient boosting approach.
+* Change our validation approach. Could go to 5-fold CV, or even training/test set approach.
+
+### b) Stochastic GBMs
+
+
+```{r, eval=FALSE}
+# refined hyperparameter grid
+hyper_grid <- list(
+  sample_rate = 0.5,              # row subsampling
+  col_sample_rate = 0.01,          # col subsampling for each split
+  col_sample_rate_per_tree = 0.01,  # col subsampling for each tree
+  #n.trees = 2, #c(3000, 6000, 9000),
+  learn_rate = c(0.5, 0.05, 0.005),
+  max_depth = c(3, 5, 7),
+  ntrees = 6000
+)
+
+# random grid search strategy
+search_criteria <- list(
+  strategy = "RandomDiscrete",
+  stopping_metric = "mse",
+  stopping_tolerance = 0.001,   
+  stopping_rounds = 10,         
+  max_runtime_secs = 60*60      
+)
+
+# perform grid search 
+grid <- h2o.grid(
+  algorithm = "gbm",
+  y = "y",
+  training_frame = as.h2o(dat),
+  hyper_params = hyper_grid,
+  min_rows = 5,
+  nfolds = 5,
+  search_criteria = search_criteria,
+  seed = 123,
+  parallelism = 0
+)
+
+# collect the results and sort by our model performance metric of choice
+grid_perf <- h2o.getGrid(
+  grid_id = grid@grid_id, 
+  sort_by = "mse", 
+  decreasing = FALSE
+)
+
+grid_perf
+
+```
+
+### c) XGboost
+
+```{r xgb}
+# install.packages("recipes")
+library(recipes)
+xgb_prep <- recipe(y ~ ., data = dat) %>%
+  step_integer(all_nominal()) %>%
+  prep(training = dat, retain = TRUE) %>%
+  juice()
+
+X_mat <- as.matrix(xgb_prep[setdiff(names(xgb_prep), "y")])
+Y_vec <- xgb_prep$y
+
+set.seed(123)
+xgb <- xgb.cv(
+  data = X,
+  label = y,
+  nrounds = 6000,
+  objective = "reg:linear",
+  early_stopping_rounds = 50, 
+  nfold = 5,
+  params = list(
+    eta = 0.1, # 
+    max_depth = 3,
+    min_child_weight = 3,
+    subsample = 0.8,
+    colsample_bytree = 1.0),
+  verbose = TRUE
+) 
+
+# minimum test CV RMSE
+min(xgb$evaluation_log$test_rmse_mean)
+
+```
+
