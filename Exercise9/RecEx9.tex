@@ -228,6 +228,9 @@ takeaways are
 \NormalTok{environment }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(N, }\AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(genetics) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{))}
 \NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ genetics }\SpecialCharTok{+}\NormalTok{ environment}
 \NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(y, }\FunctionTok{as.data.frame}\NormalTok{(X))}
+
+\CommentTok{\# Looking at a few entries in the data:}
+\NormalTok{dat[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -334,9 +337,7 @@ done in the below code (\texttt{?h2o.grid}, \texttt{h2o.gbm} and
 
 Below we also provide code for applying cross-validated XGBoost to the
 same data set. Expand this code to perform a search of the
-hyperparameter space, similar to b). Finally, experimenting with the
-code from a), b) and c), what is the best model you are able to find?
-Fit that model using all available training data (no cross-validation).
+hyperparameter space, similar to b).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -361,5 +362,11 @@ Fit that model using all available training data (no cross-validation).
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{d-model-evaluation}{%
+\subsubsection{d) Model evaluation}\label{d-model-evaluation}}
+
+Finally, experimenting with the code from a), b) and c), what is the
+best model you are able to find? Fit that model using all available
+training data (no cross-validation).
 
 \end{document}

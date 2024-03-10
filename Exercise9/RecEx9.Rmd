@@ -5,10 +5,10 @@ author:
 - Department of Mathematical Sciences, NTNU
 date: "March 14, 2024"
 output:
-  html_document:
-    df_print: paged
-    toc: no
-    toc_depth: '2'
+  # html_document:
+  #   df_print: paged
+  #   toc: no
+  #   toc_depth: '2'
   pdf_document:
     fig_caption: yes
     keep_tex: yes
@@ -98,6 +98,9 @@ genetics <- as.vector(X %*% marker_effects)
 environment <- rnorm(N, sd = sqrt(var(genetics) / 2))
 y <- genetics + environment
 dat <- cbind(y, as.data.frame(X))
+
+# Looking at a few entries in the data:
+dat[1:6,1:20]
 ```
 
 We will now try to predict $y$ using various tree boosting methods, adapted from code provided in \url{https://bradleyboehmke.github.io/HOML/gbm.html}.
@@ -186,7 +189,7 @@ grid_perf
 
 ### c) XGboost
 
-Below we also provide code for applying cross-validated XGBoost to the same data set. Expand this code to perform a search of the hyperparameter space, similar to b). Finally, experimenting with the code from a), b) and c), what is the best model you are able to find? Fit that model using all available training data (no cross-validation).
+Below we also provide code for applying cross-validated XGBoost to the same data set. Expand this code to perform a search of the hyperparameter space, similar to b). 
 
 ```{r xgb, eval=FALSE}
 
@@ -210,3 +213,7 @@ xgb <- xgb.cv(
 min(xgb$evaluation_log$test_rmse_mean)
 
 ```
+
+### d) Model evaluation
+
+Finally, experimenting with the code from a), b) and c), what is the best model you are able to find? Fit that model using all available training data (no cross-validation).

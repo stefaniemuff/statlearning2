@@ -249,7 +249,9 @@ higher we need \(M\) to be, since we slow down the learning. \(\nu\) can
 be chosen by cross-validation, or set to a fixed (small) value if \(M\)
 is chosen adaptively (see above).
 
-The learning rate would be added to step 2d), so that it would read
+The learning rate would be added to step 2d) on lecture slide 35
+(Algorithm 10.3 in ``The Elements of Statistical Learning''), so that it
+would read
 
 \[
 \text{Update} \quad f_m(x)=f_{m-1}(x) + \nu \sum_{j=1}^{J_m} \gamma_{jm}I(x\in R_{jm}).
@@ -305,8 +307,21 @@ takeaways are
 \NormalTok{environment }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(N, }\AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(genetics) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{))}
 \NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ genetics }\SpecialCharTok{+}\NormalTok{ environment}
 \NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(y, }\FunctionTok{as.data.frame}\NormalTok{(X))}
+
+\CommentTok{\# Looking at a few entries in the data:}
+\NormalTok{dat[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+##            y V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19
+## 1 -0.6553370  0  1  0  0  0  0  1  0  0   0   0   0   1   1   1   1   1   2   2
+## 2 -0.6780554  1  0  0  2  0  2  1  0  2   0   0   0   0   0   0   0   0   1   1
+## 3 -0.2311866  0  1  0  0  1  0  0  0  1   1   0   0   1   0   1   0   0   1   1
+## 4 -1.0386650  2  0  0  1  0  1  0  0  1   0   1   0   1   0   0   0   0   0   0
+## 5 -0.4776310  0  1  1  1  0  0  0  2  2   2   2   0   2   1   1   0   1   1   0
+## 6 -0.4600658  0  0  1  1  1  0  0  1  1   0   0   0   0   0   0   0   0   1   1
+\end{verbatim}
 
 We will now try to predict \(y\) using various tree boosting methods,
 adapted from code provided in
@@ -357,7 +372,8 @@ We could for example:
 \begin{itemize}
 \tightlist
 \item
-  We could reduce the allowed complexity of each base learner
+  We could reduce the allowed complexity of each base learner (reduce
+  the interaction depth).
 \item
   We could subsample observations (like in bagging) and/or predictors
   (like in random forest). In other words, go for a stochastic gradient
@@ -445,9 +461,7 @@ reach \(10000\) iterations or if the runtime exceeds twenty minutes.
 
 Below we also provide code for applying cross-validated XGBoost to the
 same data set. Expand this code to perform a search of the
-hyperparameter space, similar to b). Finally, experimenting with the
-code from a), b) and c), what is the best model you are able to find?
-Fit that model using all available training data (no cross-validation).
+hyperparameter space, similar to b).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -524,9 +538,18 @@ what is done here.
 \end{Highlighting}
 \end{Shaded}
 
-As for the final best model, the answer will depend on what models you
-decided to investigate, and how you decided to tune the hyperparameters.
-The final fit should involve a call to \texttt{gbm()},
-\texttt{h2o.gbm()} or \texttt{xgb.train()}.
+\hypertarget{d-model-evaluation}{%
+\subsubsection{d) Model evaluation}\label{d-model-evaluation}}
+
+Finally, experimenting with the code from a), b) and c), what is the
+best model you are able to find? Fit that model using all available
+training data (no cross-validation).
+
+\emph{Solution}:
+
+The answer will depend on what models you decided to investigate, and
+how you decided to tune the hyperparameters. The final fit should
+involve a call to \texttt{gbm()}, \texttt{h2o.gbm()} or
+\texttt{xgb.train()}.
 
 \end{document}
