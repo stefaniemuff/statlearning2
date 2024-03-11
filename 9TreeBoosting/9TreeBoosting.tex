@@ -161,6 +161,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{multirow}
+\usepackage{tcolorbox}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]
 \ifLuaTeX
@@ -278,7 +279,7 @@ Greenwell (2020)
 \begin{itemize}
 \tightlist
 \item
-  Boosting of linear models
+  Boosting of linear models (experience from a master student)
 \end{itemize}
 \end{block}
 \end{frame}
@@ -475,7 +476,7 @@ See here to access the paper:
 \tightlist
 \item
   A solution to this problem, making a good model from simple trees, is
-  another class of ensemble methods called boosting.
+  another class of ensemble methods called \emph{boosting}.
 \end{itemize}
 
 \(~\)
@@ -530,7 +531,8 @@ Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
 \begin{itemize}
 \tightlist
 \item
-  \(G(X)\) can for example be a tree which is only a ``stump''.
+  \(G(X)\) can for example be a tree which is only a ``stump''. But it
+  can also be any other classifier.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -593,7 +595,7 @@ AdaBosot.M1}
 \begin{enumerate}
 \tightlist
 \item
-  Initialize the observation weights \(w_i= 1/N\), \(i=1,2,\ldots, N\)
+  Initialize the observation weights \(w_i= 1/N\), \(i=1,2,\ldots, N\).
 \end{enumerate}
 
 \vspace{2mm}
@@ -641,7 +643,7 @@ Explanations:
 \begin{itemize}
 \item
   Weights \(\alpha_m\): assigns larger overall weight to good
-  classifiers\footnote{Note: When $\text{err}_m<0.5$, then $\alpha_m>0$. Otherwise, the classifier needs to be inverted and $\alpha<0$ makes sense.}.
+  classifiers\footnote{Note: When $\text{err}_m<0.5$, then $\alpha_m>0$. Otherwise, the classifier needs to be inverted and $\alpha_m<0$ makes sense.}.
 \item
   Weights \(w_i\) modify the original data. This ensures that
   observations \(i\) with wrong classification in \(G_{m-1}(x)\) obtain
@@ -672,7 +674,7 @@ Inspired by (10.2) in the Elements book:
   Classify \(y=1\) if \(\sum_{j=1}^{10}X_j^2 > 9.34\), \(y=-1\)
   otherwise.
 \item
-  1000 traning and 4000 test observations.
+  1000 training and 4000 test observations.
 \end{itemize}
 
 \(~\)
@@ -806,6 +808,8 @@ one split).
 \begin{frame}
 \textbf{Algorithm 8.2: Boosting for regression trees}
 
+\vspace{2mm}
+
 \begin{enumerate}
 \tightlist
 \item
@@ -830,6 +834,8 @@ one split).
   The boosted model is \(\hat{f}(x) = \sum_{b=1}^B \nu \hat{f}^b(x).\)
 \end{enumerate}
 
+\vspace{4mm}
+
 Boosting has three tuning parameters which need to be set (\(B\),
 \(\nu\), \(d\)), and can be found using cross-validation.
 \end{frame}
@@ -837,24 +843,38 @@ Boosting has three tuning parameters which need to be set (\(B\),
 \begin{frame}
 \textbf{Tuning parameters}
 
+\vspace{2mm}
+
 \begin{itemize}
+\tightlist
 \item
   \textbf{Number of trees \(B\)}. Could be chosen using
   cross-validation. A too small value of \(B\) would imply that much
   information is unused (remember that boosting is a slow learner),
   whereas a too large value of \(B\) may lead to overfitting.
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{Shrinkage parameter \(\nu\)}. Controls the rate at which
   boosting learns. \(\nu\) scales the new information from the \(b\)-th
-  tree, when added to the existing tree \(\hat{f}\). Choosing a small
-  value for \(\nu\) ensures that the algorithm learns slowly, but will
-  require a larger \(B\). Typical values of \(\nu\) is 0.1 or 0.01.
+  tree, when added to the existing tree \(\hat{f}\). A small value for
+  \(\nu\) ensures that the algorithm learns slowly, but will require a
+  larger \(B\). Typical values of \(\nu\) is 0.1 or 0.01.
+\end{itemize}
+
+\vspace{1mm}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{Interaction depth \(d\)}: The number of splits in each tree.
   This parameter controls the complexity of the boosted tree ensemble
-  (the level of interaction between variables that we may estimate). By
-  choosing \(d=1\) a tree stump will be fitted at each step and this
-  gives an additive model.
+  (level of interaction between variables). By choosing \(d=1\) a tree
+  stump will be fitted at each step and this gives an additive model.
 \end{itemize}
 \end{frame}
 
@@ -977,10 +997,10 @@ allow the interaction depth (number of splits per tree) to be of degree
 \tightlist
 \item
   In general terms, we are looking for expansions that take the form
-  \[f(x) = \sum_{m=1}^M \beta_m b(\mathbf{x};\gamma) \ , \] where
-  \(b(\mathbf{x};\gamma)\) are (simple) \emph{basis functions} in
-  \(\mathbf{x}\) characterized by a set of parameters \(\gamma\), and
-  \(\beta_m\) are the corresponding expansion coefficients.
+  \[f(x) = \sum_{m=1}^M \beta_m b(x;\gamma) \ , \] where \(b(x;\gamma)\)
+  are (simple) \emph{basis functions} in \(x\) characterized by a set of
+  parameters \(\gamma\), and \(\beta_m\) are the corresponding expansion
+  coefficients.
 \end{itemize}
 
 \vspace{2mm}
@@ -988,7 +1008,7 @@ allow the interaction depth (number of splits per tree) to be of degree
 \begin{itemize}
 \tightlist
 \item
-  In the following, we focus on the case where \(b(\mathbf{x};\gamma)\)
+  In the following, we focus on the case where the \(b(x;\gamma)\)
   correspond to trees.
 \end{itemize}
 \end{frame}
@@ -1002,12 +1022,15 @@ Start by looking again at \emph{a single tree}. We need to find regions
 \(R_j\) and values \(f(x)=\gamma_j\) if \(x\in R_j\), for
 \(j=1,2,\ldots,J\). The tree can then be expressed as
 
-\[T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ .\] \(~\)
+\begin{equation*} 
+T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ .
+\end{equation*}
 
-Formally we want to minimize
+For a given division into regions, we want to minimize
 
 \begin{equation}\label{eq:treeopt}
 \hat\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} L(y_i,\gamma_i) \ , 
+%\hat\Theta = \arg \min_\Theta \sum_{i=1}^N L(y_i,T(x_i;\Theta) ) \ , 
 \end{equation} for a set of observations \((x_i,y_i)\)
 \((i=1,\ldots,N)\) and for loss function \(L()\), for example
 squared-error, Gini, deviance loss etc.
@@ -1017,7 +1040,7 @@ squared-error, Gini, deviance loss etc.
 \begin{frame}
 \label{sl:regions}
 
-The optimization problem is split into two parts:
+The optimization problem can thus be split into two parts:
 
 \(~\)
 
@@ -1026,8 +1049,8 @@ The optimization problem is split into two parts:
 \tightlist
 \item
   \textbf{Find \(\gamma_j\) given \(R_j\)}: Given \(R_j\), estimating
-  \(\gamma_j\) is easy. Either \(\gamma_j=\overline{y_j}\) or majority
-  vote for classification.
+  \(\gamma_j\) is easy. Often it is \(\gamma_j=\overline{y_j}\) or a
+  majority vote for classification.
 \end{enumerate}
 
 \vspace{2mm}
@@ -1043,7 +1066,7 @@ The optimization problem is split into two parts:
   \begin{equation}\label{eq:approx}
   \tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
   \end{equation} and then use \(\hat{R}_j=\tilde{R}_j\) to find
-  \(\gamma_j\) using the original criterion \eqref{eq:treeopt}.
+  \(\gamma_j\) using criterion \eqref{eq:treeopt}.
 \end{enumerate}
 \end{frame}
 
@@ -1102,7 +1125,8 @@ The optimization problem is split into two parts:
 \item
   For \emph{\textcolor{red}{binary classification}} with
   \(Y\in \{-1,1\}\) and \textbf{exponential loss}
-  \[L(y,f(x))=\exp(-yf(x)) \ ,\] we get AdaBoost (Algorithm 10.1).
+  \[L(y,f(x))=\exp(-yf(x)) \ ,\] we get AdaBoost (Algorithm
+  10.1)\footnote{The equivalence of AdaBoost to forward stagewise additive modeling using exponential loss was only discovered five years after its invention!}.
 \end{itemize}
 
 \(~\)
@@ -1150,6 +1174,10 @@ the previous tree. Motivated by steepest descent.
 \protect\hypertarget{steepest-descent-a-numerical-optimization-technique}{}
 \(~\)
 
+\emph{The following considerations are not restricted to trees!}
+
+\(~\)
+
 \begin{itemize}
 \tightlist
 \item
@@ -1164,10 +1192,19 @@ the previous tree. Motivated by steepest descent.
 \item
   When trying to find the best function \(f(x)\) that minimizes a loss
   function \[L(f) = \sum_{i=1}^N L(y_i,f(x_i)) \ ,\] the direction of
-  steepest descent is given by an \(n\)-dimensional vector with entries
-  \[g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ ,\]
-  with gradient vector
-  \(\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})\).
+  steepest ascent is given by an \(N\)-dimensional
+  \emph{\textcolor{red}{gradient vector}}
+  \(\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})\) with entries
+  \[g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ .\]
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  The direction of \emph{steepest descent} is thus given by
+  \(-\mathbf{g}\).
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1201,16 +1238,6 @@ the previous tree. Motivated by steepest descent.
 \end{itemize}
 
 \(~\)
-
-\pause
-
-\begin{itemize}
-\tightlist
-\item
-  However, recall that we want to fit trees
-  \(f_m(x)=T(x;\Theta_m)=\sum_{j=1}^J \gamma_j I(x\in R_j)\), not
-  aribtrary predictor functions \(\mathbf{f}_m\).
-\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -1218,12 +1245,19 @@ the previous tree. Motivated by steepest descent.
 \protect\hypertarget{gradient-boosting-steepest-descent-for-trees}{}
 \(~\)
 
-\textbf{The central idea}: find a tree \(T(x;\Theta_m)\) that is as
-close as possible to the negative gradient
+Recall that we want to fit trees
+\[f_m(x)=T(x;\Theta_m)=\sum_{j=1}^J \gamma_j I(x\in R_j) \ , \] not
+aribtrary predictor functions \(\mathbf{f}_m\).
+
+\(~\)
+
+\begin{tcolorbox}
+\textbf{The central idea}: find a tree $T(x;\Theta_m)$ that is as close as possible to the negative gradient 
 
 \begin{equation}
 \tilde{\Theta}_m= \arg \min_\Theta \sum_{i=1}^N (-g_{im} -T(x_i;\Theta))^2 \ .
 \end{equation}
+\end{tcolorbox}
 
 \vspace{8mm}
 
@@ -1412,7 +1446,7 @@ Popular alternatives:
 \(~\)
 
 Replace the squared error loss by the \emph{binomial deviance} (now with
-\(y\in \{0,1\}\)):
+\(y\in \{0,1\}\))\footnote{Note that the deviance is $-2\log(\mathcal{L}(y;x,\Theta))$, but we ignore the factor 2.}:
 
 \[L(y,f(x)) = -I(y=1) \log(p(x)) - I(y=0) \log(1-p(x)) \ , \] with
 \[p(x) = \frac{e^{f(x)}}{1+e^{f(x)}} \ .\]
@@ -1464,6 +1498,14 @@ corresponding functions \(f(x)\).
 \begin{itemize}
 \tightlist
 \item
+  Each tree \(T_{km}\) is fit to the gradient \(\mathbf{g}_{km}\).
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
   In step 3., we aggregate the class probabilities for each class \(k\).
 \end{itemize}
 \end{frame}
@@ -1478,19 +1520,19 @@ determine in practice:
 \begin{itemize}
 \item
   \emph{\textcolor{red}{Weak Learner}}: A weak learner is one that
-  classifies our data but does so poorly, perhaps no better than random
+  classifies our data but does poorly, perhaps no better than random
   guessing. In other words, it has a high error rate. These are
   typically decision trees (also called decision stumps, because they
   are less complicated than typical decision trees).
+\item
+  \emph{\textcolor{red}{Loss Function}}: The function we want to
+  minimize. Its role is to estimate how good the model is at making
+  predictions with the given data.
 \item
   \emph{\textcolor{red}{Additive Model}}: This is the iterative and
   sequential approach of adding the trees (weak learners) one step at a
   time. After each iteration, we need to be closer to our final model,
   since each iteration should reduce the value of our loss function.
-\item
-  \emph{\textcolor{red}{Loss Function}}: The function we want to
-  minimize. Its role is to estimate how good the model is at making
-  predictions with the given data.
 \end{itemize}
 \end{frame}
 
@@ -1520,7 +1562,7 @@ Given a loss function, we can tune the following parameters:
 [a)]
 \setcounter{enumi}{2}
 \item
-  Number of trees \(M\), i.e., the number of boosting iterations
+  Number of trees \(M\), that is, the number of boosting iterations
 \item
   The learning rate \(\nu\)
 \end{enumerate}
@@ -2217,23 +2259,28 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \end{block}
 \end{frame}
 
-\begin{frame}{Most recent advances: LightBGM, CatBoost}
+\begin{frame}[fragile]{Most recent advances: LightBGM, CatBoost}
 \protect\hypertarget{most-recent-advances-lightbgm-catboost}{}
+\vspace{2mm}
+
 From \url{https://bradleyboehmke.github.io/HOML/gbm.html}:
 
 \begin{itemize}
 \item
   LightGBM (Ke et al.~2017) is a gradient boosting framework that
-  focuses on leaf-wise tree growth versus the traditional level-wise
-  tree growth. This means as a tree is grown deeper, it focuses on
-  extending a single branch versus growing multiple branches
+  focuses on leaf-wise tree growth and smart ways to subsample the data
+  (keep only instances with large gradients). Speeds up conventional
+  gradient boosting by up to a factor of 20.
 \item
   CatBoost (Dorogush, Ershov, and Gulin 2018) is another gradient
   boosting framework that focuses on using efficient methods for
   encoding categorical features during the gradient boosting process.
 \end{itemize}
 
-Both frameworks are available in R.
+\vspace{2mm}
+
+Both frameworks are available in R (packages \texttt{lightgbm} and
+\texttt{catboost}).
 \end{frame}
 
 \begin{frame}{Interpretation of tree ensembles}
