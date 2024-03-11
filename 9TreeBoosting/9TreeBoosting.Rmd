@@ -996,7 +996,7 @@ $~$
 
 \vspace{2mm}
 
-* Moreover, by giving tree depth and tuning the number of trees, we can hope to get this parameter "for free".
+* Moreover, by fixing tree depth and tuning the number of trees, we can hope to get this parameter "for free".
 
 \vspace{2mm}
 
@@ -1008,7 +1008,7 @@ $~$
 
 ---
 
-## c) The number of trees (regularization strategy 1)
+## c) The number of trees (regularization strategy 1) 
 
 $~$
 
@@ -1024,7 +1024,7 @@ $~$
 
 \vspace{2mm}
 
-* Alternative: Cross-validation
+* Alternative: Monitor prediction error with cross-validation
 
 
 \vspace{6mm}
@@ -1048,7 +1048,7 @@ $$f_m(x) = f_{m-1}(x) + \nu \sum_{j=1}^J \gamma_{jm}I(x\in R_{jm}) \ .$$
 
 \vspace{2mm}
 
-* Empirically, it was found that small $\nu$ (i.e., $\nu<0.1$) is more robust. 
+* Empirically, it was found that small $\nu$ (_i.e._, $\nu<0.1$) is more robust. 
 
 \vspace{2mm}
 
@@ -1154,7 +1154,7 @@ See @boehmke_greenwell2020
 $~$
 \normalsize
 
-* Stochastic gradient boosting: chose a random subsample of the training data for building each tree [@friedman2002].
+* Stochastic gradient boosting: choose a random subsample of the training data for building each tree [@friedman2002].
 
 \vspace{2mm}
 
@@ -1199,7 +1199,7 @@ $~$
 
 $~$
 
-Here we only look at the case where we subsample rows (i.e., entire data samples), which is available in the `gbm()` package.
+Here we only look at the case where we subsample rows (_i.e._, entire data samples), which is available in the `gbm()` package.
 
 
 ---
@@ -1263,7 +1263,7 @@ Core ideas of XGBoost:
 
 * _\textcolor{red}{Approximation}_ of the greedy algorithm for each tree by not checking each possible split.
 
-* _\textcolor{red}{Regularization}_: XGBoost includes different regularization penalties to avoid overfitting. Each new tree is regularized with two terms: The number of leafs (pruning) and the weights on the leafs. The total penalizing term is typically given by
+* _\textcolor{red}{Regularization}_: XGBoost includes different regularization penalties to avoid overfitting. Each new tree is regularized with two terms: The number of leaves (pruning) and the weights on the leaves. The total penalizing term is typically given by\footnote{The weights $w$ correspond to the predicted values or probabilities for each observation.}
 $$\Omega(f) = \gamma |T| + \frac{1}{2}\lambda||w||^2  \text{ (L2 regularization)} $$ 
 or 
  $$\Omega(f) = \gamma |T| +  \alpha ||w|| \text{ (L1 regularization)}  \ .  $$    
@@ -1357,7 +1357,7 @@ ames_xgb <- xgboost(
   early_stopping_rounds = 50,   
   
   params = list( 
-    eta = 0.1, # learning rate (nu)
+    eta = 0.1, # learning rate (we call it $\nu$)
     lambda=0.01, # L2 regularization term
     max_depth = 3,
     min_child_weight = 3,
@@ -1462,8 +1462,8 @@ where $X_{-j}$ denotes the set of all variables _except_ $X_j$.
 \vspace{2mm}
 
 * For boosted trees, we estimate the partial dependence by taking the average over all observations
-$$\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{j},(X_{-j})_i)$$
-for a set of values for $X_j$, where we evaluate the estimated tree value $f(X_{j},(X_{-j})_i$ for each data point $i$. 
+$$\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{ji},(X_{-j})_i)$$
+for a set of values for $X_j$, where we evaluate the estimated tree value $f(X_{ji},(X_{-j})_i)$ for each data point $i$. 
 
 \vspace{4mm}
 
