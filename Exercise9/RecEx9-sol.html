@@ -1722,8 +1722,9 @@ often found to be crucial in determining the accuracy of the model. The
 smaller the value of this parameter, the higher we need <span class="math inline">\(M\)</span> to be, since we slow down the learning.
 <span class="math inline">\(\nu\)</span> can be chosen by
 cross-validation, or set to a fixed (small) value if <span class="math inline">\(M\)</span> is chosen adaptively (see above).</p>
-<p>The learning rate would be added to step 2d), so that it would
-read</p>
+<p>The learning rate would be added to step 2d) on lecture slide 35
+(Algorithm 10.3 in “The Elements of Statistical Learning”), so that it
+would read</p>
 <p><span class="math display">\[
 \text{Update} \quad f_m(x)=f_{m-1}(x) + \nu \sum_{j=1}^{J_m}
 \gamma_{jm}I(x\in R_{jm}).
@@ -1769,7 +1770,15 @@ marker_effects &lt;- apply(effect_weights, 1, function(w) {
 genetics &lt;- as.vector(X %*% marker_effects)
 environment &lt;- rnorm(N, sd = sqrt(var(genetics) / 2))
 y &lt;- genetics + environment
-dat &lt;- cbind(y, as.data.frame(X))</code></pre>
+dat &lt;- cbind(y, as.data.frame(X))
+
+# Looking at a few entries in the data:
+dat[1:6,1:20]</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["y"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["V1"],"name":[2],"type":["int"],"align":["right"]},{"label":["V2"],"name":[3],"type":["int"],"align":["right"]},{"label":["V3"],"name":[4],"type":["int"],"align":["right"]},{"label":["V4"],"name":[5],"type":["int"],"align":["right"]},{"label":["V5"],"name":[6],"type":["int"],"align":["right"]},{"label":["V6"],"name":[7],"type":["int"],"align":["right"]},{"label":["V7"],"name":[8],"type":["int"],"align":["right"]},{"label":["V8"],"name":[9],"type":["int"],"align":["right"]},{"label":["V9"],"name":[10],"type":["int"],"align":["right"]},{"label":["V10"],"name":[11],"type":["int"],"align":["right"]},{"label":["V11"],"name":[12],"type":["int"],"align":["right"]},{"label":["V12"],"name":[13],"type":["int"],"align":["right"]},{"label":["V13"],"name":[14],"type":["int"],"align":["right"]},{"label":["V14"],"name":[15],"type":["int"],"align":["right"]},{"label":["V15"],"name":[16],"type":["int"],"align":["right"]},{"label":["V16"],"name":[17],"type":["int"],"align":["right"]},{"label":["V17"],"name":[18],"type":["int"],"align":["right"]},{"label":["V18"],"name":[19],"type":["int"],"align":["right"]},{"label":["V19"],"name":[20],"type":["int"],"align":["right"]}],"data":[{"1":"-0.6553370","2":"0","3":"1","4":"0","5":"0","6":"0","7":"0","8":"1","9":"0","10":"0","11":"0","12":"0","13":"0","14":"1","15":"1","16":"1","17":"1","18":"1","19":"2","20":"2","_rn_":"1"},{"1":"-0.6780554","2":"1","3":"0","4":"0","5":"2","6":"0","7":"2","8":"1","9":"0","10":"2","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"0","18":"0","19":"1","20":"1","_rn_":"2"},{"1":"-0.2311866","2":"0","3":"1","4":"0","5":"0","6":"1","7":"0","8":"0","9":"0","10":"1","11":"1","12":"0","13":"0","14":"1","15":"0","16":"1","17":"0","18":"0","19":"1","20":"1","_rn_":"3"},{"1":"-1.0386650","2":"2","3":"0","4":"0","5":"1","6":"0","7":"1","8":"0","9":"0","10":"1","11":"0","12":"1","13":"0","14":"1","15":"0","16":"0","17":"0","18":"0","19":"0","20":"0","_rn_":"4"},{"1":"-0.4776310","2":"0","3":"1","4":"1","5":"1","6":"0","7":"0","8":"0","9":"2","10":"2","11":"2","12":"2","13":"0","14":"2","15":"1","16":"1","17":"0","18":"1","19":"1","20":"0","_rn_":"5"},{"1":"-0.4600658","2":"0","3":"0","4":"1","5":"1","6":"1","7":"0","8":"0","9":"1","10":"1","11":"0","12":"0","13":"0","14":"0","15":"0","16":"0","17":"0","18":"0","19":"1","20":"1","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>We will now try to predict <span class="math inline">\(y\)</span>
 using various tree boosting methods, adapted from code provided in .</p>
 <div id="a-a-basic-gbm" class="section level3">
@@ -1804,7 +1813,8 @@ could we modify the algorithm to be less computationally intensive?</p>
 <p><em>Solution</em>:</p>
 <p>We could for example:</p>
 <ul>
-<li>We could reduce the allowed complexity of each base learner</li>
+<li>We could reduce the allowed complexity of each base learner (reduce
+the interaction depth).</li>
 <li>We could subsample observations (like in bagging) and/or predictors
 (like in random forest). In other words, go for a stochastic gradient
 boosting approach.</li>
@@ -1879,10 +1889,7 @@ exceeds twenty minutes.</p>
 <h3>c) XGboost</h3>
 <p>Below we also provide code for applying cross-validated XGBoost to
 the same data set. Expand this code to perform a search of the
-hyperparameter space, similar to b). Finally, experimenting with the
-code from a), b) and c), what is the best model you are able to find?
-Fit that model using all available training data (no
-cross-validation).</p>
+hyperparameter space, similar to b).</p>
 <pre class="r"><code>set.seed(123)
 xgb &lt;- xgb.cv(
   data = X,
@@ -1945,11 +1952,23 @@ hyper_grid %&gt;%
 
 # minimum test CV RMSE
 min(xgb$evaluation_log$test_rmse_mean)</code></pre>
-<p>As for the final best model, the answer will depend on what models
-you decided to investigate, and how you decided to tune the
-hyperparameters. The final fit should involve a call to
-<code>gbm()</code>, <code>h2o.gbm()</code> or
+</div>
+<div id="d-model-evaluation" class="section level3">
+<h3>d) Model evaluation</h3>
+<p>Finally, experimenting with the code from a), b) and c), what is the
+best model you are able to find? Fit that model using all available
+training data (no cross-validation).</p>
+<p><em>Solution</em>:</p>
+<p>The answer will depend on what models you decided to investigate, and
+how you decided to tune the hyperparameters. The final fit should
+involve a call to <code>gbm()</code>, <code>h2o.gbm()</code> or
 <code>xgb.train()</code>.</p>
+<p>Notice that here we have skipped a model assessment of the final
+model, as we used all the available data to train the final model. If we
+were in a data-rich situation we might have held out a independent test
+set until now to check the accuracy of the final model. Or, if we had a
+lot of computing power, we might have done a nested cross-validation to
+perform the model assessment.</p>
 </div>
 </div>
 

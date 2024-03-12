@@ -5,10 +5,10 @@ author:
 - Department of Mathematical Sciences, NTNU
 date: "March 14, 2024"
 output:
-  # html_document:
-  #   df_print: paged
-  #   toc: no
-  #   toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: no
+    toc_depth: '2'
   pdf_document:
     fig_caption: yes
     keep_tex: yes
@@ -314,3 +314,5 @@ Finally, experimenting with the code from a), b) and c), what is the best model 
 *Solution*:
 
 The answer will depend on what models you decided to investigate, and how you decided to tune the hyperparameters. The final fit should involve a call to `gbm()`, `h2o.gbm()` or `xgb.train()`. 
+
+Notice that here we have skipped a model assessment of the final model, as we used all the available data to train the final model. If we were in a data-rich situation we might have held out a independent test set until now to check the accuracy of the final model. Or, if we had a lot of computing power, we might have done a nested cross-validation to perform the model assessment.

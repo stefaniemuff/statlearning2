@@ -552,4 +552,11 @@ how you decided to tune the hyperparameters. The final fit should
 involve a call to \texttt{gbm()}, \texttt{h2o.gbm()} or
 \texttt{xgb.train()}.
 
+Notice that here we have skipped a model assessment of the final model,
+as we used all the available data to train the final model. If we were
+in a data-rich situation we might have held out a independent test set
+until now to check the accuracy of the final model. Or, if we had a lot
+of computing power, we might have done a nested cross-validation to
+perform the model assessment.
+
 \end{document}
