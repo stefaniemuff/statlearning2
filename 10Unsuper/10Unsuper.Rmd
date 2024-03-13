@@ -17,7 +17,7 @@ output:
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-bibliography: refs.bib
+bibliography: ../refs.bib
 header-includes: \usepackage{multirow}
 
 ---
@@ -38,7 +38,8 @@ whichformat="latex"
 $~$
 
 \centering
-![](table121.png){width=85%}
+<!-- ![](table121.png){width=85%} -->
+
 \flushleft
 (Table 2.1)
 

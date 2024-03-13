@@ -1,20 +1,257 @@
 ---
-title: "Chapter 10: Unsupervised Learning"
-author: Thiago G. Martins | NTNU & Yahoo
-date: Spring 2022
-bibliography: references.bib
+subtitle: "TMA4268 Statistical Learning V2023"
+title: "Module 10: Unsupervised learning"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "April 4, 2024"
+fontsize: 10pt
 output:
-  ioslides_presentation:
-    css: presentation.css
-    widescreen: true
-    #smaller: true
+  beamer_presentation:
+    keep_tex: yes
+    fig_caption: false
+    latex_engine: xelatex
+    theme: "Singapore"
+    colortheme: "default"
+    font: "serif"
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+urlcolor: blue
+bibliography: ../refs.bib
+header-includes: \usepackage{multirow}
+
 ---
+
+```{r, echo = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
+knitr::opts_chunk$set(echo = FALSE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+                      cache=TRUE, size="scriptsize")
+
+```
+
+```{r}
+library(tidyverse)
+library(ISLR)
+library(ggplot2)
+library(GGally)
+library(patchwork)
+```
+
+# Supervised vs Unsuperviser Learning
+
+  - **Supervised Learning**
+  
+    - For each observation $i = 1,\dots N$ we record:
+    
+      - $p$ features $X_{i1},\dots,X_{ip} $ AND one response variable $Y_i$
+    
+    - **Main Interest:**
+      
+      - Prediction or inference
+      
+      
+  - **Unsupervised Learning**
+  
+   - For each observation $i = 1,\dots N$ we record:
+    
+      - $p$ features $X_{i1},\dots,X_{ip}$ 
+    
+   - **Main Interest:**
+      
+      - Better data visualization, discover interesting patterns, exploratory analysis, clustering
+  
+# General Challenges of Unsupervised Learning
+  
+  - In general, unsupervised learning methods are
+  
+    - more subjective
+    - hard to assess results
+
+  - There is usually no obvious ground-truth to compare to
+
+\pause 
+
+  - Remedy: 
+  
+    - Unsupervised methods are usually part of a bigger goal
+    
+    - Evaluate them as how they contribute to such bigger goal
+
+  - Examples:
+  
+    - How clustering shoppers improved your recommendation algorithm?
+    - How clustering documents reduced computational complexity and what was the cost involved?
+  
+# Unsupervised Learning techniques
+  
+  Covered in this module:
+  
+  - **PCA (Principal Component Analysis)**
+
+    - Data Visualization
+
+    - Data pre-processing
+
+  - **Clustering**
+    
+    - Discovering unknown subgroups in the data
+    - k-means clustering
+    - Hierarchical clustering
+
+# Data Visualization
+```{r, head = TRUE}
+
+data(USArrests)
+head(USArrests)
+```
+Number of arrest per 100 000 inhabitants, Percent of population living in urban areas.
+
+
+# Data Visualization
+
+```{r, out.width="70%"}
+ggpairs(USArrests, title="US Arrests")
+```
+
+  - Many plots to look at ($p(p-1)$)
+  - Each contains only a small part of the information
+  
+  We want to find low dimensional representation of the data that captures
+most of the info as possible: **Principal Components Analysis (PCA)** is a way to obtain that !
+
+
+# Principal Components Analisis (I)
+
+- We have a $n \times p$ matrix $X$
+
+- We want to create a $n \times M$ matrix $Z$, with $M < p$ such that the $m$th column is:
+
+$$Z_m = \sum_{j=1}^{p} \phi_{jm} X_j \quad \text{subject to} \quad \sum_{j=1}^p \phi_{jm}^2 = 1$$
+  
+  - We want $Z_1$ to have the highest possible variance.
+  
+  \pause
+  
+  - Why do we have the constrain $\sum_{j=1}^p \phi_{jm}^2 = 1$ ?
+
+# Principal Component Analysis (II)
+  
+  - Once we have $Z_1$: 
+  
+  - $Z_2$ should be uncorrelated to $Z_1$, and have the highest variance, subject to this constrain.
+    
+    - The direction of $Z_1$ must be perpendicular (or orthogonal) to the direction of $Z_2$
+  
+  - And so on ...
+
+\vspace{1cm}
+
+- We can construct up to $p$ PCs that way.
+- In which case we have: 
+  
+  - Captured all the variability contained in the data
+
+  - Created a set of orthogonal predictors
+  - But  **not** accomplished dimensionality reduction
+
+# Example 1
+
+```{r, out.width="70%"}
+data = USArrests[,c(1,2)]
+datas = scale(data)
+results <- prcomp(datas, scale = FALSE)
+
+a11 = results$rotation[1,1]
+a12= results$rotation[2,1]
+c1 = -a11/a12
+a21 = results$rotation[1,2]
+a22= results$rotation[2,2]
+c2 =-a21/a22
+
+
+u = datas[,2] + 1/c2 * datas[,1]
+y1 = (1+c2^(-2))^(-1) *u
+x1 = 1/c2*y1
+data.frame(datas) %>%
+  mutate(pr1 = x1, pr2 = y1) %>%
+  ggplot() + geom_point(aes(Murder, Assault)) +
+  coord_equal() +
+  geom_abline(intercept = 0, slope = c1, color = "green") +
+  geom_abline(intercept = 0, slope = c2, color = "red") +
+  geom_point( aes(pr1,pr2, color = "PC1")) +
+  geom_segment(aes(x = Murder, xend = pr1, y = Assault, yend = pr2), color = "grey", linetype = "dashed") 
+```
+
+# Example 2
+
+```{r}
+results <- prcomp(USArrests, scale = TRUE)
+print("Loadings")
+results$rotation
+```
+# Example 2
+```{r, out.width="80%"}
+biplot(results, scale = 0)
+```
+
+# PCA - General setup
+  
+  - Let $\boldsymbol X$ be a matrix with dimension $n \times p$.
+
+  - Assume $\boldsymbol \Sigma$ to be the covariance matrix associated with $\boldsymbol X$.
+
+  -  $\Sigma$ is  non-negative, therefore:
+$$ \boldsymbol {\Sigma} = \boldsymbol C \boldsymbol \Lambda \boldsymbol C^{-1} $$
+  
+  - $\boldsymbol \Lambda = diag(\lambda _1, ..., \lambda _p)$ is a diagonal matrix of ordered eigenvalues
+    
+  - $\boldsymbol C$ is a matrix of eigenvectors of $\boldsymbol {\Sigma}$.
+
+
+- We want $\boldsymbol Z_1 = \boldsymbol \phi_1 \boldsymbol X$, subject to $||\boldsymbol \phi_1||_2 = 1$ so that the variance  $V(\boldsymbol Z_1) = \boldsymbol \phi_1^T \Sigma \boldsymbol \phi_1$ is maximised
+  
+  - $\boldsymbol \phi_1$ is the eigenvector corresponding to the largest eigenvalue of $\boldsymbol \Sigma$
+  
+  - The fraction of the original variance kept by the first $M$ principal component
+
+$$ R^2 = \frac{\sum _{i=1}^{M} \lambda _i}{\sum _{j=1}^{p}\lambda _j} $$
+
+# Example 2
+
+```{r, out.width="80%"}
+p1 = data.frame(PC = c(1:4),
+           Var = results$sdev^2 ) %>%
+  ggplot() + geom_point(aes(PC, Var)) +
+  geom_line(aes(PC, Var)) +
+  ggtitle("Variance Explained by each PC")
+
+p2 = data.frame(PC = c(1:4),
+           Var = results$sdev^2 ) %>%
+  mutate(cum= cumsum(Var)/sum(Var)) %>%
+  ggplot() + geom_point(aes(PC, cum)) + 
+  geom_line(aes(PC, cum)) + 
+  
+  ggtitle("Variance Explained by each PC") +
+  ylab("Proportion of variance explained") +
+  xlab("Principal Component")
+
+p1 + p2
+```
+
+# Notes about PCA
+
+  - PCA is dependent on the scaling of the variables involved....why?
+  
+  - Each Principal Component loading vector is unique, up to a sign flip.
+  
+  - Flipping the sign has no effect as the direction of the PC does not change.
 
 # Clustering methods
 
-## Clustering methods
 
-- Partition the data into different groups
+- **Gaal**: Partition the data into different groups
     - Observations within each group are quite similar
     - Observations in different groups are quite different 
     
@@ -26,7 +263,7 @@ output:
     - Market segmentation
     - Search Engine
 
-## PCA vs. Clustering methods
+# PCA vs. Clustering methods
 
 - Both aim to simplify the data via small number of summaries
 
@@ -36,7 +273,7 @@ output:
 - Clustering looks for homogeneous subgroups among the observations
     - Clusters
 
-## Types of clustering
+# Types of clustering
 
 - K-means
 
@@ -44,9 +281,8 @@ output:
 
 # K-means clustering
 
-## K-means clustering
 
-- It is an approach for partitioning a dataset into K distinct, non-overlapping clusters.
+- It is an approach for *partitioning* a dataset into K distinct, non-overlapping clusters.
 
 - $C_1, ..., C_k$: Sets containing indices of observations in each cluster.
 
@@ -54,15 +290,13 @@ output:
     - $C_1 \cup C_2 \cup \ldots \cup C_k = \{1,\ldots,n\}$
     - $C_k \cap C_{k'} = \emptyset \text{ for all }k\neq k'$
 
-<div class="notes">
 
-1) Each observation belongs to at least one of the $K$ clusters.
+  1.  Each observation belongs to  one of the $K$ clusters.
 
-2) No observation belongs to more than one cluster.
+  2.  No observation belongs to more than one cluster.
 
-</div>
 
-## Within-cluster variation
+# Within-cluster variation
 
 - A good cluster is one for which the **within-cluster variation** is **as small as possible**
 
@@ -74,13 +308,11 @@ $$W(C_k) = \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})
 
 $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K}W(C_k)\right\}$$
 
-<div class="notes">
 
 - Squared Euclidean distance is the most common
 
-</div>
 
-## K-means algorithm
+# K-means algorithm
 
 - Find algorithm to solve:
 
@@ -90,27 +322,21 @@ $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_
 
 - Fortunately, there is a simple algorithm that can provide a local optimum
 
-## K-means algorithm
+# K-means algorithm
+![](imgs/kmeans_algo.png)
 
-<center>
-<img src="imgs/kmeans_algo.png" height="90%" width="90%" />
-</center>
+<!-- # Recommended Exercise 2 -->
 
-## Recommended Exercise 2
+<!-- Show that the algorithm in the previous slide is guaranteed to decrease the value of the objective -->
 
-Show that the algorithm in the previous slide is guaranteed to decrease the value of the objective
+<!-- $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2 \right\}$$ -->
 
-$$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2 \right\}$$
+<!-- at each step.  -->
 
-at each step. 
 
-## K-means algorithm
+# K-means algorithm
 
-<center>
-<img src="imgs/kmeans_algo_progress.png" height="50%" width="50%" />
-</center>
-
-<div class="notes">
+![](imgs/kmeans_algo_progress.png){width=50%}
 
 - A simulated data set with 150 observations in two-dimensional space. 
 
@@ -118,17 +344,12 @@ at each step.
 
 - Final result is obtained after 10 iterations
 
-</div>
 
-## K-means algorithm
+# K-means algorithm (stating conditions)
 
-- Depend on random start conditions, need to run multiple times and select the best run
 
-<center>
-<img src="imgs/kmeans_algo_random_init.png" height="40%" width="40%" />
-</center>
+![](imgs/kmeans_algo_random_init.png){width=60%}
 
-<div class="notes">
 
 - K-means performed six times with random initial conditions
 
@@ -136,58 +357,42 @@ at each step.
 
 - Above is the value of objective function
 
-</div>
 
-## K-means algorithm
+# K-means algorithm
 
-- Potential disadvantage of K-means, we need to select K
-    - But this is not always a disadvantage, e.g. search engine
+- Potential disadvantage of K-means, we need to select $K$
 
-## Recommended exercise 3
+- This is not always a disadvantage
 
-Perform k-means clustering in the New York Times stories dataset. 
-
-The pca-examples.rdata can be downloaded from the Blackboard. 
 
 # Hierarchical Clustering
 
-## Hierarchical Clustering
 
-- Does not require us to commit to a particular choice of K in advance
+- Does not require us to commit to a particular choice of $K$ in advance
 
-- Produces an attractive tree-based representation called dendogram
+- Produces an attractive tree-based representation called *dendogram*
 
 - We will describe bottom-up or agglomerative clustering
     - Most common type of hierarchical clustering
 
-<div class="notes">
 
 - Other approach available is called Divisive or "top down" approach
 
-</div>
-    
-## Interpreting a dendogram
 
-<center>
-<img src="imgs/dendogram.png" height="90%" width="90%" />
-</center>
+# Interpreting a dendogram
 
-<div class="notes">
+![](imgs/dendogram.png)
 
-- The height of the cut in the dendogram serves the same role as K in K-means clustering
+- The height of the cut in the dendogram serves the same role as $K$ in $K$-means clustering
     - Not always clear where to make the cut
     
 - Clusters obtained by cutting the vertical axis at a lower level are always nested within clusters obtained by cutting at a higher level.
 
-</div>
 
-## Dendograms can be misleading
+# Dendograms can be misleading
 
-<center>
-<img src="imgs/dendogram_misleading.png" height="90%" width="90%" />
-</center>
+![](imgs/dendogram_misleading.png)
 
-<div class="notes">
 
 - The lower in the tree fusions occur -> more similar
 
@@ -197,9 +402,8 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 - It is tempting but incorrect to conclude that observations 9 and 2 are quite similar to each other.
     - observation 9 is no more similar to observation 2 than it is to observations 8, 5, and 7.
 
-</div>
 
-## Hierarchical structure
+# Hierarchical structure
 
 - Not always suited for a arbitrary dataset
 
@@ -212,7 +416,7 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 
 - This explains why hierarchical clusters can sometimes yield worse results than K-means for a given number of clusters
 
-## The hierarchical clustering algorithm
+# The hierarchical clustering algorithm
 
 1. Start at the botton of the dendogram
     - Each of the $n$ observations is treated as its own cluster
@@ -220,7 +424,6 @@ The pca-examples.rdata can be downloaded from the Blackboard.
     - There are now $n-1$ clusters
 3. Repeat step 2 until there are only one cluster
 
-<div class="notes">
 
 - Dissimilarity measure
     - We need to chose a dissimilarity measure
@@ -228,15 +431,10 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 - Linkage
     - Extend the concept of dissimilarity from a pair of observation to a pair of groups of observations
 
-</div>
 
 ## The hierarchical clustering algorithm
 
-<center>
-<img src="imgs/dendogram_iteration.png" height="50%" width="50%" />
-</center>
-
-<div class="notes">
+![](imgs/dendogram_iteration.png){width=50%}
 
 - First few steps of the hierarchical clustering algorithm
     - Euclidean distance
@@ -248,7 +446,6 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 
 - 8 and {5, 7} using complete linkage
 
-</div>
 
 ## Choice of dissimilarity measure
 
@@ -259,21 +456,15 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 - Correlation-based distance
     - Correlation focus on shape of the observation profile rather than their magnitude
 
-<div class="notes">
 
 - Correlation-based distance: 
     - Two observations are similar if their features are highly correlated
     - Even though observed values might be far apart according to Euclidean distance
 
-</div>
 
-## Correlation-based distance
+# Correlation-based distance
 
-<center>
-<img src="imgs/correlation_based_sample.png" height="70%" width="70%" />
-</center>
-
-<div class="notes">
+![](imgs/correlation_based_sample.png){width=70%}
 
 - Three observations with measure on 20 variables
 
@@ -285,9 +476,8 @@ The pca-examples.rdata can be downloaded from the Blackboard.
     - Different values for each variable -> large euclidean distance
     - Strongly correlated
 
-</div>
 
-## Online retailer example
+# Online retailer example
 
 - Online retailer example
     - Identify subgroups of similar shoppers
@@ -302,7 +492,7 @@ The pca-examples.rdata can be downloaded from the Blackboard.
     - Shoppers with similar preference will be clustered together
     - Including both high and low volumes shoppers
 
-## Linkage
+# Linkage
 
 - Need to extend the concept between dissimilarity between pairs of observations to pairs of groups of observations
 
@@ -311,33 +501,27 @@ The pca-examples.rdata can be downloaded from the Blackboard.
     - Single: Minimal intercluster dissimilarity
     - Average: Mean intercluster dissimilarity
 
-<div class="notes">
 
 - Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B. 
 
 - Then apply the appropriate function to compute either Complete, Single and Average linkage
 
-</div>
 
-## Linkage
+# Linkage
 
 - Dendogram depends strongly on the type of linkage used 
 
-<center>
-<img src="imgs/dendogram_linkages.png" height="65%" width="65%" />
-</center>
+![](imgs/dendogram_linkages.png){width=60%}
+
 
 - Average and complete linkage tend to yield more balanced clusters.
 
-## Scaling variable
+# Scaling variable
 
 - Usually wise to scale the variables
 
-<center>
-<img src="imgs/online_shoppers_scaling.png" height="70%" width="70%" />
-</center>
+![](imgs/online_shoppers_scaling.png){width=70%}
 
-<div class="notes">
 
 - Eight online shoppers (each with one color)
 
@@ -349,15 +533,9 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 
 - Which case is better depend on the application and objectives
 
-</div>
 
-## Recommended exercise 4
 
-Perform hierarchical clustering in the New York Times stories dataset. 
-
-The pca-examples.rdata can be downloaded from the Blackboard. 
-
-## Summary of the decisions involved
+# Summary of the decisions involved
 
 - Should standardize the variables?
     - Usually yes
@@ -373,9 +551,10 @@ The pca-examples.rdata can be downloaded from the Blackboard.
 - With these methods, there is no single right answer—any solution that exposes some 
 interesting aspects of the data should be considered.
 
-## Extra slides
+# Extra slides
 
 - Blog post applying k-means clustering on data from Twitter
     - http://thinktostart.com/cluster-twitter-data-with-r-and-k-means/
+    
 - Blog post applying hierarchical clustering on data based on the complete works of william shakespeare
     - https://www.r-bloggers.com/clustering-the-words-of-william-shakespeare/ 
