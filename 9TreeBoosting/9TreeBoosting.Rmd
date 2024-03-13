@@ -121,7 +121,7 @@ $~$
 
 \vspace{2mm}
 
-* It is also possible to boost, e.g., linear or penalized regression models (see presentation by a master student on Friday).
+* It is also possible to boost, \emph{e.g.}, linear or penalized regression models (see presentation by a master student on Friday).
 
 
 ---
@@ -239,7 +239,7 @@ $$\text{err} =\frac{1}{N} \sum_{i=1}^N I(y_i \neq G(x_i)) \ .$$
 
 \vspace{2mm}
 
-* Here, $G(X)$ is assumed to be a _\textcolor{red}{weak classifier}_, that is, its error rate is only _slightly_ better than a random guess.
+* Here, $G(X)$ is assumed to be a _\textcolor{red}{weak classifier}_, that is, its error rate is only _slightly better than a random guess_.
 
 \vspace{2mm}
 
@@ -260,19 +260,23 @@ $$\text{err} =\frac{1}{N} \sum_{i=1}^N I(y_i \neq G(x_i)) \ .$$
     * Sequentially apply the weak classifier on _modified versions_ of the data, producing a _sequence_ $G_m(x)$ of weak classifiers for $m=1,2,\ldots,M$. 
     * At the end, use a weighted sum $G(x)=\text{sign}\left( \sum_{m=1}^M \alpha_m G_m(x)\right)$ to make the final prediction.
 
-\vspace{2mm}
-
-* How do we then find the sequence $G_m(x)$ and the corresponding weights $\alpha_m$?
-
----
 
 
 
 \centering
-![](fig10_1_elements.png){width=80%}
+![](fig10_1_elements.png){width=50%}
 
-\small
+\tiny
 (Taken from @hastie_etal2009 )
+
+---
+
+\vspace{2mm}
+
+How do we then find the sequence $G_m(x)$ and the corresponding weights $\alpha_m$?
+
+
+
 
 ---
 
@@ -585,9 +589,9 @@ $~$
 
 \vspace{2mm}
 
-2) **Finding the regions $R_j$**: This is the hard part. Usually approximative via a greedy algorithm. Often, use smoother approximations of the optimization criterion 
+2) **Finding the regions $R_j$**: This is the hard part. Usually approximated via a greedy algorithm. Often, use smoother approximations of the optimization criterion 
 \begin{equation}\label{eq:approx}
-\tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
+\tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in \tilde{R}_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
 \end{equation}
 and then use $\hat{R}_j=\tilde{R}_j$ to find $\gamma_j$ using criterion \eqref{eq:treeopt}.
 
@@ -640,7 +644,7 @@ $~$
 
 $~$
 
-* Both strategies on the previous slide are straightforward, but _not very robust_. 
+* Both strategies on the previous slide are straightforward, but either _not very robust and general_. 
 
 \vspace{2mm}
 
@@ -672,7 +676,7 @@ $~$
 
 * When trying to find the best function $f(x)$ that minimizes a loss function 
 $$L(f) = \sum_{i=1}^N L(y_i,f(x_i)) \ ,$$
-the direction of steepest ascent is given by an $N$-dimensional _\textcolor{red}{gradient vector}_ $\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})$ with entries
+the direction of _steepest ascent_ is given by an $N$-dimensional _\textcolor{red}{gradient vector}_ $\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})$ with entries
 $$g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ .$$
 
 \vspace{2mm}
@@ -1362,7 +1366,7 @@ ames_xgb <- xgboost(
     max_depth = 3,
     min_child_weight = 3,
     subsample = 0.8, # Proportion of datapoints used for each tree
-    colsample_bytree = 0.5, # subsample ratio of columns when constructing each tree
+    colsample_bytree = 0.5, # subsample ratio of columns when constructing one tree
     nthread=12),
   verbose = 0
 )  
