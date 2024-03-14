@@ -1,7 +1,7 @@
 ---
 title: "Compulsory Exercise 2"
 author:
-- Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff
+- Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara Martino
 - Department of Mathematical Sciences, NTNU
 header-includes: \usepackage{amsmath}
 output:
@@ -12,7 +12,7 @@ output:
     toc: no
     toc_depth: '2'
     df_print: paged
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
@@ -24,47 +24,58 @@ urlcolor: blue
 
 ---
 
-**The submission deadline is: Thursday April 20, 23:59h**
+**The submission deadline is: Monday April 15, 23:59h**
 
 
 ```{r setup, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize",fig.width=4, fig.height=3,fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize",
+                      fig.width = 4,
+                      fig.height = 3,
+                      fig.align = "center")
 
 ```
 
 
 # Introduction
 
-Welcome to the TMA4268 project exercise! In this project, you will be working on analyzing a data set by developing a model using machine learning techniques.
+In this project, you will be working on analyzing a data set by developing *prediction/classification* models using statistical learning techniques.
 
-The goal of this project is to give you hands-on experience with the methods learned in the course and to help you develop your skills in data pre-processing, model selection, and evaluation.
+The goal of this relatively open project is to give you hands-on experience with the methods learned in the course and to help you develop your skills in data pre-processing, model selection, and evaluation.
 
-To get started, here are a broad guideline for your project (detailed guideline is specified below):
+To get started, here is a broad guideline for your project:
 
-1. Data set: Choose a data set of your choice. Ensure that your chose data set is diverse enough and contains enough data points to train a good model. You can find a variety of data sets in [Kaggle](https://www.kaggle.com/datasets). You can try searching for a topic that you find interesting and would like to work with. \
-*Hint* for finding a "well-organized" data set: We recommend choosing a data set with sufficiently-large enough upvotes (i.e., shown as an upward arrow). Otherwise, a data set could be often un-organized or poorly structured with missing values. We don not want you to spend much time on data cleaning! \
-If you cannot possibly decide which data set to use, please contact Daesoo Lee by email.
+1. **Choose a data set for your project.** We list two possible data sets below, or you can find one on your own.
+    - **Heart Failure:** The data set is provided by user Fedesoriano on Kaggle here [here](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction). More information can be found in the provided link.
+    - **Salaries in Academia:** This is a synthetic data set provided in the `carData` package in `R`, and can be accessed via `Salaries`. More information can be found with the `?Salaries` command.
+    - **Choosing your own data set:** Ensure that your chose data set is diverse enough and contains enough data points to train a good model. There are many example data sets provided by `R` packages (e.g. `CarData`), and you can find a variety of data sets in [Kaggle](https://www.kaggle.com/datasets) or [TidyTuesday](https://github.com/rfordatascience/tidytuesday). Try searching for a topic that you find interesting and would like to work with. To find a "well-organized" data on Kaggle set we recommend choosing a data set with sufficiently-large amount of upvotes. Otherwise, a data set could be often un-organized or poorly structured with missing values. We do not want you to spend much time on data cleaning!
 
-2. Data pre-processing: Before building your model, you might need to pre-process the data (data wrangling), depending on what format your methods require.
+2. **Decide on a prediction/classification task.** What are you trying to predict/classify with the data set? Decide on this *before* you try out any of the models - it's fine if it turns out in the end that you are not able to get good predictions, as long as you have done everything correctly. Some ideas are provided here, but in principle you can decide on anything that makes sense.
+    - For the heart failure data set you could try to classify whether a patient gets heart disease or not, predict their age, or predict their cholesterol.
+    - For the academic salary data set, you can try to predict the salary, or classify an academic's rank or discipline.
 
-3. Model selection: Choose appropriate models and methods for your project. Ideally, you should use methods that you have learned about in the course, such as linear or logistic regression, regression or classification trees, random forests, SVMs etc. Make sure to justify your choice of algorithm and tune the hyperparameters to improve model performance. **Use methods from at least two (ideally more) different modules of the course**. If you are solving a classification task, for example, you can compare various approaches like logistic regression, LDA, QDA, KNN, regression trees/random forests and SVMs, etc.
+3. **Data pre-processing.** Before building your model, you might need to pre-process the data (data wrangling), depending on what format your methods require.
 
-4. Model evaluation: Evaluate your model's performance using appropriate metrics or evaluation tools, such as accuracy, MSE, sensitivity, specificity, residual plots etc. You should also use techniques such as cross-validation to ensure that your model is robust.
+4. **Model selection.** Choose appropriate models and methods for your project. You should use methods that you have learned about in the course. Make sure to justify your choice of algorithm, check model assumptions and, if relevant, tune the hyperparameters to improve model performance. **Use methods from at least two different modules of the course**. You can also consider transformations of the variables in your data set, and interaction effects. Make sure that you do the model selection in a *valid* way, as you have learned in the course, and remember the bias-variance tradeoff.
+    -  If you are solving a prediction task, you can try methods such as multiple linear regression, GAMs, ridge/lasso regression, trees, random forests, boosting *etc*.
+    - If you are solving a classification task, you try methods like logistic regression, LDA, QDA, KNN, regression trees, random forests and boosting *etc*.
 
-5. Reporting: Present your results and state your findings and interpresentation on the results. 
+5. **Model assessment.** Evaluate your model's performance using appropriate metrics or evaluation tools, such as accuracy, MSE, sensitivity, specificity, *etc.* Again, make sure that you do this in a *valid* way, as you have learned in the course.
 
+6. **Reporting.** Present your results and state your findings and interpretation of the results.
 
-We hope you find this project both challenging and rewarding. 
-
-Best of luck!
-
+We hope you find this project both challenging and rewarding. Best of luck!
 
 ## Grading
 
 Maximal score is 100 points and the number of points given for each section of your report are indicated below. The grading is given by PASS/FAIL. To pass the compulsory exercise, your score must be at least 60.
-
 
 ## Supervision
 
@@ -72,9 +83,8 @@ We will use the times where we would have lectures and exercises for supervision
 
 Supervision hours (in the usual lecture rooms):
 
-* Thursday, April 13, 8:15-10:00 and 10:15-12:00
-* Monday, April 17, 10:15-12:00
-* Thursday April 20, 8:15-10:00 and 10:15-12:00
+* Thursday, April 11, 8:15-10:00 and 16:15-18:00
+* Friday April 12, 12:15-14:00
 
 Remember that there is also the Mattelab forum, and we strongly encourage you to use it for your questions outside the supervision hours -- this ensures that all other students benefit from the answers (try to avoid emailing the course staff). 
 
@@ -83,11 +93,11 @@ Remember that there is also the Mattelab forum, and we strongly encourage you to
 * You should work in the same groups as for compulsory exercise 1.
 * Remember to write your names and group number on top of your submission file.
 * The exercise should be handed in as **one R Markdown file and a pdf-compiled version** of the R Markdown file (if you are not able to produce a pdf-file directly please make an html-file, open it in your browser and save as pdf - no, not landscape - but portrait please). We will read the pdf-file and use the Rmd file in case we need to check details in your submission.
-* In the R-chunks please use possibly both `echo=TRUE` and `eval=TRUE` to make it simpler for us to read and grade. If the output is too long and thus not shown, you may indicate this. 
-* Please do not include all the text from this file (that you are reading now) - we want your R code, plots and written solutions - use the attached template `Compulsory2_template.Rmd`.
-* Please **not more than 14 pages** in your pdf-file! (This is a request, not a requirement.)
+* Do not include the text from the file that you are reading now. We want your (relevant) R code, plots and written solutions - use the attached template `Compulsory2_template.Rmd`.
+* Please **no more than 14 pages** in your pdf-file. **We will stop reading your report after page 14.** Keep this in mind when choosing what R-code/output to include, and when sizing your figures.
+* In the R-chunks, carefully consider when to set `echo` and `eval` to `TRUE` or `FALSE`, to make it simpler for us to read and grade. Use common sense, and do not include irrelevant output and code.
 * Please save us time and **do not submit word or zip**, and do not submit only the Rmd. This only results in extra work for us.
-* **Bonus hint: Neat reports are easier to understand and may result in a better grade - simply because we cannot give full points if things are unclear, ambiguous or messy. **
+* **Bonus hint: Neat reports are easier to understand and may result in a better grade - simply because we cannot give full points if things are unclear, ambiguous or messy.** Pretend that the task you decided on was given to you by your boss at a company, and the report is what you will deliver to the boss. When writing the report, keep in mind that boss has limited time and attention, and has not spent as much time as you have on getting familiar with the problem.
 
 ---
 
@@ -111,18 +121,18 @@ The purpose of the abstract it to give a short and concise summary of your proje
 
 ## Introduction: Scope and purpose of your project (15 points)
 
-* Briefly introduce the broad idea of the problem or task that you chose and the respective data set that you use. This could be a classification task (e.g., predicting the species of flowers in the Iris data set) or a regression task (e.g., predicting the price of a house based on its features). Clearly define the scope of your project. What specific problem are you trying to solve? 
+* Briefly introduce the broad idea of the problem or task that you chose and the respective data set that you use. This could be a classification task (e.g., predicting whether a patient gets heart disease or not) or a prediction task (e.g., predicting the salary of an academic). Clearly define the scope of your project. What specific problem are you trying to solve? 
 
-* Describe the source and give a referenc to where the data set is coming from.
+* Describe the source and give a reference to where the data set is coming from.
 
-* Describe the purpose of your project is some more detail. What are the specific question that you want to answer in your project? Are you trying to find the best performing method or a good performing and light method that is easy to use? Who is your audience? Are you trying to discover the relations between different variables? Are you trying to find important predictors for your classification? Are you trying to draw some insightful understanding in a particular topic/domain? Importantly: Is the main purpose inference or prediction? 
+* Describe the purpose of your project is some more detail. What are the specific question that you want to answer in your project? Are you trying to find the best performing method or a good performing and light method that is easy to use? Who is your audience? Are you trying to discover the relations between different variables? Are you trying to find important predictors for your classification? Are you trying to draw some insightful understanding in a particular topic/domain?
 
 
 ## Descriptive data analysis/statistics (15 points)
 
-Conduct descriptive data analysis to get an overview over your data (see [this example](https://www.kaggle.com/code/upadorprofzs/basic-visualization-techniques) for inspiration).
+Conduct descriptive data analysis to get an overview over your data (see [this example](https://www.kaggle.com/code/upadorprofzs/basic-visualization-techniques) for inspiration). Try to **focus on what will be relevant for your modelling** - too much detail, or context-free figures, are not useful to the reader.
 
-Examples:
+For example:
 
 * Report measures such as mean, median, range, standard deviation, and variance to describe the central tendency, variability, and distribution of a data set.
 * Scatter plots and correlation matrices across different variables and histograms of variables (see [this example](https://ggobi.github.io/ggally/reference/ggpairs.html)).
@@ -132,7 +142,7 @@ Examples:
 
 ## Methods (30 points)
 
-* Describe the methods that you are using in your project and explain in detail how you applied them. Depending on the task, these could include methods such as linear or logistic regression, decision trees, random forests, support vector machines etc. You should use several methods for your problem so that you can compare their performance.
+* Describe the methods that you are using in your project and explain in detail how you applied them. You should use several methods for your problem so that you can compare their performance.
 * Explain briefly how each method works, what its strengths and weaknesses are, both in general but also in the light of your project (how suitable is the method _in your case_?).
 * Describe which hyperparameters are optimized for the methods (e.g., a shrinkage factor is a hyperparameter in Lasso).
 * Describe clearly how you evaluate the performance of the different models and methods (accuracy, MSE, misclassification error, CV error,...). Explain how each metric is calculated, and why it is a useful measure of model performance.
@@ -143,14 +153,7 @@ Examples:
 
 1. Present your results in a *clear and organized* manner. This could include tables, graphs, or other visualizations that help to convey your findings. Report also all the hyperparameters, the performance (e.g., test error) etc. that you introduced in the Methods section.
 
-2. State your interpretation of the results. **It is important that you compare the different methods in terms of different aspects such as model size, flexibility, bias-variance trade-off, etc.** The interpretation is very much dependent on your initial question. For instance:
-* Classification: In a classification problem, interpret the outcome and performance of the different methods and compare them. Which method worked best and why? In addition, the importance of each feature in the model can be analyzed to gain insights into the underlying patterns in the data. 
-
-* Regression: In a regression problem, the result interpretation is typically the predicted value for each instance in the test set. The mean squared error (MSE) can be reported to evaluate and compare the performance of the models. In addition, the coefficients of each feature in the model can be analyzed. You may identify the most important predictors for the target variable. Again, the interpretation is depending on your research question (e.g., inference vs. prediction).
-
-* Clustering: In a clustering problem, the result interpretation is typically the grouping of instances into clusters. The characteristics of each cluster can be analyzed to gain insights into the underlying patterns in the data.
-
-
+2. Interpret the results. **You can compare the different methods in terms of aspects such as performance, computational cost, flexibility, bias-variance trade-off, etc.** The interpretation should depend on the prediction/classification task you decided on.
 
 3. Discuss any limitations or caveats that are important to keep in mind when interpreting your results.
 

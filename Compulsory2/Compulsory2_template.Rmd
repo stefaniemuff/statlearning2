@@ -20,12 +20,22 @@ abstract: "This is the place for your abstract (max 350 words)"
   
 ```{r setup, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize",fig.width=4, fig.height=3,fig.align = "center")
+# Feel free to change the setting as you see fit
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize",
+                      fig.width = 4,
+                      fig.height = 3,
+                      fig.align = "center")
 
 ```
 
-```{r,eval=TRUE,echo=FALSE}
+```{r, eval=TRUE, echo=FALSE}
 library("knitr")
 library("rmarkdown")
 ```
