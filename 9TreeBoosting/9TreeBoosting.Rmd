@@ -1466,8 +1466,8 @@ where $X_{-j}$ denotes the set of all variables _except_ $X_j$.
 \vspace{2mm}
 
 * For boosted trees, we estimate the partial dependence by taking the average over all observations
-$$\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{ji},(X_{-j})_i)$$
-for a set of values for $X_j$, where we evaluate the estimated tree value $f(X_{ji},(X_{-j})_i)$ for each data point $i$. 
+$$\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{j},(X_{-j})_i)$$
+for a set of values for $X_j$, where we evaluate the estimated tree value $f(X_{j},(X_{-j})_i)$ for each data point $i$. 
 
 \vspace{4mm}
 
