@@ -22,30 +22,92 @@ header-includes: \usepackage{multirow}
 
 ---
 
-```{r setup, include=FALSE}
-showsol<-TRUE
+
+```{r, echo = FALSE}
+
 library(knitr)
 opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+knitr::opts_chunk$set(echo = FALSE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
                       cache=TRUE, size="scriptsize")
-whichformat="latex"
+
 ```
 
+```{r}
+library(tidyverse)
+library(ISLR)
+library(ggplot2)
+library(GGally)
+library(patchwork)
+```
+
+### US Arrest Example
+
+$~$
+
+
+```{r}
+
+data(USArrests)
+
+head(USArrests)
+
+```
+
+$~$
+
+Scales:
+
+- Number of occurrence per 100 000 people
+- Percentage 
+
 ---
+
+### US Arrest Example
+
+$~$
+
+
+```{r}
+
+USArrests %>% mutate(Murder = Murder/1000, Assault = Assault/1000, Rape = Rape/1000) %>% head()
+
+```
+$~$
+
+Scales:
+
+- Number of occurrence per 100 people
+- Percentage 
+
+$~$
+
+Scales:
+
+- Number of occurrence per 100  people
+- Percentage 
+
+---
+
+
 
 ### PC loadings vectors $\Phi$
 
 $~$
 
-\centering
-<!-- ![](table121.png){width=85%} -->
+```{r}
+pca1 = prcomp(USArrests, scale = FALSE)
+pca2 = prcomp(USArrests%>% mutate(Murder = Murder/1000, Assault = Assault/1000, Rape = Rape/1000), scale = FALSE)
+knitr::kable(
+  list(pca1$rotation, pca2$rotation),
+  digits = 4
+)
 
-\flushleft
-(Table 2.1)
+```
+
 
 $~$
 
-Loadings vectors $\Phi_i=(\Phi_{1j} , \Phi_{2j},\ldots, \Phi_{pj})^\top$: How much does the respective covariate contribute to PC$_j$? 
+
 
 ---
 
@@ -54,7 +116,11 @@ Loadings vectors $\Phi_i=(\Phi_{1j} , \Phi_{2j},\ldots, \Phi_{pj})^\top$: How mu
 $~$
 
 \centering
-![](figure121.png){width=75%}
+```{r,  fig.show="hold", out.width="40%"}
+biplot(pca1, scale = 0)
+biplot(pca2, scale = 0)
+```
+
 
 --- 
 
@@ -98,7 +164,7 @@ $~$
 A graphical description of the **proportion of variance explained (PVE)** by a certain number of PCs (see Fig 12.3 from @ISL):
 
 \centering
-![](123.png){width=90%}
+<!-- ![](123.png){width=90%} -->
 
 ---
 
@@ -160,12 +226,12 @@ $~$
 
 ---
 
-![](kmeans_alg.png)
+<!-- ![](kmeans_alg.png) -->
 
 ---
 
 \centering
-![](fig12_8.png){width=75%}
+<!-- ![](fig12_8.png){width=75%} -->
 \flushleft
 \small
 (Fig 12.8 from course book)
@@ -180,7 +246,7 @@ Bottom-up agglomerative clustering that results in a _\textcolor{red}{dendogram}
 
 $~$
 
-![](hierclust.png){width=90%}
+<!-- ![](hierclust.png){width=90%} -->
 
 ---
 
@@ -201,7 +267,7 @@ $~$
 
 $~$
 
-![](fig12_12.png)
+<!-- ![](fig12_12.png) -->
 
 Note: The representation on the right is not possible in high-dimensional space (i.e., if we have $X_1, X_2, X_3, ...., X_p$).
 
@@ -213,7 +279,7 @@ $~$
 
 An exam question from 2022:
 
-![](exam_question3b_2023.png){with=110%}
+<!-- ![](exam_question3b_2023.png){with=110%} -->
 
 ---
 
