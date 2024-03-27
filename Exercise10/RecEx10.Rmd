@@ -1,9 +1,9 @@
 ---
 title: 'Module 10: Recommended Exercises'
 author:   
-  - Emma Skarstein, Kenneth Aase, Daesoo Lee, Stefanie Muff, 
+  - Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara Martino
   - Department of Mathematical Sciences, NTNU
-date: "March 23, 2023"
+date: "April 4, 2024"
 output:
    pdf_document:
      fig_caption: yes
@@ -14,7 +14,7 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
@@ -37,13 +37,16 @@ New stories were randomly selected from the [New York Times Annotated Corpus](ht
 
 The `nyt_data` is a dataset containing these 102 stories, which represent the 102 observations. The first column contains class labels of the stories (art and music) and, and the other stories contain the counts of each word in a given story (weight by the inverse document frequency and normalized by vector length).
 
-The New York Times stories dataset are contained in the file `pca-exampes.rdata`, which you can load from google drive (https://drive.google.com/open?id=1vaK9GDvMw4Hsuv0T1jHeq9ZyrqLhJ6MR) and store in the directory of your Rmd file. The pca-examples.rdata can be loaded with the following code.
+The New York Times stories dataset are contained in the file `pca-exampes.rdata` which is already included in the directory. 
+You can still download it from google drive (https://drive.google.com/open?id=1vaK9GDvMw4Hsuv0T1jHeq9ZyrqLhJ6MR) and store in the directory of your Rmd file. 
+The `pca-examples.rdata` can be loaded with the following code.
 
 ```{r, eval = T}
-load("pca-examples.rdata")
+load("pca-examples.rdata")  # use this when knitting
+# load("Exercise10\\pca-examples.rdata")  # use this when running the code in Rmd
 
 # We will work with nyt.frame
-nyt_data = nyt.frame
+nyt_data <- nyt.frame  # dimension: (102, 4432)
 ```
 
 
