@@ -41,18 +41,18 @@ library(patchwork)
 
 # Supervised vs Unsuperviser Learning
 
-  - **Supervised Learning**
+- **Supervised Learning**
   
     - For each observation $i = 1,\dots N$ we record:
     
-      - $p$ features $X_{i1},\dots,X_{ip} $ AND one response variable $Y_i$
+      - $p$ features $X_{i1},\dots,X_{ip}$ AND one response variable $Y_i$
     
     - **Main Interest:**
       
       - Prediction or inference
       
       
-  - **Unsupervised Learning**
+- **Unsupervised Learning**
   
    - For each observation $i = 1,\dots N$ we record:
     
@@ -61,6 +61,17 @@ library(patchwork)
    - **Main Interest:**
       
       - Better data visualization, discover interesting patterns, exploratory analysis, clustering
+  
+# Applications  of Unsupervised Learning (Examples)
+
+- Cancer research: Look for subgroups within the patients or within the genes in
+order to better understand the disease
+
+- Online shopping site: Identify groups of shoppers as well as groups of items within each of those shoppers groups.
+
+- Search engine: Search only a subset of the documents in order to find the best one for retrieval.
+
+- +++  
   
 # General Challenges of Unsupervised Learning
   
@@ -94,11 +105,11 @@ library(patchwork)
 
     - Data pre-processing
 
-  - **Clustering**
+  - * *Clustering**
     
     - Discovering unknown subgroups in the data
-    - k-means clustering
-    - Hierarchical clustering
+    - 1. k-means clustering
+    - 2. Hierarchical clustering
 
 # Data Visualization
 ```{r, head = TRUE}
@@ -124,19 +135,67 @@ most of the info as possible: **Principal Components Analysis (PCA)** is a way t
 
 # Principal Components Analisis (I)
 
-- We have a $n \times p$ matrix $X$
+- We have a $n \times p$ matrix $X$ (mean centered)
 
 - We want to create a $n \times M$ matrix $Z$, with $M < p$ such that the $m$th column is:
 
 $$Z_m = \sum_{j=1}^{p} \phi_{jm} X_j \quad \text{subject to} \quad \sum_{j=1}^p \phi_{jm}^2 = 1$$
   
-  - We want $Z_1$ to have the highest possible variance.
-  
-  \pause
-  
-  - Why do we have the constrain $\sum_{j=1}^p \phi_{jm}^2 = 1$ ?
+    - Why do we have the constrain $\sum_{j=1}^p \phi_{jm}^2 = 1$ ?
 
-# Principal Component Analysis (II)
+# The first principal component $Z_1$ 
+
+  - We look for linear combinations of the form 
+  
+$$z_{i1} = \sum_{j = 1}^p\phi_{j1}x_{ij} = \phi_{11}x_{i1} + \phi_{21}x_{i1} +\dots+\phi_{p1}x_{ip} $$
+  that have largest variance subject to $\sum|\phi_{j1}^2| = 1$
+  
+  - The sample variance of $z_1$ is $\frac{1}{n}\sum_i z_{i1}^2 =  \frac{1}{n}\sum_i \left(\sum_{j = 1}^p\phi_{j1}x_{ij}\right)^2$
+
+# The first principal component $Z_1$  - Maximization problem
+
+We want to find
+
+$$\text{max}_{\phi_{11},\dots,\phi_{p1}}(\text{Var}(z_1)) = \text{max}_{\phi_{11},\dots,\phi_{p1}}\left(\frac{1}{n}\sum_i \left(\sum_{j = 1}^p\phi_{j1}x_{ij}\right)^2\right)  $$
+given $\sum|\phi_{j1}^2| = 1$
+
+- This is a standard problem in linear algebra solved via singular-value decomposition of $\mathbf{X}$
+
+
+# The first principal component $Z_1$  - Geometric interpretation
+
+  - The loading vector $\phi_1 = (\phi_{11},\dots,\phi_{p1})$ defines the direction along with the data vary most
+  
+  
+```{r, out.width="60%"}
+data = USArrests[,c(1,2)]
+datas = scale(data)
+results <- prcomp(datas, scale = FALSE)
+
+a11 = results$rotation[1,1]
+a12= results$rotation[2,1]
+c1 = -a11/a12
+a21 = results$rotation[1,2]
+a22= results$rotation[2,2]
+c2 =-a21/a22
+
+
+u = datas[,2] + 1/c2 * datas[,1]
+y1 = (1+c2^(-2))^(-1) *u
+x1 = 1/c2*y1
+data.frame(datas) %>%
+  mutate(pr1 = x1, pr2 = y1) %>%
+  ggplot() + geom_point(aes(Murder, Assault)) +
+  coord_equal() +
+ # geom_abline(intercept = 0, slope = c1, color = "green") +
+  geom_abline(intercept = 0, slope = c2, color = "red") +
+  geom_point( aes(pr1,pr2, color = "PC1")) +
+  geom_segment(aes(x = Murder, xend = pr1, y = Assault, yend = pr2), color = "grey", linetype = "dashed") 
+```
+
+
+# The second principal component $Z_2$ 
+
   
   - Once we have $Z_1$: 
   
@@ -198,7 +257,7 @@ biplot(results, scale = 0)
 
 # PCA - General setup
   
-  - Let $\boldsymbol X$ be a matrix with dimension $n \times p$.
+  - Let $\boldsymbol X$ be a (standardized) matrix with dimension $n \times p$.
 
   - Assume $\boldsymbol \Sigma$ to be the covariance matrix associated with $\boldsymbol X$.
 
@@ -251,7 +310,7 @@ p1 + p2
 # Clustering methods
 
 
-- **Gaal**: Partition the data into different groups
+- **Goal**: Partition the data into different groups
     - Observations within each group are quite similar
     - Observations in different groups are quite different 
     
@@ -432,7 +491,7 @@ $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_
     - Extend the concept of dissimilarity from a pair of observation to a pair of groups of observations
 
 
-## The hierarchical clustering algorithm
+# The hierarchical clustering algorithm
 
 ![](imgs/dendogram_iteration.png){width=50%}
 
@@ -447,7 +506,7 @@ $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_
 - 8 and {5, 7} using complete linkage
 
 
-## Choice of dissimilarity measure
+# Choice of dissimilarity measure
 
 - Euclidean distance is most common dissimilarity measure to use.
 
@@ -464,7 +523,8 @@ $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_
 
 # Correlation-based distance
 
-![](imgs/correlation_based_sample.png){width=70%}
+\centering
+![](imgs/correlation_based_sample.png){width=50%}
 
 - Three observations with measure on 20 variables
 
