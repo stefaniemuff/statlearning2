@@ -172,6 +172,11 @@ data = USArrests[,c(1,2)]
 datas = scale(data)
 results <- prcomp(datas, scale = FALSE)
 
+
+
+
+
+
 a11 = results$rotation[1,1]
 a12= results$rotation[2,1]
 c1 = -a11/a12

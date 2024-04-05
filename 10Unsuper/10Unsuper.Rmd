@@ -1,8 +1,8 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 10: Unsupervised learning (Overview/quizz lecture)"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "March 23, 2023"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "April 5, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -40,99 +40,24 @@ library(GGally)
 library(patchwork)
 ```
 
-### US Arrest Example
-
-$~$
-
-
-```{r}
-
-data(USArrests)
-
-head(USArrests)
-
-```
-
-$~$
-
-Scales:
-
-- Number of occurrence per 100 000 people
-- Percentage 
-
----
-
-### US Arrest Example
-
-$~$
-
-
-```{r}
-
-USArrests %>% mutate(Murder = Murder/1000, Assault = Assault/1000, Rape = Rape/1000) %>% head()
-
-```
-$~$
-
-Scales:
-
-- Number of occurrence per 100 people
-- Percentage 
-
-$~$
-
-Scales:
-
-- Number of occurrence per 100  people
-- Percentage 
-
----
 
 
 
-### PC loadings vectors $\Phi$
 
-$~$
-
-```{r}
-pca1 = prcomp(USArrests, scale = FALSE)
-pca2 = prcomp(USArrests%>% mutate(Murder = Murder/1000, Assault = Assault/1000, Rape = Rape/1000), scale = FALSE)
-knitr::kable(
-  list(pca1$rotation, pca2$rotation),
-  digits = 4
-)
-
-```
-
-
-$~$
 
 
 
 ---
 
-### The biplot
+### PCA example
 
 $~$
 
-\centering
-```{r,  fig.show="hold", out.width="40%"}
-biplot(pca1, scale = 0)
-biplot(pca2, scale = 0)
-```
-
-
---- 
-
-### Example from Compulsory 3, 2020
-
-$~$
-
-* We study the `decathlon2` dataset from the `factoextra` package in R, where Athletes' performance during a sporting meeting was recorded. 
+* We study the `decathlon2` dataset from the `factoextra` package in R, where Athletes' performance during a sporting meeting was recorded.
 
 * We look at 23 athletes and the results from the 10 disciplines in two competitions.
 
-```{r,eval=T,echo=F}
+```{r,eval=T,echo=T}
 library(factoextra)
 library(FactoMineR)
 data("decathlon2")
@@ -157,26 +82,96 @@ biplot(r.prcomp)
 
 ---
 
-### Scree plot
 
-$~$
-
-A graphical description of the **proportion of variance explained (PVE)** by a certain number of PCs (see Fig 12.3 from @ISL):
-
-\centering
-<!-- ![](123.png){width=90%} -->
-
----
 
 ### Proportion of varianced explained (PVE)
 
 $~$
 
-**Recap:** The PVE by PC $m$ is given by 
+**Recap:** The PVE by PC $m$ is given by
 
 $$
 \frac{\sum_{i=1}^m z_{im}^2} {\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
 $$
+
+---
+
+### Scree plot
+
+$~$
+
+A graphical description of the **proportion of variance explained (PVE)** by a certain number of PCs:
+
+\centering
+```{r, out.width="90%"}
+p1 = data.frame(PC = 1:10, var = r.prcomp$sdev^2/sum(r.prcomp$sdev^2)) %>% ggplot() + geom_point(aes(PC, var), size = 1.5)+ geom_line(aes(PC, var)) +
+  xlab("Principal Component") + ylab("Prop of variance explained")
+
+
+p2 = data.frame(PC = 1:10, var = cumsum(r.prcomp$sdev^2)/sum(r.prcomp$sdev^2)) %>% ggplot() + geom_point(aes(PC, var), size = 1.5)+ geom_line(aes(PC, var)) +
+  xlab("Principal Component") + ylab("Prop of variance explained") + ylim(c(0,1))
+ p1 + p2
+
+```
+
+---
+
+# Another example
+Protein consumption in twenty-five European countries for nine food groups.
+
+```{r}
+library("FactoMineR")
+#from MultBiplotR
+library(MultBiplotR)
+
+data("Protein")
+Protein = Protein[,-c(1,2)]
+head(Protein)
+Protein = Protein %>% mutate(across(1:9,\(x) scale(x,center =T, scale = T)))
+
+```
+
+
+---
+
+# Correlation Matrix
+
+```{r}
+corr_matrix <- cor(Protein)
+ggcorrplot::ggcorrplot(corr_matrix)
+```
+
+---
+
+# PCA
+
+```{r}
+data.pca <- prcomp(Protein)
+biplot(data.pca)
+```
+
+---
+
+# Variance Explained
+\footnotesize
+```{r}
+summary(data.pca)
+```
+
+---
+
+# Variance Explained - Scree plot
+
+
+```{r}
+p1 = data.frame(PC = 1:9, var = data.pca$sdev^2/sum(data.pca$sdev^2)) %>% ggplot() + geom_point(aes(PC, var), size = 1.5)+ geom_line(aes(PC, var)) +
+  xlab("Principal Component") + ylab("Prop of variance explained")
+
+
+p2 = data.frame(PC = 1:9, var = cumsum(data.pca$sdev^2)/sum(data.pca$sdev^2)) %>% ggplot() + geom_point(aes(PC, var), size = 1.5)+ geom_line(aes(PC, var)) +
+  xlab("Principal Component") + ylab("Prop of variance explained") + ylim(c(0,1))
+ p1 + p2
+```
 
 ---
 
@@ -222,21 +217,18 @@ $~$
 
 $~$
 
-* Algorithm?
 
 ---
 
-<!-- ![](kmeans_alg.png) -->
+# K-means clustering - Algorithm
+
+![](imgs/kmeans_algo.png)
+
 
 ---
 
-\centering
-<!-- ![](fig12_8.png){width=75%} -->
-\flushleft
-\small
-(Fig 12.8 from course book)
 
----
+
 
 ### Hierarchical clustering
 
@@ -246,7 +238,7 @@ Bottom-up agglomerative clustering that results in a _\textcolor{red}{dendogram}
 
 $~$
 
-<!-- ![](hierclust.png){width=90%} -->
+![](imgs/hierarchical_algorithm.png)
 
 ---
 
@@ -267,19 +259,50 @@ $~$
 
 $~$
 
-<!-- ![](fig12_12.png) -->
+![](imgs/dendogram_misleading.png)
 
 Note: The representation on the right is not possible in high-dimensional space (i.e., if we have $X_1, X_2, X_3, ...., X_p$).
 
 ---
 
-### Hierarchical clustering -- example
+# Exercise 2 from the book
 
-$~$
+```{r}
 
-An exam question from 2022:
+write_matex2 <- function(x) {
+  begin <- "\\begin{bmatrix}"
+  end <- "\\end{bmatrix}"
+  X <-
+    apply(x, 1, function(x) {
+      paste(
+        paste(x, collapse = "&"),
+        "\\\\"
+      )
+    })
+  paste(c(begin, X, end), collapse = "")
+}
 
-<!-- ![](exam_question3b_2023.png){with=110%} -->
+C = matrix(c(0,.3,.4,.7,.3,0,.5,.8,.4,.5,0.,.45,.7,.8,.45,0),4,4)
+
+```
+
+We have the following dissimilarity matrix:
+
+$$`r write_matex2(C)`$$
+
+1. Sketch the dendogram using *complete* linkage, indicate on the plot the height at wich each fusion occurs, as well as the observations corresponding to each leaf in the dendogram
+
+2. Repeat using *single* linkage
+
+3. Suppose we cut the two dendograms such that 2 clusters result. Which observations are in each cluster?
+
+---
+
+# Exercise 11 from the book
+
+![](imgs/Ch10_ex11.png)
+
+
 
 ---
 
