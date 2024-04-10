@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2023"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 11: Deep Learning and Neural Networks"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "April 24 and 27, 2023"
+date: "April 18 and 19, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -251,11 +251,17 @@ $~$
 
 \vspace{2mm}
 
-* The [_ImageNet_](http://www.image-net.org/) classification challenge (classify high resolution colour images into 1k different categories after training on 1.4M images) was won by solutions with deep convolutional neural networks (CNNs). In 2011 the accuracy was 74.3%, in 2012 83.6% and in 2015 96.4%.
+* The [_ImageNet_](http://www.image-net.org/) classification challenge (classify high resolution color images into 1k different categories after training on 1.4M images) was won by solutions with deep convolutional neural networks (CNNs). In 2011 the accuracy was 74.3%, in 2012 83.6% and in 2015 96.4%.
 
 \vspace{2mm}
 
 * Since 2012, CNNs are the general solution for computer vision tasks. Other application area: natural language processing.
+
+Todo: Check out these websites that give overview over winning solutions:
+
+https://mlcontests.com/state-of-competitive-machine-learning-2022/#winning-solutions
+
+https://mlcontests.com/tabular-data/
 
 ---
 
@@ -681,7 +687,7 @@ This simplifies the choice of network architecture to _choose a large enough net
 
 $~$
 
-See e.g. @kerasR, Section 4.5.6/7 and @goodfellow, Section 7
+See e.g. @kerasR, Section 4.5.6/7 and @goodfellow, Section 7.
 
 ---
 
@@ -797,12 +803,12 @@ $${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla J({\b
 
 $~$
 
-* Note that in _full gradient descent_, the loss function is computed as a mean over all training examples.
+* Note that in _full gradient descent_, the loss function is computed as a mean over all training examples:
 $$
 J({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n J({\boldsymbol x}_i, y_i) \ .
 $$
 
-* The gradient is _an average over many individual gradients_ from the training example. You can think of this as an estimator for an expectation. 
+* The gradient is _an average over many individual gradients_ from the training example. You can think of this as an estimator for an expectation
 
 $$
 \nabla_{\boldsymbol \theta} J({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n \nabla_{\boldsymbol \theta} J({\boldsymbol x}_i, y_i) \ .
@@ -1286,7 +1292,7 @@ $~$
 
 $~$
 
-* In addition, we can use $K$ different filters in a convolution step. This produced 3D feature maps (of depth $K$).
+* In addition, we can use $K$ different filters in a convolution step. This produces 3D feature maps (of depth $K$).
 
 
 $~$
@@ -1359,7 +1365,11 @@ $~$
 
 See 
 
-* Section 10.3.5 in the book, 
+\vspace{2mm}
+
+* Section 10.3.5 in the book.
+
+\vspace{2mm}
 
 * Examples in the recommended exercise 11.
 
@@ -1548,7 +1558,7 @@ $~$
 
 $~$
 
-* Advantage of e.g. simple linear regression? 
+* Advantage of, for example, simple linear regression? 
 
 ---
 
