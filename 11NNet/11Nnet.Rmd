@@ -132,23 +132,26 @@ $~$
 
 ---
 
+
+* Brain neurons -- inspiration for neural networks. 
+
+\centering
+![ ](Neuron3.png){width=40%}
+
+\scriptsize
+Image credits: By Egm4313.s12 (Prof. Loc Vu-Quoc) <https://commons.wikimedia.org/w/index.php?curid=72816083>
+
+\flushleft
+
+\normalsize
+
+$~$
+
 * Shift from statistics to computer science and machine learning, as they are highly parameterized.
 
 $~$
 
 * Statisticians were skeptical: "It's just a nonlinear model".
-
----
-
-
-\centering
-![ ](Neuron3.png){width=50%}
-
-\flushleft
-Neuron and myelinated axon, with signal flow from inputs at dendrites to outputs at axon terminals. 
-
-\scriptsize
-Image credits: By Egm4313.s12 (Prof. Loc Vu-Quoc) <https://commons.wikimedia.org/w/index.php?curid=72816083>
 
 
 ---
@@ -257,11 +260,13 @@ $~$
 
 * Since 2012, CNNs are the general solution for computer vision tasks. Other application area: natural language processing.
 
-Todo: Check out these websites that give overview over winning solutions:
+\vspace{2mm}
+
+Task: Check out this website that gives overview over winning solutions:
 
 https://mlcontests.com/state-of-competitive-machine-learning-2022/#winning-solutions
 
-https://mlcontests.com/tabular-data/
+<!-- https://mlcontests.com/tabular-data/ -->
 
 ---
 
@@ -272,11 +277,11 @@ The success of deep learning is dependent upon the breakthroughts in
 
   * _hardware_ development, expecially with faster CPUs and massively parallell graphical processing units (GPUs). 
   * _datasets_ and benchmarks (internet/tech data).
-  * improvemets of the  _algorithms_.
+  * improved  _algorithms_.
 
 $~$
 
-Achievements of deep learning includes 
+Achievements of deep learning include
 
   * high quality (near-human to super human) image classification, 
   * speech recognition, 
@@ -584,21 +589,6 @@ ggarrange(pp,p)
 # qplot(x,y,geom="line",main="")
 ```
 
----
-
-**Less common**:
-
-$~$
-
-* Radial basis functions: as we looked at in Module 9.
-
-$~$
-
-* Softplus: $g(x)=\ln(1+\exp(x))$
-
-$~$
-
-* Hard tanh: $g(x)=\max(-1,\min(1,x))$
 
 ---
 
@@ -671,25 +661,25 @@ $~$
 
 ---
 
-However, the recent practice is to
+<!-- The recent practice is to -->
 
-$~$
+<!-- $~$ -->
 
-* choose a too large network, train it until convergence (optimum), which results in overfitting,
+<!-- * choose a too large network, train it until convergence (optimum), which results in overfitting, -->
 
-\vspace{2mm}
+<!-- \vspace{2mm} -->
 
-* then use other means to avoid this (various variants of regularization and hyperparameter optimization).
+<!-- * then use other means to avoid this (various variants of regularization and hyperparameter optimization). -->
 
-$~$
+<!-- $~$ -->
 
-This simplifies the choice of network architecture to _choose a large enough network_.
+<!-- This simplifies the choice of network architecture to _choose a large enough network_. -->
 
-$~$
+<!-- $~$ -->
 
-See e.g. @kerasR, Section 4.5.6/7 and @goodfellow, Section 7.
+<!-- See e.g. @kerasR, Section 4.5.6/7 and @goodfellow, Section 7. -->
 
----
+<!-- --- -->
 
 ## 4) Loss function ("Method")
 
@@ -712,19 +702,20 @@ $~$
 
 ---
 
+
 * Regression: Loss function _\textcolor{red}{MSE}_ for a given set of parameters $\boldsymbol{\theta}$:
 
-$$J({\boldsymbol \theta}) = \sum_{i=1}^n (y_i- f(x_i))^2$$
+$$R({\boldsymbol \theta}) = \sum_{i=1}^n (y_i- f(x_i))^2$$
 
 $~$
 
  
 * Classification: _\textcolor{red}{Cross-entropy}_
 
-$$J({\boldsymbol \theta}) = -\sum_{i=1}^n \sum_{m=1}^C y_i \log f_m(x_i) \ ,$$ 
+$$R({\boldsymbol \theta}) = -\sum_{i=1}^n \sum_{m=1}^C y_i \log f_m(x_i) \ ,$$ 
 
 * with special case for $C=2$ (_\textcolor{red}{binary cross-entropy loss}_):
-$$J({\boldsymbol \theta}) = -\sum_{i=1}^n  y_i \log f_m(x_i) + (1-y_i) \log (1-f_m(x_i)) \ .$$
+$$R({\boldsymbol \theta}) = -\sum_{i=1}^n  y_i \log f_m(x_i) + (1-y_i) \log (1-f_m(x_i)) \ .$$
 
 
 
@@ -734,7 +725,7 @@ $$J({\boldsymbol \theta}) = -\sum_{i=1}^n  y_i \log f_m(x_i) + (1-y_i) \log (1-f
 
 $~$
 
-Let the unknown parameters be denoted ${\boldsymbol \theta}$ (what we have previously denoted as $\alpha$s and $\beta$s), and the loss function to be minimized $J({\boldsymbol \theta})$.
+Let the unknown parameters be denoted ${\boldsymbol \theta}$ (what we have previously denoted as $\alpha$s and $\beta$s), and the loss function to be minimized $R({\boldsymbol \theta})$.
 
 $~$
 
@@ -781,21 +772,15 @@ $~$
 \vspace{2mm}
 2. Until finding a (local) optimum, repeat a) to e)
     a) Calculate the predictions ${\hat{y}_1({\boldsymbol x}_i)}$.
-    b) Calculate the loss function $J({\boldsymbol \theta}^{(t)})$.
-    c) Find the gradient (direction) in the $(p+1)$-dimensional space of the weights, and evaluate this at the current weight values $\nabla J({\boldsymbol \theta}^{(t)})={\frac{\partial J}{\partial {\boldsymbol \theta}}}({\boldsymbol \theta}^{(t)})$.
+    b) Calculate the loss function $R({\boldsymbol \theta}^{(t)})$.
+    c) Find the gradient (direction) in the $(p+1)$-dimensional space of the weights, and evaluate this at the current weight values $\nabla R({\boldsymbol \theta}^{(t)})={\frac{\partial R}{\partial {\boldsymbol \theta}}}({\boldsymbol \theta}^{(t)})$.
     d) Go with a given step length (_\textcolor{red}{learning rate}_) $\lambda$ in the direction of the negative of the gradient of the loss function to get 
-$${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla J({\boldsymbol \theta}^{(t)}) \ .$$
+$${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla R({\boldsymbol \theta}^{(t)}) \ .$$
     e) Set $t=t+1$.
 \vspace{2mm}
 3. The final values of the weights in that $(p+1)$ dimensional space are our parameter estimates and your network is _trained_.
 
 
----
-
-
-**Q**: Why are we moving in the direction of the negative of the gradient? Why not the positive?
-
-**A**: 
 
 ---
 
@@ -803,18 +788,18 @@ $${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla J({\b
 
 $~$
 
-* Note that in _full gradient descent_, the loss function is computed as a mean over all training examples:
+* Note that in _full gradient descent_, the loss function is computed as a mean over all training samples:
 $$
-J({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n J({\boldsymbol x}_i, y_i) \ .
-$$
-
-* The gradient is _an average over many individual gradients_ from the training example. You can think of this as an estimator for an expectation
-
-$$
-\nabla_{\boldsymbol \theta} J({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n \nabla_{\boldsymbol \theta} J({\boldsymbol x}_i, y_i) \ .
+R({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n R({\boldsymbol x}_i, y_i) \ .
 $$
 
-* To build a network that generalizes well, it is important to have many training examples, but that would make us spend a lot of time and computer resources at calculating each gradient descent step.
+* The gradient is _an average over many individual gradients_ from the training sample. You can think of this as an estimator for an expectation
+
+$$
+\nabla_{\boldsymbol \theta} R({\boldsymbol \theta})=\frac{1}{n}\sum_{i=1}^n \nabla_{\boldsymbol \theta} R({\boldsymbol x}_i, y_i) \ .
+$$
+
+* To build a network that generalizes well, it is important to have many training samples, but that would make us spend a lot of time and computer resources at calculating each gradient descent step.
 
 ---
 
@@ -841,7 +826,7 @@ $~$
 
 \vspace{1mm}
 
-* Small batches also bring in a _\textcolor{red}{regularization effect}_, maybe due to the variability they bring to the optimization process.
+* Small batches also bring in a _\textcolor{red}{regularization effect}_, due to the variability they bring to the optimization process.
 
 ---
 
@@ -858,8 +843,8 @@ $~$
 2. Until convergence, repeat a) to d)
     a) For each mini-batch: Make predictions of the reponses in the mini-batch in a _forward pass_.
     b) Compute the loss for the training data in this batch.
-    c) Compute the gradient $\nabla_{\boldsymbol \theta}^* J({\boldsymbol \theta}^{(t)})$ of the loss with regard to the model's parameters (_backward pass_) based on the training data in the batch. 
-    d) Update all weighs, but just using the _average gradient_ from the mini-batch ${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla_{\boldsymbol \theta} ^* J({\boldsymbol \theta}^{(t)})$
+    c) Compute the gradient $\nabla_{\boldsymbol \theta}^* R({\boldsymbol \theta}^{(t)})$ of the loss with regard to the model's parameters (_backward pass_) based on the training data in the batch. 
+    d) Update all weighs, but just using the _average gradient_ from the mini-batch ${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla_{\boldsymbol \theta} ^* R({\boldsymbol \theta}^{(t)})$
  
 \vspace{1mm}
 
@@ -904,7 +889,7 @@ More background:
 
 $~$
 
-* @ISL Chapter 10.7.
+* @ISL Chapter 10.7 (this is part of the compulsory course material - study yourself).
 
 $~$
 
@@ -929,12 +914,16 @@ $~$
 
 \vspace{2mm}
 
-* Remember (module 6): The aim of regularization was to trade _increased bias_ for _reduced variance_.  The ideas was to add a penalty to the loss function. 
+* Remember:\vspace{2mm}
+
+  * **Module 6**: The aim of regularization was to trade _increased bias_ for _reduced variance_.  The ideas was to add a penalty to the loss function. 
+  \vspace{1mm}
+  * **Module 9**: Tree pruning and L1 and L2 regularization in XGBoost.
 
 \vspace{2mm}
 
-* Penalties: absolute value of parameter ($L_1$, lasso, where we looked at this as model selection) and square value of parameter ($L_2$, ridge regression).  
-$\rightarrow$ This can also done for neural networks.
+<!-- * Penalties: absolute value of parameter ($L_1$, lasso, where we looked at this as model selection) and square value of parameter ($L_2$, ridge regression).   -->
+<!-- $\rightarrow$ This can also done for neural networks. -->
 
 
 ---
@@ -943,9 +932,11 @@ $\rightarrow$ This can also done for neural networks.
 
 $~$
 
-* _\textcolor{red}{Weight decay}_: In neural networks this means adding a $L_2$-penalty to the loss function to _penalize large weights_ \footnote{see chapter 7.1.1 in Goodfellow et al}:
+* _\textcolor{red}{Ridge/Lasso penalization}_: In neural networks this means adding an $L_2$ or $L_1$-penalty to the loss function to _penalize large weights_ \footnote{see chapter 10.7.2 in the course book}:
 
-$$ \tilde{J}({\boldsymbol w})= \frac{\alpha}{2}{{\boldsymbol w}^\top{\boldsymbol w}} + J({\boldsymbol w}) \ .$$
+\begin{align*} \tilde{J}({\boldsymbol w})= R({\boldsymbol w}) + \lambda{{\boldsymbol w}^\top{\boldsymbol w}}  \\
+ \tilde{J}({\boldsymbol w})= R({\boldsymbol w}) + \alpha ||{\boldsymbol w}||
+\end{align*}
 
 \vspace{2mm}
 
@@ -1030,7 +1021,7 @@ Fig 10.19, @ISL
 
 $~$
 
-Many **hyperparameters** when building and fitting a neural network, like the network architecture, the number of batches to run before terminating the optimization, the drop-out rate, etc.
+There are **hyperparameters** when building and fitting a neural network, like the network architecture, the number of batches to run before terminating the optimization, the drop-out rate, etc.
 
 $~$
 
@@ -1289,6 +1280,8 @@ $~$
 $~$
 
 * One filter is applied to each color (red, green, blue), so three convolutions are happening in parallel and then immediately summed up. 
+
+<!-- See for example here: https://clemsonciti.github.io/rcde_workshops/python_deep_learning/07-Convolution-Neural-Network.html -->
 
 $~$
 
