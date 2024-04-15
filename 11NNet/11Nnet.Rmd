@@ -1381,7 +1381,7 @@ $~$
 
 \vspace{2mm}
 
-* The input object $X$ is a sequence.
+* The input object $X$ is a sequence, for example a sequence of $L$ words.
 
 \vspace{2mm}
 
@@ -1396,28 +1396,46 @@ $~$
 \centering
 ![](fig10_12.png){width=80%}
 
-\scriptsize Figure 10.12 of @ISL
+\scriptsize Figure 10.12 in @ISL
+
+\vspace{2mm}
 
 \normalsize
 
 * Observed sequence $X=\{ X_1, \ldots , X_L \}$, where each $X_l^\top=(X_{l1},\ldots, X_{lp})$ is an input vector at point $l$ in the sequence.
 
+\vspace{2mm}
+
+* If $X$ is a text, $X_l$ can for example be the one-hot encoding for word $l$ (long vector with almost only 0s).
+
+\vspace{2mm}
+
 * Sequence of hidden layers $\{ A_1, \ldots, A_L \}$, where each $A_l$ is a layer of $K$ units $A_l^\top = (A_{l1}, \ldots , A_{lK})$.
+
+---
+
+Example of one-hot encoding a text with 20 words:
+
+![](One_hot_1013.png)
+
+\scriptsize
+Figure 10.13 in @ISL
+
+---
 
 * $A_{lk}$ is determined as 
 \begin{equation}\label{eq:chain}
 A_{lk} = g(w_{k0} + \sum_{j=1}^p w_{kj}X_{lj} + \sum_{s=1}^K u_{ks}A_{l-1,s}) \ ,
 \end{equation}
-
 with hidden layer activation function $g()$ (e.g., ReLU).
 
----
+\vspace{2mm}
 
 * The output is determined as 
 $$O_l = \beta_0 + \sum_{k=1}^K\beta_k A_{lk} \ ,$$
 potentially with a sigmoid or softmax output activation for binary or categorical outcome.
 
-$~$
+\vspace{2mm}
 
 * Note: The weights $\boldsymbol{W}$, $\boldsymbol{U}$ and $\boldsymbol{B}$ are the _same_ at each point in the sequence. This is called _\textcolor{red}{weight sharing}_.
 
@@ -1440,11 +1458,11 @@ $~$
 
 $~$
 
-* For input sequences $(x_i,y_i)$, we minimize $\sum_{i=1}^n (y_i - o_{iL})^2$.
+* For input sequences $(x_i,y_i)$ ($1\leq i \leq n$), we minimize $\sum_{i=1}^n (y_i - o_{iL})^2$.
 
 $~$
 
-* Note: $x_i = \{ x_{i1}, \ldots, x_{iL} \}$ is a sequence of _vectors_. 
+* Note: all $x_i = \{ x_{i1}, \ldots, x_{iL} \}$ are _vectors_. 
 
 
 ---
