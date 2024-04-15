@@ -1,9 +1,9 @@
 ---
 title: 'Module 11: Recommended Exercises'
 author:
-- Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff
+- Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara Martino
 - Department of Mathematical Sciences, NTNU
-date: "April 27, 2023"
+date: "April 18, 2024"
 output:
   pdf_document:
     toc: no
@@ -12,7 +12,7 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2023
+subtitle: TMA4268 Statistical Learning V2024
 urlcolor: blue
 ---
 
@@ -37,6 +37,41 @@ library(ramify)
 
 
 ---
+
+## Keras Installation
+
+First install kears by running:
+```{r, eval=FALSE}
+install.packages("keras")
+library(keras)
+install_keras()
+```
+
+The library is automatically installed on a virtual environment named "r-tensorflow".
+
+NB! by installing Keras, Tensorflow is also installed.
+
+After installation and session restart, we first must activate the virtual environement by running:
+```{r, eval=FALSE}
+library(reticulate)
+use_virtualenv("r-tensorflow")
+```
+
+Test your installation by running:
+```{r, eval=FALSE}
+library(tensorflow)
+tf$constant("Hello TensorFlow!")
+```
+
+In addition, you need to install the necessary libraries on the virtual environment like
+```{r, eval=FALSE}
+install.packages("NeuralNetTools")
+install.packages("caret")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("TSrepr")
+install.packages("ramify")
+```
 
 
 ## Problem 1
