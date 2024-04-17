@@ -872,7 +872,7 @@ $~$
 
 \vspace{2mm}
 
-* Computing the analytical expression for the gradient $\nabla J$ is not difficult, but _the numerical evaluation may be expensive_.  
+* Computing the analytical expression for the gradient $\nabla R$ is not difficult, but _the numerical evaluation may be expensive_.  
 
 \vspace{2mm}
 
