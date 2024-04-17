@@ -18,7 +18,11 @@ output:
     toc_depth: 2
 urlcolor: blue
 bibliography: refs.bib
-#header-includes: \usepackage{xcolor}
+header-includes: 
+- \usepackage{multirow}
+- \usepackage{tcolorbox}
+- \setbeamertemplate{navigation symbols}{}
+- \setbeamertemplate{footline}[page number]
 
 ---
 
@@ -351,7 +355,7 @@ $$
 
 $~$
 
-* Identify $p, M, C$ in the network figure above, and relate that to the $y_{c}({\boldsymbol x})$ equation.
+* Identify $p, M, C$ in the network figure above, and relate that to the $\hat{y}_{c}({\boldsymbol x})$ equation.
 
 $~$
 
@@ -733,7 +737,9 @@ $~$
 
 * Mini-batch stochastic gradient descent (SGD) and true SGD
 
-* Backpropagation
+$~$
+
+where the gradient is calculated via _\textcolor{red}{backpropagation}_. 
 
 ---
 
@@ -828,29 +834,27 @@ $~$
 
 * Small batches also bring in a _\textcolor{red}{regularization effect}_, due to the variability they bring to the optimization process.
 
----
+$~$
 
+<!-- **Mini-batch stochastic gradient descent**  -->
 
+<!-- \vspace{1mm} -->
 
-**Mini-batch stochastic gradient descent** 
+<!-- 1. Divide all the training samples randomly into _mini-batches_. -->
 
-\vspace{1mm}
+<!-- \vspace{1mm} -->
 
-1. Divide all the training samples randomly into _mini-batches_.
+<!-- 2. Until convergence, repeat a) to d) -->
+<!--     a) For each mini-batch: Make predictions of the reponses in the mini-batch in a _forward pass_. -->
+<!--     b) Compute the loss for the training data in this batch. -->
+<!--     c) Compute the gradient $\nabla_{\boldsymbol \theta}^* R({\boldsymbol \theta}^{(t)})$ of the loss with regard to the model's parameters (_backward pass_) based on the training data in the batch.  -->
+<!--     d) Update all weighs, but just using the _average gradient_ from the mini-batch ${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla_{\boldsymbol \theta} ^* R({\boldsymbol \theta}^{(t)})$ -->
 
-\vspace{1mm}
+<!-- \vspace{1mm} -->
 
-2. Until convergence, repeat a) to d)
-    a) For each mini-batch: Make predictions of the reponses in the mini-batch in a _forward pass_.
-    b) Compute the loss for the training data in this batch.
-    c) Compute the gradient $\nabla_{\boldsymbol \theta}^* R({\boldsymbol \theta}^{(t)})$ of the loss with regard to the model's parameters (_backward pass_) based on the training data in the batch. 
-    d) Update all weighs, but just using the _average gradient_ from the mini-batch ${\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla_{\boldsymbol \theta} ^* R({\boldsymbol \theta}^{(t)})$
- 
-\vspace{1mm}
+<!-- 3. Network is _trained_; return parameter estimates. -->
 
-3. Network is _trained_; return parameter estimates.
-
-\vspace{6mm}
+<!-- \vspace{6mm} -->
 
 
   **Special case**: _\textcolor{red}{True SGD}_ involves only _\textcolor{red}{one sample}_ (mini-batch size 1). $\rightarrow$ Mini-batch SGD is a compromise between SGD (one sample per iteration) and full gradient descent (full dataset per iteration)
@@ -956,7 +960,7 @@ $~$
 
 \vspace{2mm}
 
-* SGD is also a form of regularization (prevents over-fitting).
+* _\textcolor{red}{SGD}_ is also a form of regularization (prevents over-fitting).
 
 ---
 

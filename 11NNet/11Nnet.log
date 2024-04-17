@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.4.2)  17 APR 2024 17:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.4.2)  17 APR 2024 20:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -790,44 +790,91 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 \cslhangindent=\skip75
 \csllabelwidth=\skip76
 \cslentryspacingunit=\skip77
-(/usr/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip78
+\multirow@cntb=\count354
+\multirow@dima=\skip79
+\bigstrutjot=\dimen316
+) (/usr/share/texlive/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2022/01/07 version 5.0.2 text color boxes
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box85
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen317
+\pgf@nodesepend=\dimen318
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)) (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks50
+\verbatim@line=\toks51
+\verbatim@in@stream=\read4
+) (/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box86
+\tcb@upperbox=\box87
+\tcb@lowerbox=\box88
+\tcb@phantombox=\box89
+\c@tcbbreakpart=\count355
+\c@tcblayer=\count356
+\c@tcolorbox@number=\count357
+\tcb@temp=\box90
+\tcb@temp=\box91
+\tcb@temp=\box92
+\tcb@temp=\box93
+) (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count354
+\BKM@id=\count358
 )) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 184.
+Package hyperref Info: Option `colorlinks' set `true' on input line 188.
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 19
-1.
+5.
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count355
-\l__pdf_internal_box=\box85
+\l__color_backend_stack_int=\count359
+\l__pdf_internal_box=\box94
 ) (./11Nnet.aux)
 \openout1 = `11Nnet.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -864,17 +911,17 @@ LaTeX Font Info:    ... okay on input line 191.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count356
-\scratchdimen=\dimen316
-\scratchbox=\box86
-\nofMPsegments=\count357
-\nofMParguments=\count358
-\everyMPshowfont=\toks50
-\MPscratchCnt=\count359
-\MPscratchDim=\dimen317
-\MPnumerator=\count360
-\makeMPintoPDFobject=\count361
-\everyMPtoPDFconversion=\toks51
+\scratchcounter=\count360
+\scratchdimen=\dimen319
+\scratchbox=\box95
+\nofMPsegments=\count361
+\nofMParguments=\count362
+\everyMPshowfont=\toks52
+\MPscratchCnt=\count363
+\MPscratchDim=\dimen320
+\MPnumerator=\count364
+\makeMPintoPDFobject=\count365
+\everyMPtoPDFconversion=\toks53
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -883,7 +930,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 191.
+Package hyperref Info: Link coloring ON on input line 195.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -891,11 +938,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count362
+\c@section@level=\count366
 )
-LaTeX Info: Redefining \ref on input line 191.
-LaTeX Info: Redefining \pageref on input line 191.
-LaTeX Info: Redefining \nameref on input line 191.
+LaTeX Info: Redefining \ref on input line 195.
+LaTeX Info: Redefining \pageref on input line 195.
+LaTeX Info: Redefining \nameref on input line 195.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary
 -English.dict
@@ -921,12 +968,12 @@ Dictionary: translator-numbers-dictionary, Language: English
 ry-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \microtypecontext on input line 191.
-Package microtype Info: Applying patch `item' on input line 191.
-Package microtype Info: Applying patch `toc' on input line 191.
-Package microtype Info: Applying patch `eqnum' on input line 191.
+LaTeX Info: Redefining \microtypecontext on input line 195.
+Package microtype Info: Applying patch `item' on input line 195.
+Package microtype Info: Applying patch `toc' on input line 195.
+Package microtype Info: Applying patch `eqnum' on input line 195.
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 191.
+Package microtype Warning: Unable to apply patch `footnote' on input line 195.
 
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
@@ -934,7 +981,7 @@ Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 191.
+LaTeX Info: Redefining \showhyphens on input line 195.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -948,39 +995,39 @@ Package caption Info: End \AtBeginDocument code.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
-08.
+12.
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
-08.
+12.
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-208.
+212.
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-208.
+212.
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 208.
+(Font)              <10> on input line 212.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 208.
+(Font)              <7> on input line 212.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 208.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 208
+(Font)              <5> on input line 212.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 212
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 208
+LaTeX Font Info:    Trying to load font information for U+msb on input line 212
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -990,9 +1037,9 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 255.
+(Font)              <9> on input line 259.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 255.
+(Font)              <6> on input line 259.
 [3
 
 ] [4
@@ -1000,32 +1047,32 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [5
 
 ]
-<Neuron3.png, id=57, 313.17pt x 164.615pt>
+<Neuron3.png, id=58, 313.17pt x 164.615pt>
 File: Neuron3.png Graphic file (type png)
 <use Neuron3.png>
-Package pdftex.def Info: Neuron3.png  used on input line 363.
+Package pdftex.def Info: Neuron3.png  used on input line 367.
 (pdftex.def)             Requested size: 122.9147pt x 64.60901pt.
 [6
 
  <./Neuron3.png>]
-<DeepLearningwithR.jpeg, id=68, 1317.92375pt x 1615.03375pt>
+<DeepLearningwithR.jpeg, id=69, 1317.92375pt x 1615.03375pt>
 File: DeepLearningwithR.jpeg Graphic file (type jpg)
 <use DeepLearningwithR.jpeg>
-Package pdftex.def Info: DeepLearningwithR.jpeg  used on input line 382.
+Package pdftex.def Info: DeepLearningwithR.jpeg  used on input line 386.
 (pdftex.def)             Requested size: 92.18364pt x 112.96533pt.
-<DeepLearning.jpeg, id=69, 1227.58624pt x 1612.0225pt>
+<DeepLearning.jpeg, id=70, 1227.58624pt x 1612.0225pt>
 File: DeepLearning.jpeg Graphic file (type jpg)
 <use DeepLearning.jpeg>
-Package pdftex.def Info: DeepLearning.jpeg  used on input line 382.
+Package pdftex.def Info: DeepLearning.jpeg  used on input line 386.
 (pdftex.def)             Requested size: 92.17738pt x 121.04405pt.
 [7
 
  <./DeepLearningwithR.jpeg> <./DeepLearning.jpeg>]
-<AI_ML_DL.png, id=76, 446.6286pt x 596.2275pt>
+<AI_ML_DL.png, id=77, 446.6286pt x 596.2275pt>
 File: AI_ML_DL.png Graphic file (type png)
 <use AI_ML_DL.png>
-Package pdftex.def Info: AI_ML_DL.png  used on input line 389.
-(pdftex.def)             Requested size: 192.91205pt x 257.52823pt.
+Package pdftex.def Info: AI_ML_DL.png  used on input line 393.
+(pdftex.def)             Requested size: 187.67133pt x 250.5321pt.
 [8
 
  <./AI_ML_DL.png>] [9
@@ -1033,10 +1080,10 @@ Package pdftex.def Info: AI_ML_DL.png  used on input line 389.
 ] [10
 
 ]
-<deep.png, id=96, 962.59625pt x 406.51875pt>
+<deep.png, id=97, 962.59625pt x 406.51875pt>
 File: deep.png Graphic file (type png)
 <use deep.png>
-Package pdftex.def Info: deep.png  used on input line 491.
+Package pdftex.def Info: deep.png  used on input line 495.
 (pdftex.def)             Requested size: 245.81865pt x 103.81287pt.
 [11
 
@@ -1045,16 +1092,16 @@ Package pdftex.def Info: deep.png  used on input line 491.
 ] [13
 
 ]
-<drawNNp3h2o3.png, id=117, 708.6475pt x 588.1975pt>
+<drawNNp3h2o3.png, id=118, 708.6475pt x 588.1975pt>
 File: drawNNp3h2o3.png Graphic file (type png)
 <use drawNNp3h2o3.png>
-Package pdftex.def Info: drawNNp3h2o3.png  used on input line 565.
+Package pdftex.def Info: drawNNp3h2o3.png  used on input line 569.
 (pdftex.def)             Requested size: 245.82448pt x 204.04128pt.
 [14
 
  <./drawNNp3h2o3.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 596.
+(Font)              <8> on input line 600.
 [15
 
 ] [16
@@ -1064,10 +1111,10 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 ] [18
 
 ]
-<fig10_4.png, id=157, 801.99625pt x 666.49pt>
+<fig10_4.png, id=158, 801.99625pt x 666.49pt>
 File: fig10_4.png Graphic file (type png)
 <use fig10_4.png>
-Package pdftex.def Info: fig10_4.png  used on input line 700.
+Package pdftex.def Info: fig10_4.png  used on input line 704.
 (pdftex.def)             Requested size: 215.09785pt x 178.75467pt.
 [19
 
@@ -1078,28 +1125,28 @@ Package pdftex.def Info: fig10_4.png  used on input line 700.
 ] [22
 
 ]
-<mnist.png, id=186, 405.515pt x 262.9825pt>
+<mnist.png, id=187, 405.515pt x 262.9825pt>
 File: mnist.png Graphic file (type png)
 <use mnist.png>
-Package pdftex.def Info: mnist.png  used on input line 785.
+Package pdftex.def Info: mnist.png  used on input line 789.
 (pdftex.def)             Requested size: 307.29738pt x 199.28691pt.
 [23
 
  <./mnist.png>] [24
 
 ]
-Overfull \vbox (4.31458pt too high) detected at line 875
+Overfull \vbox (11.31458pt too high) detected at line 879
  []
 
 [25
 
 ]
-<11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf, id=208, 495.8525pt x 240.9pt
+<11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf, id=209, 495.8525pt x 240.9pt
 >
 File: 11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic file (type pdf)
 <use 11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: 11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf  used
- on input line 908.
+ on input line 912.
 (pdftex.def)             Requested size: 245.82983pt x 119.43149pt.
 [26
 
@@ -1111,7 +1158,7 @@ Package pdftex.def Info: 11Nnet_files/figure-beamer/unnamed-chunk-1-1.pdf  used
 proximation-property}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.975 \end{frame}
+l.979 \end{frame}
                   [29
 
 ] [30
@@ -1134,7 +1181,7 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 <gradient_descent.png, id=265, 346.896pt x 198.5016pt>
 File: gradient_descent.png Graphic file (type png)
 <use gradient_descent.png>
-Package pdftex.def Info: gradient_descent.png  used on input line 1133.
+Package pdftex.def Info: gradient_descent.png  used on input line 1140.
 (pdftex.def)             Requested size: 184.37802pt x 105.5052pt.
 [34
 
@@ -1152,23 +1199,30 @@ Package pdftex.def Info: gradient_descent.png  used on input line 1133.
 
 ] [41
 
-] [42
+]
+Overfull \vbox (5.75266pt too high) detected at line 1444
+ []
+
+[42
 
 ] [43
 
 ] [44
 
-] [45
-
 ]
-<fig10_19.png, id=351, 776.9025pt x 317.185pt>
+<fig10_19.png, id=345, 776.9025pt x 317.185pt>
 File: fig10_19.png Graphic file (type png)
 <use fig10_19.png>
-Package pdftex.def Info: fig10_19.png  used on input line 1563.
+Package pdftex.def Info: fig10_19.png  used on input line 1522.
 (pdftex.def)             Requested size: 307.29396pt x 125.4585pt.
-[46
+[45
 
- <./fig10_19.png>] [47
+ <./fig10_19.png>] [46
+
+]
+\openout4 = `11Nnet.vrb'.
+
+(./11Nnet.vrb) [47
 
 ]
 \openout4 = `11Nnet.vrb'.
@@ -1178,15 +1232,15 @@ Package pdftex.def Info: fig10_19.png  used on input line 1563.
 ]
 \openout4 = `11Nnet.vrb'.
 
-(./11Nnet.vrb) [49
+(./11Nnet.vrb
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <7> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 7.
+) [49
 
 ]
 \openout4 = `11Nnet.vrb'.
 
-(./11Nnet.vrb
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <7> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 7.
-) [50
+(./11Nnet.vrb) [50
 
 ]
 \openout4 = `11Nnet.vrb'.
@@ -1196,152 +1250,147 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <7> not available
 ]
 \openout4 = `11Nnet.vrb'.
 
-(./11Nnet.vrb) [52
-
-]
-\openout4 = `11Nnet.vrb'.
-
 (./11Nnet.vrb
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 3.
-<11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf, id=396, 608.2725pt x 327.222
+<11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf, id=390, 608.2725pt x 327.222
 5pt>
 File: 11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use 11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: 11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf  used
  on input line 8.
 (pdftex.def)             Requested size: 307.29121pt x 165.30846pt.
-) [53
+) [52
 
  <./11Nnet_files/figure-beamer/unnamed-chunk-7-1.pdf>]
 \openout4 = `11Nnet.vrb'.
 
-(./11Nnet.vrb) [54
+(./11Nnet.vrb) [53
 
 ]
-<cifar10.png, id=417, 598.235pt x 441.65pt>
+<cifar10.png, id=411, 598.235pt x 441.65pt>
 File: cifar10.png Graphic file (type png)
 <use cifar10.png>
-Package pdftex.def Info: cifar10.png  used on input line 1824.
+Package pdftex.def Info: cifar10.png  used on input line 1783.
 (pdftex.def)             Requested size: 122.91281pt x 90.741pt.
-[55
+[54
 
- <./cifar10.png>] [56
+ <./cifar10.png>] [55
 
-] [57
+] [56
 
 ]
-<fig107.png, id=437, 546.04pt x 390.45876pt>
+<fig107.png, id=431, 546.04pt x 390.45876pt>
 File: fig107.png Graphic file (type png)
 <use fig107.png>
-Package pdftex.def Info: fig107.png  used on input line 1917.
+Package pdftex.def Info: fig107.png  used on input line 1876.
 (pdftex.def)             Requested size: 245.83237pt x 175.78822pt.
-[58
+[57
 
- <./fig107.png>] [59
+ <./fig107.png>] [58
 
-] [60
+] [59
 
 ]
-<fig108.png, id=456, 860.21375pt x 223.83624pt>
+<fig108.png, id=450, 860.21375pt x 223.83624pt>
 File: fig108.png Graphic file (type png)
 <use fig108.png>
-Package pdftex.def Info: fig108.png  used on input line 2018.
+Package pdftex.def Info: fig108.png  used on input line 1977.
 (pdftex.def)             Requested size: 307.28781pt x 79.95937pt.
-[61
+[60
 
  <./fig108.png>]
-<fig109.png, id=464, 861.2175pt x 167.62625pt>
+<fig109.png, id=457, 861.2175pt x 167.62625pt>
 File: fig109.png Graphic file (type png)
 <use fig109.png>
-Package pdftex.def Info: fig109.png  used on input line 2044.
+Package pdftex.def Info: fig109.png  used on input line 2003.
 (pdftex.def)             Requested size: 276.56767pt x 53.83076pt.
-[62
+[61
 
- <./fig109.png>] [63
+ <./fig109.png>] [62
 
-] [64
+] [63
 
 ]
-<fig10_12.png, id=484, 821.0675pt x 323.2075pt>
+<fig10_12.png, id=478, 821.0675pt x 323.2075pt>
 File: fig10_12.png Graphic file (type png)
 <use fig10_12.png>
-Package pdftex.def Info: fig10_12.png  used on input line 2156.
+Package pdftex.def Info: fig10_12.png  used on input line 2115.
 (pdftex.def)             Requested size: 245.83354pt x 96.77066pt.
-[65
+[64
 
  <./fig10_12.png>]
-<One_hot_1013.png, id=491, 1001.7425pt x 390.45876pt>
+<One_hot_1013.png, id=485, 1001.7425pt x 390.45876pt>
 File: One_hot_1013.png Graphic file (type png)
 <use One_hot_1013.png>
-Package pdftex.def Info: One_hot_1013.png  used on input line 2166.
+Package pdftex.def Info: One_hot_1013.png  used on input line 2125.
 (pdftex.def)             Requested size: 307.28119pt x 119.77193pt.
-[66
+[65
 
- <./One_hot_1013.png>] [67
+ <./One_hot_1013.png>] [66
+
+] [67
 
 ] [68
 
 ] [69
 
-] [70
-
 ]
-<fig10_14.png, id=521, 894.34125pt x 766.865pt>
+<fig10_14.png, id=515, 894.34125pt x 766.865pt>
 File: fig10_14.png Graphic file (type png)
 <use fig10_14.png>
-Package pdftex.def Info: fig10_14.png  used on input line 2278.
+Package pdftex.def Info: fig10_14.png  used on input line 2237.
 (pdftex.def)             Requested size: 215.09662pt x 184.4375pt.
-[71
+[70
 
- <./fig10_14.png>] [72
+ <./fig10_14.png>] [71
+
+] [72
 
 ] [73
-
-] [74
 
 ]
 \openout4 = `11Nnet.vrb'.
 
-(./11Nnet.vrb) [75
+(./11Nnet.vrb) [74
 
 ]
-<Table10_2.png, id=552, 933.4875pt x 265.99374pt>
+<Table10_2.png, id=547, 933.4875pt x 265.99374pt>
 File: Table10_2.png Graphic file (type png)
 <use Table10_2.png>
-Package pdftex.def Info: Table10_2.png  used on input line 2436.
+Package pdftex.def Info: Table10_2.png  used on input line 2395.
 (pdftex.def)             Requested size: 307.28265pt x 87.55902pt.
-[76
+[75
 
  <./Table10_2.png>]
-<ML_logreg1.png, id=559, 700.6175pt x 241.90375pt>
+<ML_logreg1.png, id=554, 700.6175pt x 241.90375pt>
 File: ML_logreg1.png Graphic file (type png)
 <use ML_logreg1.png>
-Package pdftex.def Info: ML_logreg1.png  used on input line 2453.
+Package pdftex.def Info: ML_logreg1.png  used on input line 2412.
 (pdftex.def)             Requested size: 245.82915pt x 84.87796pt.
-<ML_logreg2.png, id=560, 846.16125pt x 181.67876pt>
+<ML_logreg2.png, id=555, 846.16125pt x 181.67876pt>
 File: ML_logreg2.png Graphic file (type png)
 <use ML_logreg2.png>
-Package pdftex.def Info: ML_logreg2.png  used on input line 2453.
+Package pdftex.def Info: ML_logreg2.png  used on input line 2412.
 (pdftex.def)             Requested size: 307.29047pt x 65.97813pt.
-<ML_logreg3.png, id=561, 887.315pt x 147.55125pt>
+<ML_logreg3.png, id=556, 887.315pt x 147.55125pt>
 File: ML_logreg3.png Graphic file (type png)
 <use ML_logreg3.png>
-Package pdftex.def Info: ML_logreg3.png  used on input line 2453.
+Package pdftex.def Info: ML_logreg3.png  used on input line 2412.
 (pdftex.def)             Requested size: 307.28839pt x 51.09885pt.
-[77
+[76
 
  <./ML_logreg1.png> <./ML_logreg2.png> <./ML_logreg3.png>]
-<dl_ecology.png, id=571, 722.7pt x 239.89626pt>
+<dl_ecology.png, id=566, 722.7pt x 239.89626pt>
 File: dl_ecology.png Graphic file (type png)
 <use dl_ecology.png>
-Package pdftex.def Info: dl_ecology.png  used on input line 2464.
+Package pdftex.def Info: dl_ecology.png  used on input line 2423.
 (pdftex.def)             Requested size: 307.2923pt x 102.00397pt.
-[78
+[77
 
- <./dl_ecology.png>] [79
+ <./dl_ecology.png>] [78
 
-] [80
+] [79
 
 ]
 \tf@nav=\write6
@@ -1355,15 +1404,15 @@ Package pdftex.def Info: dl_ecology.png  used on input line 2464.
 
 (./11Nnet.aux) ) 
 Here is how much of TeX's memory you used:
- 27768 strings out of 480121
- 532065 string characters out of 5892161
- 831790 words of memory out of 5000000
- 44717 multiletter control sequences out of 15000+600000
+ 30184 strings out of 480121
+ 593654 string characters out of 5892161
+ 889306 words of memory out of 5000000
+ 47102 multiletter control sequences out of 15000+600000
  567350 words of font info for 175 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  128i,17n,122p,1003b,738s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texm
-f/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-math
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/
+texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-math
 it.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/e
 nc/dvips/lm/lm-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/p
@@ -1384,10 +1433,10 @@ share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/publi
 c/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/l
 mtt12.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt8.pfb>
-Output written on 11Nnet.pdf (80 pages, 4929337 bytes).
+Output written on 11Nnet.pdf (79 pages, 4928822 bytes).
 PDF statistics:
- 790 PDF objects out of 1000 (max. 8388607)
- 587 compressed objects within 6 object streams
- 218 named destinations out of 1000 (max. 500000)
+ 781 PDF objects out of 1000 (max. 8388607)
+ 579 compressed objects within 6 object streams
+ 216 named destinations out of 1000 (max. 500000)
  51369 words of extra memory for PDF output out of 51595 (max. 10000000)
 

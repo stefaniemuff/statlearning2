@@ -167,6 +167,10 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{multirow}
+\usepackage{tcolorbox}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -630,7 +634,7 @@ The nodes are also called \emph{neurons}.
 \tightlist
 \item
   Identify \(p, M, C\) in the network figure above, and relate that to
-  the \(y_{c}({\boldsymbol x})\) equation.
+  the \(\hat{y}_{c}({\boldsymbol x})\) equation.
 \end{itemize}
 
 \(~\)
@@ -1090,9 +1094,12 @@ function to be minimized \(R({\boldsymbol \theta})\).
   Gradient descent
 \item
   Mini-batch stochastic gradient descent (SGD) and true SGD
-\item
-  Backpropagation
 \end{itemize}
+
+\(~\)
+
+where the gradient is calculated via
+\emph{\textcolor{red}{backpropagation}}.
 \end{block}
 \end{frame}
 
@@ -1243,63 +1250,14 @@ The expectation can be approximated by the average gradient over just a
   \emph{\textcolor{red}{regularization effect}}, due to the variability
   they bring to the optimization process.
 \end{itemize}
-\end{block}
-\end{frame}
 
-\begin{frame}
-\textbf{Mini-batch stochastic gradient descent}
-
-\vspace{1mm}
-
-\begin{enumerate}
-\tightlist
-\item
-  Divide all the training samples randomly into \emph{mini-batches}.
-\end{enumerate}
-
-\vspace{1mm}
-
-\begin{enumerate}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Until convergence, repeat a) to d)
-
-  \begin{enumerate}
-  [a)]
-  \tightlist
-  \item
-    For each mini-batch: Make predictions of the reponses in the
-    mini-batch in a \emph{forward pass}.
-  \item
-    Compute the loss for the training data in this batch.
-  \item
-    Compute the gradient
-    \(\nabla_{\boldsymbol \theta}^* R({\boldsymbol \theta}^{(t)})\) of
-    the loss with regard to the model's parameters (\emph{backward
-    pass}) based on the training data in the batch.
-  \item
-    Update all weighs, but just using the \emph{average gradient} from
-    the mini-batch
-    \({\boldsymbol \theta}^{(t+1)}={\boldsymbol \theta}^{(t)} - \lambda \nabla_{\boldsymbol \theta} ^* R({\boldsymbol \theta}^{(t)})\)
-  \end{enumerate}
-\end{enumerate}
-
-\vspace{1mm}
-
-\begin{enumerate}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Network is \emph{trained}; return parameter estimates.
-\end{enumerate}
-
-\vspace{6mm}
+\(~\)
 
 \textbf{Special case}: \emph{\textcolor{red}{True SGD}} involves only
 \emph{\textcolor{red}{one sample}} (mini-batch size 1). \(\rightarrow\)
 Mini-batch SGD is a compromise between SGD (one sample per iteration)
 and full gradient descent (full dataset per iteration)
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -1479,7 +1437,8 @@ More background:
 \begin{itemize}
 \tightlist
 \item
-  SGD is also a form of regularization (prevents over-fitting).
+  \emph{\textcolor{red}{SGD}} is also a form of regularization (prevents
+  over-fitting).
 \end{itemize}
 \end{block}
 \end{frame}
