@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2023"
+subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 12: Summing up and some cautionary notes"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "May 04, 2023"
+date: "April 25, 2024"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -17,8 +17,11 @@ output:
     toc_depth: 2
 urlcolor: blue
 bibliography: refs.bib
-header-includes: \usepackage{multirow}
-
+header-includes: 
+- \usepackage{multirow}
+- \usepackage{tcolorbox}
+- \setbeamertemplate{navigation symbols}{}
+- \setbeamertemplate{footline}[page number]
 ---
 
 ```{r setup, include=FALSE}
@@ -74,22 +77,22 @@ $~$
 
 $~$
 
-* **School exam** June 1st, 15-19h.
+* **School exam** May 11, 09-13h, plus 15min for file upload.
 
 $~$
 
 Tentative plan:
 
 * Warm up section.
-* 1-2 examples with real data.
 * A conceptual/theoretical section testing your understanding.
+* Two examples with real data.
 * A section with single/multiple choice questions. 
 
 $~$
 
-**Check out the exam from 2022 and additional information on the course website:**
+**Check out the exam from 2023 and additional information on the course website:**
 
-https://wiki.math.ntnu.no/tma4268/2023v/subpage16
+https://wiki.math.ntnu.no/tma4268/2024v/subpage16
 
 
 
@@ -196,7 +199,7 @@ $~$
 * Qualitative covariates, interactions.
  \vspace{2mm}
 
-* This module is a stepping stone for all subsequent uses of regression in Modules 6, 7, 8, and 11.
+* This module is a stepping stone for all subsequent uses of regression in Modules 6, 7, 8, 9 and 11.
 
 
 ---
@@ -516,52 +519,67 @@ To improve prediction (but worse interpretation):
 
 * Variable importance plots.
 
-* _Boosting_: fit one tree with $d$ splits, make residuals and fit a new tree, adjust residuals partly with new tree - repeat. 
+
 
 ---
 
 
-## 9. Support vector machines
+## 9. Boosting and additive trees
 
 $~$
 
-* SVM can be used both classification and regression, but we have only studied two-class classification.
+* Boosting is another (tree) ensemble method.
 
 \vspace{2mm}
 
-* Aim: find high dimensional hyperplane that separates two classes $f({\bf x})=\beta_0+{\bf x}^T \boldsymbol\beta=0$. If $y_if({\bf x}_i)>0$ observation ${\bf x}_i$ is correctly classified.
+* Sequentially add new trees that are grown in the areas where the previous tree ensemble performs bad.
 
 \vspace{2mm}
+
+* Most common boosting approach is  **gradient boosting**, where we fit a tree $T$ to the negative gradient using least squares:
+
+\vspace{6mm}
+
+\begin{tcolorbox}
+\textbf{The central idea}: find a tree $T(x;\Theta_m)$ that is as close as possible to the negative gradient 
+
+\begin{equation}
+\tilde{\Theta}_m= \arg \min_\Theta \sum_{i=1}^N (-g_{im} -T(x_i;\Theta))^2 \ .
+\end{equation}
+\end{tcolorbox}
 
 ---
 
-* Maximizing the distance (on both sides) from the class boundary to the closes observations (the margin $M$). 
+### Further methods and considerations
 
-* Relaxed with slack variables (support vector classifiers), and to allow nonlinear functions of ${\bf x}$ (inner products).
+$~$
 
-\vspace{2mm}
-
-* Support vectors: observations that lie on the margin or on the wrong side of the margin. 
-
-\centering
-![casi Figure 19.3](../../casi/193.png){width=80%}
-
----
-
-* Kernels: generalization of an inner product to allow for non-linear boundaries 
-
-* Most popular kernel is radial $$K(x_i,x_i')=\exp(-\gamma\sum_{j=1}^p (x_{ij}-x_{i'j})^2) \ . $$
-
-
-* Tuning parameters: cost and parameters in kernels - chosen by CV.
+**Extensions**:
 
 \vspace{2mm}
 
-* Unfortunately not able to present details since then a course in optimization is needed.
+* Stochastic gradient boosting (SGB)
 
 \vspace{2mm}
 
-* _\textcolor{red}{SVMs have been overtaken largely by neural networks and tree-based methods.}_
+* Extreme gradient boosting (XGBoost)
+
+\vspace{2mm}
+
+* LightGBM, CatBoost,...
+
+\vspace{8mm}
+
+**Caveats**:
+
+\vspace{2mm}
+
+* Lots of parameters to tune! Parameter tuning becomes an art.
+
+\vspace{2mm}
+
+
+* Loss of interpretability (but remember _variable importance_ and _partial dependence plots_)
 
 ---
 
@@ -600,7 +618,7 @@ biplot(pcaS,scale=0,cex=0.6) # scale=0: arrows scaled to represent the loadings
 Hierarchical clustering for visualization
 
 \centering
-![](../1Intro/heatmap.png){width=70%}
+![](../../2023/1Intro/heatmap.png){width=70%}
 
 
 
@@ -645,8 +663,6 @@ $~$
 \centering
 
 www.menti.com
-
-Code 16 18 55 1
 
 
 ---
