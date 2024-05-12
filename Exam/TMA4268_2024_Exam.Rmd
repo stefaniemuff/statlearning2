@@ -1,0 +1,698 @@
+---
+title: "TMA4268 V2024 Exam"
+author: Stefanie Muff and Sara Martino, Department of Mathematical
+  Sciences, NTNU
+date: 'May 11, 2024'
+output:
+  # html_document:
+  #   df_print: paged
+  #   toc: no
+  #   toc_depth: '2'
+  pdf_document:
+    toc: no
+    toc_depth: '2'
+subtitle: TMA4268 Statistical Learning V2024
+urlcolor: blue
+header-includes: \usepackage{amsmath}
+---
+
+Check in the end which libraries we need:
+```{r setup, include=FALSE}
+library(knitr)
+library(MASS)
+library(caret)
+library(pls)
+library(glmnet)
+library(gam)
+library(gbm)
+library(randomForest)
+library(ggfortify)
+library(leaps)
+library(pROC)
+ 
+opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
+knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+                      cache=FALSE, size="scriptsize", fig.height=4, fig.width=5,cache=TRUE)
+
+```
+
+
+
+###################################
+# Problem 1 (Fill-in-the-blank text, 5P) 
+###################################
+
+0.5P per correct answer
+
+Read the whole text and fill in the blanks such that the whole text makes sense (you might only understand which answer is correct after you continued reading):
+
+In this course we learned about methods that can be used for statistical learning. 
+We have mainly discussed supervised statistical learning methods, broadly divided into regression and classification problems. We were thereby discriminating between models that we use for prediction versus inference.
+
+If the main goal is inference, we usually prefer _parametric_ (non-parametric, unsupervised, more advanced, more flexible, regression, classification) methods, because the goal is then to _understand_ (predict, minimize the sum of bias and variance, minimize prediction error). If the goal is pure prediction, we can use any method that performs well, whereas _non-parametric_ (regression, classification, clustering, supervised) methods are very flexible and thus more complex and _less interpretable_ (better interpretable, more appealing, better suited for inference) than, for example, linear models.
+
+One important concept in the course was the bias-variance trade-off, and in that context we discussed variable selection and methods based on shrinkage. Lasso and ridge regression are two shrinkage methods we learned about. Lasso is an alternative to AIC-based model selection in linear models and should be preferred since it avoids _model selection bias_ (underestimated parameter estimates, large prediction error, irreducible error, over-fitting).
+In the context of trees, shrinkage-type regularization is performed via _tree pruning_ (bagging, random forests, boosting, classification trees, regression trees), whereas neural networks do this via _weight penalization_ (data augmentation, label smoothing, dropout, early stopping). More generally, any type of regularization has as a main goal to _reduce test error_ (reduce training error, reduce bias, increase the flexibility of the model, shrink parameters) by avoiding that the model over-fits the data.
+
+In unsupervised learning the goal is to discover interesting aspects about the data
+when the _response variable_ (covariate, loss function, parametric model, reducible error, bias-variance trade-off) is not present. We have considered two types of methods: principal component analysis and clustering. Both methods have strong focus on finding _groups_ (good predictions, bias, variance) in the data, and on visualization.  
+ 
+
+
+
+
+###################################
+# Problem 2 (Multiple choice and numeric answer, 7P)
+###################################
+
+##  a) (3P)
+
+Which statements are correct? Here $n$ are the number of data points and $p$ the number of available variables. 
+
+  - Forward selection requires that $p<n$.
+  - [correct] Backward selection requires that $p<n$.
+  - Lasso requires that $p<n$.
+  - [correct] Ridge regression is possible even if $p>n$.
+  - Neural networks must have $p>n$.
+  - [Correct] Boosted regression trees allow for $p>n$.
+
+
+##  b) (2P)  
+
+Look at the following architecture of a feed-forward neural network:
+
+![](nnet.png){width=60%}
+
+Which statements are correct?
+
+  - [correct] This network has 9 input variables, two hidden layers and a continuous or binary outcome.
+  - This network has 10 input variables and two hidden layers with 8 and 7 nodes, respectively.
+  - [correct] This network can be used for binary classification.
+  - In this network we estimate 143 parameters.
+  
+**Solution:**
+
+The second statement is wrong, because there are bias nodes in each layer. We estimate $125 = 10\cdot 7 + 8 \cdot 6 + 7$ parameters.
+
+  
+## c) (1P) Numeric answer
+
+A covariate is included in a regression model as a natural cubic spline with three cut points. How many degrees of freedom does this spline term consume?
+
+
+**Solution**:
+4
+
+##  d) (1P) Numeric answer
+
+We have fitted a tree to some training data to predict the number of bikes rented out in a given city on a specific day, and get the following result:
+
+![](tree_simple.png){width=60%}
+
+Using the fitted regression tree, what would you predict as the number of bikes rented on a day with the following covariates:  
+
+  * `year=0`
+  * `season=3`
+  * `holiday=0`
+  * `notworkday=0`
+  * `temp=0.3`
+  * `weather=3`
+  * `wind=0.3`
+
+**Solution:** 3243
+  
+###################################
+# Problem 3 (theory, 8P)
+###################################
+
+## a) (4P)
+We learned about $k$-fold cross-validation (CV) as a way of doing model selection. 
+
+(i) (2P) Explain how $k$-fold CV is implemented and how the MSE is computed.
+(ii) (2P) State what the advantages and disadvantages of $k$-fold cross-validation (CV) are with respect to the Leave-one-out cross-validation (LOOCV) approach.
+
+**Solution**:
+ 
+ (i)   A training set is randomly divided into $k$ groups of equal size. The first group  is used as the validation set, while the model is fit on the remaining $k-1$ groups which constitute the training set. The MSE is calculated using the validation set. This procedure is repeated $k$ times and on each occasion the validation set and training sets will be different than the previous one. We then take the average of all the MSE's as the final MSE. 
+
+  (ii)  $k$-fold CV is less computationally demanding: If $k=5$ then only 5 models need to be fitted, while with LOOCV where $n$ models need fitting. $k$-fold CV  has higher bias than LOOCV, as fewer observations are used, but tends to have lower variance. 
+  
+## b) (4P)
+
+Consider a regression setting and assume an additive error model:
+
+$$
+Y_i = f_{\theta}(X_i) + \epsilon_i,\qquad i = 1,\dots,N
+$$
+
+where $\theta$ denotes the model parameters defining the regression function $f_{\theta}$, and $\epsilon$ is the error term.
+
+i) (2P) Describe the least squares method and  the maximum likelihood method and how they are used to estimate $\theta$. It is enough to state the optimization problems, you do not need to solve them. State also the assumption that are made for each estimation method
+
+ii) (2P) Show that, if you assume a Gaussian distribution for the error term, then the two methods are equivalent with respect to the estimate of $\theta$.
+
+  
+**Solution**:
+ 
+i) In the  least squares method we assume that the error terms $\epsilon_1,\dots,\epsilon_N$ are independent, incorrelated, and all have the same variance. We estimate parameters by minimizing the the residual sum-of-squares (RSS):
+$$
+\hat{\theta}_{LSE} = \text{argmax}_{\theta}\left\{\sum_{i=1}^N(y_i-f_{\theta}(X_i))^2 \right\}
+$$
+In the maximum likelihood method we additionally assume taht the error terms are normally distributed. We then estimate parameters by maximizing the log-likelihood
+
+$$
+\hat{\theta}_{MSE} = \text{argmax}_{\theta}\left\{\sum_{i=1}^N\log(p(y_i|f_{\theta}(X_i), \sigma^2)) \right\}
+$$
+
+ii)  Assuming a Gaussian distribution for the error term implies that $Y_i\sim\mathcal{N}(f_{\theta}(X_i), \sigma^2)$ which gives the log-likelihood function
+$$
+\begin{aligned}
+l(\theta) & = \sum\left(-\frac{1}{2}\log(2\pi)-\frac{1}{2}\log(\sigma^2)-\frac{1}{2\sigma^2}(y_i-f_{\theta}(X_i))^2\right)\\
+& = -\frac{N}{2}\log(2\pi)-\frac{N}{2}\log(\sigma^2)-\frac{1}{2\sigma^2}\sum(y_i-f_{\theta}(X_i))^2
+\end{aligned}
+$$
+Since the first two terms in the expression above do not depend on $\theta$, the only term to maximize is the sum $\sum(y_i-f_{\theta}(X_i))^2$, which gives the same optimization problem as for the least square method.
+
+###################################
+# Problem 4 -- Data analysis 1 (16P)
+###################################
+
+ 
+
+
+Here we are looking at a regression problem, where we want to understand the factors that affect the sales of child carseats in 400 different stores. We use the `Carseats` data set from the ISLR package, which you can load  using the code below
+
+```{r,fig.width=7,fig.height=7,out.width="80%"}
+library(ISLR)
+library(leaps)
+library(glmnet)
+
+data(Carseats)
+```
+
+It is useful to investigate the data for example using the code below and   by typing `?Carseats` into the R console: 
+```{r,fig.width=7,fig.height=7,out.width="80%", eval = FALSE}
+# Look at the data, for example using:
+pairs(Carseats)
+str(Carseats)
+
+```
+
+
+
+
+##  a) (8P)
+```{r, echo = FALSE}
+mod = lm(Sales ~Price + ShelveLoc + US + Population , data = Carseats)
+```
+
+
+(i) (1P) Fit a multiple regression model to predict `Sales` using `Price`, `ShelveLoc`,  `US` and `Population` as predictors.
+(ii) (1P) Provide an interpretation of the estimated coefficient for Price. How much does the sales changes if price is increased by 10 dollars?
+(iii) (2P) Perform and F test to asses the significance of the `ShelveLoc` covariate and state your conclusion. If you move an item from a Medium to a Good shelve location, how does the expected number of sales changes?
+(iv) (2P) Compute the predicted sales for two observations both with a price of 100 dollars and population of 10 000 inhabitants but one with bad shelving location and not located in the US while the other with medium shelving and located in the US.
+(v) (2P) Look at the plots produced by
+
+```{r, eval = FALSE}
+plot(mod)
+```
+where `mod` is your fitted model. Explain how each of the plots can be used to assess the fitted model. When relevant, state which assumptions are addressed and if those are met for the model under consideration.
+
+
+## Solution
+
+(i)
+```{r}
+mod = lm(Sales ~Price + ShelveLoc + US + Population , data = Carseats)
+summary(mod)
+```
+
+(ii) The model suggests a negative relationship between price and sales. If we increase the price by 10 dollars the sales are espected to diminish by `r round(mod$coefficients[2] *10,3)` thousands units.
+
+
+iii)
+
+Anovae for `SelveLoc`:
+```{r}
+r.lm <- lm(Sales ~Price +  US + Population + ShelveLoc , data = Carseats)
+anova(r.lm)
+```
+We conclude that the shelve location appears to be very relevant. 
+
+By moving an item from  a Medium to a Good location, we expect to increase the sales by `r 4.8346990-1.9057673` thousends units.
+
+
+(iii)
+```{r}
+new_data = data.frame(Price = rep(100,2), 
+                      ShelveLoc = factor(c("Bad", "Medium"), levels = c("Bad","Medium","Good")), 
+                      US = factor(c("No", "Yes"), levels = c("Yes","No")),
+                      Population = rep(10000,2))
+
+predict(mod, newdata = new_data)
+```
+
+iv)
+```{r, eval = TRUE,fig.width=6,fig.height=6}
+par(mfrow=c(2,2))
+plot(mod)
+```
+
+The assumptions we want to check are that the mean of the error terms is zero, that the error variance is constant, that the errors are (approximately) independent and that the distribution of the error term is Gaussian.
+
+The first plots tells us that residuals are centered around 0 and that their variance does not seem to change with the fitted values. The second plots show a QQ plot and it is consistent with the assumption of Gaussian distribution.
+The third plot also does not show any worrying pattern. The fourth plot one datapoint seems to have a high leverage but not a high residual. 
+
+
+## b) Model Selection (8P)
+
+We now consider all predictors in the `Carseats` dataset except for `ShelveLoc`. Our goal is to build a model with as few predictor as possible but that still gives good predictions.
+
+In order to assess the robustness of our models, we split the data into a training and a test set as follows:
+
+```{r}
+set.seed(1234)
+# remove ShelveLoc covariate
+car.all = Carseats[,-7]
+
+# create train and test datasets
+samples <- sample(1:400,250, replace=F)
+car.train <- car.all[samples,]
+car.test <- car.all[-samples,]
+```
+
+i) (1P) Fit a model on the train data with all `Sales` as response. Use all predictors except `ShelveLoc` and add also a quadratic effect of `Age`.
+
+ii) (1P) Look at the summary of your model. How do you interpret the F-statistics in the last row?
+
+iii) (2P) Carry out Ridge regression on the training set,  choose the largest lambda within 1 standard error from the lambda with the minimal error in a 5-fold cross-validation. As above, include the quadratic term for `Age` . Report the MSE of test data.
+
+*Requirement*: Use set.seed(1100) before running the cross-validation.
+
+
+iv) (2P) Carry out Lasso regression on the training set, choose the largest $\lambda$ within 1 standard error from the $\lambda$ with the minimal error in a 5-fold cross-validation. As above, include the quadratic term for `Age` . Report the MSE of test data.
+
+*Requirement*: Use set.seed(1100) before running the cross-validation.
+
+v) (2P) Compare the estimated coefficients you obtained with Ordinary least square, Ridge and Lasso regression. What patterns do you notice? Are there some advantages/disadvantages of Lasso over ridge regression?
+
+
+**R-hints**:
+
+```{r, eval = FALSE}
+x.train <- model.matrix(Sales ~ ..., data = car.train)
+set.seed(1100)
+
+#ridge
+cv_ridge <- cv.glmnet(x.train,  car.train$Sales, alpha = ...)
+plot(cv.ridge)
+cv.ridge$...
+fit_ridge = glmnet(..., ... , alpha=..., lambda = ...)
+```
+
+
+
+
+
+
+## Solution
+ 
+i)
+
+```{r, echo = TRUE}
+mod  = lm(Sales ~ CompPrice + Income + Advertising + Population + Price + Age + I(Age^2) + Education +Urban+  US, data = car.train)
+
+
+p = predict(mod, car.test)
+mse = mean((p-car.test$Sales)^2)
+```
+
+ii) The F-Statistic is a “global” test that checks if at least one of your coefficients are nonzero. In this case the p-value is very small so we reject the null hypothesis and conclude that at least one of the coefficients is not zero.
+ 
+iii)
+```{r}
+x.train <- model.matrix(Sales ~ . + I(Age^2), data = car.train)
+set.seed(1100)
+
+#ridge
+cv_ridge <- cv.glmnet(x.train,  car.train$Sales, alpha = 0, nfolds = 5)
+plot(cv_ridge)
+fit_ridge = glmnet(x.train, car.train$Sales, alpha=0, lambda = cv_ridge$lambda.1se)
+p <- predict(fit_ridge,   model.matrix(Sales ~ . + I(Age^2), data = car.test), s = fit_ridge$lambda.1se)
+
+mse_ridge <- mean((p - car.test$Sales)^2)
+coef_ridge = coef(fit_ridge)
+```
+
+(iv)
+```{r}
+
+#lasso
+cv_lasso <- cv.glmnet(x.train, car.train$Sales, alpha = 1, nfolds = 5)
+plot(cv_lasso)
+fit_lasso = glmnet(x.train, car.train$Sales, alpha=1, lambda = cv_lasso$lambda.1se)
+p <- predict(cv_lasso, model.matrix(Sales ~ . + I(Age^2), data = car.test), s = cv_lasso$lambda.1se)
+(mse_lasso <- mean((p - car.test$Sales)^2))
+coef_lasso = coef(fit_lasso)
+```
+
+(v) 
+```{r}
+c(mse, mse_ridge, mse_lasso)
+cbind(coef(mod), coef_ridge, coef_lasso)
+
+```
+
+The estimated parameters with Lasso and Rigde regression are shrunken towards 0. While in Lasso regression some parameters are exactly 0 the same does not happen with ridge regression. This is expected due to the diffent form of the penalization used.
+
+
+
+
+
+###################################
+# Problem 5 -- Data analysis 2 (16P)
+###################################
+
+We are using a dataset on purchase of orange juice, where the costumors either purchased the brand "Citrus Hill" (CH) or "Minute Maid" (MM). The dataset is available in the `ISLR` package and can be loaded and modified as follows: 
+
+```{r}
+library(ISLR)
+data(OJ)
+# Select a subset of columns
+d.OJ <- OJ[,c("Purchase","WeekofPurchase","PriceDiff","PriceCH","PriceMM","SpecialMM","LoyalCH","PctDiscMM","PctDiscCH","Store7")]
+d.OJ$Purchase <- ifelse(d.OJ$Purchase=="CH",0,1)
+```
+
+Note that we have coded the purchase of Citrus Hill as 0, and Minute Maid as 1.
+
+You can look up what the different covariates in the dataset actually mean by typing `?OJ` in the R console.
+
+Before starting, it is smart to investigate the data a little bit, for example by making `pairs` plots or looking at the structure using `str(d.OJ)` etc.
+
+We are interested in understanding and predicting the purchase of Minute Maid vs Citrus Hill.
+
+
+## a) (3P)
+
+  (i) (1P) Fit a logistic regression model on the full data set with `Purchase` as response variable, using all the covariates.
+  (ii) (2P) Since we have a model where the prices for both brands, as well as the price differences are included, we fit another logistic regression model where we use all covariates _except_ `PriceCH` and `PriceMM`. Given the fitted model, quantify the effect of the price difference (`PriceDiff`) on purchase of MM when the price difference increases by 0.1 units.
+
+**Solution**
+
+(i)
+```{r}
+r.glm <- glm(Purchase ~ ., data=d.OJ, family="binomial")
+summary(r.glm)
+```
+(ii) 
+ 
+```{r}
+r.glm2 <- glm(Purchase ~ . -PriceCH - PriceMM, data=d.OJ, family="binomial")
+summary(r.glm2)
+```
+ 
+ The _odds ratio_ for purchase decreases by a factor of $\exp(\beta \cdot 0.1) =$ `r round(exp(summary(r.glm2)$coef["PriceDiff",1]*0.1),3)`
+
+Common mistakes:
+\begin{itemize}
+\item Used linear regression, e.g. by not specifying family="binomial" (-1)
+\item Incorrect explanation or conclusion (-1)
+\end{itemize}
+
+## b) (5P)
+
+Now split the dataset into a training and a test sample for prediction (assuming our aim is to predict purchase of MM). Split the dataset as in the code below, using the same seed. Then 
+
+  (i) (1P) Perform a quadratic discriminant analysis on the training data. 
+  (ii) (1P) Use the fitted model to predict purchase of MM in the test set using a probability cutoff of $p=0.5$. 
+  (iii) (1.5P) Generate the confusion table and calculate the error rate, sensitivity and specificity for the prediction on the test set. 
+  (iv) (1.5P) Generate the confusion table and calculate the error rate, sensitivity and specificity also for the logistic regression model from a) i), when trained on the training data and then predicted on the test data. Use again $p=0.5$ as cutoff.
+
+**R-hints:**
+```{r}
+set.seed(4268)
+samples <- sample(1:1070,1070*0.7, replace=F)
+d.OJ.train <- d.OJ[samples,]
+d.OJ.test <- d.OJ[-samples,]
+```
+
+```{r,echo=TRUE,eval=FALSE}
+library(MASS)
+qdaMod <- qda()
+postQDA = predict(qdaMod,newdata=..)$class
+table(...)
+```
+
+
+**Solution:**
+
+```{r}
+library(MASS)
+qdaMod = qda(Purchase~ . , data = d.OJ.train)
+# $class is doing the 0.5 cutoff, while $posterior gives the actual probabilities:
+predQDA = predict(qdaMod, newdata = d.OJ.test)$posterior
+predQDA = predict(qdaMod, newdata = d.OJ.test)$class
+tQDA = table(true=d.OJ.test$Purchase, predict=predQDA)
+tQDA 
+
+sensQDA = tQDA[2, 2]/(sum(tQDA[2,]))
+spesQDA = tQDA[1, 1]/(sum(tQDA[1,]))
+c(sensitivity = sensQDA, specificity =  spesQDA)
+
+(error.rate.QDA <- (tQDA[1, 2] +tQDA[2, 1]) /(sum(tQDA)))
+```
+
+iv)
+```{r}
+r.glm.train <- glm(Purchase ~ ., data=d.OJ.train, family="binomial")
+pred.glm <- round(predict(r.glm.train,newdata=d.OJ.test,type="response"),0)
+t.glm = table(true=d.OJ.test$Purchase, predict=pred.glm)
+t.glm
+
+sens.glm = t.glm[2, 2]/(sum(t.glm[2,]))
+spes.glm = t.glm[1, 1]/(sum(t.glm[1,]))
+c(sensitivity = sens.glm, specificity =  spes.glm)
+
+(error.rate.glm <- (t.glm[1, 2] +t.glm[2, 1]) /(sum(t.glm)))
+```
+
+Common mistakes:
+\begin{itemize}
+\item trained model on all data (-1)
+\item didn’t include/wrong sens. and/or spec. (-0.5) (only if they show confusion matrix, otherwise -1)
+\end{itemize}
+
+## c) (4P)
+
+(i) (3P) We continue analyzing the same that, focusing on the task to obtain good predictions of what the custormers purchase. To this end, use a generalized additive model (still for the binary outcome `Purchase`) that only contains smoothed versions of `PriceDiff` and `LoyalCH` (no other covariates). Fit it on the training data and explain the details of your choice, for example how many degrees of freedom the smoothed terms consume and what functional form they have. Use maximum 5 sentences.
+(ii) (1P) Calculate the misclassification error rate on the test data. Is it lower than for logistic regression and QDA?
+
+
+**Solution:**
+
+(i)
+```{r}
+r.gam.train <- glm(Purchase ~ ns(PriceDiff,5) + ns(LoyalCH,5), data=d.OJ.train, family="binomial")
+pred.gam <- round(predict(r.gam.train,newdata=d.OJ.test,type="response"),0)
+t.gam = table(true=d.OJ.test$Purchase, predict=pred.gam)
+t.gam
+```
+
+(ii) Yes the error rate is lower than before, but not much (and depending on the choice, it might be the same or slightly higher even than for logistic regression):
+```{r}
+(error.rate.gam <- (t.gam[1, 2] +t.gam[2, 1]) /(sum(t.gam)))
+```
+
+## d) (4P)
+
+(i) (2P) Finally, you should use a gradient tree boosting method. Take a large enough number of trees for a given learning rate and then choose the tree number that gives the lowest error rate for a 10-fold CV. Explain your choices. Use the R-hints below and fit the model on the training data.
+(ii) (2P) Calculate the misclassification error on the test data. Compare to the findings from b) and c) and interpret in 1-2 sentences. 
+
+
+**R-hints:**
+```{r, echo=T,eval=F}
+library(gbm)
+# Check the help file:
+?gbm()
+gbm(..., n.trees=..., shrinkage=...,interaction.depth=...,cv.folds=10)
+```
+
+**Solution:**
+
+(i) Students should explain `n.trees`, `shrinkage` and `interaction.depth`. Since we are choosing the best number of trees at the end, `n.trees` should be large enough, because we then anyway do early stopping. 
+```{r}
+library(gbm)
+gbm1 <- gbm(
+  formula = Purchase ~ .,
+  data = d.OJ.train,
+  distribution = "bernoulli",
+  n.trees = 1000,
+  shrinkage = 0.01,
+  interaction.depth = 2,
+  n.minobsinnode = 10,
+  cv.folds = 10
+)
+
+# To check out which number of trees gives the best CV error
+(best.iter <- which.min(gbm1$cv.error))
+```
+
+(ii) Calculation of the error rate:
+```{r}
+pred.gbm <- round(predict(gbm1,n.trees=best.iter,newdata=d.OJ.test,type="response"),0)
+t.gbm = table(true=d.OJ.test$Purchase, predict=pred.gbm)
+t.gbm
+
+(error.rate.gbm <- (t.gbm[1, 2] +t.gbm[2, 1]) /(sum(t.gbm)))
+```
+
+Here, most students will find an error rate that is not lower than for logistic regression or the GAM. So they should hypothesize that boosted trees are probably not needed, and simpler models can (or should) be used.
+
+ 
+###################################
+# Multiple and single choice  and numerical answer questions 
+###################################
+
+# Problem 6 (7.5P)
+
+## a)(1P) (numerical answer )
+
+We have a dataset that we want to use to predict the starting salary after graduation, based on three predictors: the GPA (Grade Point Average, a number that indicates how high you scored in your courses on average), the IQ and the gender.
+
+Assume we use R to fit the following linear model
+
+```{r, eval = F}
+formula = salary ~ GPA + IQ + GENDER + GPA:IQ + GPA:GENDER
+mod = lm(formula, data = dataset)
+```
+
+Suppose we use least squares to fit the model, and get the following estimates
+
+````{verbatim}
+mod$coefficients
+   (Intercept)      GPA     IQ     GENDERFemale   GPA:IQ     GPA:GENDERFemale 
+     50             20     0.07         35        0.01             -10 
+````
+
+i)  What is the predicted salary for a female with IQ of 110 and GPA of 4.0? Give your answer with a precision of one decimal after the period.
+
+
+**Solution**:
+
+[137.1]
+
+## b) Single Choice (1P)
+
+In the same problem as **a)** , which sentence is correct:
+
+  * For a fixed value of IQ and GPA, males earn more on
+        average than females.
+
+  *  For a fixed value of IQ and GPA, females earn more on
+         average than males.
+
+  *  For a fixed value of IQ and GPA, males earn more on
+           average than females provided that the GPA is high enough.[correct]
+
+  *  For a fixed value of IQ and GPA, females earn more on 
+         average than males provided that the GPA is high 
+         enough.
+         
+
+
+
+
+## c) (1P)
+
+For which of the following techniques it is important to standardize the predictors:
+
+  * Multiple Linear Regression
+  
+  * Ridge Regression
+  
+  * Principal Component Analysis
+  
+  * K-nearest neighbour classification
+   
+**Solution**:
+
+[FALSE, TRUE, TRUE, TRUE]
+
+## d) (2P)
+
+For each optimization criterion choose the correct method from the drop down menu:
+
+  * $\text{argmin}_{\beta}\sum_{i = 1}^n(y_i-\mathbf{x}_i^T\beta)^2$: *least square regression*
+  
+  * $\text{argmin}_{\beta}\sum_{i = 1}^n(y_i-\mathbf{x}_i^T\beta)^2 + \lambda\sum_{j =1}^p|\beta_j|$: *Lasso regression*
+
+  * $\text{minimize}_{C_1,\dots,C_K}\left\{\sum_{k = 1}^K\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j = 1}^p(x_{ij}-x_{i'j})^2\right\}$: *K-means clustering*
+  
+   * $\text{argmin}_{R_1(j,s),R_2(j,s)}\left[ \sum_{i:x_i\in R_1(j,s)}(y_i-\hat{y}_{R_1})^2 + \sum_{i:x_i\in R_2(j,s)}(y_i-\hat{y}_{R_2})^2\right]$: *Regression tree*
+  
+  
+## e) (2.5P)
+
+<!-- \textcolor{red}{I think this question should be replaced by something that is not covered so far - sensitivity and specificity are extensively covered in Problem 5. I suggest to use a question about PCA, for example with a bi-plot, where the students need to interpret things. Check out old exams, and compulsory exercises 2 from 2021 and 2022 (see private git). I feel the exam has now a bit too much weight on Modules 3 and 4. Module 10 is almost not covered, for example} -->
+
+<!-- A test set is available, with 100 observation from each each of two classes. A classification rule gave the following confusion matrix -->
+<!-- ```{r} -->
+<!-- ##        classto1 -->
+<!-- ## test.y  0  1 -->
+<!-- ##      0 64  36 -->
+<!-- ##      1 10  90 -->
+<!-- ``` -->
+<!-- Calculate sensitivity and specificity. -->
+
+<!-- ## Solution -->
+
+<!-- **Sensitivity** is the proportion of correctly classified positive observations: $\frac{\text{Nr. True Positive }}{\text{Nr. Condition Positive }} = \frac{90}{100} = 0.9$  -->
+
+<!-- **Specificity** is the proportion of correctly classified negative observations: $\frac{\text{Nr. True Positive }}{\text{Nr. Condition Positive }} = \frac{64}{100} = 0.64$  -->
+
+
+
+We are looking at the `state.x77` dataset given in R. This dataset consists of data related to the 50 states of the United States of America.
+The dataset contains 8 variables regarding different aspect of the state. You can check the data in R typing:
+
+```{r, eval = FALSE, echo = TRUE}
+data(state)
+?state.x77
+```
+
+to see what the different variables mean. 
+
+Here we carried out a principal component analysis and give the biplot and the scree plot below. In the biplot we also color the states according to their region (Northeast, South, North, Central, West).  Which of the following statements are correct?
+
+  (i) [correct] Population, income and area contribute most to the second PC.
+  (ii) The first  component explains 45\% of the variability of the response variable. 
+ (iii) [correct] California (CA) has a very high loading for the second principal component. 
+ (iv) [correct] The first three PCs explain about 80\% of the variability in the data. 
+ (v) [correct] Illiteracy has a low loading on the second PC.
+ 
+\centering
+```{r biplot,fig.width=6,fig.height=4.5, echo=FALSE}
+# library(devtools)
+# install_github("vqv/ggbiplot")
+library(ggbiplot)
+
+data(state)
+
+
+
+
+fit <- prcomp(state.x77, scale=T)
+
+ggbiplot(fit,ellipse=F,  labels=state.abb, groups=state.region) + xlim(c(-2,2)) 
+
+
+
+```
+
+
+
+```{r ,fig.width=4,fig.height=4,echo=FALSE}
+plot(fit$sdev^2/sum(fit$sdev^2),xlab="PCs",ylab="Variance explained")
+```
+
+
