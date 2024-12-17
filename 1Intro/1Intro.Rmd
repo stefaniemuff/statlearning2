@@ -1,26 +1,24 @@
 ---
-title: 'Module 1: Introduction'
-author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "11th January, 2024"
+subtitle: "TMA4268 Statistical Learning V2025"
+title: "Module 1: Introduction"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "9th January, 2025"
+fontsize: 10pt
 output:
-  # html_document:
-  #   toc: true
-  #   toc_float: true
-  #   toc_depth: 2
-  # slidy_presentation: default
   beamer_presentation:
-    keep_tex: true
+    keep_tex: yes
     fig_caption: false
     latex_engine: xelatex
-    theme: Singapore
-    colortheme: default
-    font: serif
-    includes:
-      in_header: ../header.tex
-fontsize: 10pt
-subtitle: TMA4268 Statistical Learning V2024
+    theme: "Singapore"
+    colortheme: "default"
+    font: "serif"
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
 urlcolor: blue
 header-includes: \usepackage{multirow}
+
 ---
 
 
@@ -32,18 +30,16 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 # Acknowledgements
 
-* This course had been built up by Mette Langaas at NTNU in 2018 and 2019 and revised by Stefani Muff in 2020-2023. I am using a some of their material, and material from her TAs, throughout the course.  
+This course had been built up by Mette Langaas at NTNU in 2018 and 2019. I am using a some of her material, and material from her TAs, throughout the course.  
 \vspace{2mm}
-**I would like to thank Mette and Steffi for the great work and for the permission to use her material!**
+**I would like to thank Mette for her great work and for the permission to use her material!**
 
 $~$
 
-* Thanks to Julia Debik for contributing to this module page.
 
 ---
 
 # Learning outcomes of TMA4268
-
 
 1. **Knowledge.** The student has knowledge about the most popular statistical learning models and methods that are used for _prediction_ and _inference_ in science and technology. Emphasis is on regression- and classification-type statistical models.
 
@@ -63,9 +59,9 @@ The textbook can be downloaded here: https://www.statlearning.com/
     * There are 15 hours of youtube videos by two of the authors of the book, Trevor Hastie an Rob Tibshirani. Links will be added to the module subpages.
 
 
-2) All the lecture notes (iPad notes will be made available online).
+2) All the lecture notes, \textbf{including any classnotes} made on the iPad or black board (iPad notes will be made available online).
 
-3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about)
+3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/)
 
 4) **Additional reading material will be clearly indicated in the modules and on the course page.**
 
@@ -76,20 +72,20 @@ The textbook can be downloaded here: https://www.statlearning.com/
 
 All the relevant information for the course can be found here:
 
-https://wiki.math.ntnu.no/tma4268/2024v/start
+https://wiki.math.ntnu.no/tma4268/2025v/start
 
 On each module page, all the relevant learning material and exercises (incl. solutions) will be provided in due time.
 
 ---
 
-# The Statistical Learning Team 2024
+# The Statistical Learning Team 2025
 
-## The TAs:
+## The TA:
 
 \vspace{2mm}
 
 * [Kenneth Aaase](https://www.ntnu.no/ansatte/kenneth.aase); PhD student
-* [Daesoo Lee](https://www.ntnu.no/ansatte/daesoo.lee); PhD student
+
 
 $~$
 
@@ -97,8 +93,9 @@ $~$
 
 \vspace{2mm}
 
-* [Sara Martino](https://www.ntnu.no/ansatte/sara.martino); Associate Professor
+* [Sara Martino](https://www.ntnu.edu/employees/sara.martino); Associate Professor
 * [Stefanie Muff](https://www.ntnu.edu/employees/stefanie.muff); Associate Professor
+ 
 
 
 ---
@@ -120,7 +117,7 @@ $~$
 
 \vspace{2mm}
 
-* No background in statistical software needed: but we will use the R statistical software extensively in the course. Knowing Python will make this easier for you!
+* No background in statistical software needed: but we will use the R statistical software extensively in the course. Knowing python will make this easier for you!
 
 \vspace{2mm}
 
@@ -192,8 +189,8 @@ $~$
     5) Resampling methods
     6) Model selection/regularization
     7) Non-linearity
-    8) Tree-based methods 1
-    9) Tree-based methods 2
+    8) Tree-based methods
+    9) Boosting and additive trees
     10) Unsupervised methods
     11) Neural networks (new in the course book edition 2)
 
@@ -233,7 +230,7 @@ $~$
 
 \vspace{4mm}  
 
-**Thursdays at 8.15-10.00 in EL6 and Fridays at 12.15-14.00 in EL6**
+**Thursdays and Fridays at 08.15-10.00 in GL-GE G1**
 
 
 \vspace{4mm}
@@ -242,11 +239,13 @@ $~$
 
 \vspace{2mm}
 
-* See here [https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf](https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf) for a tentative schedule.
+* **I suggest that you always have your laptop handy for the lecture.** So you can run code or do an exercise in class. 
 
 \vspace{2mm}
 
-* **I suggest that you always have your laptop handy for the lecture.** So you can run code or do an exercise in class. 
+* A tentative schedule is always available on our course webpage (see here at the bottom: https://wiki.math.ntnu.no/tma4268/2025v/start).
+
+
 
 
 ---
@@ -271,7 +270,7 @@ $~$
 
 \vspace{4mm}  
 
-**Thursdays at 16.15-19.00 in EL6**
+**Wednesdays at 16.15-18.00 in GL-GE G1**
 
 \vspace{4mm}
 
@@ -290,7 +289,7 @@ $~$
 
 \vspace{2mm}
 
-* Starting next week.
+* Starting in two weeks (22.01.2025). Exercises will always be discussed the week _after_ the topic was discussed in class.
 
 $~$
 
@@ -327,7 +326,7 @@ $~$
 
 \vspace{2mm}
 
-* The TAs grade the exercises (pass/fail).
+* The TA grades the exercises (pass/fail).
 
 
 
@@ -338,7 +337,7 @@ $~$
   
   \hspace{8mm} Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm} **Friday 23.02.24 **.
+  \hspace{8mm} **Monday, 24. February 2025, 23:59h**.
 
 
 \vspace{8mm}
@@ -347,7 +346,7 @@ $~$
  
   \hspace{8mm}Suggested submission deadline:  
   \vspace{2mm}
-  \hspace{8mm}**Friday 19.04.24 **.
+  \hspace{8mm}**Monday, 07. April 2025, 23:59h**.
 
 ---
 
@@ -359,7 +358,7 @@ A tentative schedule (i.e., with continous updates) can be found under the follo
 
 \vspace{2mm}
 
-[https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf](https://github.com/stefaniemuff/statlearning2/blob/main/TMA4268_schedule2024.pdf)
+[https://github.com/stefaniemuff/statlearning2/blob/master/TMA4268_schedule2025.pdf](https://github.com/stefaniemuff/statlearning2/blob/master/TMA4268_schedule2025.pdf)
 
 ---
 
@@ -367,11 +366,11 @@ A tentative schedule (i.e., with continous updates) can be found under the follo
 
 $~$
 
-* All the material presented in class will be available on our course webpage (https://wiki.math.ntnu.no/tma4268/2024v/start).
+* All the material presented in class will be available on our course webpage (https://wiki.math.ntnu.no/tma4268/2025v/start).
 
 \vspace{2mm}
 
-* There will be .pdf, .html and .Rmd versions of the lecture notes and exercises. This will allow you to check and use the code that is used therein. 
+* There will be .pdf and .Rmd versions of the lecture notes and exercises. This will allow you to check and use the code that is used therein. 
 
 
 ---
@@ -380,9 +379,10 @@ $~$
 
 $~$
 
+Todo: Check!
 
 * Use our discussion forum on Mattelab for all course-relevant questions: 
-[https://mattelab2024v.math.ntnu.no/c/tma4268/22](https://mattelab2024v.math.ntnu.no/c/tma4268/22)
+[https://mattelab2023v.math.ntnu.no/c/tma4268/6](https://mattelab2023v.math.ntnu.no/c/tma4268/6)
 
 $~$
 
@@ -412,7 +412,7 @@ $~$
 
 $~$
 
-Log into www.menti.com use code 3413 8094
+Go to www.menti.com and use the code that is visible.
 
 <!-- https://www.mentimeter.com/s/502463fe2a5484c36ffc166e1f33ef6b/977df7f3a325 -->
 
@@ -479,9 +479,9 @@ Log into www.menti.com use code 3413 8094
 
 Volunteers?
 
- * 
- * 
- * 
+ * (BMAT)
+ * (IndMat or Math/Physcis master, year 4 or 5?)
+ * (Other)
 
 Thanks to the three people that volunteer. 
 
@@ -530,16 +530,12 @@ _\textcolor{red}{Recommended}_:
 
 \vspace{1mm}
 
-* Watch the video lecture for Chapter 1 by Hastie and Tibshirani [here](https://wiki.math.ntnu.no/tma4268/2024v/subpage1).
+* Watch the video lecture for Chapter 1 by Hastie and Tibshirani [here](https://wiki.math.ntnu.no/tma4268/2025v/subpage1).
 
 
 
 * Background on Matrix Algebra: [Härdle and Simes (2015) - Chapter 2: A short excursion into Matrix Algebra](https://link.springer.com/chapter/10.1007/978-3-662-45171-7_2) (on the reading list for TMA4267 Linear statistical models). 
 
-
-<!-- ## Added after the lecture -->
-
-<!-- * [Classnotes 07.01.2019](https://www.math.ntnu.no/emner/TMA4268/2019v/notes/M1L1notes.pdf)  -->
 
 ---
 
@@ -767,8 +763,7 @@ In this plot the small black dots represent correctly classified iris plants, wh
 
 ```{r irislda, echo=FALSE, fig.width=6, fig.height=4.5,out.width="10cm"}
 library(klaR)
-drawparti(iris$Species, iris$Sepal.Length, iris$Sepal.Width,  prec=301, gs=20,  
-          method="lda", image.colors=c("#F8766D", "#00BA38", "#619CFF"), xlab="Sepal Length", ylab="Sepal Width", print.err=0)
+drawparti(iris$Species, iris$Sepal.Length, iris$Sepal.Width,  prec=301, gs=20,  method="lda", image.colors=c("#F8766D", "#00BA38", "#619CFF"), xlab="Sepal Length", ylab="Sepal Width", print.err=0)
 legend("topright", title="Species", legend=c("setosa", "versicolor", "virginica"), fill=c("#F8766D", "#00BA38", "#619CFF"),  inset=.02 , cex=0.8)
 ```
 
@@ -833,38 +828,40 @@ More:
 
 ---
 
-# Example 3: Unsupervised learning
+# Example 4: Unsupervised methods (Network clustering)
+\vspace{2mm}
 
-**Q**: What is different in this example?
+Finding clusters in protein-protein-interaction networks.
+\vspace{2mm}
 
+![](muff_etal.png)
+
+---
+
+# Unsupervised learning 
+
+$~$
+
+**Q**: What is different in examples 3 and 4?
 \pause
 
-  * We do not have a response variable
-  * We are not interested in predicting a particular variable but in determining whther there are groups, or clusters, among the observations.
+* We do not have a response variable
+* We are not interested in predicting a particular variable but in
+determining whther there are groups, or clusters, among the
+observations.
 
----  
+$~$
+\pause
 
-# Examples of unsupervised learning in practice
+**Practical examples**:
 
-
-  * Cancer research: Look for subgroups within the patients or within the genes in
-order to better understand the disease
-
-  * Online shopping site: Identify groups of shoppers as well as groups of items
-within each of those shoppers groups.
-
-  * Search engine: Search only a subset of the documents in order to find the best
-one for retrieval.
-
-  * $\dots$
-<!-- --- -->
-<!-- # Example 4: Unsupervised methods (Network clustering) -->
-<!-- \vspace{2mm} -->
-
-<!-- Finding clusters in protein-protein-interaction networks. -->
-<!-- \vspace{2mm} -->
-
-<!-- ![](muff_etal.png) -->
+* Cancer research: Look for subgroups within the patients or
+within the genes in order to better understand the disease
+* Online shopping site: Identify groups of shoppers as well as
+groups of items within each of those shoppers groups.
+* Search engine: Search only a subset of the documents in order to
+find the best one for retrieval.
+* ...
 
 ---
 
