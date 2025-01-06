@@ -43,7 +43,12 @@ $~$
 
 1. **Knowledge.** The student has knowledge about the most popular statistical learning models and methods that are used for _prediction_ and _inference_ in science and technology. Emphasis is on regression- and classification-type statistical models.
 
-2. **Skills.** The student can, based on an existing data set, choose a suitable statistical model, apply sound statistical methods, and perform the analyses using statistical software. The student can present, interpret and communicate the results from the statistical analyses, and knows which conclusions can be drawn from the analyses, and what the caveats are. 
+2. **Skills.** The student can, based on an existing data set, 
+* choose a suitable statistical model, 
+* apply sound statistical methods, and 
+* perform the analyses using statistical software.  
+\vspace{1mm}
+In addition, the student can present, interpret and communicate the results from the statistical analyses, and knows which conclusions can be drawn from the analyses, and what the caveats are. 
 
 
 
@@ -61,7 +66,7 @@ The textbook can be downloaded here: https://www.statlearning.com/
 
 2) All the lecture notes, \textbf{including any classnotes} made on the iPad or black board (iPad notes will be made available online).
 
-3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/)
+3) The R course here: [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about)
 
 4) **Additional reading material will be clearly indicated in the modules and on the course page.**
 
@@ -217,7 +222,7 @@ $~$
 
 $~$
 
-* Retake of examination may be given as an oral examination. The lectures are given in English.
+* Retake of examination may be given as an oral examination. The lectures and exam are given in English.
 
 
 
@@ -318,7 +323,7 @@ $~$
 
 \vspace{2mm}
 
-* Work in **groups of maximum 3**; groups are formed in Blackboard (Bb). Also hand-in is via Blackboard. 
+* Work in **groups of 3**; groups are formed in Blackboard (Bb). Also hand-in is via Blackboard. 
 
 \vspace{2mm}
 
@@ -329,13 +334,32 @@ $~$
 * The TA grades the exercises (pass/fail).
 
 
+---
+
+## Finding group members
+
+$~$
+
+* Please start immediately to form groups. Group size should be 3, and we very strongly encourage you to form groups of this size.
+
+\vspace{2mm}
+
+* We will open groups in Blackboard (info email will follow). Please, before you sign into a group, find your group first and the sign in together.
+
+\vspace{2mm}
+
+* We also opened a sub-category on our discussion forum where you can write if you are looking for group members:
+
+$~$
+
+https://mattelab2025v.math.ntnu.no/c/tma4268/finding-group-members/36
 
 
 ---
 
 * The **\textcolor{red}{first compulsory exercise}** will be held after Modules 1-5. 
   
-  \hspace{8mm} Suggested submission deadline:  
+  \hspace{8mm} Submission deadline:  
   \vspace{2mm}
   \hspace{8mm} **Monday, 24. February 2025, 23:59h**.
 
@@ -344,7 +368,7 @@ $~$
 
 * The **\textcolor{red}{second compulsory exercise}** will be held after Modules 6-10.
  
-  \hspace{8mm}Suggested submission deadline:  
+  \hspace{8mm} Submission deadline:  
   \vspace{2mm}
   \hspace{8mm}**Monday, 07. April 2025, 23:59h**.
 
@@ -354,7 +378,7 @@ $~$
 
 $~$
 
-A tentative schedule (i.e., with continous updates) can be found under the following link (als available from our course page):
+A _tentative_ schedule with continuous updates can be found under the following link (also available from our course page):
 
 \vspace{2mm}
 
@@ -379,10 +403,10 @@ $~$
 
 $~$
 
-Todo: Check!
+ 
 
 * Use our discussion forum on Mattelab for all course-relevant questions: 
-[https://mattelab2023v.math.ntnu.no/c/tma4268/6](https://mattelab2023v.math.ntnu.no/c/tma4268/6)
+[https://mattelab2025v.math.ntnu.no/c/tma4268/22](https://mattelab2025v.math.ntnu.no/c/tma4268/22)
 
 $~$
 
@@ -414,57 +438,6 @@ $~$
 
 Go to www.menti.com and use the code that is visible.
 
-<!-- https://www.mentimeter.com/s/502463fe2a5484c36ffc166e1f33ef6b/977df7f3a325 -->
-
- 
-<!-- ## Study programme  -->
-
-<!-- * MTFYMA FysMat ( ) -->
-<!-- * BMAT ( ) -->
-<!-- * MSMNFNA Master in Mathematical Sciences ( ) -->
-<!-- * Other ( ) -->
-
-
-
-
-<!-- ## Study year -->
-
-<!-- * 1 or 2 ( ) -->
-<!-- * 3 ( ) -->
-<!-- * 4 ( ) -->
-<!-- * 5, >5 or PhD ( ) -->
-
-<!-- --- -->
-
-<!-- ## Have you/will you take TMA4267 Linear Statistical Models? -->
-
-<!-- * Yes, previously= in 2019 or earlier ( ) -->
-<!-- * Yes, now= in 2020 ( ) -->
-<!-- * Yes, planned for 2021 or later ( ) -->
-<!-- * Not planned ( ) -->
-
-<!-- ## Do you know R? -->
-
-<!-- * No ( ) -->
-<!-- * No, and I do not want to learn R ( ) -->
-<!-- * Yes, but only the basics ( ) -->
-<!-- * Yes, in depth ( ) -->
-
-<!-- --- -->
-
-<!-- ## Plenary lectures on Monday mornings at 8.15-10 - do you plan to attend? -->
-
-<!-- * Yes ( ) -->
-<!-- * No, this is too early ( ) -->
-<!-- * No, since I rarely attend lectures. ( ) -->
-<!-- * No, for some other reason ( ) -->
-
-<!-- ## What do you think will be most fun in TMA4268? -->
-
-<!-- * Learning new statistical theory ( ) -->
-<!-- * Trying out statistical theory in R ( ) -->
-<!-- * Analysing data ( ) -->
-<!-- * Learn new hot topics ( ) -->
 
 
 ---
