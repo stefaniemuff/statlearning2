@@ -1,24 +1,25 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2022"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 2, Part 2: Random vectors, covariance, multivariate Normal distribution"
-author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 19, 2024"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "January 17, 2025"
 output:
   beamer_presentation:
     keep_tex: yes
     fig_caption: false
-   # latex_engine: xelatex
+    latex_engine: xelatex
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
-    includes:
-      in_header: ../header.tex
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 2
+  # html_document:
+  #   toc: true
+  #   toc_float: true
+  #   toc_depth: 2
 urlcolor: blue
-header-includes: \usepackage{xcolor,bm}
+header-includes: 
+- \usepackage{xcolor,bm}
+- \setbeamertemplate{footline}[page number]
+
 ---
 
 ```{r setup, include=FALSE}
@@ -30,13 +31,8 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
                       cache=TRUE, size="scriptsize")
 ```
 
-# Message
 
-- We need reference group members!!
-- Groups
-
-
-
+---
 
 # Overview
 
@@ -44,13 +40,14 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 
 * Random vectors
+
 \vspace{2mm}
 
 * The covariance and correlation matrix 
+
 \vspace{2mm}
 
 * The multivariate normal distribution
-
 
 
 ---
@@ -62,8 +59,11 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
     + Factors to predict body fat: bmi, age, weight, hip circumference,....
     
 * Joint distribution function: $f(\boldsymbol{x})$.
+
 * From joint distribution function to marginal (and conditional distributions).
+
 $$f_1(x_1)=\int_{-\infty}^{\infty}\cdots \int_{-\infty}^{\infty} f(x_1,x_2,\ldots,x_p)dx_2 \cdots dx_p$$
+
 * Cumulative distribution (definite integrals!) used to calculate probabilites.
 
 ---
@@ -130,30 +130,19 @@ $$\boldsymbol{X}_{(28 \times 4)}=\left[ \begin{array}{cccc}X_{11} & X_{12} & X_{
 
 $~$
 
- * **Remember** for a univariate SV $X\sim f(x)$ the expected value (mean) is defined as
- 
- $$
- \text{E}(X) = \int_\mathcal{R}x\ f(x) dx
- $$
-
-
-* For a **Random vector** $\boldsymbol{X}_{(p\times 1)}$,  the  mean vector $\boldsymbol{\mu}_{(p\times 1)}$ is 
-
+* Random vector $\boldsymbol{X}_{(p\times 1)}$ with mean vector $\boldsymbol{\mu}_{(p\times 1)}$:
 $$\boldsymbol{X}_{(p\times 1)}=\left[ \begin{array}{c}X_1\\ X_2\\ \vdots\\ X_p\\ \end{array}\right], \text{ and }\boldsymbol{\mu}_{(p \times 1)}=\text{E}(\boldsymbol{X})=\left[ \begin{array}{c}\text{E}(X_1)\\ \text{E}(X_2)\\ \vdots\\ \text{E}(X_p)\\ \end{array}\right] \ .$$
+* Note that $\text{E}(X_j)$ is calculated from the marginal distribution of
+$X_j$ and contains no information about dependencies between $X_j$ and $X_k$ for $k \neq j$.
 
-**Note** that $\text{E}(X_j)$ is calculated from the marginal distribution of $X_j$ and contains no information about dependencies between $X_{j}$ and $X_k$, $k\neq j$.
-  
-  
-* Same rule for random matrices.
-
-
---- 
+---
 
 ## Rules for the mean I
+  
 
-$~$
+\vspace{4mm}
 
-* Random matrix $\boldsymbol{X}_{(n\times p)}$ and random matrix $\boldsymbol{Y}_{(n\times p)}$:
+Random matrix $\boldsymbol{X}_{(n\times p)}$ and random matrix $\boldsymbol{Y}_{(n\times p)}$:
 $$\text{E}(\boldsymbol{X}+\boldsymbol{Y})=\text{E}(\boldsymbol{X})+\text{E}(\boldsymbol{Y}) \ .$$
 
 (Rules of vector addition)
@@ -162,8 +151,7 @@ $$\text{E}(\boldsymbol{X}+\boldsymbol{Y})=\text{E}(\boldsymbol{X})+\text{E}(\bol
 
 ## Rules for the mean II
 
-$~$
-
+\vspace{4mm}
 
 * Random matrix $\boldsymbol{X}_{(n\times p)}$ and conformable constant matrices $\boldsymbol{A}$ and $\boldsymbol{B}$:
 $$\text{E}(\boldsymbol{A}\boldsymbol{X}\boldsymbol{B})=\boldsymbol{A}\text{E}(\boldsymbol{X})\boldsymbol{B}$$
@@ -228,6 +216,7 @@ Make a scatter plot for negative, zero and positive correlation (see also R exam
 $$\boldsymbol{X}_{(p\times 1)} =\left[ \begin{array}{c} X_1\\ X_2\\ \vdots\\ X_p\\ \end{array} \right], \text{ and }\boldsymbol{\mu}_{(p\times 1)} =\text{E}(\boldsymbol{X})=\left[ \begin{array}{c} \text{E}(X_1)\\ \text{E}(X_2)\\ \vdots\\ \text{E}(X_p)\\ \end{array}\right]$$
 
 * Variance-covariance matrix $\boldsymbol\Sigma$ (real and symmetric)
+
 \begin{align*}
 \boldsymbol\Sigma & =\text{Cov}(\boldsymbol{X})  
 =\text{E}[(\boldsymbol{X}-\boldsymbol{\mu})(\boldsymbol{X}-\boldsymbol{\mu})^T] \\
@@ -236,9 +225,7 @@ $$\boldsymbol{X}_{(p\times 1)} =\left[ \begin{array}{c} X_1\\ X_2\\ \vdots\\ X_p
 \end{align*}
 
 
-
 ---
-
 
 
 * The diagonal elements in $\boldsymbol\Sigma$, $\sigma_{ii}=\sigma_i^2$, are variances.
@@ -348,7 +335,9 @@ $$\text{Cov}(\boldsymbol{Z})=\text{Cov}(\boldsymbol{C}\boldsymbol{X})=
 
 <!-- [Proof](https://www.math.ntnu.no/emner/TMA4268/2018v/notes/CXproof.pdf) -->
 
-**Exercise:** Follow the proof (board) - what are the most important transitions? 
+**Exercise:** Follow the proof - what are the most important transitions? 
+
+---
 
 
 ---
@@ -430,11 +419,8 @@ $$\boldsymbol{b}^T \boldsymbol{\Sigma} \boldsymbol{b} \geq 0 \ .$$
 * Why do you think that is?
 
 $~$
-\pause
+
 Hint: Is it possible that the variance of the linear combination $\boldsymbol{Y}=\boldsymbol{b}^T\boldsymbol{X}$ is negative? 
-
-
-
 
 
 ---
@@ -443,7 +429,7 @@ Hint: Is it possible that the variance of the linear combination $\boldsymbol{Y}
 
 \vspace{4mm}
 
-Quizz on www.menti.com joint at 23 38 27 0
+Quizz on www.menti.com
 
 <!-- In class - go to [https://forms.gle/HCaAFxpY2b7JoVim9](https://forms.gle/HCaAFxpY2b7JoVim9) to answer the questions on the following slides -->
 
@@ -547,33 +533,12 @@ $~$
 * C: 0.40
 * D: 0.80
 
----
-
-### Question 7
-
-$\boldsymbol{X}$ is a $2$-dimensional random vector with mean $\boldsymbol{\mu}$ and covariance matrix $\boldsymbol\Sigma$. 
-
-Are these sufficient to totally describe the random vector  $\boldsymbol{X}$?
-
-$~$
-
-* A: Yes
-* B: No
-
-\pause
-
-$~$
-
-Why?^[Show the Datasaurus data: https://cran.r-project.org/web/packages/datasauRus/vignettes/Datasaurus.html]
-
-
-
 
 
 ```{r, echo=FALSE, results='asis', eval=showsolB}
 cat("
 ## Answers: 
-1B, 2A, 3B, 4A, 5D, 6C , 7B
+1B, 2A, 3B, 4A, 5D, 6C 
 ")
 ```
 
@@ -747,9 +712,12 @@ Take a look at the contour plots - when are the contours circles, when ellipses?
 
 
 ## Multiple choice - multivariate normal
+
 \vspace{2mm}
 
-A second quizz on www.menti.com join at 1624 7290
+A second quizz on www.menti.com
+
+$~$
 
 Choose the correct answer. Let's go!
 
@@ -846,16 +814,6 @@ cat("
 
 ---
 
-### Main Concepts:
-
-  * Mean of a random vector
-    - Linear operator
-  
-  * Variance-covariance Matrix    
-    - Correlation Matrix
-    
-  * Multinormal distribution
----
 
 # <a id="further"> Further reading/resources</a>
 
