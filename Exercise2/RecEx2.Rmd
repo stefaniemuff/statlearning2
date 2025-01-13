@@ -1,20 +1,20 @@
 ---
 title: 'Module 2: Recommended Exercises'
 author: 
-  - Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
+  - Sara Martino, Stefanie Muff, Kenneth Aase
   - Department of Mathematical Sciences, NTNU
-date: "January 18, 2024"
+date: "January 22, 2025"
 output:
-  html_document:
-    df_print: paged
-    toc: no
-    toc_depth: '2'
+  # html_document:
+  #   df_print: paged
+  #   toc: no
+  #   toc_depth: '2'
   pdf_document:
     fig_caption: yes
     keep_tex: yes
     toc: no
     toc_depth: 2
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
@@ -43,44 +43,43 @@ b) Describe a real-life application in which *regression* might be useful. Ident
 
 ## Problem 2
 
-Take a look at Figure 2.9 in the course book (p. 31). 
-
-a) Discuss whether a flexible or rigid method typically will have the highest test error.
-b) Does a small variance imply that the data has been under- or overfit?
+a) Take a look at Figure 2.9 in the course book (p. 31). Do the flexible or rigid methods have the highest test error? Is this always the case?
+b) Does a very small variance imply that the data has been under- or overfit?
 c) Relate the problem of over- and underfitting to the bias-variance trade-off.
-
 
 ## Problem 3 -- Exercise 2.4.9 from ISL textbook (modified)
 
 This exercise involves the `Auto` dataset from the `ISLR` library. Load the data into your R session by running the following commands:
+
 ```{r, eval = T}
 library(ISLR)
 data(Auto)
 ```
+
 PS: if the `ISLR` package is not installed (`library` function gives error) you can install it by running `install.packages("ISLR")` before you load the package the first time. 
 
 a) View the data. What are the dimensions of the data? Which predictors are quantitative and which are qualitative?
 
 b) What is the range (min, max) of each quantitative predictor? Hint: use the `range()` function. For more advanced users, check out `sapply()`.
 
-c) What is the mean and standard deviation of each quantitative predictor?
+c) What is the sample mean and sample standard deviation for each quantitative predictor?
 
 d) Now, make a new dataset called `ReducedAuto` where you remove the 10th through 85th observations. What is the range, mean and standard deviation of the quantitative predictors in this reduced set?
 
-e) Using the full dataset, investigate the quantitative predictors graphically using a scatterplot. Do you see any strong relationships between the predictors? Hint: try out the `ggpairs()` function from the `GGally` package. 
+e) Using the full dataset, investigate the quantitative predictors graphically using a scatter plot. Do you see any strong relationships between the predictors? Hint: try out the `ggpairs()` function from the `GGally` package. 
 
-f) Suppose we wish to predict gas milage (`mpg`) on the basis of the other variables (both quantitative and qualitative). Make some plots showing the relationships between `mpg` and the qualitative predictors (hint: `geom_boxplot()`). Which predictors would you consider helpful when predicting `mpg`?
+f) Suppose we wish to predict gas mileage (`mpg`) on the basis of the other variables (both quantitative and qualitative). Make some plots showing the relationships between `mpg` and the qualitative predictors (hint: `geom_boxplot()`). Which predictors would you consider helpful when predicting `mpg`?
 
 g) The correlation of two variables $X$ and $Y$ are defined as
-$$ \text{cor}(X,Y) = \frac{\text{cov}(X,Y)}{\sigma_X\sigma_Y}.$$
-Both the correlation matrix and covariance matrix are easily assessed in R with the `cor()` and `cov()` functions. Use only the covariance matrix to find the correlation between `mpg` and `displacement`, `mpg` and `horsepower`, and `mpg` and `weight`. Do your results coincide with the correlation matrix you find using `cor(Auto[, quant])`? 
+$$
+\text{cor}(X,Y) = \frac{\text{cov}(X,Y)}{\sigma_X\sigma_Y}.
+$$
+The correlation matrix and covariance matrix can be easily found in `R` with the `cor()` and `cov()` functions, respectively. Use only the covariance matrix (as shown below) to find the correlation between `mpg` and `displacement`, `mpg` and `horsepower`, and `mpg` and `weight`. Do your results coincide with the correlation matrix you find using `cor(Auto[, quant])`? 
+
 ```{r}
-quant <- c(1, 3, 4, 5, 6, 7)
+quant <- 1:7
 covMat <- cov(Auto[, quant])
 ```
-
-
-
 
 ## Problem 4 -- Multivariate normal distribution
 
@@ -121,9 +120,7 @@ iv) $$ \boldsymbol{\mu} = \begin{pmatrix}
 -2 & 5
 \end{pmatrix}.$$ 
 
-b) Make a scatterplot of the four sets of simulated datasets. Can you see which plot belongs to which distribution?
-
-
+b) Make a scatter plot of the four sets of simulated data sets. Can you see which plot belongs to which distribution?
 
 ## Problem 5 -- Theory and practice: training and test MSE; bias-variance
 
@@ -140,9 +137,9 @@ Below, the code to run the simulation is included. The data is simulated accordi
 
 Look at the code below, copy it and run it yourself. Explain roughly what is done (you do not need not understand the code in detail), for example by commenting the code after copying it into your report.
 
-We will learn more about the `lm` function in Module 3 - now just think of this as fitting a polynomial regression and then predict gives the fitted curve in our grid points. `predictions_list` is just a way to save $M$ simulations of 61 gridpoints in $x$ and 20 polynomial models.
+We will learn more about the `lm` function in Module 3 - now just think of this as fitting a polynomial regression and then predict gives the fitted curve in our grid points. `predictions_list` is just a way to save $M$ simulations of 61 grid-points in $x$ and 20 polynomial models.
 
-```{r, Problem2a, eval=FALSE}
+```{r, Problem5a, eval=FALSE}
 set.seed(2) # to reproduce
 
 M <- 100 # repeated samplings, x fixed
@@ -335,9 +332,9 @@ library(patchwork) # The library patchwork is the best way of combining ggplot2 
 p.all_lines / (p.bars + p.means)
 ```
 
-- Which value of the polynomial gives the smallest mean testMSE? 
-- Which gives the smallest mean trainMSE? 
-- Which would you use to predict a new value of $y$?
+- Which polynomial degree gives the smallest mean testMSE? 
+- Which polynomial degree gives the smallest mean trainMSE? 
+- Which should you use to predict a new value of $y$?
 
 ### c) Bias and variance - we use the truth!
 
@@ -403,11 +400,11 @@ iii) the irreducible error?
 ---
 
 ### d) Repeat a-c
-Try to change the true function `truefunc` to something else - maybe order 3? What does this do the the plots produced? Maybe you then also want to plot poly3?
+Try to change the true function `truefunc` to something else - maybe order $3$? What does this do the the plots produced? Maybe you then also want to plot poly3?
 
-Also try to change the standard deviation of the noise added to the curve (now it is sd=2). What happens if you change this to sd=1 or sd=3?
+Also try to change the standard deviation of the noise added to the curve (now it is sd=2). What happens if you change this to `sd=1` or `sd=3`?
 
-Or, change to the true function that is not a polynomial?
+Or, change to the true function so that is not a polynomial?
 
 ---
 

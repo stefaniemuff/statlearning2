@@ -98,12 +98,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 2: Recommended Exercises - Solution},
-  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -118,20 +118,19 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee \and Department of Mathematical Sciences, NTNU}
-\date{January 18, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{January 22, 2025}
 
 \begin{document}
 \maketitle
 
-Last changes: 2024-01-11
+Last changes: 2025-01-13
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1}{%
-\section{Problem 1}\label{problem-1}}
+\section{Problem 1}\label{problem-1}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -140,15 +139,16 @@ Last changes: 2024-01-11
   Classification
 \end{enumerate}
 
-Example 1: Cancer diagnostics. Response: cancer (yes/no). Predictors:
-smoking, age, family history, gene expression ect. Goal: prediction.
+Example 1: Diagnosing cancer. Response: cancer (yes/no). Predictors:
+smoking status, age, family history, gene expression etc. Goal:
+prediction.
 
-Example 2: Stock market price direction. Response: up/down. Predictors:
-yesterday's price movement change, two previous days price movement ect.
-Goal: inference.
+Example 2: Understanding stock market price direction. Response:
+up/down. Predictors: yesterday's price movement change, two previous
+days price movement etc. Goal: inference.
 
 Example 3: Flower species. Response: species. Predictors: color, height,
-leafes ect. Goal: prediction
+leaves, etc. Goal: prediction.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -158,28 +158,27 @@ leafes ect. Goal: prediction
   Regression
 \end{enumerate}
 
-Example 1: Illness classification. Response: age of death. Predictors:
-current age, gender, resting heart rate, resting breath rate ect. Goal:
-prediction
+Example 1: Life expectancy. Response: age of death. Predictors: current
+age, gender, resting heart rate, resting breath rate etc. Goal:
+prediction.
 
-Example 2: House price. Response: Price. Predictors: age of house, price
-of neighbourhood, crime rate, distance to town, distance to school, ect.
-Goal: prediction
+Example 2: Price of a house. Response: Price. Predictors: age of house,
+average price in neighborhood, crime rate, distance to city center,
+distance to school, etc. Goal: prediction.
 
 Example 3: What affects O2-uptake. Response: O2-uptake. Predictors:
 gender, age, amount of weekly exercise, type of exercise, smoking, heart
-disease, ect. Goal: inference
+disease, etc. Goal: inference.
 
-\hypertarget{problem-2}{%
-\section{Problem 2}\label{problem-2}}
+\section{Problem 2}\label{problem-2}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
 \tightlist
 \item
-  Based on the three different models compared here, a rigid method will
-  have the highest test MSE. However, this does not always have to be
-  the case. For instance, in figure 2.10, we see that the most flexible
+  Based on the three different models compared here, the rigid method
+  has the highest test MSE. However, this does not always have to be the
+  case. For instance, in figure 2.10, we see that the most flexible
   model has the highest test MSE. See also figure 2.12 that summarizes
   the last three figures and shows some of the variation. So in general
   we cannot say anything certain about how the test MSE will vary based
@@ -192,11 +191,10 @@ disease, ect. Goal: inference
 \item
   See figure 2.12. Underfit - low variance - high bias. Overfit - high
   variance - low bias. We wish to find a model that lies somewhere
-  inbetween, with low variance \emph{and} low bias.
+  in-between, with low variance \emph{and} low bias.
 \end{enumerate}
 
-\hypertarget{problem-3}{%
-\section{Problem 3}\label{problem-3}}
+\section{Problem 3}\label{problem-3}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -256,21 +254,22 @@ disease, ect. Goal: inference
 ##                                                  (Other)           :365
 \end{verbatim}
 
-The dimensions are 392 observations (rows) of 9 variables (columns). See
-from looking at the structure (\texttt{str()}) and \texttt{summary()}
-that cylinders (taking values 3,4,5,6,8), origin (taking values 1,2,3)
-and name (name of the cars) are qualitative predictors. The rest of the
-predictors are quantitative.
+The dimensions are \(392\) observations (rows) of \(9\) variables
+(columns). See from looking at the structure (\texttt{str()}) and
+\texttt{summary()} origin (encoded by values \(1,2,3\)) and name (name
+of the car) are qualitative predictors. The rest of the predictors are
+quantitative.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
 \setcounter{enumi}{1}
 \tightlist
 \item
-  To see the range of the quantitative predictors, either apply the
-  \texttt{range()} function to each column with a quantitative predictor
-  separately
 \end{enumerate}
+
+To see the range of the quantitative predictors, either apply the
+\texttt{range()} function to each column with a quantitative predictor
+separately
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -337,15 +336,15 @@ function on the specified columns with a single line of code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{quant }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\NormalTok{quant }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{7}
 \FunctionTok{sapply}\NormalTok{(Auto[, quant], range)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##       mpg displacement horsepower weight acceleration year
-## [1,]  9.0           68         46   1613          8.0   70
-## [2,] 46.6          455        230   5140         24.8   82
+##       mpg cylinders displacement horsepower weight acceleration year
+## [1,]  9.0         3           68         46   1613          8.0   70
+## [2,] 46.6         8          455        230   5140         24.8   82
 \end{verbatim}
 
 \begin{enumerate}
@@ -353,11 +352,12 @@ function on the specified columns with a single line of code:
 \setcounter{enumi}{2}
 \tightlist
 \item
-  To get the and standard deviation of the quantitative predictors, we
-  can again either use the \texttt{sapply()} function in the same manner
-  as above, or apply the \texttt{mean()} and \texttt{sd()} commands
-  columnwise.
 \end{enumerate}
+
+To get the sample mean and sample standard deviation of the quantitative
+predictors, we can again either use the \texttt{sapply()} function in
+the same manner as above, or apply the \texttt{mean()} and \texttt{sd()}
+commands column-wise.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -367,8 +367,10 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##          mpg displacement   horsepower       weight acceleration         year 
-##     23.44592    194.41199    104.46939   2977.58418     15.54133     75.97959
+##          mpg    cylinders displacement   horsepower       weight acceleration 
+##    23.445918     5.471939   194.411990   104.469388  2977.584184    15.541327 
+##         year 
+##    75.979592
 \end{verbatim}
 
 \begin{Shaded}
@@ -440,8 +442,10 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##          mpg displacement   horsepower       weight acceleration         year 
-##     23.44592    194.41199    104.46939   2977.58418     15.54133     75.97959
+##          mpg    cylinders displacement   horsepower       weight acceleration 
+##    23.445918     5.471939   194.411990   104.469388  2977.584184    15.541327 
+##         year 
+##    75.979592
 \end{verbatim}
 
 \begin{Shaded}
@@ -452,8 +456,10 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##          mpg displacement   horsepower       weight acceleration         year 
-##     7.805007   104.644004    38.491160   849.402560     2.758864     3.683737
+##          mpg    cylinders displacement   horsepower       weight acceleration 
+##     7.805007     1.705783   104.644004    38.491160   849.402560     2.758864 
+##         year 
+##     3.683737
 \end{verbatim}
 
 \begin{Shaded}
@@ -522,10 +528,11 @@ function on the specified columns with a single line of code:
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Remove 10th to 85th observations and look at the range, mean and
-  standard deviation of the reduced set. We now only show the solutions
-  using \texttt{sapply()} to save space.
 \end{enumerate}
+
+Remove 10th to 85th observations and look at the range, mean and
+standard deviation of the reduced set. We now only show the solutions
+using \texttt{sapply()} to save space.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -538,9 +545,9 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##       mpg displacement horsepower weight acceleration year
-## [1,] 11.0           68         46   1649          8.5   70
-## [2,] 46.6          455        230   4997         24.8   82
+##       mpg cylinders displacement horsepower weight acceleration year
+## [1,] 11.0         3           68         46   1649          8.5   70
+## [2,] 46.6         8          455        230   4997         24.8   82
 \end{verbatim}
 
 \begin{Shaded}
@@ -550,8 +557,10 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##          mpg displacement   horsepower       weight acceleration         year 
-##     24.40443    187.24051    100.72152   2935.97152     15.72690     77.14557
+##          mpg    cylinders displacement   horsepower       weight acceleration 
+##    24.404430     5.373418   187.240506   100.721519  2935.971519    15.726899 
+##         year 
+##    77.145570
 \end{verbatim}
 
 \begin{Shaded}
@@ -561,8 +570,10 @@ function on the specified columns with a single line of code:
 \end{Shaded}
 
 \begin{verbatim}
-##          mpg displacement   horsepower       weight acceleration         year 
-##     7.867283    99.678367    35.708853   811.300208     2.693721     3.106217
+##          mpg    cylinders displacement   horsepower       weight acceleration 
+##     7.867283     1.654179    99.678367    35.708853   811.300208     2.693721 
+##         year 
+##     3.106217
 \end{verbatim}
 
 \begin{enumerate}
@@ -570,9 +581,10 @@ function on the specified columns with a single line of code:
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Make a scatterplot of the full dataset using the \texttt{ggpairs()}
-  function.
 \end{enumerate}
+
+We make a scatter plot of the full dataset using the \texttt{ggpairs()}
+function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -611,11 +623,11 @@ trends and correlation) between the pairs: \texttt{mpg} and
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Wish to predict gas milage based on the other variables. From the
-  scatterplot we see that \texttt{displacement}, \texttt{horsepower} and
-  \texttt{weight} could be good choises for prediction of \texttt{mpg}.
-  Check if the qualitative predictors could also be good choises by
-  plotting them against \texttt{mpg}.
+  Wish to predict gas mileage based on the other variables. From the
+  scatter plot we see that \texttt{displacement}, \texttt{horsepower}
+  and \texttt{weight} could be good choices for prediction of
+  \texttt{mpg}. Check if the qualitative predictors could also be good
+  choices by plotting them against \texttt{mpg}.
 \end{enumerate}
 
 \begin{Shaded}
@@ -661,7 +673,7 @@ per gallon (mpg) seems to depend on these two variables.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.8051269
+## [1] -0.7776175
 \end{verbatim}
 
 \begin{Shaded}
@@ -671,7 +683,7 @@ per gallon (mpg) seems to depend on these two variables.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.7784268
+## [1] -0.8051269
 \end{verbatim}
 
 \begin{Shaded}
@@ -681,7 +693,7 @@ per gallon (mpg) seems to depend on these two variables.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.8322442
+## [1] -0.7784268
 \end{verbatim}
 
 \begin{Shaded}
@@ -691,27 +703,28 @@ per gallon (mpg) seems to depend on these two variables.
 \end{Shaded}
 
 \begin{verbatim}
-##                     mpg displacement horsepower     weight acceleration
-## mpg           1.0000000   -0.8051269 -0.7784268 -0.8322442    0.4233285
-## displacement -0.8051269    1.0000000  0.8972570  0.9329944   -0.5438005
-## horsepower   -0.7784268    0.8972570  1.0000000  0.8645377   -0.6891955
-## weight       -0.8322442    0.9329944  0.8645377  1.0000000   -0.4168392
-## acceleration  0.4233285   -0.5438005 -0.6891955 -0.4168392    1.0000000
-## year          0.5805410   -0.3698552 -0.4163615 -0.3091199    0.2903161
-##                    year
-## mpg           0.5805410
-## displacement -0.3698552
-## horsepower   -0.4163615
-## weight       -0.3091199
-## acceleration  0.2903161
-## year          1.0000000
+##                     mpg  cylinders displacement horsepower     weight
+## mpg           1.0000000 -0.7776175   -0.8051269 -0.7784268 -0.8322442
+## cylinders    -0.7776175  1.0000000    0.9508233  0.8429834  0.8975273
+## displacement -0.8051269  0.9508233    1.0000000  0.8972570  0.9329944
+## horsepower   -0.7784268  0.8429834    0.8972570  1.0000000  0.8645377
+## weight       -0.8322442  0.8975273    0.9329944  0.8645377  1.0000000
+## acceleration  0.4233285 -0.5046834   -0.5438005 -0.6891955 -0.4168392
+## year          0.5805410 -0.3456474   -0.3698552 -0.4163615 -0.3091199
+##              acceleration       year
+## mpg             0.4233285  0.5805410
+## cylinders      -0.5046834 -0.3456474
+## displacement   -0.5438005 -0.3698552
+## horsepower     -0.6891955 -0.4163615
+## weight         -0.4168392 -0.3091199
+## acceleration    1.0000000  0.2903161
+## year            0.2903161  1.0000000
 \end{verbatim}
 
 We see that the obtained correlations coincide with the given elements
 in the correlation matrix.
 
-\hypertarget{problem-4}{%
-\section{Problem 4}\label{problem-4}}
+\section{Problem 4}\label{problem-4}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -770,18 +783,17 @@ in the correlation matrix.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set1, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set1"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set2, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set2"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set3, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set3"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
-\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set4, }\FunctionTok{aes}\NormalTok{(x1, x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set4"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set1, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set1"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set2"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set3, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set3"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(set4, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ x2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"set4"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
 \NormalTok{(p1 }\SpecialCharTok{+}\NormalTok{ p2) }\SpecialCharTok{/}\NormalTok{ (p3 }\SpecialCharTok{+}\NormalTok{ p4)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{RecEx2-sol_files/figure-latex/unnamed-chunk-11-1.pdf}
 
-\hypertarget{problem-5}{%
-\section{Problem 5}\label{problem-5}}
+\section{Problem 5}\label{problem-5}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -790,8 +802,8 @@ in the correlation matrix.
   We sample from the model \(y=x^2+\epsilon\) where
   \(\epsilon \sim \mathcal{N}(0,2^2)\) and
   \(x\in \{-2,-1.9,-1.8,...,3.8,3.9,4\}\). This means that
-  \(y \sim \mathcal{N}(x^2,2^2)\). A total of 100 samples from this
-  model are generated for each of the 61 \(x\)'s.\\
+  \(y \sim \mathcal{N}(x^2,2^2)\). A total of \(100\) samples from this
+  model are generated for each of the \(61\) \(x\)'s.\\
   See comments in code for further explanations.
 \end{enumerate}
 
@@ -1017,7 +1029,7 @@ predictions when assuming \(y\) is a function of polynomials up to
 \includegraphics{RecEx2-sol_files/figure-latex/unnamed-chunk-13-1.pdf}
 
 The plots show that the test MSE in general is larger than the train
-MSE. This is reasonable. The fitted model is fitted based on the
+MSE. This is makes sense, since the model is fitted based on the
 training set. Thus, the error will be smaller for the train data than
 for the test data. Furthermore, the plots show that the difference
 between the MSE for the test set and the training set increases when the
@@ -1032,7 +1044,8 @@ overfitted model that performs bad for test data.
   We observe that poly 2 gives the smallest mean testMSE, while poly 20
   gives the smallest trainMSE. Based on these plots, we would choose
   poly 2 for prediction of a new value of \(y\), as the testMSE tells us
-  more about how the model performs on data not used to train the model.
+  how the model performs on new data, which was not used to train the
+  model.
 \end{itemize}
 
 \begin{enumerate}
@@ -1077,16 +1090,16 @@ overfitted model that performs bad for test data.
 \includegraphics{RecEx2-sol_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 We see that the irriducible error remains constant with the complexity
-of the model and the variance (purple) increases with the complexity. A
-linear model gives variance close to zero, while a polynomial of degree
-20 gives variance close to 1 (larger at the borders). A more complex
-model is more flexible as it can turn up and down and change direction
-fast. This leads to larger variance. (Look at the plot in 2a, there is a
-larger variety of curves you can make when the degree is 20 compared to
-if the degree is 1.).
+(flexibility) of the model and the variance (purple) increases with the
+complexity. A linear model gives variance close to zero, while a
+polynomial of degree 20 gives variance close to 1 (larger at the
+borders). A more complex model is more flexible as it can turn up and
+down and change direction fast. This leads to larger variance. (Look at
+the plot in 2a, there is a larger variety of curves you can make when
+the degree is 20 compared to if the degree is 1.).
 
-Further, we see that the bias is large for poly1, the linear model. The
-linear model is quite rigid, so if the true underlying model is
+Furthermore, we see that the bias is large for poly1, the linear model.
+The linear model is quite rigid, so if the true underlying model is
 non-linear, we typically get large deviations between the fitted line
 and the training data. If we study the first plot, it seems like the
 fitted line goes through the training data in \(x=-1\) and \(x=3\) as
@@ -1165,8 +1178,7 @@ to get correct plots of the irreducible error. Here,
 \texttt{rep(4,prod(dim(varmat)))} is replaced by
 \texttt{rep(1,prod(dim(varmat)))}.
 
-\hypertarget{r-packages}{%
-\section{\texorpdfstring{ R packages}{ R packages}}\label{r-packages}}
+\section{\texorpdfstring{ R packages}{ R packages}}\label{r-packages}
 
 If you want to look at the .Rmd file and \texttt{knit} it, you need to
 first install the following packages (only once).
@@ -1189,10 +1201,12 @@ first install the following packages (only once).
 \end{Shaded}
 
 \begin{verbatim}
-##    forcats    stringr      dplyr      purrr      readr      tidyr     tibble 
-##    "0.5.2"    "1.5.0"    "1.1.2"    "1.0.1"    "2.1.3"    "1.3.0"    "3.2.1" 
-##  tidyverse  patchwork       MASS     GGally    ggplot2       ISLR 
-##    "1.3.2"    "1.1.2" "7.3-58.2"    "2.1.2"    "3.4.2"      "1.4"
+##    lubridate      forcats      stringr        dplyr        purrr        readr 
+##      "1.9.3"      "1.0.0"      "1.5.1"      "1.1.4"      "1.0.2"      "2.1.5" 
+##        tidyr       tibble    tidyverse    patchwork         MASS       GGally 
+##      "1.3.1"      "3.2.1"      "2.0.0"      "1.2.0" "7.3-60.0.1"      "2.2.1" 
+##      ggplot2         ISLR 
+##      "3.5.0"        "1.4"
 \end{verbatim}
 
 \end{document}
