@@ -231,58 +231,60 @@ where \(\bf{x}\) is a random vector of size \(p\times 1\),
 \(\boldsymbol{\mu}\) is the mean vector of size \(p\times 1\) and
 \(\boldsymbol{\Sigma}\) is the covariance matrix of size \(p\times p\).
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\item
-  Use the \texttt{mvrnorm()} function from the \texttt{MASS} library to
-  simulate 1000 values from multivariate normal distributions with
-\item
-  \[ \boldsymbol{\mu} = \begin{pmatrix}
-  2 \\
-  3 
-  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-  1 & 0\\
-  0 & 1
-  \end{pmatrix},\]
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\roman{enumi})}
-\setcounter{enumi}{1}
-\item
-  \[ \boldsymbol{\mu} = \begin{pmatrix}
-  2 \\
-  3 
-  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-  1 & 0\\
-  0 & 5
-  \end{pmatrix},\]
-\item
-  \[ \boldsymbol{\mu} = \begin{pmatrix}
-  2 \\
-  3 
-  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-  1 & 2\\
-  2 & 5
-  \end{pmatrix},\]
-\item
-  \[ \boldsymbol{\mu} = \begin{pmatrix}
-  2 \\
-  3 
-  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-  1 & -2\\
-  -2 & 5
-  \end{pmatrix}.\]
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{1}
+\begin{itemize}
 \tightlist
 \item
-  Make a scatter plot of the four sets of simulated data sets. Can you
-  see which plot belongs to which distribution?
-\end{enumerate}
+  \textbf{a)} Use the \texttt{mvrnorm()} function from the \texttt{MASS}
+  library to simulate 1000 values from multivariate normal distributions
+  with
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{i)} \[
+    \boldsymbol{\mu} = \begin{pmatrix}
+    2 \\
+    3 
+    \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+    1 & 0\\
+    0 & 1
+    \end{pmatrix},
+    \]
+  \item
+    \textbf{ii)} \[
+    \boldsymbol{\mu} = \begin{pmatrix}
+    2 \\
+    3 
+    \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+    1 & 0\\
+    0 & 5
+    \end{pmatrix},
+    \]
+  \item
+    \textbf{iii)} \[
+    \boldsymbol{\mu} = \begin{pmatrix}
+    2 \\
+    3 
+    \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+    1 & 2\\
+    2 & 5
+    \end{pmatrix},
+    \]
+  \item
+    \textbf{iv)} \[
+    \boldsymbol{\mu} = \begin{pmatrix}
+    2 \\
+    3 
+    \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+    1 & -2\\
+    -2 & 5
+    \end{pmatrix}.
+    \]
+  \end{itemize}
+\item
+  \textbf{b)} Make a scatter plot of the four sets of simulated data
+  sets. Can you see which plot belongs to which distribution?
+\end{itemize}
 
 \subsection{Problem 5 -- Theory and practice: training and test MSE;
 bias-variance}\label{problem-5-theory-and-practice-training-and-test-mse-bias-variance}
