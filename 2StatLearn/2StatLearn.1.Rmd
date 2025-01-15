@@ -195,8 +195,7 @@ kable(means, digits = 2, col.names = c("you", "free", "george", "!", "$", "edu")
 
 \textcolor{blue}{\emph{Starting point}}:
 
-* Outcome measurement $Y$, also called dependent variable,
-response, target.
+* Outcome measurement $Y$, also called dependent variable, response, target.
 
 * Vector of $p$ predictor measurements $X=(X_1,\ldots,X_p)$, also called inputs,
 regressors, covariates, features, independent variables.
@@ -407,6 +406,12 @@ There are two quantities which influence the accuracy of $\hat{Y}$ as a predicti
 For a given $\hat{f}$ and a set of predictors $X$ which gives $\hat{Y}=\hat{f}(X)$, we have
 
 $$\text{E}[(Y-\hat{Y})^2] = \underbrace{(f(X)-\hat{f}(X))^2}_{reducible} + \underbrace{\text{Var}(\epsilon)}_{irreducible}$$
+
+---
+
+## Reducible vs. irreducible error: Calculation
+
+\vspace{7cm}
 
 --- 
 
@@ -1043,12 +1048,16 @@ $~$
 
 ---
 
-Using that $y_0=f(x_0)+\varepsilon$, this expected test MSE (at $X=x_0$) can be decomposed into three terms (board)
+Using that $y_0=f(x_0)+\varepsilon$, this expected test MSE (at $X=x_0$) can be decomposed into three terms 
 \begin{align*}
-&\text{E}[(y_0 - \hat{f}(x_0))^2] = \\
-& ... \\
-& =  \underbrace{\text{Var}(\varepsilon)}_{\text{Irreducible error}} + \underbrace{\text{Var}(\hat{f}(x_0))}_{\text{Variance of prediction}} + \underbrace{\left( f(x_0) - \text{E}[\hat{f}(x_0)] \right)^2}_{\text{Squared bias}}
+\text{E}[(y_0 - \hat{f}(x_0))^2] = \qquad \qquad \qquad \qquad  \qquad \qquad \qquad \qquad\\
 \end{align*}
+
+\vspace{4cm}
+
+---
+
+ 
 
 
 <!-- \begin{align*} -->
@@ -1063,11 +1072,11 @@ Using that $y_0=f(x_0)+\varepsilon$, this expected test MSE (at $X=x_0$) can be 
 
 ---
 
-$$\text{E}[(y_0 - \hat{f}(x_0))^2]=\cdots=\text{Var}(\varepsilon) +  \text{Var}(\hat{f}(x_0))+[\text{Bias}(\hat{f}(x_0))]^2$$
+$$\text{E}[(y_0 - \hat{f}(x_0))^2]=  \underbrace{\text{Var}(\varepsilon)}_{\text{Irreducible error}} + \underbrace{\text{Var}(\hat{f}(x_0))}_{\text{Var. of prediction}} + \underbrace{\left( f(x_0) - \text{E}[\hat{f}(x_0)] \right)^2}_{\text{Squared bias}}$$
 
 * _\textcolor{red}{Irreducible error}_. This term cannot be reduced regardless how well our statistical model fits the data. 
 
-* _\textcolor{red}{Variance}_ of the prediction at $\hat{f}(x_0)$. Relates to the amount by which $\hat{f}(x_0)$ is expected to change for different training data. If the variance is high, there is large uncertainty associated with the prediction. 
+* _\textcolor{red}{Variance}_. of the prediction at $\hat{f}(x_0)$. Relates to the amount by which $\hat{f}(x_0)$ is expected to change for different training data. If the variance is high, there is large uncertainty associated with the prediction. 
 
 * _\textcolor{red}{Squared bias}_. The bias gives an estimate of how much the prediction differs from the true mean. If the bias is low the model gives a prediction which is close to the true value.
 
@@ -1085,19 +1094,6 @@ is the **expected test MSE**. We can think of this as the average test MSE we wo
 
 * Mathematically: $\text{E} \{ \text{E}[(Y - \hat{f}(X))^2 \mid X]\}$ (by the law of total expectation / law of double expectations).
 
----
-
-### General rule
-\vspace{4mm}
-
-For more flexible models, the variance will _increase_ and the bias will _decrease_.
-
-\vspace{4mm}
-
-\centering
-This is called the _\textcolor{red}{Bias-variance trade-off}_.
-
-
 
 
 ---
@@ -1106,27 +1102,35 @@ This is called the _\textcolor{red}{Bias-variance trade-off}_.
 
 $~$
 
-The aim is often to obtain **the most predictive model**. Ingredients:
+The aim is often to obtain **the most predictive model**. 
+
+<!-- \vspace{2mm} -->
+
+<!-- 1. **Training set**: The observations used to fit the statistical model $\rightarrow$ Training error -->
+
+<!-- \vspace{2mm} -->
+
+<!-- 2. **Test sample**: new observations which were not used when fitting the model $\rightarrow$ Test error  -->
+
+
+\vspace{6mm}
+
+We have seen that there is a trade-off:
 
 \vspace{2mm}
 
-1. **Training set**: The observations used to fit the statistical model $\rightarrow$ Training error
+ * For more flexible models, the variance will _increase_ and the bias will _decrease_.
+ 
+ \vspace{2mm}
+ 
+ * Although training error decreases for more complex/flexible models, but the test error has an **optimum**.
 
-\vspace{2mm}
-
-2. **Test sample**: new observations which were not used when fitting the model $\rightarrow$ Test error 
-
-
-\vspace{4mm}
-
-We have seen that
-
-\vspace{4mm}
-
-* Training error decreases for more complex/flexible models, but the test error has an **optimum**.
+\vspace{6mm}
 
 \centering
-$\rightarrow$  **Bias-Variance  trade-off**
+
+This is called the _\textcolor{red}{Bias-variance trade-off}_.
+
 
 
  
