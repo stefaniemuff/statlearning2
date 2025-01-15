@@ -1710,49 +1710,56 @@ where <span class="math inline">\(\bf{x}\)</span> is a random vector of
 size <span class="math inline">\(p\times 1\)</span>, <span class="math inline">\(\boldsymbol{\mu}\)</span> is the mean vector of
 size <span class="math inline">\(p\times 1\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}\)</span> is the covariance
 matrix of size <span class="math inline">\(p\times p\)</span>.</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Use the <code>mvrnorm()</code> function from the
+<ul>
+<li><strong>a)</strong> Use the <code>mvrnorm()</code> function from the
 <code>MASS</code> library to simulate 1000 values from multivariate
-normal distributions with</p></li>
-<li><p><span class="math display">\[ \boldsymbol{\mu} = \begin{pmatrix}
+normal distributions with
+<ul>
+<li><strong>i)</strong> <span class="math display">\[
+\boldsymbol{\mu} = \begin{pmatrix}
 2 \\
 3
 \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} =
 \begin{pmatrix}
 1 &amp; 0\\
 0 &amp; 1
-\end{pmatrix},\]</span></p></li>
-</ol>
-<ol start="2" style="list-style-type: lower-roman">
-<li><p><span class="math display">\[ \boldsymbol{\mu} = \begin{pmatrix}
+\end{pmatrix},
+\]</span></li>
+<li><strong>ii)</strong> <span class="math display">\[
+\boldsymbol{\mu} = \begin{pmatrix}
 2 \\
 3
 \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} =
 \begin{pmatrix}
 1 &amp; 0\\
 0 &amp; 5
-\end{pmatrix},\]</span></p></li>
-<li><p><span class="math display">\[ \boldsymbol{\mu} = \begin{pmatrix}
+\end{pmatrix},
+\]</span></li>
+<li><strong>iii)</strong> <span class="math display">\[
+\boldsymbol{\mu} = \begin{pmatrix}
 2 \\
 3
 \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} =
 \begin{pmatrix}
 1 &amp; 2\\
 2 &amp; 5
-\end{pmatrix},\]</span></p></li>
-<li><p><span class="math display">\[ \boldsymbol{\mu} = \begin{pmatrix}
+\end{pmatrix},
+\]</span></li>
+<li><strong>iv)</strong> <span class="math display">\[
+\boldsymbol{\mu} = \begin{pmatrix}
 2 \\
 3
 \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} =
 \begin{pmatrix}
 1 &amp; -2\\
 -2 &amp; 5
-\end{pmatrix}.\]</span></p></li>
-</ol>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Make a scatter plot of the four sets of simulated data sets. Can you
-see which plot belongs to which distribution?</li>
-</ol>
+\end{pmatrix}.
+\]</span></li>
+</ul></li>
+<li><strong>b)</strong> Make a scatter plot of the four sets of
+simulated data sets. Can you see which plot belongs to which
+distribution?</li>
+</ul>
 </div>
 <div id="problem-5-theory-and-practice-training-and-test-mse-bias-variance" class="section level2">
 <h2>Problem 5 – Theory and practice: training and test MSE;

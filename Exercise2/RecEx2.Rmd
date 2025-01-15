@@ -5,10 +5,10 @@ author:
   - Department of Mathematical Sciences, NTNU
 date: "January 22, 2025"
 output:
-  # html_document:
-  #   df_print: paged
-  #   toc: no
-  #   toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: no
+    toc_depth: '2'
   pdf_document:
     fig_caption: yes
     keep_tex: yes
@@ -33,7 +33,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       cache = TRUE,
                       size = "scriptsize")
 ```
-
 
 
 ## Problem 1 
@@ -86,41 +85,48 @@ covMat <- cov(Auto[, quant])
 The pdf of a multivariate normal distribution is on the form
 $$ f(\boldsymbol{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol{\Sigma|}} \exp\{-\frac{1}{2}(\boldsymbol{x-\mu})^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x-\mu)}\},$$ where $\bf{x}$ is a random vector of size $p\times 1$, $\boldsymbol{\mu}$ is the mean vector of size $p\times 1$ and $\boldsymbol{\Sigma}$ is the covariance matrix of size $p\times p$. 
 
-a) Use the `mvrnorm()` function from the `MASS` library to simulate 1000 values from multivariate normal distributions with 
-
-i)  
-$$ \boldsymbol{\mu} = \begin{pmatrix}
-2 \\
-3 
-\end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-1 & 0\\
-0 & 1
-\end{pmatrix},$$ 
-ii) $$ \boldsymbol{\mu} = \begin{pmatrix}
-2 \\
-3 
-\end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-1 & 0\\
-0 & 5
-\end{pmatrix},$$ 
-
-iii) $$ \boldsymbol{\mu} = \begin{pmatrix}
-2 \\
-3 
-\end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-1 & 2\\
-2 & 5
-\end{pmatrix},$$ 
-
-iv) $$ \boldsymbol{\mu} = \begin{pmatrix}
-2 \\
-3 
-\end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
-1 & -2\\
--2 & 5
-\end{pmatrix}.$$ 
-
-b) Make a scatter plot of the four sets of simulated data sets. Can you see which plot belongs to which distribution?
+- **a)** Use the `mvrnorm()` function from the `MASS` library to simulate 1000 values from multivariate normal distributions with 
+  - **i)** 
+  $$
+  \boldsymbol{\mu} = \begin{pmatrix}
+  2 \\
+  3 
+  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+  1 & 0\\
+  0 & 1
+  \end{pmatrix},
+  $$
+  - **ii)** 
+  $$
+  \boldsymbol{\mu} = \begin{pmatrix}
+  2 \\
+  3 
+  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+  1 & 0\\
+  0 & 5
+  \end{pmatrix},
+  $$ 
+  - **iii)**
+  $$
+  \boldsymbol{\mu} = \begin{pmatrix}
+  2 \\
+  3 
+  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+  1 & 2\\
+  2 & 5
+  \end{pmatrix},
+  $$ 
+  - **iv)** 
+  $$
+  \boldsymbol{\mu} = \begin{pmatrix}
+  2 \\
+  3 
+  \end{pmatrix} \quad \text{and} \quad \boldsymbol{\Sigma} = \begin{pmatrix}
+  1 & -2\\
+  -2 & 5
+  \end{pmatrix}.
+  $$
+- **b)** Make a scatter plot of the four sets of simulated data sets. Can you see which plot belongs to which distribution?
 
 ## Problem 5 -- Theory and practice: training and test MSE; bias-variance
 

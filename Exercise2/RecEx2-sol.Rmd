@@ -98,6 +98,7 @@ To get the sample mean and sample standard deviation of the quantitative predict
 sapply(Auto[, quant], mean)
 #or
 mean(Auto[, 1])
+mean(Auto[, 2])
 mean(Auto[, 3])
 mean(Auto[, 4])
 mean(Auto[, 5])
@@ -110,6 +111,7 @@ colMeans(Auto[, quant])
 sapply(Auto[, quant], sd)
 #or
 sd(Auto[, 1])
+sd(Auto[, 2])
 sd(Auto[, 3])
 sd(Auto[, 4])
 sd(Auto[, 5])
