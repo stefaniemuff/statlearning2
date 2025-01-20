@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 3: Linear Regression"
-author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "January 26 and 27, 2024"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "January 23 and 24, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -12,15 +12,13 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
-    includes:
-      in_header: ../header.tex
   html_document:
     toc: true
     toc_float: true
     toc_depth: 2
 urlcolor: blue
-#bibliography: refs.bib
-#header-includes: \usepackage{bm}
+bibliography: refs.bib
+header-includes: 
 
 ---
 
@@ -35,13 +33,13 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 ```
 
  
-<!-- --- -->
+---
 
-<!-- # Acknowledgements -->
+# Acknowledgements
 
-<!-- * Thanks to Mette Langaas and her TAs who permit me to use and modify their original material.  -->
+* Thanks to Mette Langaas and her TAs who permit me to use and modify their original material. 
 
-<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL. -->
+* Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
 
 --- 
 
@@ -168,22 +166,13 @@ ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body 
 
 * One quantitative response $Y$ is modelled
 
-* _One covariate_ $x$ (=simple), 
+* from _one covariate_ $x$ (=simple), 
 
 * and the relationship between $Y$ and $x$ is assumed to be _linear_. 
 
----
-
-
-Looking at the data it is obbious that the relationship is not perfectly linear. But we could assume it to be approximately linear. Such that, 
-<!-- If the relation between $Y$ and $x$ is perfectly linear,  -->
-all instances of $(x,Y)$, given by $(x_i,y_i)$, $i= 1,\ldots, n$, lie around a  straight line:
-$$y_i \approx \beta_0 + \beta_1 x_i\ .$$
-
-```{r motivating2b, echo=FALSE, fig.width=6, fig.height=5,fig.align = "center",out.width='70%'}
-ggplot(d.bodyfat,aes(x=bmi,y=bodyfat)) + geom_point() + theme_bw() + ylab("body fat (%)")
-```
-
+\vspace{6mm}
+If the relation between $Y$ and $x$ is perfectly linear, all instances of $(x,Y)$, given by $(x_i,y_i)$, $i= 1,\ldots, n$, lie on a  straight line and fulfill 
+$$y_i = \beta_0 + \beta_1 x_i\ .$$
 
 ---
 
@@ -262,7 +251,7 @@ The assumptions about the linear regression model lie in the error term $$\varep
 \vspace{-2mm}
 \includegraphics[width=11cm]{pictures/regrAssumptions.jpg}
 
-Note: The true regression line goes through $\mathsf{E}(Y|X= x)$.
+Note: The true regression line goes through $\mathsf{E}(Y)$.
 
 
 ---
@@ -278,7 +267,7 @@ In a regression analysis, the task is to estimate the **regression coefficients*
 * **Problem:** For more than two points $(x_i,y_i)$, $i=1,\ldots, n$, there is generally no perfectly fitting line.
 \vspace{2mm}
 
-* **Aim**: We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x + \epsilon$. 
+* **Aim**: We want to find the parameters $(a,b)$ of the best fitting line $Y = a + b x$. 
 
 \vspace{2mm}
 
@@ -323,7 +312,7 @@ polygon(from_x,from_y,to_x,to_y,col=2,lwd=2)
 
 $$\text{RSS} = \sum_{i=1}^n e_i^2 \ , \qquad \text{where} \quad e_i = y_i - (a + b x_i) $$
 
-is  minimized.
+is being minimized.
 
 * The respective "best" estimates are called $\hat{\beta_0}$ and $\hat{\beta_1}$.
 
@@ -347,34 +336,16 @@ $$e_i = Y_i - \hat{y}_i.$$
 
 Using $n$ observed independent data points 
 $$(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\ ,$$ 
-we aim at finding $a$ and $b$ such that 
+
+the least squares estimates for simple linear regression are given as
+
 $$
-RSS = \sum_{i = 1}^n(y_i-a-b x_i)^2 = \text{min}
+\hat{\beta}_0 = \bar{y}-\hat{\beta}_1 \bar{x}
 $$
-to do this we need to solve the linear system
-\begin{align}
-\begin{aligned}
-\frac{\partial RSS}{\partial a } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
-\frac{\partial RSS}{\partial b } =  -2 \sum_{i = 1}^n(y_i-a-b x_i) = 0\\
-\end{aligned}
-\end{align}
-
----
-
-## Least squares estimators:
-
-The system can be solved analytically and 
-the least squares estiamtes for simple linear regression are given as
-
-
-\begin{align}
-\begin{aligned}
-\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\\
-\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\boldsymbol{x},\boldsymbol{y})}{\mathsf{Var}(\boldsymbol{x})}
-\end{aligned}
-\end{align}
-
-
+and 
+$$
+ \hat{\beta}_1 = \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} = \frac{\mathsf{Cov}(\bf{x},\bf{y})}{\mathsf{Var}(\bf{x})}\ , 
+$$
 
 \vspace{2mm}
 where 
@@ -382,30 +353,7 @@ $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ and $\bar{x} = \frac{1}{n}\sum_{i=1}^n 
 
 \vspace{6mm}
 \scriptsize
-This is something you should have proven in your previous statistics classes; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf).
-
----
-
-## Maximum likelihood estimator
-
-Another method to estimate $\alpha,\beta,\sigma^2$ when we assume that
-$$
-y_i\sim\mathcal{N}(\alpha+\beta x_i,\sigma^2 ),\ i = 1\dots,n
-$$
-is to maximise the **likelihood** function: 
-$$
-L(\alpha,\beta,\sigma^2;y_1,\dots,y_n) = \prod_i f(y_i;\alpha,\beta,\sigma^2)
-$$
-where
-$$
-f(y;\alpha,\beta,\sigma^2) = \frac{1}{\sqrt{2\sigma^2}}\exp\{-\frac{1}{2\sigma^2}(y-\alpha-\beta x)^2\}
-$$
-This gives the same result as the previous slide.
-
-\vspace{6mm}
-\scriptsize
-This is something you should know from TMA4240/4245; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning2/blob/master/literature/Walepole_book.pdf).
-
+This is something you should have proven in your previous statistics classes; if you forgot how to get there, please check again, e.g. in chapter 11 of the book by @walepole.etal, see [here](https://github.com/stefaniemuff/statlearning/blob/master/literature/Walepole_book.pdf).
 
 ---
 
@@ -546,8 +494,7 @@ $$\mathsf{Var}(\hat{\beta}_1)=\text{SE}(\hat{\beta}_1)^2 = \frac{\sigma^2}{\sum_
 
 * $\mathsf{Cov}(\hat{\beta_0},\hat{\beta_1})$ is in general different from zero.
 
-$~$
-$~$
+\vspace{10mm}
 
 
 **Note**: We will _derive a general version_ of these formulas for multiple linear regression, because without matrix notation this is very cumbersome.
@@ -595,15 +542,7 @@ thus for a given $\sigma^2$, the standard error is only dependent on the _design
 * An estimate of $\sigma$, the residual standard error, RSE, is given by
 $$\hat\sigma = \text{RSE}  =\sqrt{\frac{1}{n-2} \text{RSS}} = \sqrt{\frac{1}{n-2}\sum_{i=1}^n (y_i -\hat{y}_i)^2} \ .$$
 
-* What are the characteristcs of $\hat\sigma^2$?
 
-  * Unbiased estimator for $\sigma^2$
-  
-  * $\frac{n-2}{\sigma^2}\hat\sigma^2\sim\chi^2_{n-2}$
-
----
-
-## Estimated Variance for $\beta_1$  
 * So actually we have
 
 $$\hat{\text{SE}}(\hat{\beta}_1)^2 = \frac{{\hat\sigma}^2}{\sum_{i=1}^n (x_i-\bar{x})^2} \ ,$$ 
@@ -640,14 +579,13 @@ After the regression parameters and their uncertainties have been estimated, the
 
  
 1. **"Are the parameters compatible with some specific value?"** 
-
  Typically, the question is whether the slope $\beta_1$ might be 0 or not, that is: "Is $x$ an informative predictor or not?"
  
  \hspace{4mm} $\rightarrow$ This leads to a **statistical test**. 
 
 \vspace{6mm}
 
-2. **"Which values of the parameters are compatible with the data?"**
+2. "Which values of the parameters are compatible with the data?"
 
  \hspace{4mm} $\rightarrow$ This leads us to determine  **confidence intervals**.
 
@@ -679,15 +617,13 @@ How do these things help us to answer the two questions above?
 
 $~$
 
-**Remember**: in a statistical test you first need to specify the _\textcolor{red}{null hypothesis}_. 
-
-Here, typically, the null hypothesis is
+Remember: in a statistical test you first need to specify the _\textcolor{red}{null hypothesis}_. Here, typically, the null hypothesis is
 
 
  
 $$H_0: \quad \beta_1 =   0  \ .$$
  
-In words: $H_0$ =   ``There is no relationship between $X$ and $Y$.'' \footnote{You could also test against another null hypothesis, like $\beta_1=c$.}
+In words: $H_0$ =   ``There is no relationship between $X$ and $Y$." \footnote{You could also test against another null hypothesis, like $\beta_1=c$.}
 
 
 
@@ -703,9 +639,7 @@ $$H_A: \quad \beta_1 \neq  0  $$
 ---
  
 
-**Remember**: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. 
-
-For our purpose, we use the so-called **$T$-statistic**
+Remember: To carry out a statistical test, we need a _test statistic_. This is some type of **summary statistic** that follows a known distribution under $H_0$. For our purpose, we use the so-called **$T$-statistic**
 
 
 
@@ -722,47 +656,14 @@ T=\frac{\hat\beta_1 }{SE(\hat\beta_1)}\ .
 T=\frac{\hat\beta_1 - c}{SE(\hat\beta_1)} \ .
 \end{equation*}
  
-\vspace{1cm}
 
-Where does this come from??
-
----
-
-
-## Recap: The $t$-distribution
-
-$~$
-
-```{r,echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='80%'}
-
-xx <- data.frame(seq(-4,4,0.01))
-names(xx) <- "xx"
-xx$t1 <- dt(xx$xx,1)
-xx$t3 <- dt(xx$xx,3)
-xx$t10 <- dt(xx$xx,10)
-xx$t30 <- dt(xx$xx,30)
-xx$norm <- dnorm(xx$xx)
-
-plot(xx$xx,xx$t1,lwd=2,type="l",xlab="x",ylab="density",ylim=c(0,0.4))
-lines(xx$xx,xx$t3,add=TRUE,lwd=2,col=2)
-lines(xx$xx,xx$t10,add=TRUE,lwd=2,col=3)
-lines(xx$xx,xx$t30,add=TRUE,lwd=2,col=4)
-lines(xx$xx,xx$norm,add=TRUE,lwd=2,col=5)
-legend("topright",legend=c("df=1","df=3","df=10","df=30","normal"),col=1:5,lwd=2)
-
-```
-
-\normalsize
-
-* The $t$-distribution has heavier tails than the normal distribution.
-* For df $\geq 30$ the $t$ and Normal distribution are pretty similar.
 
 ---
 
 ## Distribution of parameter estimators
 \vspace{2mm}
 
-We will _derive a general version_ for multiple linear regression!
+
 
 
 
@@ -771,9 +672,42 @@ $~$
 Brief recap: Under $H_0$, $T$ has a $t$-distribution with $n-2$ degrees of freedom ($n=$ number of data points; compare to Chapter 8.6 in @walepole.etal).
 
 
+$~$
+$~$
+
+We will _derive a general version_ for multiple linear regression!
+
 ---
 
+<!-- ## Recap: The $t$-distribution -->
 
+<!-- $~$ -->
+
+<!-- ```{r,echo=FALSE, fig.width=5, fig.height=4,fig.align = "center",out.width='80%'} -->
+
+<!-- xx <- data.frame(seq(-4,4,0.01)) -->
+<!-- names(xx) <- "xx" -->
+<!-- xx$t1 <- dt(xx$xx,1) -->
+<!-- xx$t3 <- dt(xx$xx,3) -->
+<!-- xx$t10 <- dt(xx$xx,10) -->
+<!-- xx$t30 <- dt(xx$xx,30) -->
+<!-- xx$norm <- dnorm(xx$xx) -->
+
+<!-- plot(xx$xx,xx$t1,lwd=2,type="l",xlab="x",ylab="density",ylim=c(0,0.4)) -->
+<!-- lines(xx$xx,xx$t3,add=TRUE,lwd=2,col=2) -->
+<!-- lines(xx$xx,xx$t10,add=TRUE,lwd=2,col=3) -->
+<!-- lines(xx$xx,xx$t30,add=TRUE,lwd=2,col=4) -->
+<!-- lines(xx$xx,xx$norm,add=TRUE,lwd=2,col=5) -->
+<!-- legend("topright",legend=c("df=1","df=3","df=10","df=30","normal"),col=1:5,lwd=2) -->
+
+<!-- ```  -->
+
+<!-- \normalsize -->
+
+<!-- * The $t$-distribution has heavier tails than the normal distribution.  -->
+<!-- * For df $\geq 30$ the $t$ and Normal distribution are pretty similar. -->
+
+<!-- --- -->
 
 ### Hypothesis tests for bodyfat example
 
@@ -811,48 +745,48 @@ $~$
 
 <!-- We would in a two-sided setting reject $H_0$ for large values of $\text{abs}(t_0)$. We may rely on calculating a $p$-value.  -->
 
----
+<!-- --- -->
 
-## Recap: Formal definition of the $p$-value
+<!-- ## Recap: Formal definition of the $p$-value -->
 
-$~$
+<!-- $~$ -->
 
-**The $p$-value is** the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct.
+<!-- **The $p$-value is** the probability to observe a data summary (e.g., an average) that is at least as extreme as the one observed, given that the Null Hypothesis is correct. -->
 
-\vspace{3mm}
+<!-- \vspace{3mm} -->
 
-**Example** (normal distribution): Assume the observed test-statistic leads to a $z$-value = -1.96
-$\Rightarrow$ $\text{P}(|z|\geq 1.96)=0.05$ and $\text{P}(z\leq-1.96)=0.025$ .
+<!-- **Example** (normal distribution): Assume the observed test-statistic leads to a $z$-value = -1.96  -->
+<!-- $\Rightarrow$ $\text{P}(|z|\geq 1.96)=0.05$ and $\text{P}(z\leq-1.96)=0.025$ . -->
 
-\vspace{1mm}
+<!-- \vspace{1mm} -->
 
 
-```{r pValFig, echo=FALSE, fig.width=8, fig.height=4,fig.align = "center",out.width='100%'}
-par(mfrow=c(1,2))
+<!-- ```{r pValFig, echo=FALSE, fig.width=8, fig.height=4,fig.align = "center",out.width='100%'} -->
+<!-- par(mfrow=c(1,2)) -->
 
-zz1 <- qnorm(0.025)
-zz2 <- qnorm(0.975)
-zz3 <- qnorm(0.025)
+<!-- zz1 <- qnorm(0.025) -->
+<!-- zz2 <- qnorm(0.975) -->
+<!-- zz3 <- qnorm(0.025) -->
 
-cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1)
-cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0)
+<!-- cord.x1 <- c(-4,seq(-4,zz1,0.01),zz1) -->
+<!-- cord.y1 <- c(0,dnorm(seq(-4,zz1,0.01)),0) -->
 
-cord.x2 <- c(zz2,seq(zz2,4,0.01),4)
-cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0)
+<!-- cord.x2 <- c(zz2,seq(zz2,4,0.01),4) -->
+<!-- cord.y2 <- c(0,dnorm(seq(zz2,4,0.01)),0) -->
 
-curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value (0.05)",xlab="")
-polygon(cord.x1,cord.y1,col='gray')
-polygon(cord.x2,cord.y2,col='gray')
-text(-3,0.05,labels="2.5%")
-text(3,0.05,labels="2.5%")
+<!-- curve(dnorm(x,0,1),-4,4,ylab="density",main="Two-sided p-value (0.05)",xlab="") -->
+<!-- polygon(cord.x1,cord.y1,col='gray') -->
+<!-- polygon(cord.x2,cord.y2,col='gray') -->
+<!-- text(-3,0.05,labels="2.5%") -->
+<!-- text(3,0.05,labels="2.5%") -->
 
-cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3)
-cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0)
+<!-- cord.x3 <- c(-4,seq(-4,zz3,0.01),zz3) -->
+<!-- cord.y3 <- c(0,dnorm(seq(-4,zz3,0.01)),0) -->
 
-curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value (0.025)",xlab="")
-polygon(cord.x3,cord.y3,col='gray')
-text(-3,0.05,labels="2.5%")
-```
+<!-- curve(dnorm(x,0,1),-4,4,ylab="density",main="One-sided p-value (0.025)",xlab="") -->
+<!-- polygon(cord.x3,cord.y3,col='gray') -->
+<!-- text(-3,0.05,labels="2.5%") -->
+<!-- ``` -->
 
 
 ---
@@ -872,7 +806,7 @@ $~$
 $~$
 
 
-\scriptsize
+
 
 We will discuss this a bit in the final module 12. The topic is connected to good/bad research practice, problems with ``reproducibility'' and scientific progress in general. See e.g. here:
 
@@ -906,19 +840,19 @@ $$\hat{\beta}_j \pm t_{(1-\alpha/2),n-2} \cdot\text{SE} (\hat{\beta}_j) \quad j=
     * **It is the range of parameter estimates that are *compatible with the data* **.
 
 
----
+<!-- --- -->
 
-Doing this for the bodfat example ``by hand'' is not hard. We have $241 (=243-2)$ degrees of freedom:
+<!-- Doing this for the bodfat example ``by hand'' is not hard. We have $241 (=243-2)$ degrees of freedom: -->
 
-\vspace{4mm}
+<!-- \vspace{4mm} -->
 
-\scriptsize
-```{r}
-coefs <- summary(r.bodyfat)$coef
-beta <- coefs[2,1]
-sdbeta <- coefs[2,2]
-beta + c(-1,1) * qt(0.975,241) * sdbeta
-```
+<!-- \scriptsize -->
+<!-- ```{r} -->
+<!-- coefs <- summary(r.bodyfat)$coef -->
+<!-- beta <- coefs[2,1] -->
+<!-- sdbeta <- coefs[2,2]  -->
+<!-- beta + c(-1,1) * qt(0.975,241) * sdbeta  -->
+<!-- ``` -->
 
 ---
 
@@ -998,30 +932,6 @@ $~$
 summary(r.bodyfat)$r.squared
 cor(d.bodyfat$bodyfat,d.bodyfat$bmi)^2
 ```
-
----
-
-# Summary: Simple Linear Regression
-
-* The statistical model:
-$$
-y_i = \alpha + \beta x_i + \epsilon_i, \ \epsilon_i\sim\mathcal(0,\sigma^2)\ \epsilon_i\perp\epsilon_j,\ i\neq j
-$$
-
-* Parameter estimate
-
-\begin{align}
-\begin{aligned}
-\hat{\beta}_0 &= \bar{y}-\hat{\beta}_1 \bar{x}\sim\mathcal{N}(\beta_0, \frac{\sigma^2\sum x_i^2}{n\sum(x_i-\bar{x})^2})\\
-\hat{\beta}_1 &= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} \sim\mathcal{N}(\beta_1, \frac{\sigma^2}{\sum(x_i-\bar{x})^2})
-\end{aligned}
-\end{align}
-
-* Interpretation of the parameters
-
-* Derive confidence intervals and test
-
-* Model accuracy
 
 
 
@@ -1117,11 +1027,13 @@ Assumptions:
 
 The classical _normal_ linear regression model is obtained if additionally
 
+\vspace{2mm}
+
 4. $\boldsymbol\varepsilon\sim N_n({\boldsymbol 0},\sigma^2 {\bf I})$ holds. Here $N_n$ denotes the $n$-dimensional multivarate normal distribution.
 
 
 
-The interpretation of the coefficients $\beta_j$ is now as following: holding all other covariates fixed, what is the average effect on $Y$ of a one-unit increase in the $j$th covariate.
+<!-- The interpretation of the coefficients $\beta_j$ is now as following: holding all other covariates fixed, what is the average effect on $Y$ of a one-unit increase in the $j$th covariate. -->
 
 
 ---
@@ -1171,7 +1083,7 @@ $~$
 
 Assume that 
 
-$${\bf Y=X \boldsymbol\beta}+{\boldsymbol \varepsilon} \ , \quad \boldsymbol\varepsilon\sim N_n({\bf 0},\sigma^2 {\bf I}) \ . $$
+$${\bf Y=X \boldsymbol\beta}+{\boldsymbol\varepsilon} \ , \quad \boldsymbol\varepsilon\sim N_n({\bf 0},\sigma^2 {\bf I}) \ . $$
 
 \vspace{4mm}
 
@@ -1202,16 +1114,20 @@ In multiple linear regression, the parameter vector $\boldsymbol\beta$ is estima
 
 $~$
 
-With least squares, we minimize the RSS for a multiple linear regression model:
+With least suqres, we minimize the RSS for a multiple linear regression model:
 $$\begin{aligned} \text{RSS} &=\sum_{i=1}^n (y_i - \hat y_i)^2 = \sum_{i=1}^n (y_i - \hat \beta_0 - \hat \beta_1 x_{i1} - \hat \beta_2 x_{i2} -...-\hat \beta_p x_{ip} )^2 \\
 &= \sum_{i=1}^n (y_i-{\boldsymbol x}_i^T \hat{\boldsymbol\beta})^2=({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})^T({\bf Y}-{\bf X}\hat{\boldsymbol{\beta}})\end{aligned}$$
 The estimator is found by solving the system of $(p+1)$ equations
 
 $$\frac{\partial \text{RSS}}{\partial \boldsymbol \beta}={\bf 0} \ .$$ 
 
-$\rightarrow$ Derivation on the board. 
+$\rightarrow$ Derivation on next 2 pages. 
 
 <!-- See also [here](https://www.math.ntnu.no/emner/TMA4268/2018v/notes/LeastSquaresMLR.pdf) (from Mette in TMA4267). -->
+
+---
+
+--- 
 
 ---
 
@@ -1292,18 +1208,8 @@ $$\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\b
 <!-- [](https://www.math.ntnu.no/emner/TMA4268/2018v/notes/PropertiesBetahatMLR.pdf) for a derivation. -->
  
  
----
+ 
 
-### Where were we?
-\vspace{2cm}
-
-  * **The Model:** $\boldsymbol{Y} = \boldsymbol{X}\beta + \epsilon$, $\epsilon\sim N_n(0,\sigma^2\boldsymbol{I})$
-  * **Parameter estimate:**
-      
-      - $$\hat{\boldsymbol\beta}\sim N_{p+1}(\boldsymbol{\beta},\underbrace{\sigma^2({\bf X}^T{\bf X})^{-1}}_{\text{covariance matrix}}) \ . $$
-      
-      - $$\hat{\sigma}^2 =  \frac{\sum(y_i-\hat{y}_i)^2}{n-p-1} . $$
-  
 ---
 
 ### The covariance matrix of $\boldsymbol{\hat\beta}$ in R
@@ -1701,20 +1607,22 @@ Note: The prediction range is much broader than the confidence range. Why?
 
 ---
 
-### Calculation of the confidence intervals/range
+### Calculation of the confidence and prediction intervals
 
 $~$ 
 
-* Given a realization of $X_1, \ldots ,X_p$, say $x_1^{(0)}, \ldots x_p^{(0)}$. The question is:  
-\vspace{2mm}
-**Where does $\hat y_0 = \hat\beta_0 + \hat\beta_1 x_1^{(0)} + \ldots \hat\beta_p x_p^{(0)}$ lie with a certain confidence (i.e., 95\%)?**
+See problem 2 in the recommended exercise 3 (for this module).
+
+<!-- * Given a realization of $X_1, \ldots ,X_p$, say $x_1^{(0)}, \ldots x_p^{(0)}$. The question is:   -->
+<!-- \vspace{2mm} -->
+<!-- **Where does $\hat y_0 = \hat\beta_0 + \hat\beta_1 x_1^{(0)} + \ldots \hat\beta_p x_p^{(0)}$ lie with a certain confidence (i.e., 95\%)?** -->
 
 
-\vspace{6mm} 
+<!-- \vspace{6mm}  -->
 
-* This question is not trivial, because $\hat\beta_0, \ldots \hat\beta_p$ are estimates from the data and contain uncertainty. 
+<!-- * This question is not trivial, because $\hat\beta_0, \ldots \hat\beta_p$ are estimates from the data and contain uncertainty.  -->
 
-$~$ 
+<!-- $~$  -->
 
 <!-- The details of the calculation are given in Stahel 2.4b.  -->
 
@@ -1722,35 +1630,35 @@ $~$
 
 
 
-\vspace{4mm}
+<!-- \vspace{4mm} -->
 
-* For the confidence range, only the uncertainty in the estimates $\hat\beta_0, \ldots \hat\beta_p$ matters.
-
-
-
----
+<!-- * For the confidence range, only the uncertainty in the estimates $\hat\beta_0, \ldots \hat\beta_p$ matters. -->
 
 
-### Calculation of the prediction intervals/range
 
-$~$ 
-
-* Given a new value of $X_1, \ldots, X_p$, say $x_1^{(0)}, \ldots x_p^{(0)}$. The question is:  
-\vspace{2mm}
-**Where does a future observation $y_0$ lie with a certain confidence (i.e., 95\%)?**
-
-\vspace{6mm} 
-
-* To answer this question, we have to sum uncertainty over two components:
-
-    1. the _\textcolor{red}{uncertainty in the predicted value}_ $\hat y_0 =  \hat\beta_0 + \hat\beta_1 x_1^{(0)} + \ldots \hat\beta_p x_p^{(0)}$ (due to uncertainty in $\hat{\boldsymbol\beta}$).
-
-    2. the _\textcolor{red}{irreducible error}_ $\varepsilon_0 \sim N(0,\sigma^2)$.  
+<!-- --- -->
 
 
-\vspace{4mm}
+<!-- ### Calculation of the prediction intervals/range -->
 
-* The *prediction intervals and range are always wider than the confidence intervals and range*.
+<!-- $~$  -->
+
+<!-- * Given a new value of $X_1, \ldots, X_p$, say $x_1^{(0)}, \ldots x_p^{(0)}$. The question is:   -->
+<!-- \vspace{2mm} -->
+<!-- **Where does a future observation $y_0$ lie with a certain confidence (i.e., 95\%)?** -->
+
+<!-- \vspace{6mm}  -->
+
+<!-- * To answer this question, we have to sum uncertainty over two components: -->
+
+<!--     1. the _\textcolor{red}{uncertainty in the predicted value}_ $\hat y_0 =  \hat\beta_0 + \hat\beta_1 x_1^{(0)} + \ldots \hat\beta_p x_p^{(0)}$ (due to uncertainty in $\hat{\boldsymbol\beta}$). -->
+
+<!--     2. the _\textcolor{red}{irreducible error}_ $\varepsilon_0 \sim N(0,\sigma^2)$.   -->
+
+
+<!-- \vspace{4mm} -->
+
+<!-- * The *prediction intervals and range are always wider than the confidence intervals and range*. -->
 
 
 ---
@@ -1853,7 +1761,7 @@ Y_i = \left\{
 
 ---
 
-## Qualitative predictors with more than 2 ( $k$ ) levels
+## Qualitative predictors with more than 2 levels
 
 $~$
  
@@ -2069,7 +1977,7 @@ $~$
 
 Let's look at the graphs:
 
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.pdf)
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter3/3.7.png)
 
 $\rightarrow$ We want a model that allows for different slopes!
 
@@ -2144,7 +2052,7 @@ We can include interactions also between
 
 \vspace{4mm}
 
-$\rightarrow$ See problem 1 in recommended exercises for module 3 (important)!
+$\rightarrow$ See problem 1 in recommended exercises 3 (important)!
 
 \vspace{4mm}
 
@@ -2254,9 +2162,9 @@ The _\textcolor{red}{Tukey-Anscombe}_ diagram plots the residuals against the fi
 
 $~$
 
-```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='50%'}
+```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='90%'}
 library(ggfortify)
-autoplot(r.bodyfat,smooth.colour=NA)[1] 
+autoplot(r.bodyfat,smooth.colour=NA)[1] + theme_bw() 
 ```
 
 $~$
@@ -2273,8 +2181,8 @@ To check assumption 3., the quantiles of the observed distribution are plotted a
 
 $~$
 
-```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='40%'}
-autoplot(r.bodyfat,smooth.colour=NA)[2] 
+```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='90%'}
+autoplot(r.bodyfat,smooth.colour=NA)[2] + theme_bw() 
 ```
  
 $~$
@@ -2317,7 +2225,7 @@ The idea is to plot the square root of the (standardized) residuals $\sqrt{|\til
 
 \vspace{2mm}
  
-```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='45%'}
+```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='90%'}
 autoplot(r.bodyfat,which=3) + theme_bw()
 ```
 
@@ -2385,8 +2293,8 @@ $~$
 In the leverage plot, (standardized) residuals $\tilde{r_i}$ are plotted against the leverage $H_{ii}$ (still for the bodyfat):
  
  
-```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='45%'}
-autoplot(r.bodyfat,which=5)
+```{r,echo=FALSE, fig.width=8, fig.height=3.5,fig.align = "center",out.width='90%'}
+autoplot(r.bodyfat,which=5) + theme_bw()
 ```
  
 
@@ -2404,7 +2312,7 @@ autoplot(r.bodyfat,which=5)
 
 \vspace{40mm}
 
-* Exercise: Verify that formula (4) comes out in the special case of simple linear regression.
+* Exercise: Verify that formula (2) comes out in the special case of simple linear regression.
 
 \vspace{1mm}
 
