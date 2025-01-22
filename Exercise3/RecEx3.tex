@@ -98,12 +98,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 3: Recommended Exercises},
-  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -118,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee \and Department of Mathematical Sciences, NTNU}
-\date{January 25, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{January 29, 2025}
 
 \begin{document}
 \maketitle
@@ -133,9 +133,8 @@ course book (Lab on linear regression)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1-extension-from-book-ex.-9}{%
 \section{Problem 1 (Extension from Book Ex.
-9)}\label{problem-1-extension-from-book-ex.-9}}
+9)}\label{problem-1-extension-from-book-ex.-9}
 
 This question involves the use of multiple linear regression on the
 \texttt{Auto} data set from \texttt{ISLR} package (you may use
@@ -207,22 +206,19 @@ variable (a synonymous for ``qualitative predictor''):
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{a}{%
-\subsection{a)}\label{a}}
+\subsection{a)}\label{a}
 
 Use the function \texttt{ggpairs()} from \texttt{GGally} package to
 produce a scatterplot matrix which includes all of the variables in the
 data set.
 
-\hypertarget{b}{%
-\subsection{b)}\label{b}}
+\subsection{b)}\label{b}
 
 Compute the correlation matrix between the variables. You will need to
 remove the factor covariate \texttt{origin}, because this is no longer a
 continuous variable.
 
-\hypertarget{c}{%
-\subsection{c)}\label{c}}
+\subsection{c)}\label{c}
 
 Use the \texttt{lm()} function to perform a multiple linear regression
 with \texttt{mpg} (miles per gallon, a measure for fuel consumption) as
@@ -243,15 +239,13 @@ Comment on the output. In particular:
   suggest?
 \end{enumerate}
 
-\hypertarget{d}{%
-\subsection{d)}\label{d}}
+\subsection{d)}\label{d}
 
 Look again at the regression output from question \textbf{c)}. Now we
 want to test whether the \texttt{origin} variable is important. How does
 this work for a factor variable with more than only two levels?
 
-\hypertarget{e}{%
-\subsection{e)}\label{e}}
+\subsection{e)}\label{e}
 
 Use the \texttt{autoplot()} function from the \texttt{ggfortify} package
 to produce diagnostic plots of the linear regression fit by setting
@@ -260,8 +254,7 @@ misleading. Comment on any problems you see with the fit. Do the
 residual plots suggest any unusually large outliers? Does the leverage
 plot identify any observations with unusually high leverage?
 
-\hypertarget{f}{%
-\subsection{f)}\label{f}}
+\subsection{f)}\label{f}
 
 For beginners, it can be difficult to decide whether a certain QQ plot
 looks ``good'' or ``bad'', because we only look at it and do not test
@@ -276,16 +269,15 @@ the QQ plot. Use the following code to repeat this six times:
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
 
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{) \{}
-\NormalTok{    sim }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
-    \FunctionTok{qqnorm}\NormalTok{(sim, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
-    \FunctionTok{qqline}\NormalTok{(sim, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{1}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)\{}
+\NormalTok{  sim }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
+  \FunctionTok{qqnorm}\NormalTok{(sim, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{frame =} \ConstantTok{FALSE}\NormalTok{)}
+  \FunctionTok{qqline}\NormalTok{(sim, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{1}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{g}{%
-\subsection{g)}\label{g}}
+\subsection{g)}\label{g}
 
 Let us look at interactions. These can be included via the \texttt{*} or
 \texttt{:} symbols in the linear predictor of the regression function
@@ -299,19 +291,16 @@ and \texttt{origin} (interactions can be included as
 once). Is there evidence that the interactions term is relevant? Give an
 interpretation of the result.
 
-\hypertarget{h}{%
-\subsection{h)}\label{h}}
+\subsection{h)}\label{h}
 
 Try a few different transformations of the variables, such as
 \(\log(X),\) \(\sqrt{X},\) \(X^2\). See Section 3.6.5 in the course book
 for how to do this. Perhaps you manage to improve the residual plots
 that you got in e)? Comment on your findings.
 
-\hypertarget{problem-2}{%
-\section{Problem 2}\label{problem-2}}
+\section{Problem 2}\label{problem-2}
 
-\hypertarget{a-1}{%
-\subsection{a)}\label{a-1}}
+\subsection{a)}\label{a-1}
 
 A core finding for the least-squares estimator
 \(\hat{\boldsymbol\beta}\) of linear regression models is
@@ -333,8 +322,7 @@ with
   In particular, how can we calculate the variance of \(\hat{\beta}_j\)?
 \end{itemize}
 
-\hypertarget{b-1}{%
-\subsection{b)}\label{b-1}}
+\subsection{b)}\label{b-1}
 
 What is the interpretation of a 95\% confidence interval? Hint: repeat
 experiment (on \(Y\)), on average how many CIs cover the true
@@ -352,35 +340,32 @@ confidence interval. Study and fill in the code where is needed
 \begin{Highlighting}[]
 \NormalTok{beta0 }\OtherTok{\textless{}{-}}\NormalTok{ ...}
 \NormalTok{beta1 }\OtherTok{\textless{}{-}}\NormalTok{ ...}
-\NormalTok{true\_beta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(beta0, beta1)  }\CommentTok{\# vector of model coefficients}
-\NormalTok{true\_sd }\OtherTok{\textless{}{-}} \DecValTok{1}  \CommentTok{\# choosing true sd}
+\NormalTok{true\_beta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(beta0, beta1) }\CommentTok{\# vector of model coefficients}
+\NormalTok{true\_sd }\OtherTok{\textless{}{-}} \DecValTok{1} \CommentTok{\# choosing true sd}
 \NormalTok{nobs }\OtherTok{\textless{}{-}} \DecValTok{100}
-\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(nobs, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)  }\CommentTok{\# simulate the predictor variable X}
-\NormalTok{Xmat }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{X, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(X))  }\CommentTok{\# create design matrix}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(nobs, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{\# simulate the predictor variable X}
+\NormalTok{Xmat }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{X, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(X)) }\CommentTok{\# create design matrix}
 
-\CommentTok{\# Count how many times the true value is within the confidence}
-\CommentTok{\# interval}
+\CommentTok{\# Count how many times the true value is within the confidence interval}
 \NormalTok{ci\_int }\OtherTok{\textless{}{-}}\NormalTok{ ci\_x }\OtherTok{\textless{}{-}} \DecValTok{0}
 \NormalTok{nsim }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nsim) \{}
-\NormalTok{    y }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ nobs, }\AttributeTok{mean =}\NormalTok{ Xmat }\SpecialCharTok{\%*\%}\NormalTok{ true\_beta, }\AttributeTok{sd =} \FunctionTok{rep}\NormalTok{(true\_sd,}
-\NormalTok{        nobs))}
-\NormalTok{    mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{x =}\NormalTok{ X))}
-\NormalTok{    ci }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(mod)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nsim)\{}
+\NormalTok{  y }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ nobs, }\AttributeTok{mean =}\NormalTok{ Xmat }\SpecialCharTok{\%*\%}\NormalTok{ true\_beta, }\AttributeTok{sd =} \FunctionTok{rep}\NormalTok{(true\_sd, nobs))}
+\NormalTok{  mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{x =}\NormalTok{ X))}
+\NormalTok{  ci }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(mod)}
 
-    \CommentTok{\# if true value of beta0 is within the CI then 1 else 0}
-\NormalTok{    ci\_int[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+  \CommentTok{\# if true value of beta0 is within the CI then 1 else 0}
+\NormalTok{  ci\_int[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 
-    \CommentTok{\# if true value of beta\_1 is within the CI then 1 else 0}
-\NormalTok{    ci\_x[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+  \CommentTok{\# if true value of beta\_1 is within the CI then 1 else 0}
+\NormalTok{  ci\_x[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(..., }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 \NormalTok{\}}
 
 \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(ci\_int), }\FunctionTok{mean}\NormalTok{(ci\_x))}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{c-1}{%
-\subsection{c)}\label{c-1}}
+\subsection{c)}\label{c-1}
 
 What is the interpretation of a 95\% prediction interval? Hint: repeat
 experiment (on \(Y\)) for a given \({\boldsymbol x}_0\). Write
@@ -388,16 +373,14 @@ experiment (on \(Y\)) for a given \({\boldsymbol x}_0\). Write
 order to produce the PIs use the data point \(x_0 = 0.4.\) Furthermore,
 you may use a similar code structure as in b).
 
-\hypertarget{d-1}{%
-\subsection{d)}\label{d-1}}
+\subsection{d)}\label{d-1}
 
 Construct a 95\% CI for \({\boldsymbol x}_0^T \beta\). Explain the
 connections between a CI for \(\beta_j\), a CI for
 \({\boldsymbol x}_0^T \beta\) and a PI for \(Y\) at
 \({\boldsymbol x}_0\).
 
-\hypertarget{e-1}{%
-\subsection{e)}\label{e-1}}
+\subsection{e)}\label{e-1}
 
 Explain the difference between \emph{error} and \emph{residual}. What
 are the properties of the raw residuals? Why don't we want to use the

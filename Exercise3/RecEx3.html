@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee" />
+<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase" />
 <meta name="author" content="Department of Mathematical Sciences, NTNU" />
 
-<meta name="date" content="2024-01-25" />
+<meta name="date" content="2025-01-29" />
 
 <title>Module 3: Recommended Exercises</title>
 
@@ -1623,11 +1623,10 @@ display: none;
 
 
 <h1 class="title toc-ignore">Module 3: Recommended Exercises</h1>
-<h3 class="subtitle">TMA4268 Statistical Learning V2024</h3>
-<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee</h4>
+<h3 class="subtitle">TMA4268 Statistical Learning V2025</h3>
+<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase</h4>
 <h4 class="author">Department of Mathematical Sciences, NTNU</h4>
-<h4 class="date">January 25, 2024</h4>
+<h4 class="date">January 29, 2025</h4>
 
 </div>
 
@@ -1744,10 +1743,10 @@ Use the following code to repeat this six times:</p>
 n &lt;- 100
 
 par(mfrow = c(2, 3))
-for (i in 1:6) {
-    sim &lt;- rnorm(n)
-    qqnorm(sim, pch = 1, frame = FALSE)
-    qqline(sim, col = &quot;blue&quot;, lwd = 1)
+for (i in 1:6){
+  sim &lt;- rnorm(n)
+  qqnorm(sim, pch = 1, frame = FALSE)
+  qqline(sim, col = &quot;blue&quot;, lwd = 1)
 }</code></pre>
 </div>
 <div id="g" class="section level2">
@@ -1801,27 +1800,25 @@ in the code where is needed</p>
 </ul>
 <pre class="r"><code>beta0 &lt;- ...
 beta1 &lt;- ...
-true_beta &lt;- c(beta0, beta1)  # vector of model coefficients
-true_sd &lt;- 1  # choosing true sd
+true_beta &lt;- c(beta0, beta1) # vector of model coefficients
+true_sd &lt;- 1 # choosing true sd
 nobs &lt;- 100
-X &lt;- runif(nobs, 0, 1)  # simulate the predictor variable X
-Xmat &lt;- model.matrix(~X, data = data.frame(X))  # create design matrix
+X &lt;- runif(nobs, 0, 1) # simulate the predictor variable X
+Xmat &lt;- model.matrix(~X, data = data.frame(X)) # create design matrix
 
-# Count how many times the true value is within the confidence
-# interval
+# Count how many times the true value is within the confidence interval
 ci_int &lt;- ci_x &lt;- 0
 nsim &lt;- 1000
-for (i in 1:nsim) {
-    y &lt;- rnorm(n = nobs, mean = Xmat %*% true_beta, sd = rep(true_sd,
-        nobs))
-    mod &lt;- lm(y ~ x, data = data.frame(y = y, x = X))
-    ci &lt;- confint(mod)
+for (i in 1:nsim){
+  y &lt;- rnorm(n = nobs, mean = Xmat %*% true_beta, sd = rep(true_sd, nobs))
+  mod &lt;- lm(y ~ x, data = data.frame(y = y, x = X))
+  ci &lt;- confint(mod)
 
-    # if true value of beta0 is within the CI then 1 else 0
-    ci_int[i] &lt;- ifelse(..., 1, 0)
+  # if true value of beta0 is within the CI then 1 else 0
+  ci_int[i] &lt;- ifelse(..., 1, 0)
 
-    # if true value of beta_1 is within the CI then 1 else 0
-    ci_x[i] &lt;- ifelse(..., 1, 0)
+  # if true value of beta_1 is within the CI then 1 else 0
+  ci_x[i] &lt;- ifelse(..., 1, 0)
 }
 
 c(mean(ci_int), mean(ci_x))</code></pre>

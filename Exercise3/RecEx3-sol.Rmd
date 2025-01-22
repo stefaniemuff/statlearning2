@@ -1,9 +1,9 @@
 ---
 title: 'Module 3: Recommended Exercises - Solution'
 author:
-- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "January 25, 2024"
+date: "January 29, 2025"
 output:
   pdf_document:
     toc: no
@@ -12,7 +12,7 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
