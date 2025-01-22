@@ -120,7 +120,7 @@ Body fat is an important indicator for overweight, but difficult to measure.
 
 
 \vspace{2mm}
-Study with 243 male participants, where body fat (%) and BMI and other predictors were measured. Some scatterplots\footnote{The data to reproduce these plots and analyses can be found here: https://github.com/stefaniemuff/statlearning/tree/master/3LinReg/data}:
+Study with 243 male participants, where body fat (%) and BMI and other predictors were measured. Some scatterplots\footnote{The data to reproduce these plots and analyses can be found here: https://github.com/stefaniemuff/statlearning2/tree/master/3LinReg/data}:
 
 
 ```{r motivating, echo=FALSE, fig.width=8, fig.height=3,fig.align = "center",out.width='100%'}
@@ -212,8 +212,8 @@ In the linear regression model the dependent variable $Y$ is related to the inde
 $$Y = \beta_0 + \beta_1 x + \varepsilon \ , \qquad \varepsilon \sim N(0,\sigma^2) \ .$$
 \vspace{2mm}
 
-In this formulation $Y$ is a random variable $Y \sim N(\beta_0 + \beta_1 x, \sigma^2$) where
-$$Y \quad= \quad \underbrace{\text{ expected value }}_{\mathsf{E}(Y) = \beta_0 + \beta_1 x} \quad + \quad \underbrace{\text{ error}}_{\varepsilon}  \ .$$
+In this formulation $Y$ is a random variable $Y | x\sim N(\beta_0 + \beta_1 x, \sigma^2$) where
+$$Y|x \quad= \quad \underbrace{\text{ expected value }}_{\mathsf{E}(Y) = \beta_0 + \beta_1 x} \quad + \quad \underbrace{\text{ error}}_{\varepsilon}  \ .$$
 
 Note:
  
@@ -810,6 +810,7 @@ $~$
 
 We will discuss this a bit in the final module 12. The topic is connected to good/bad research practice, problems with ``reproducibility'' and scientific progress in general. See e.g. here:
 
+$~$
 
 * The $p$-value statement by ASA: [https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#.Xh16iuExnhM](https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#.Xh16iuExnhM)
 * Ideas to redefine what ``statistical significane'' means: [https://www.nature.com/articles/s41562-017-0189-z](https://www.nature.com/articles/s41562-017-0189-z)
@@ -905,7 +906,7 @@ Measured by
 
 \vspace{2mm}
 
-2. The **coefficient of determination $R^2$**, which measures the proportion of $y$'s variance explained by the model (between 0 and 1), is a **relative measure** of _lack of fit_:
+2. The **coefficient of determination $R^2$**, which measures the proportion of $y$'s variance explained by the model (between 0 and 1), is a **relative measure** of _fit_ or _lack of fit_ ($1-R^2$):
 
 $$R^2 = \frac{\text{TSS}-\text{RSS}}{\text{TSS}}= 1-\frac{\text{RSS}}{\text{TSS}}=1-\frac{\sum_{i=1}^n(y_i-\hat{y}_i)^2}{\sum_{i=1}^n(y_i-\bar{y}_i)^2}, $$ 
 
@@ -1089,11 +1090,11 @@ $${\bf Y=X \boldsymbol\beta}+{\boldsymbol\varepsilon} \ , \quad \boldsymbol\vare
 
 **Q:** 
 
-* What is the expected value $\mathsf{E}(\bf Y)$?
+* What is the expected value $\mathsf{E}(\bf Y)$ given $\bf{X}$?
 
 * The covariance matrix $\mathsf{Cov}(\bf Y)$ given $\bf{X}$?
 
-* Thus what is the distribution of $\bf Y$?
+* Thus what is the distribution of $\bf Y$ given $\bf{X}$?
 
 ---
 
