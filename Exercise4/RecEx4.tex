@@ -112,12 +112,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 4: Recommended Exercises},
-  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -132,17 +132,16 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee \and Department of Mathematical Sciences, NTNU}
-\date{February 1, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{February 5, 2025}
 
 \begin{document}
 \maketitle
 
-\hypertarget{problem-1-knn-exercise-2.4.7-in-isl-textbook-slightly-modified}{%
-\section{Problem 1: KNN (Exercise 2.4.7 in ISL textbook slightly
-modified)}\label{problem-1-knn-exercise-2.4.7-in-isl-textbook-slightly-modified}}
+\section{Problem 1: KNN (Exercise 2.4.7 in ISL textbook, slightly
+modified)}\label{problem-1-knn-exercise-2.4.7-in-isl-textbook-slightly-modified}
 
 The table and plot below provides a training data set consisting of
 seven observations, two predictors and one qualitative response
@@ -161,38 +160,36 @@ variable.
 
 \begin{center}\includegraphics[width=0.5\linewidth]{RecEx4_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
-We wish to use this data set to make a prediction for \(Y\) when
+We want to use this data set to make a prediction for \(Y\) when
 \(X_1=1, X_2=2\) using the \(K\)-nearest neighbors classification
 method.
 
-\hypertarget{a}{%
-\subsection{a)}\label{a}}
+\subsection{a)}\label{a}
 
 Calculate the Euclidean distance between each observation and the test
 point, \(X_1=1,X_2=2\).
 
-\hypertarget{b}{%
-\subsection{b)}\label{b}}
+\subsection{b)}\label{b}
 
-Use \(P(Y=j\mid X=x_0) = \frac{1}{K}\sum_{I \in \mathcal{N}_0}I(Y=j)\)
+Use
+\(P\left(Y=j\mid X=x_0\right) = \frac{1}{K}\sum_{I \in \mathcal{N}_0}I\left(Y=j\right)\)
 to predict the class of \(Y\) when \(K=1\), \(K=4\) and \(K=7\). Why is
 \(K=7\) a bad choice?
 
-\hypertarget{c}{%
-\subsection{c)}\label{c}}
+\subsection{c)}\label{c}
 
 If the Bayes decision boundary in this problem is highly non-linear,
 would we expect the best value for \(K\) to be large or small? Why?
 
-\hypertarget{problem-2-bank-notes-and-lda-with-calculations}{%
 \section{Problem 2: Bank notes and LDA (with
-calculations)}\label{problem-2-bank-notes-and-lda-with-calculations}}
+calculations)}\label{problem-2-bank-notes-and-lda-with-calculations}
 
-To distinguish between genuine and fake bank notes measurements of
-length and diagonal of an image part of the bank notes have been made.
-For 1000 bank notes (500 genuine and 500 false) this gave the following
-values for the mean and the covariance matrix (using unbiased
-estimators), where the first value is the length of the bank note.
+To distinguish between genuine and fake bank notes, measurements of
+length and diagonal of part of the bank notes have been made. For
+\(1000\) bank notes (\(500\) genuine and \(500\) false) this gave the
+following values for the mean and the covariance matrix (using unbiased
+estimators), where the first value is the length of the bank note, and
+the second is the diagonal.
 
 Genuine bank notes: \[
 \bar{\bf x}_G=\left[     \begin{array}{c} 214.97 \\ 141.52  \end{array} \right]
@@ -208,22 +205,19 @@ Fake bank notes: \[
 \end{array} \right]
 \]
 
-\hypertarget{a-1}{%
-\subsection{a)}\label{a-1}}
+\subsection{a)}\label{a-1}
 
 Assume the true covariance matrix for the genuine and fake bank notes
 are the same. How would you estimate the common covariance matrix?
 
-\hypertarget{b-1}{%
-\subsection{b)}\label{b-1}}
+\subsection{b)}\label{b-1}
 
 Explain the assumptions made to use linear discriminant analysis to
 classify a new observation to be a genuine or a fake bank note. Write
 down the classification rule for a new observation (make any assumptions
 you need to make).
 
-\hypertarget{c-1}{%
-\subsection{c)}\label{c-1}}
+\subsection{c)}\label{c-1}
 
 Use the method in b) to determine if a bank note with length \(214.0\)
 and diagonal \(140.4\) is genuine or fake. You can use R to perform the
@@ -245,99 +239,91 @@ matrix calculations.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{d}{%
-\subsection{d)}\label{d}}
+\subsection{d)}\label{d}
 
 What is the difference between LDA and QDA? Use the classification rule
 for QDA to determine the bank note from c). Do you obtain the same
 result? You can use R to perform the matrix calculations.
 
-Hint: the following formulas might be useful. \[A^{-1} = \left[
+Hint: the following formulas might be useful. \[
+A^{-1} = \left[
 \begin{array}{cc} a & b \\ c & d \end{array} 
 \right]^{-1} = \frac{1}{ad-bc}
 \left[
 \begin{array}{cc} d & -b \\ -c & a \end{array} 
-\right]\]
+\right]
+\]
 
-\[ |A| = det(A) = \Big|\begin{array}{cc} a & b \\ c & d \end{array}\Big| = ad - bc \]
+\[
+|A| = \det(A) = \left|\begin{array}{cc} a & b \\ c & d \end{array}\right| = ad - bc
+\]
 
-\hypertarget{problem-3-odds-exercise-4.7.9-in-isl-textbook}{%
 \section{Problem 3: Odds (Exercise 4.7.9 in ISL
-textbook)}\label{problem-3-odds-exercise-4.7.9-in-isl-textbook}}
+textbook)}\label{problem-3-odds-exercise-4.7.9-in-isl-textbook}
 
-This problem has to do with \emph{odds}.
+This problem is about \emph{odds}.
 
-\hypertarget{a-2}{%
-\subsection{a)}\label{a-2}}
+\subsection{a)}\label{a-2}
 
 On average, what fraction of people with an odds of \(0.37\) of
 defaulting on their credit card payment will in fact default?
 
-\hypertarget{b-2}{%
-\subsection{b)}\label{b-2}}
+\subsection{b)}\label{b-2}
 
 Suppose that an individual has a \(16\%\) chance of defaulting on her
 credit card payment. What are the odds that she will default?
 
-\hypertarget{problem-4-logistic-regression-exercise-4.7.6-in-isl-textbook}{%
 \section{Problem 4: Logistic regression (Exercise 4.7.6 in ISL
-textbook)}\label{problem-4-logistic-regression-exercise-4.7.6-in-isl-textbook}}
+textbook)}\label{problem-4-logistic-regression-exercise-4.7.6-in-isl-textbook}
 
 Suppose we collect data for a group of students in a statistics class
 with variables \(x_1\) = hours studied, \(x_2\) = undergrad grade point
-average (GPA), and \(Y\) = receive an A. We fit a logistic regression
-and produce estimated coefficient,
+average (GPA), and \(Y = I(\text{student gets an A})\). We fit a
+logistic regression and produce estimated coefficient,
 \(\hat{\beta}_0 = -6, \hat{\beta}_1 = 0.05, \hat{\beta}_2 = 1\).
 
-\hypertarget{a-3}{%
-\subsection{a)}\label{a-3}}
+\subsection{a)}\label{a-3}
 
-Estimate the probability that a student who studies for \(40\) h and has
-an undergrad GPA of \(3.5\) gets an A in the class.
+Estimate the probability that a student who studies for \(40\) hours and
+has an undergrad GPA of \(3.5\) gets an A in the class.
 
-\hypertarget{b-3}{%
-\subsection{b)}\label{b-3}}
+\subsection{b)}\label{b-3}
 
 How many hours would the student in part a) need to study to have an
 estimated \(50\%\) probability of getting an A in the class?
 
-\hypertarget{problem-5-sensitivity-specificity-roc-and-auc}{%
 \section{Problem 5: Sensitivity, specificity, ROC and
-AUC}\label{problem-5-sensitivity-specificity-roc-and-auc}}
+AUC}\label{problem-5-sensitivity-specificity-roc-and-auc}
 
-We have a two-class problem, with classes 0=non-disease and 1=disease,
-and a method \(p(x)\) that produces probability of disease for a
-covariate \(x\). In a population we have investigated \(N\) individuals
-and know the predicted probability of disease \(p(x)\) and true disease
-status for these \(N\).
+We have a two-class problem, with classes \(0=\)non-disease and
+\(1=\)disease, and a method \(p(x)\) that produces probability of
+disease depending on a covariate \(x\). In a population we have
+investigated \(n\) individuals and know the predicted probability of
+disease \(p(x)\) and true disease status for these \(n\).
 
-\hypertarget{a-4}{%
-\subsection{a)}\label{a-4}}
+\subsection{a)}\label{a-4}
 
 We choose the rule \(p(x)>0.5\) to classify to disease. Define the
 sensitivity and the specificity of the test.
 
-\hypertarget{b-4}{%
-\subsection{b)}\label{b-4}}
+\subsection{b)}\label{b-4}
 
-Explain how you can construct a reciever operator curve (ROC) for your
+Explain how you can construct a receiver operator curve (ROC) for your
 setting, and why that is a useful thing to do. In particular, why do we
 want to investigate different cut-offs of the probability of disease?
 
-\hypertarget{c-2}{%
-\subsection{c)}\label{c-2}}
+\subsection{c)}\label{c-2}
 
 Assume that we have a competing method \(q(x)\) that also produces
 probability of disease for a covariate \(x\). We get the information
-that the AUC of the \(p(x)\)-method is 0.6 and the AUC of the
-\(q(x)\)-method is 0.7. What is the definition and interpretation of the
-AUC? Would you prefer the \(p(x)\) or the \(q(x)\) method for
+that the AUC of the \(p(x)\)-method is \(0.6\) and the AUC of the
+\(q(x)\)-method is \(0.7\). What is the definition and interpretation of
+the AUC? Would you prefer the \(p(x)\) or the \(q(x)\) method for
 classification?
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{data-analysis-with-r}{%
-\section{Data analysis with R}\label{data-analysis-with-r}}
+\section{Data analysis with R}\label{data-analysis-with-r}
 
 For the following problems, you should check out and learn how to use
 the following R functions: \texttt{glm()} (\texttt{stats} library),
@@ -345,18 +331,16 @@ the following R functions: \texttt{glm()} (\texttt{stats} library),
 (\texttt{class} library), \texttt{roc()} and \texttt{auc()}
 (\texttt{pROC} library).
 
-\hypertarget{problem-6-exercise-4.7.10-in-isl-textbook---modified}{%
 \section{Problem 6 (Exercise 4.7.10 in ISL textbook -
-modified)}\label{problem-6-exercise-4.7.10-in-isl-textbook---modified}}
+modified)}\label{problem-6-exercise-4.7.10-in-isl-textbook---modified}
 
 This question should be answered using the \texttt{Weekly} data set,
-which is part of the \texttt{ISLR} package. This data is similar in
-nature to the \texttt{Smarket} data from this chapter's lab, except that
-it contains \(1,089\) weekly returns for \(21\) years, from the
-beginning of 1990 to the end of 2010.
+which is part of the \texttt{ISLR} package. This data is similar to the
+\texttt{Smarket} data from this chapter's lab, except that it contains
+\(1,089\) weekly returns for \(21\) years, from the beginning of 1990 to
+the end of 2010.
 
-\hypertarget{a-5}{%
-\subsection{a)}\label{a-5}}
+\subsection{a)}\label{a-5}
 
 Produce numerical and graphical summaries of the \texttt{Weekly} data.
 Do there appear to be any patterns? \textbf{R-hint}: Load the data as
@@ -368,23 +352,21 @@ follows:
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{b-5}{%
-\subsection{b)}\label{b-5}}
+\subsection{b)}\label{b-5}
 
 Use the full data set to perform a logistic regression with
 \texttt{Direction} as the response and the five lag variables plus
 \texttt{Volume} as predictors. Use the \texttt{summary()} function to
-print the results. Which of these predictors appears to be of
-interest?\\
-\textbf{R-hints:} You should use the \texttt{glm()} function with the
-argument \texttt{family="binomial"} to make a logistic regression model.
+print the results. Which of the predictors appears to be associated with
+\texttt{Direction}? \textbf{R-hints:} You should use the \texttt{glm()}
+function with the argument \texttt{family="binomial"} to make a logistic
+regression model.
 
-\hypertarget{c-3}{%
-\subsection{c)}\label{c-3}}
+\subsection{c)}\label{c-3}
 
 Compute the confusion matrix and overall fraction of correct
 predictions. Explain what the confusion matrix is telling you about the
-types of mistakes made by logistic regression.\\
+types of mistakes made by your logistic regression model.
 \textbf{R-hints:} insert the name of your model for
 \texttt{yourGlmModel} in the code below to get the predicted
 probabilities for ``Up'', the classified direction and the confusion
@@ -398,8 +380,7 @@ matrix.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{d-1}{%
-\subsection{d)}\label{d-1}}
+\subsection{d)}\label{d-1}
 
 Now fit the logistic regression model using a training data period from
 1990 to 2008, with \texttt{Lag2} as the only predictor. Compute the
@@ -417,18 +398,16 @@ set. For predicting the direction of the test set, use
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{e}{%
-\subsection{e)}\label{e}}
+\subsection{e)}\label{e}
 
 Repeat d) using LDA.
 
-\hypertarget{f}{%
-\subsection{f)}\label{f}}
+\subsection{f)}\label{f}
 
 Repeat d) using QDA.
 
-\textbf{R-hints:} plug in you variables in the following code to perform
-lda and qda (just replacing \texttt{lda} with \texttt{qda}).
+\textbf{R-hints:} plug in your variables in the following code to
+perform lda (and similarly for \texttt{qda}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -440,18 +419,17 @@ lda and qda (just replacing \texttt{lda} with \texttt{qda}).
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{g}{%
-\subsection{g)}\label{g}}
+\subsection{g)}\label{g}
 
 Repeat d) using KNN with \(K=1\).
 
-\textbf{R-hints:} plug in you variables in the following code to perform
-KNN. The argument \texttt{prob=TRUE} will provide the probabilities for
-the classified direction (which you will need later). When there are
-ties (same amount of Up and Down for the nearest neighbors), the
-\texttt{knn} function picks a class at random. We use the
-\texttt{set.seed()} function such that we don't get different answers
-for each time we run the code.
+\textbf{R-hints:} plug in your variables in the following code to
+perform KNN. The argument \texttt{prob=TRUE} will provide the
+probabilities for the classified direction (which you will need later).
+When there are ties (same amount of Up and Down for the nearest
+neighbors), the \texttt{knn} function picks a class at random. We use
+the \texttt{set.seed()} function such that we don't get different
+answers for each time we run the code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -469,8 +447,7 @@ for each time we run the code.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{h}{%
-\subsection{h)}\label{h}}
+\subsection{h)}\label{h}
 
 Use the following code to find the best value of \(K\). Report the
 confusion matrix and overall fraction of correct predictions for this
@@ -497,13 +474,11 @@ value of \(K\).
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{i}{%
-\subsection{i)}\label{i}}
+\subsection{i)}\label{i}
 
 Which of these methods appear to provide the best results on this data?
 
-\hypertarget{j}{%
-\subsection{j)}\label{j}}
+\subsection{j)}\label{j}
 
 Plot the ROC curves and calculate the AUC for the four methods (using
 your the best choice for KNN). What can you say about the fit of these
@@ -516,7 +491,7 @@ models?
 \item
   For KNN you can use \texttt{knn(...,prob=TRUE)} to get the probability
   for the classified direction. Note that we want \(P(Direction = Up)\)
-  when plotting the ROC-curve, so we need to modify the probabilties
+  when plotting the ROC-curve, so we need to modify the probabilities
   returned from the \texttt{knn} function.
 \end{itemize}
 
