@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 4: Classification"
-author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: " February 1st and 3rd, 2024"
+author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
+date: "January 30 and 31, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -12,16 +12,13 @@ output:
     theme: "Singapore"
     colortheme: "default"
     font: "serif"
-    includes:
-      in_header: ../header.tex
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 2
 urlcolor: blue
-bibliography: ../refs.bib
-header-includes: \usepackage{multirow}
-#   \usepackage{bm}
+bibliography: refs.bib
+header-includes:  
+- \usepackage{multirow}
+- \usepackage{tcolorbox}
+- \setbeamertemplate{navigation symbols}{}
+- \setbeamertemplate{footline}[page number]
  
 
 ---
@@ -37,22 +34,14 @@ whichformat="latex"
 ```
 
 
-<!-- --- -->
-
-<!-- # Acknowledgements -->
-
-<!-- * Thanks to Mette Langaas and her TAs who permit me to use and modify their original material.  -->
-
-<!-- * Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal. -->
-
---- 
+---
 
 # Introduction
 
 ## Learning material for this module
 \vspace{2mm}
 
-* James et al. (2013): An Introduction to Statistical Learning. Chapter 4 + Chapter 2.2.3.  
+* [@james.etal2] : An Introduction to Statistical Learning. Chapter 4 + Chapter 2.2.3.  
 
 $~$
 
@@ -80,9 +69,9 @@ $~$
 
 * Classification and discrimination
 
-* Bayes classifier, Bayes risk
-
 * Logistic regression
+
+* Bayes classifier, Bayes risk
 
 * KNN - majority vote or estimate posterior class probability?
 
@@ -156,8 +145,7 @@ The `Default` dataset is available from the ISLR package.
 
 
  \centering
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.1a.pdf){width=50%}
-
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.1a.png){width=50%}
  
 
 
@@ -178,110 +166,6 @@ $~$
 
 **Performance measure:** Most popular is the misclassification error rate (training and test version).
 
----
-
-# The Bayes classifier
-
-*  **Idea:** probability can be used for classification.
-
-\vspace{0mm}
-
-* Assume that we know the probability that a new observation $x_0$ belongs to class $k$, for $K$ classes $\mathcal{C} = \{c_1, c_2,\ldots, c_K\}$, with elements numbered as $1, 2, ..., K$
-$$p_k(x_0) = \text{Pr}(Y=k | X=x_0), \quad k = 1, 2, ... K \ .$$
-This is the probability that $Y=k$ given the observation $x_0$. 
-\vspace{1mm}
-
-* The _Bayes classifier_ assigns an observation to _\textcolor{red}{the most likely class}_, given its predictor values.  
-
-
-* **Example** for two groups $\{A, B\}$. A new observation $x_0$ will be classified to $A$ if $\text{Pr}(Y=A | X=x_0) > 0.5$ and to class $B$ otherwise.
-
-
----
-
-## Properties of the Bayes classifier
-
-$~$
-
-* It has the _smallest \textcolor{red}{test error} rate_. 
-
-\vspace{2mm}
-
-* The class boundaries using the Bayes classifier is called the _Bayes decision boundary_.
-
-\vspace{2mm}
-
-* The overall Bayes error rate is given as $$1-\text{E}(\max_j \text{Pr}(Y=j\mid X))$$ where the expectation is over $X$.
-
-\vspace{2mm}
-
-* The Bayes error rate is comparable to the _irreducible error_ in the regression setting.
-
-\vspace{2mm}
-
-* **Caveat:** We usually don't know the true conditional distribution $\text{Pr}(Y  |  X)$ for real data.
-
----
-
-# Some terminology
-
-\vspace{2mm}
- 
-
-**Training set:** Independent observations $\{(x_1, y_1), ..., (x_n, y_n)\}$ with _qualitative response_ variable $Y \in \{1, 2, ..., K\}$, used to construct the classification rule (by estimating parameters in class densities or posterior probabilites).
-
-\vspace{2mm}
-
-**Test set:** Independent observations of the same format as the training set, used to evaluate the classification rule.
-
-\vspace{2mm}
-
-**Loss function:** The misclassifications are given the loss 1 and the correct classifications loss 0 - this is called _0/1-loss_. 
-
-
-The proportion of mistakes that are made if we apply our estimator $\hat{f}$ to the training observations, i.e. $\hat{y}_i=\hat{f}(x_i)$ 
-$$\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,$$
-with indicator function I, which is defined as: 
-
-$$\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
-0 \text{ else. } \end{cases}$$
-
----
-
-### Training error
-
-$~$
-
-**Training error rate**:
-The proportion of mistakes that are made if we apply our estimator $\hat{f}$ to the training observations, i.e. $\hat{y}_i=\hat{f}(x_i)$ 
-$$\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,$$
-with indicator function I, which is defined as: 
-
-$$\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
-0 \text{ else. } \end{cases}$$
-
-\vspace{2mm}
-
- 
----
-
-### Test error
-
-$~$
-
-**Test error rate**: The fraction of misclassifications when our model is applied on a test set
-
-$$\frac{1}{n_0}\sum_{i=1}^{n_0} \text{I}(y_{0i} \neq \hat{y}_{0i}) \ ,$$
-where the average is over all the test observations $(x_0,y_0)$.
-
-\vspace{6mm}
-
-Remember: a _\textcolor{red}{good classifier}_ is a classifier that has a _\textcolor{red}{low test error}_ (why?).
-
- 
-
-
----
 
 
 ---
@@ -343,7 +227,7 @@ $~$
 Let's anticipate a bit, to see why linear regression does not so well. We estimate the probability that someone defaults, given the credit card balance as predictor:
 \vspace{2mm}
 
-![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.2.pdf)
+![ISLR Figure 3.7](../../ISLR/Figures/Chapter4/4.2.png)
 
 
 ---
@@ -413,7 +297,7 @@ $$Y_i = \begin{cases} 1 \text{ with probability } p_i, \\ 0 \text{ with probabil
 $$\eta_i = \beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}$$ 
 to $p_i$. How?
 
-
+\pause
 
 * The idea is to use a so-called _link-function_ to link $p_i$ to the linear predictor. 
 
@@ -504,9 +388,7 @@ $~$
 \vspace{2mm}
 
 * Given $n$ independent observation pairs  $\{{\boldsymbol x}_i, y_i\}$, the likelihood function of a logistic regression model can be written as:
-
-$$L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) \propto \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},$$
-
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^n L_i(\boldsymbol{\beta}) = \prod_{i=1}^n f(y_i; \boldsymbol{\beta}) = \prod_{i=1}^n (p_i)^{y_i}(1-p_i)^{1-y_i},$$
 where $\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2, \ldots, \beta_p)^T$ enters into $p_i$
 
 $$p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\beta_0 + \beta_1 x_{i1}+\cdots+\beta_p x_{ip})} \ .$$
@@ -519,12 +401,12 @@ $$p_i= \frac{\exp(\beta_0+\beta_1 x_{i1}+\cdots + \beta_p x_{ip})}{1 + \exp(\bet
 
 \vspace{-4mm}
 
-\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) \propto \sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
+\begin{align*} \log(L(\boldsymbol{\beta}))&=l(\boldsymbol{\beta}) =\sum_{i=1}^n \Big ( y_i \log p_i + (1-y_i) \log(1 - p_i )\Big ) \\ &= \sum_{i=1}^n \Big ( y_i \log \Big (\frac{p_i}{1-p_i} \Big) + \log(1-p_i) \Big ) \\
 &= \sum_{i=1}^n \Big (y_i (\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}) - \log(1 + e^{\beta_0 + \beta_1 x_{i1}+\cdots + \beta_p x_{ip}} ) \Big ).\end{align*}
 
 ---
 
-* To maximize the log-likelihood function we find the $p+1$ partial derivatives, and set equal to 0. 
+* To maximize the log-likelihood function we find the $r+1$ partial derivatives, and set equal to 0. 
 
 * This gives us a set of $p+1$ non-linear equations in the $\beta$s.
 
@@ -676,9 +558,8 @@ $~$
 
 <!-- $\rightarrow$ The odds to default increases by a factor $\exp(100 \cdot \beta_{\text{balance}})=$ `r round(exp(summary(glm_default2)$coef[2,1]*100),2)` -->
 
-* How do student and non student relate to each other?
 
-<!-- $\rightarrow$ If 'Student = TRUE' the odds to default decreases by a factor $\exp( \beta_{\text{studentYes}})=$ `r round(exp(summary(glm_default2)$coef[4,1]),2)` -->
+
 ---
 
 ## Predictions
@@ -707,7 +588,7 @@ In the case of qualitative covariates, a dummy variable needs to be introduced. 
 
 So in the `Default` example, we can predict the probability that someone defaults. 
 
-For example: "What is the estimated probability that a student  with a balance of 2000, and an income of 40000 will default?"
+For example: "What is the estimated probability that a student defaults with a balance of 2000, and an income of 40000?"
 
 $$\hat{p}(X) = \frac{e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}}{ 1+  e^{\beta_0 + 2000 \cdot \beta_1 + 40000 \cdot \beta_2 + 1 \cdot \beta_3}} = 0.5196$$
 \vspace{6mm}
@@ -728,7 +609,7 @@ exp(eta)/(1+exp(eta))
 
 $~$
 
-* `SAheart` data set from the `bestglm` package, a retrospective sample of males in a heart-disease high-risk region in South Africa. 
+* `SAheart` data set from the `ElemStatLearn` package, a retrospective sample of males in a heart-disease high-risk region in South Africa. 
 
 \vspace{2mm}
 
@@ -740,7 +621,7 @@ $~$
 
 \vspace{2mm}
 
-* 160 cases (individuals who have suffered from a cororary heart disease) and 302 controls (individuals who have not suffered from a cororary heart disease).    
+* 160 cases (individuals who have suffered from a conorary heart disease) and 302 controls (individuals who have not suffered from a conorary heart disease).    
 
 
 
@@ -763,7 +644,7 @@ The goal is to identify important risk factors. We start by loading and looking 
 
 \footnotesize
 ```{r,echo=showsolB}
-library(bestglm)
+library(ElemStatLearn)
 
 d.heart <- SAheart
 d.heart$chd <- as.factor(d.heart$chd)
@@ -796,6 +677,7 @@ glm_heart = glm(chd~., data=d.heart, family="binomial")
 summary(glm_heart)
 ```
 
+---
 
 * For which predictors do we have evidence that they are associated with CHD (www.menti.com)?
 
@@ -810,23 +692,6 @@ summary(glm_heart)
 predict(glm_heart, newdata=... , type="response")
 ```
 
-
----
-
-## Predictions for the first patients
-
-```{r}
-pred = predict(glm_heart , type="response")
-head(cbind(d.heart, pred =  pred))
-```
-
----
-
-With logistic regression we are able to estimate 
-$$
-\hat{p}_i = P(Y_i = 1|X_i = x_i)
-$$
-but how do we predict the different classes?
 
 <!-- --- -->
 
@@ -843,6 +708,102 @@ but how do we predict the different classes?
 <!-- * We will not discuss this further since LDA is more popular (than logistic regression) in the multi-class setting. And, as we shall see soon - they are not that different. -->
 
 
+---
+
+# The Bayes classifier
+
+* We were going for classification, but now estimated $\hat{p}(X)=\text{Pr}(Y \mid X)$ using logistic regression. Idea: probability can be used for classification.
+
+\vspace{0mm}
+
+* Assume that we know or can estimate the probability that a new observation $x_0$ belongs to class $k$, for $K$ classes $\mathcal{C} = \{c_1, c_2,\ldots, c_K\}$, with elements numbered as $1, 2, ..., K$
+$$p_k(x_0) = \text{Pr}(Y=k | X=x_0), \quad k = 1, 2, ... K \ .$$
+This is the probability that $Y=k$ given the observation $x_0$. 
+\vspace{1mm}
+
+* The _Bayes classifier assigns an observation to \textcolor{red}{the most likely class}_, given its predictor values.  
+
+
+* **Example** for two groups $\{A, B\}$. A new observation $x_0$ will be classified to $A$ if $\text{Pr}(Y=A | X=x_0) > 0.5$ and to class $B$ otherwise.
+
+
+---
+
+## Properties of the Bayes classifier
+
+$~$
+
+* It has the _smallest \textcolor{red}{test error} rate_. 
+
+\vspace{2mm}
+
+* The class boundaries using the Bayes classifier is called the _Bayes decision boundary_.
+
+\vspace{2mm}
+
+* The overall Bayes error rate is given as $$1-\text{E}(\max_j \text{Pr}(Y=j\mid X))$$ where the expectation is over $X$.
+
+\vspace{2mm}
+
+* The Bayes error rate is comparable to the _irreducible error_ in the regression setting.
+
+\vspace{2mm}
+
+* **Caveat:** We usually don't know the true conditional distribution $\text{Pr}(Y  |  X)$ for real data.
+
+---
+
+# Some terminology
+
+\vspace{2mm}
+ 
+
+**Training set:** Independent observations $\{(x_1, y_1), ..., (x_n, y_n)\}$ with _qualitative response_ variable $Y \in \{1, 2, ..., K\}$, used to construct the classification rule (by estimating parameters in class densities or posterior probabilites).
+
+\vspace{2mm}
+
+**Test set:** Independent observations of the same format as the training set, used to evaluate the classification rule.
+
+\vspace{2mm}
+
+**Loss function:** The misclassifications are given the loss 1 and the correct classifications loss 0 - this is called _0/1-loss_. 
+
+---
+
+### Training error
+
+$~$
+
+**Training error rate**:
+The proportion of mistakes that are made if we apply our estimator $\hat{f}$ to the training observations, i.e. $\hat{y}_i=\hat{f}(x_i)$ 
+$$\frac{1}{n}\sum_{i=1}^n \text{I}(y_i \neq \hat{y}_i) \ ,$$
+with indicator function I, which is defined as: 
+
+$$\text{I}(a\neq\hat{a}) = \begin{cases} 1 \text{ if } a \neq \hat{a} \ , \\ 
+0 \text{ else. } \end{cases}$$
+
+\vspace{2mm}
+
+ 
+---
+
+### Test error
+
+$~$
+
+**Test error rate**: The fraction of misclassifications when our model is applied on a test set
+
+$$\frac{1}{n_0}\sum_{i=1}^{n_0} \text{I}(y_{0i} \neq \hat{y}_{0i}) \ ,$$
+where the average is over all the test observations $(x_0,y_0)$.
+
+\vspace{6mm}
+
+Remember: a _\textcolor{red}{good classifier}_ is a classifier that has a _\textcolor{red}{low test error}_ (why?).
+
+ 
+
+
+---
 
 # The K-nearest neighbour (KNN) classifier
 
@@ -1017,6 +978,10 @@ $~$
 
 * How to find the optimal $K$?
 
+\vspace{2mm}
+
+* Would you rather choose $K$ even or odd? Why?
+
 
 
 ---
@@ -1074,120 +1039,57 @@ gge
 
 * Why? Because the nearest neighbors tend to be far away in high dimensions and the method is no longer  local. This is referred to as the _\textcolor{red}{curse of dimensionality}_.
 
----
-
-# Module 4 - Classification
-
-  * What is classification?
-  
-  * What is the goal with classification?
-  
-  * What did we learn yesterday?
-  
-    - Bayes Classifier
-    - Logistic regression (for bivariate response)
-    - KNN classification
-    
-  * What will we learn today?
-  
-    - Linear and quadratic discriminant analysis
-
----
-
-# Logistic Regression
-
-Parametric model.
-
-\vspace{1mm}
-
-
-We assume that $Y_i|X_i-x_i\sim\text{Ber}(p_i)$, where $p_i = P(Y_i =1|X_i = x_i)$ and that
-
-$$
-\text{logit}(p_i) = X^T\beta
-$$
-\vspace{1mm}
-
-What have we learned:
-
-  * How to estimate $\beta$
-  * What do we mean by _odds_
-  * How to interpret the estimated value $\hat{\beta}$
-  * How to make predictions using this model
-
----
-
-# KNN
-
-Non parametric model.
-
-\vspace{1mm}
-
-
-
-* Given a new observation $x_0$ it searches for the $K$ points in our training data that are closest to it (Euclidean distance).
-
-\vspace{1mm}
-
-* These points make up the neighborhood of $x_0$, $\mathcal{N}_0$.
-
-\vspace{1mm}
-
-* Classification is done by a _\textcolor{red}{majority vote}_: $x_0$ is classified to the most occurring class among its neighbors
-$$\text{Pr}(Y=j | X = x_0) = \frac{1}{K} \sum_{i \in \mathcal{N}_0} I(y_i = j)\ .$$
-
 
 
 ---
 
-# Two paradigms for classification models:
+# Bayes decision rule - two paradigms
+\vspace{1mm}
 
+Two approaches to estimate $\text{Pr}(Y=k \mid X=x)$:
+\vspace{1mm}
 
-### 1. Diagnostic paradigm
+### Diagnostic paradigm
 
-The focus was  _directly_ estimating the posterior distribution for the classes $$\text{Pr}(Y=k \mid X=x)\ .$$ 
- 
-  * **This is what we did so far:**
- 
-    - Logistic regression. 
-    - KNN classification.
+This is what we did so far: The focus was  _directly_ estimating the posterior distribution for the classes $$\text{Pr}(Y=k \mid X=x)\ .$$ 
+ **Examples:**
+    Logistic regression. 
+    KNN classification.
 
 \vspace{2mm}
 
-###  2. Sampling paradigm
+### Sampling paradigm
 
-Here we use the Bayes theorem to _derive_ the posterior distribution for the classes 
-$\text{Pr}(Y=k \mid X=x)$, using
+\vspace{1mm}
 
+* Indirect approach: Model the conditional distribution of predictors $f_k(x)=\text{Pr}(X=x \mid Y=k)$ for each class, and the prior probabilities $\pi_k=\text{Pr}(Y=k)$.
 
-  * A model  for  the _conditional distribution of predictors_ $f_k(x)=\text{Pr}(X=x \mid Y=k)$ for each class,
+\vspace{1mm}
 
-  * The _prior probabilities_ for each class $\pi_k=\text{Pr}(Y=k)$.
+* Then classify to the class with the maximal product $\pi_k f_k(x)$. In this paradigm, we need to model the pdf for each class. 
 
 
 ---
 
-# The sampling paradigm
-
-Given a continuous $X$ and categorical $Y$, we model: 
-\vspace{1mm}
+Given a continuous $X$ and categorical $Y$, and 
 
 * the probability  _\textcolor{red}{density}_ function $f_k(x) = \text{Pr}(X=x \mid Y=k)$ for $X$ in class $k$.
-
 * the  _\textcolor{red}{prior}_ probability for class $k$, $\pi_k = \text{Pr}(Y=k)$, is the prior probability.
 
 How do we get $\text{Pr}(Y=k | X=x_0)$? That is, how can we "flip" the conditioning around?
 \vspace{4mm}
 
- 
+\pause 
+
 ### **Bayes theorem** 
-\vspace{-3mm}
+
+\begin{tcolorbox}
 \begin{align}
 p_k(X) = \text{Pr}(Y=k \mid X= x) &= 
 \frac{\text{Pr}(X=x \cap Y=k)}{f(x)} \nonumber\\
 &= \frac{ f_k(x) \pi_k}{\sum_{l=1}^K  f_l(x) \pi_l}  \ . \label{eq:Bayes}
 \end{align}
-
+\end{tcolorbox}
 
 
 ---
@@ -1326,12 +1228,7 @@ gg+stat_function(fun=taildnorm,geom='area',fill="lightgreen",alpha=0.5,args=list
 ```
 
 * The Bayes decision boundary is at $x=0$. 
-* Bayes error rate: 
-$$
-0.5\text{P}(X>0|Y=A) + 0.5 \text{P}(X<0|Y=B)
-$$
-
-`round(pnorm(0,2,1.5))`=`r round(pnorm(0,2,1.5),2)`.
+* Bayes error rate: `round(pnorm(0,2,1.5))`=`r round(pnorm(0,2,1.5),2)`.
 
 * The Bayes classifier has the lowest test error rate.
 
@@ -1340,13 +1237,11 @@ $$
 
 ---
 
-# How do we use this in observed data example?
-
 \vspace{2mm}
 
 In the above example we knew the true distributions $p_k(X)$ and the priors $\pi_k$. But typically we don't know these parameters, we only have the training data.
 
-**Idea**: we simply estimate the parameters and plug them into the rule.
+Idea: we simply estimate the parameters and plug them into the rule.
 
 
 
@@ -1360,10 +1255,12 @@ In the above example we knew the true distributions $p_k(X)$ and the priors $\pi
 
 * Prior probability for class $k$ is  (often) estimated by taking the fraction of observations $n_k$ (out of $n$) coming from class $k$: $\hat{\pi}_k = \frac{n_k}{n}.$
 
+\vspace{2mm}
 * The mean value for class $k$ is simply the sample mean of all observations from class $k$:
 $$\hat{\mu}_k = \frac{1}{n_k}\sum_{i:y_i=k} x_i.$$
 
-* The standard deviation: sample standard deviation across all classes ("pooled" standard deviation):
+\vspace{2mm}
+* "Pooled" standard deviation across across all classes:
 $$\hat{\sigma}^2=\frac{1}{n-K}\sum_{k=1}^K \sum_{i: y_i=k} (x_i-\hat{\mu}_k)^2 = \sum_{k=1}^K \frac{n_k - 1}{n - K} \cdot \hat{\sigma}_k^2.$$
 $\hat{\sigma}_k$: estimated standard deviation of all observations from class $k$.
 
@@ -1382,18 +1279,26 @@ $~$
 
 **Simulated example:**
 
-\vspace{1mm}
+\vspace{2mm}
 
 \scriptsize
 ```{r}
-# set parameter values
-n=1000;pi1=pi2=0.5;mu1=-2;mu2=2;sigma=1.5;set.seed(1)
-# simulate test and training samples
-n1train=rbinom(1,n,pi1);n2train=n-n1train
-n1test=rbinom(1,n,pi1);n2test=n-n1test
-train1=rnorm(n1train,mu1,sigma);train2=rnorm(n2train,mu2,sigma)
-test1=rnorm(n1test,mu1,sigma);test2=rnorm(n2test,mu2,sigma)
-var2.1=var(train1);var2.2=var(train2)
+n=1000
+pi1=pi2=0.5 
+mu1=-2 
+mu2=2 
+sigma=1.5
+set.seed(1)  
+n1train=rbinom(1,n,pi1)
+n2train=n-n1train  
+n1test=rbinom(1,n,pi1) 
+n2test=n-n1test
+train1=rnorm(n1train,mu1,sigma) 
+train2=rnorm(n2train,mu2,sigma)
+test1=rnorm(n1test,mu1,sigma) 
+test2=rnorm(n2test,mu2,sigma)
+var2.1=var(train1) 
+var2.2=var(train2)
 var.pool=((n1train-1)*var2.1+(n2train-1)*var2.2)/(n-2)
 ```
 
@@ -1409,20 +1314,21 @@ and resolve for $x$ to obtain a decision rule (boundary).
 
 **Exercise**: Verify that the following code will give you the training and test error rates:
 
-\vspace{1mm}
+\vspace{2mm}
 
 \scriptsize
 
 ```{r}
 rule=0.5*(mean(train1)+mean(train2))+
-  (var.pool)*(log(n2train/n)-log(n1train/n))/(mean(train1)-mean(train2))
-rule
+  var.pool*(log(n2train/n)-log(n1train/n))/(mean(train1)-mean(train2))
 
 trainingError <- (sum(train1>rule)+sum(train2<rule))/n 
 testError <- (sum(test1>rule)+sum(test2<rule))/n
+
 c(trainingError,testError)
 ```
 \normalsize
+
 
 This is a rather good performance, compared to the minimal Bayes error rate. But keep in mind that the LDA classifier relies on the Normal assumption, and that $\sigma_k=\sigma$ for all classes is assumed\footnote{Both of which we knew were fulfilled here.}.
 
@@ -1444,7 +1350,7 @@ $~$
 * The sum of the diagonal is the total number of correct classifications. The sum of all elements off the diagonal is the total number of misclassifications.
 
 \centering
-<!-- ![](true_predicted.png){width=45%} -->
+![](true_predicted.png){width=45%}
 
 <!-- \begin{center} -->
 <!-- ```{r, echo=FALSE, warning=FALSE} -->
@@ -1480,7 +1386,7 @@ $~$
 $$f(x) = \frac{1}{(2 \pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}\exp({-\frac{1}{2}({\boldsymbol x}-\boldsymbol\mu)^T \boldsymbol{\Sigma}^{-1}({\boldsymbol x}-\boldsymbol\mu)})$$
 
 \centering
-![ISLR Figure 4.5](../../ISLR/Figures/Chapter4/4.5.pdf){width=70%}
+![ISLR Figure 4.5](../../ISLR/Figures/Chapter4/4.5.png){width=70%}
  
 
 ---
@@ -1518,16 +1424,16 @@ library(mvtnorm)
 library(ggplot2)
 
 set.seed(9)
-N = 200
+
 Sigma = matrix(c(2, 0, 0, 2), 2, 2)
 
 mu1 = c(1, 1)
 mu2 = c(3, 3)
 
-X1 = mvrnorm(N, mu=mu1, Sigma=Sigma)
-X2 = mvrnorm(N, mu=mu2, Sigma=Sigma)
+X1 = mvrnorm(100, mu=mu1, Sigma=Sigma)
+X2 = mvrnorm(100, mu=mu2, Sigma=Sigma)
 
-class = c(rep("A",N), rep("B", N))
+class = c(rep("A",100), rep("B", 100))
 class = as.factor(class)
 
 df = data.frame(rbind(X1, X2), class)
@@ -1561,26 +1467,6 @@ Inserting numerical values gives $-x_1-x_2+4=0$, thus a boundary with functional
 
 ---
 
-## What is the Bayes Error?
-
-The Bayes error can then be found by calculation of areas for the two class densities on the wrong side of the boundary, or by simulating many test data and counting misclassifications rates.
-
-
-
-```{r echo=FALSE, fig.width=6, fig.height=4.5,fig.align = "center",out.width='55%'}
-n = 10000
-x1 = rnorm(n, 1, sqrt(2))
-x2 = rnorm(n, 1, sqrt(2))
-
-gg = ggplot(data = data.frame(x = 1:n, y = cumsum(x2>4-x1)/(1:n))) + geom_line(aes(x,y)) +
-  xlab("") + ylab("")
-gg
-```
-
-
-
----
-
 ## Confusion matrix for the synthetic example
 
 \vspace{2mm}
@@ -1592,11 +1478,8 @@ We can use the Bayes boundary to find the error rate:
 \scriptsize
 ```{r}
 r.pred <- ifelse(df$X2<4-df$X1,"A","B")
-tab = table(real=df$class, r.pred) 
-tab
+table(real=df$class, r.pred) 
 ```
-Estimated error `r (tab[1,2]+tab[2,1])/sum(tab)`
-
 
 \vspace{6mm}
 
@@ -1635,11 +1518,9 @@ $~$
 ```{r}
 r.lda <- lda(class ~ X1 + X2, df)
 r.pred <- predict(r.lda, df)$class
-tab = table(real=df$class, predicted = r.pred) 
-tab
+table(real=df$class, predicted = r.pred)  
 ```
 
-Estimated error `r (tab[1,2]+tab[2,1])/sum(tab)`
 $~$
 
 \normalsize
@@ -1728,9 +1609,9 @@ QDA is more flexible than LDA, as it allows for group-specific covariance matric
 * But, if the covariance matrices in theory are equal - will they not be estimated equal?
 * Should we not always prefer QDA to LDA?
 
-<!-- --- -->
+---
 
-<!-- **A:** -->
+**A:**
 
 <!-- \vspace{2mm} -->
 <!-- Explanation similar to a "Bias-variance trade-off": -->
@@ -1753,7 +1634,7 @@ QDA is more flexible than LDA, as it allows for group-specific covariance matric
 Bayes (purple dashed), LDA (black dotted) and QDA (green solid) decision boundaries for the cases where $\boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2$ (left) and $\boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2$ (right).
 
 \centering
-![ISLR Figure 4.9](../../ISLR/Figures/Chapter4/4.9.pdf){width=100%}
+![ISLR Figure 4.9](../../ISLR/Figures/Chapter4/4.9.png){width=100%}
 
 
 
@@ -2092,7 +1973,12 @@ $~$
 
 Remember: 
 
+\vspace{4mm}
+
 * Logistic regression and KNN _\textcolor{red}{directly estimate}_ $\text{Pr}(Y=k \mid X=x)$ (diagnostic paradigm).
+
+\vspace{2mm}
+
 * LDA, QDA and naive Bayes _\textcolor{red}{indirectly estimate}_  $\text{Pr}(Y=k \mid X=x) \propto f_k(x) \cdot \pi_k$ (sampling paradigm). 
 
 \vspace{2mm}
@@ -2192,8 +2078,10 @@ when $K > 2$.
   * No interpretation of the effect of the covariates possbile.
   * Curse of dimensionality.
 
+
 \vspace{2mm}
-Please read Section 4.5 of our coursebook [@james.etal].
+
+Please read yourself Section 4.5 of our coursebook [@james.etal2].
 
 
 
@@ -2241,7 +2129,7 @@ $2 \times 2$ table shows data from a simple diagnostic study:
 ## Example Continued: South African heart disease
 \vspace{2mm}
 
-We evaluate our multiple logistic model for the `SAheart` data set. We divide the original data set randomly into a training and test dataset of equal size.
+Go back to the multiple logistic model for the `SAheart` data set. We divide the original data set randomly into a training and test dataset of equal size:
 
 \vspace{2mm}
 
@@ -2275,9 +2163,10 @@ summary(glm_SA)$coef
 * The estimated probability of a `chd` event ($Y=1$) is then given as
 $$\hat{p}(\mathbf{X}) =\frac{e^\eta}{1+e^\eta} ,$$
 with $\eta=\beta_0 + \beta_1 \cdot x_{\text{sbp}} + \beta_2\cdot x_{\text{tobacco}} + \ldots + \beta_7\cdot x_{\text{age}}$.  
-Remember that $x_{famhist} \in \{0,1\}$ is a binary covariate.
 
-\vspace{2mm}
+<!-- Remember that $x_{famhist} \in \{0,1\}$ is a binary covariate. -->
+
+\vspace{4mm}
 
 * We are interested in the **predictions for the test set**.
 
@@ -2314,7 +2203,7 @@ head(predictions_SA)
 
 ---
 
-The confusion matrix is used to count the number of misclassifications in the test set: 
+Confusion matrix for the test set: 
 
 \vspace{2mm}
 
@@ -2329,7 +2218,14 @@ table(predicted=pred_SA, true=d.heart[-train_ID,"chd"])
 
 * The logistic model has correctly classified 118+41 times, and misclassified 27+45 times, thus
 $$\text{Test error rate} = \frac{27+45}{27+45+118+41} \approx 0.31 \ .$$
-* Sensitivity: $\frac{41}{41+45}=0.477$, specificity = $\frac{118}{118+27}=0.814.$
+
+\vspace{2mm}
+
+* Sensitivity: $\frac{41}{41+45}=0.477$
+
+\vspace{2mm}
+
+* Specificity = $\frac{118}{118+27}=0.814.$
 
 
 <!-- --- -->
@@ -2348,30 +2244,6 @@ $$\text{Test error rate} = \frac{27+45}{27+45+118+41} \approx 0.31 \ .$$
 <!-- \normalsize -->
 <!-- The train misclassification error rate is $\approx 23.8\%$. -->
 
----
-
-## Why is this important?
-
-In many cases looking just at the total error is misleading:
-
-+---------------------+-----------------------+
-|                     |  True Status          |
-|                     +-------+-------+-------+
-| Pred. Status        | 0     | 1     | Tot   |
-+=====================+=======+=======+=======+
-| 0                   | 9644  | 252   | 9896  |
-+---------------------+-------+-------+-------+
-| 1                   | 23    | 81    | 104   |
-+---------------------+-------+-------+-------+
-| Tot                 |9667   |333    |1000   |
-+---------------------+-------+-------+-------+
-
-  * Total Prediction error: $\frac{252+23}{1000} = 0.275$
-  
-  * Sensitivity:  $\frac{81}{333} = 0.24$
-  
-  * Specificity: $\frac{9644}{9667} = 0.997$
-  
 ---
 
 ## ROC curves and AUC
