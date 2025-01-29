@@ -205,15 +205,14 @@ classify as `yes` if $\hat{Y}> 0.5$?
 \vspace{2mm}
 
 * In this case of a binary outcome, linear regression does a
-good job as a classifier, and is equivalent to linear
-discriminant analysis which we discuss later.
+good job as a classifier. 
 
 \vspace{2mm}
 
 * However, linear regression might produce probabilities less
 than zero or bigger than one. 
 
-\vspace{2mm}
+\vspace{4mm}
 
 $\rightarrow$ We need to use **logistic regression**.
 
@@ -486,7 +485,7 @@ $~$
 Let's again rearrange the _odds_ in the logistic regression model:
 
 \begin{align*}
- \frac{p_i}{1-p_i} &=  \frac{\text{P}(Y_i=1 \mid X=x)}{\text{P}(Y_i=0 \mid X = x)} \\[2mm]
+\text{odds}(X=x_i) = \frac{p_i}{1-p_i} &=  \frac{\text{P}(Y_i=1 \mid X=x_i)}{\text{P}(Y_i=0 \mid X = x_i)} \\[2mm]
  &= \exp(\beta_0) \cdot \exp(\beta_1 x_{i1}) \cdot \ldots \cdot  \exp(\beta_p x_{ip}) \ .
  \end{align*}
 
@@ -513,7 +512,7 @@ To understand the effect of a regression coefficient $\beta_j$, let's see what h
 Using simple algebra and the formula on the previous slide, you will see that
 
 \begin{equation}
-\frac{\text{odds}(Y_i=1 \mid X_{j} = x_{ij} + 1)}{\text{odds}(Y_i=1 \mid X_j = x_{ij})} = \exp(\beta_j)  \ .
+\frac{\text{odds}( X_{j} = x_{ij} + 1)}{\text{odds}( X_j = x_{ij})} = \exp(\beta_j)  \ .
 \end{equation}
 
 \vspace{2mm}
@@ -637,6 +636,8 @@ The response value (`chd`) and covariates
 * `obesity` : a numerical value
 * `alcohol` : current alcohol consumption
 * `age` : age at onset
+
+$~$
 
 The goal is to identify important risk factors. We start by loading and looking at the data:
 
@@ -1240,6 +1241,8 @@ gg+stat_function(fun=taildnorm,geom='area',fill="lightgreen",alpha=0.5,args=list
 \vspace{2mm}
 
 In the above example we knew the true distributions $p_k(X)$ and the priors $\pi_k$. But typically we don't know these parameters, we only have the training data.
+
+$~$
 
 Idea: we simply estimate the parameters and plug them into the rule.
 
