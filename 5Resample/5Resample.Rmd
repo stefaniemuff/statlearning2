@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2022"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 5: Resampling"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "February 7 and 10, 2022"
+date: "February 6 and 7, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -39,7 +39,7 @@ whichformat="latex"
 
 * A lot of this material stems from Mette Langaas and her TAs. I would like to thank Mette for the permission to use her material!
 
-* Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal.
+* Some of the figures and slides in this presentation are taken (or are inspired) from @james.etal2.
 
 
 # Introduction
@@ -48,11 +48,13 @@ whichformat="latex"
 
 \vspace{2mm}
 
-* James et al (2013): An Introduction to Statistical Learning, Chapter 5.  
+* James et al (2021), 2nd edition: An Introduction to Statistical Learning, Chapter 5.  
 
 * All the material presented on these module slides.
 
-\vspace{2mm}
+
+$~$
+
 Additional material for the interested reader: Chapter 7 (in particular 7.10) in Friedman et al (2001): Elements of Statistical learning.
 
 ---
@@ -147,10 +149,10 @@ $~$
 Illustration: Linear regression with $K=1$ (left) and $K=9$ (right).
 
 \centering
-![](../..//ISLR/Figures/Chapter3/3.17.png){width=55%}
+![](../../ISLR/Figures/Chapter3/317.png){width=55%}
 
 \tiny
-(Figure 3.17 from @james.etal).
+(Figure 3.17 from @james.etal2).
 
 $~$
 
@@ -166,7 +168,7 @@ What happens for $K=$ number of data points?
 
 \vspace{2mm}
 
-We aim to do _model selection_ in KNN-regression, where true curve is
+We aim to do _model selection_ in KNN-regression, where the true curve is
 $f(x)=-x+x^2+x^3$ with $x \in [-3,3]$. $n=61$ for the training data.
 
 \vspace{4mm}
@@ -227,15 +229,23 @@ If we had a large amount of data we could divide our data into three parts:
 * **Test set**: to assess how well the model fits on new independent data (_model assessment_)
 
 
-\vspace{2mm}
+$~$
 
 **Q**: Before we had just training and test. Why do we need the additional validation set?
 
-**A**: We have not discussed model selection before.
-
 \vspace{2mm}
 
+\pause
+**A**: We have not discussed model selection before.
+
+\pause
+
+$~$
+
 **Q**: Why can't we just use the training set for training, and then the test set both for model selection and for model evaluation?
+
+\vspace{2mm}
+\pause
 
 **A**: We will be too optimistic if we report the error on the test set when we have already used the test set to choose the best model.
 
@@ -248,7 +258,9 @@ If we had a large amount of data we could divide our data into three parts:
 
 * An alternative strategy for model selection (using methods penalizing model complexity, e.g. AIC or lasso) is covered in Module 6.
 
-We will look at _cross-validation_ and the _bootstrap_.
+$~$
+
+We will look at _\textcolor{red}{cross-validation}_ and the _\textcolor{red}{bootstrap}_.
 
 ---
 
@@ -284,7 +296,7 @@ This can be done by:
 
 \vspace{4mm}
 
-![ISLR Figure 5.1](../../ISLR/Figures/Chapter5/5.1.png){width=70%,centering}
+![ISLR Figure 5.1](../../ISLR/Figures/Chapter5/51.png){width=70%,centering}
 
 
 
@@ -481,7 +493,7 @@ $\rightarrow$ Need to fit the model only once!
 
 $~$
 
-See Compulsory exercise 1.
+See Compulsory exercise 1 (todo: check).
 
 ---
 
@@ -508,7 +520,7 @@ $~$
 
 $~$
 
-The MSE is then estimated in each of the $k$ iterations ($\text{MSE}_1,\ldots,\text{MSE}_k$). The $k$-fold CV is then a (weighted) avearge over the $k$  MSEs.
+The MSE is then estimated in each of the $k$ iterations ($\text{MSE}_1,\ldots,\text{MSE}_k$). The $k$-fold CV is then a (weighted) average over the $k$  MSEs.
 
 <!-- $$\text{CV}_k = \frac1k \sum_{j=1}^k \text{MSE}_j \ .$$ -->
 
@@ -520,11 +532,11 @@ The MSE is then estimated in each of the $k$ iterations ($\text{MSE}_1,\ldots,\t
 \centering
 LOOCV: 
 
-![ISLR Figure 5.3](../../ISLR/Figures/Chapter5/5.3.png){width=70%}
+![ISLR Figure 5.3](../../ISLR/Figures/Chapter5/53.png){width=70%}
 
 $k$-fold: 
 
-![ISLR Figure 5.5](../../ISLR/Figures/Chapter5/5.5.png){width=70%}
+![ISLR Figure 5.5](../../ISLR/Figures/Chapter5/55.png){width=70%}
 
 
 <!-- See class notes for drawing. -->
@@ -744,7 +756,9 @@ $$\text{CV}_{n}=\frac{1}{n} \sum_{i=1}^n {\text{Err}_i}$$
 
 * Then we can use CV with all data (then the validation part is really the test part) and report on the model performance using the validation parts of the data as above.
 
-\vspace{2mm}
+$~$
+
+\pause
 
 ### Can we use CV both for model selection and model assessment?
 \vspace{2mm}
@@ -800,15 +814,15 @@ Note: We will see in the Recommended Exercises that doing the wrong thing can gi
 
 ---
 
-### Selection bias in gene extraction on the basis of microarray gene-expression data
+### There are many ways how to use CV wrong
 
 \vspace{2mm}
 
-Article by [Christophe Ambroise and Geoffrey J. McLachlan, PNAS 2002](http://www.pnas.org/content/99/10/6562).
+![Example 1](cv_error1.png){width=30%, align=center}
 
+---
 
-
-![Training vs test error](pnas.png){width=105%, align=center}
+![Example 1](cv_error2.png){width=30%, align=center}
 
 
 
@@ -832,6 +846,7 @@ Article by [Christophe Ambroise and Geoffrey J. McLachlan, PNAS 2002](http://www
 
 See also this nice [anecdote at about 7min 15 in the video](https://www.youtube.com/watch?v=r64tRyHFAJ8&list=PLAOUn-KLSAVNz3lv4a957qRpfPWH2EOg4&index=3).
 
+ 
 
 ---
 
@@ -1000,9 +1015,9 @@ $~$
 
 \vspace{2mm}
 
-3. Estimate squared standard error by
+3. Estimate the squared standard error by
 $$\frac{1}{B-1}\sum_{b=1}^B (\tilde{X}^*_b-\frac{1}{B}\sum_{b=1}^B \tilde{X}^*_b)^2 \ ,$$
-which is the empirical standard deviation from the $B$ estimates  $\tilde{X}^*_b$, $b=1,\ldots,B$.
+which is the (squared) empirical standard deviation from the $B$ estimates  $\tilde{X}^*_b$, $b=1,\ldots,B$.
 
 
 ---
@@ -1161,9 +1176,9 @@ $$\text{Var}(\bar{X})=\frac{\sigma^2}{B} \ .$$
 # Excursion: R Markdown and `knitr`
 
 
-* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/](https://digit.ntnu.no/courses/course-v1:NTNU+IMF001+2020/course/).
+* You can work through the Bonus part about R Markdown in the R course [https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about](https://digit.ntnu.no/courses/course-v1:NTNU+IE-IMF+2023_AUG/about).
 
-* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2022v/subpage6](https://wiki.math.ntnu.no/tma4268/2021v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
+* You find a template for the exercise sheets on our course website [https://wiki.math.ntnu.no/tma4268/2025v/subpage6](https://wiki.math.ntnu.no/tma4268/2025v/subpage6). Do not forget to install the packages listed at the beginning of the exercise sheet.
 
  
 
@@ -1187,7 +1202,7 @@ Knitting is also done by: Ctrl+Shift+K (Windows) or Cmd+Shift+K (MacOS).
 
 ---
 
-* More: [About pandoc - the swiss army knife for file conversion](https://pandoc.org/)
+* More: [About pandoc - the swiss army knife for file conversion](https://pandoc.org/), https://pandoc.org/
 
 
 * NB: even if you write tex this is first translated to md and then via pandoc to pdf, so subtle tex stuff may be missed on the way.
@@ -1220,11 +1235,13 @@ Knitting is also done by: Ctrl+Shift+K (Windows) or Cmd+Shift+K (MacOS).
 
 ## Text, mathematics
 
+$~$
+
 * formatted with markdown
 * mathematics (in latex) with formulas starting and ending with one `$` and equation with `$$`
 * boldface with two stars and italic with one, new line with two spaces,
 * For more, like sections, bulleted or numbered lists, tables, footnotes, rulers,... see
-<https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf>
+<https://rstudio.github.io/cheatsheets/html/rmarkdown.html>
 
 ---
 
