@@ -1,5 +1,5 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Compulsory exercise 1: Group XYZ (add your group number here)"
 author: "NN1, NN2 and NN3 (full names of all group members)"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -15,22 +15,14 @@ knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.wh
 
 ```
 
-```{r,eval=TRUE,echo=FALSE}
-# install.packages("knitr") # probably already installed
-# install.packages("rmarkdown") # probably already installed
-# install.packages("ggplot2") # plotting with ggplot2
-# install.packages("dplyr") # for data cleaning and preparation
-# install.packages("ggfortify") # for model checking
+```{r installation,eval=TRUE,echo=FALSE}
+# install.packages("knitr")
+# install.packages("rmarkdown")
+# install.packages("ggplot2")
+# install.packages("ggfortify")
 # install.packages("MASS")
-# install.packages("tidyr")
-# install.packages("carData") # dataset
-# install.packages("class")
-# install.packages("pROC")
-# install.packages("plotROC")
-# install.packages("boot")
-# install.packages("ggmosaic")
-library("knitr")
-library("rmarkdown")
+# install.packages("dplyr")
+ 
 ```
 
 <!--  Etc (load all packages needed). -->
@@ -38,7 +30,7 @@ library("rmarkdown")
 
 # Problem 1
 
-For this problem you will need to include some LaTex code. Please install latex on your computer and then consult Compulsor1.Rmd for hints how to write formulas in LaTex.
+For this problem you will need to include some LaTex code. Please install latex on your computer and then consult Compulsory1.Rmd for hints how to write formulas in LaTex.
 
 ## a)
 
@@ -48,20 +40,23 @@ For this problem you will need to include some LaTex code. Please install latex 
 
 ## d)
 
+For a MC question, just answer with the responses ordered, for example TRUE - TRUE - FALSE - FALSE (if that is the correct solution).
+
 ## e)
+
+## f)
+
+## g)
 
  
 
 # Problem 2
 
-Here is a code chunk:
+Here is a code chunk (replace by what you need in the exercise):
 
-```{r, eval=FALSE, echo=TRUE}
-# load the boston housing price dataset
-data(Boston)
-
-# fit the linear regression model
-lm_model <- ...
+```{r worm, eval=FALSE}
+id <- "1nLen1ckdnX4P9n8ShZeU7zbXpLc7qiwt" # google file ID
+d.worm <- read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
 ```
 
 
