@@ -18,7 +18,9 @@ output:
     toc_depth: 2
 urlcolor: blue
 bibliography: refs.bib
-header-includes: \usepackage{multirow}
+header-includes: 
+- \usepackage{multirow}
+- \setbeamertemplate{footline}[page number]
 
 ---
 
