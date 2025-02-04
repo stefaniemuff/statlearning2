@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee" />
+<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase" />
 <meta name="author" content="Department of Mathematical Sciences, NTNU" />
 
-<meta name="date" content="2024-02-08" />
+<meta name="date" content="2025-02-12" />
 
 <title>Module 5: Recommended Exercises</title>
 
@@ -1623,11 +1623,10 @@ display: none;
 
 
 <h1 class="title toc-ignore">Module 5: Recommended Exercises</h1>
-<h3 class="subtitle">TMA4268 Statistical Learning V2024</h3>
-<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee</h4>
+<h3 class="subtitle">TMA4268 Statistical Learning V2025</h3>
+<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase</h4>
 <h4 class="author">Department of Mathematical Sciences, NTNU</h4>
-<h4 class="date">February 8, 2024</h4>
+<h4 class="date">February 12, 2025</h4>
 
 </div>
 
@@ -1643,12 +1642,15 @@ cross-validation is implemented.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Draw a figure.</p></li>
 <li><p>Specify algorithmically what is done, and in particular how the
-“results” from each fold are aggregated.</p></li>
-<li><p>Relate to one example from regression. Ideas are the complexity
-w.r.t. polynomials of increasing degree in multiple linear regression,
-or <span class="math inline">\(K\)</span> in KNN-regression.</p></li>
-<li><p>Relate to one example from classification. Ideas are the
-complexity w.r.t. polynomials of increasing degree in logistic
+results from each fold are aggregated.</p></li>
+<li><p>Relate <span class="math inline">\(k\)</span>-fold
+cross-validation to an example from regression. Ideas are the complexity
+with regards to polynomials of increasing degree in multiple linear
+regression, or <span class="math inline">\(K\)</span> in
+KNN-regression.</p></li>
+<li><p>Relate <span class="math inline">\(k\)</span>-fold
+cross-validation to an example from classification. Ideas are the
+complexity with regards to polynomials of increasing degree in logistic
 regression, or <span class="math inline">\(K\)</span> in
 KNN-classification.</p></li>
 </ol>
@@ -1657,20 +1659,30 @@ are central.</p>
 </div>
 <div id="problem-2" class="section level2">
 <h2>Problem 2</h2>
-<p>What are the advantages and disadvantages of <span class="math inline">\(k\)</span>-fold cross-validation relative to</p>
-<ol style="list-style-type: lower-alpha">
-<li>The validation set approach</li>
-<li>Leave one out cross-validation (LOOCV)</li>
-<li>What are recommended values for <span class="math inline">\(k\)</span>, and why?</li>
+<ul>
+<li><ol style="list-style-type: lower-alpha">
+<li>What are the advantages and disadvantages of <span class="math inline">\(k\)</span>-fold cross-validation relative to</li>
 </ol>
+<ul>
+<li><ol style="list-style-type: lower-roman">
+<li>The validation set approach</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-roman">
+<li>Leave one out cross-validation (LOOCV)</li>
+</ol></li>
+</ul></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>What are recommended values for <span class="math inline">\(k\)</span>, and why?</li>
+</ol></li>
+</ul>
 <p>Hint: the words “bias,” “variance” and “computational complexity”
 should be included.</p>
 </div>
 <div id="problem-3" class="section level2">
 <h2>Problem 3</h2>
 <p>Topic: Selection bias and the “wrong way to do CV.”</p>
-<p>The task here is to devise an algorithm to “prove” that the wrong way
-is wrong and that the right way is right.</p>
+<p>The task here is to devise an algorithm to show that the wrong way is
+wrong and that the right way is right.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>What are the steps of such an algorithm? Write down a suggestion.
 Hint: How do you generate data for predictors and class labels, how do
@@ -1704,37 +1716,36 @@ or on all <span class="math inline">\(c + d\)</span> predictors (the
 right way).</li>
 <li>Report misclassification errors for both situations.</li>
 </ul>
-<p>One possible version of this is presented in the R-code below. Go
-through the code and explain what is done in each step, then run the
-code and observe if the results are in agreement with what you expected.
-Make changes to the R-code if you want to test out different
-strategies.</p>
+<p>One possible version of this is presented in the <code>R</code>-code
+below. Go through the code and explain what is done in each step, then
+run the code and observe if the results are in agreement with what you
+expected. Make changes to the <code>R</code>-code if you want to test
+out different strategies.</p>
 <p>We start by generating data for <span class="math inline">\(n=50\)</span> observations</p>
 <pre class="r"><code>library(boot)
 # GENERATE DATA; use a seed for reproducibility
 set.seed(4268)
-n = 100  #number of observations
-p = 5000  #number of predictors
-d = 10  #top correlated predictors chosen
+n &lt;- 100 # Number of observations
+p &lt;- 5000 # Number of predictors
+d &lt;- 10 # Top correlated predictors chosen
 
 # Generating predictor data
-xs = matrix(rnorm(n * p, 0, 1), ncol = p, nrow = n)  #simple way to to uncorrelated predictors
-dim(xs)  # n times p
+xs &lt;- matrix(rnorm(n * p, 0, 1), ncol = p, nrow = n) # uncorrelated predictors
+dim(xs) # n times p
 xs[1:10, 1:10]
 
-# Generate class labels independent of predictors - so if all
-# classifies as class 1 we expect 50% errors in general
-ys = c(rep(0, n/2), rep(1, n/2))  #now really 50% of each
+# Generate class labels independent of predictors 
+# - so if all classifies as class 1 we expect 50% errors in general
+ys &lt;- c(rep(0, n / 2), rep(1, n / 2)) # Now really 50% of each
 table(ys)</code></pre>
 <p><strong>WRONG CV</strong>: Select the 25 most correlated predictors
 outside the CV.</p>
-<pre class="r"><code>corrs = apply(xs, 2, cor, y = ys)
+<pre class="r"><code>corrs &lt;- apply(xs, 2, cor, y = ys)
 hist(corrs)
 
+selected &lt;- order(corrs^2, decreasing = TRUE)[1:d]  
 
-selected = order(corrs^2, decreasing = TRUE)[1:d]
-
-data = data.frame(ys, xs[, selected])</code></pre>
+data &lt;- data.frame(ys, xs[, selected])</code></pre>
 <p>Then run CV around the fitting of the classifier - use logistic
 regression and built in <code>cv.glm()</code> function</p>
 <pre class="r"><code>logfit &lt;- glm(ys ~ ., family = &quot;binomial&quot;, data = data)
@@ -1749,33 +1760,21 @@ within the CV. We need to code this ourselves:</p>
 <pre class="r"><code>reorder &lt;- sample(1:n, replace = FALSE)
 validclass &lt;- NULL
 for (i in 1:kfold) {
-    neach &lt;- n/kfold
-    trainids &lt;- setdiff(1:n, (((i - 1) * neach + 1):(i * neach)))
-    traindata &lt;- data.frame(xs[reorder[trainids], ], ys[reorder[trainids]])
-    validdata &lt;- data.frame(xs[reorder[-trainids], ], ys[reorder[-trainids]])
-    colnames(traindata) &lt;- colnames(validdata) &lt;- c(paste(&quot;X&quot;, 1:p),
-        &quot;y&quot;)
-    foldcorrs &lt;- apply(traindata[, 1:p], 2, cor, y = traindata[, p +
-        1])
-    selected &lt;- order(foldcorrs^2, decreasing = TRUE)[1:d]  # Select top d correlated 
-    data &lt;- traindata[, c(selected, p + 1)]
-    trainlogfit &lt;- glm(y ~ ., family = &quot;binomial&quot;, data = data)
-    pred &lt;- plogis(predict.glm(trainlogfit, newdata = validdata[, selected]))
-    validclass &lt;- c(validclass, ifelse(pred &gt; 0.5, 1, 0))
+  neach &lt;- n / kfold
+  trainids &lt;- setdiff(1:n, (((i - 1) * neach + 1):(i * neach)))
+  traindata &lt;- data.frame(xs[reorder[trainids], ], ys[reorder[trainids]])
+  validdata &lt;- data.frame(xs[reorder[-trainids], ], ys[reorder[-trainids]])
+  colnames(traindata) &lt;- colnames(validdata) &lt;- c(paste(&quot;X&quot;, 1:p), &quot;y&quot;)
+  foldcorrs &lt;- apply(traindata[, 1:p], 2, cor, y = traindata[, p + 1])
+  # Select top d correlated predictors
+  selected &lt;- order(foldcorrs^2, decreasing = TRUE)[1:d] 
+  data &lt;- traindata[, c(selected, p + 1)]
+  trainlogfit &lt;- glm(y ~ ., family = &quot;binomial&quot;, data = data)
+  pred &lt;- plogis(predict.glm(trainlogfit, newdata = validdata[, selected]))
+  validclass &lt;- c(validclass, ifelse(pred &gt; 0.5, 1, 0))
 }
 table(ys[reorder], validclass)
-1 - sum(diag(table(ys[reorder], validclass)))/n</code></pre>
-<!-- --- -->
-<!-- **Problem 4**: Trying out different versions of cross-validation with R.  -->
-<!-- * Maybe you can devise a simulated data set, or use a data set from the `ILSR` library.  -->
-<!-- * To see differences look at a large data set and a small data set (in the number of observations), and  -->
-<!-- * focus on regression and on classification.  -->
-<!-- * What if the optimal (lowest CV error) method has complexity $7$, but the CV error of complexity $2$ is not very different. What should we do then? Hint: rule of parsimony, Occam's razor. Later (ch 6) we will look at the "1SD rule". -->
-<!-- Use Section 5.3 in the ISL book as a starting point. -->
-<!-- a. Compare candidate models -->
-<!-- LOOCV with -->
-<!-- $k$-fold CV with built in function: cv.glm -->
-<!-- for loop -->
+1 - sum(diag(table(ys[reorder], validclass))) / n</code></pre>
 </div>
 <div id="problem-4" class="section level2">
 <h2>Problem 4</h2>
@@ -1789,16 +1788,17 @@ drawing observation <span class="math inline">\(i\)</span> (i.e., <span class="m
 <span class="math inline">\(i\)</span>?</li>
 <li>We make <span class="math inline">\(n\)</span> independent draws
 (with replacement). What is the probability of not drawing observation
-<span class="math inline">\(i\)</span> in any of the <span class="math inline">\(n\)</span> drawings? What is then the probability
+<span class="math inline">\(i\)</span> in any of the <span class="math inline">\(n\)</span> draws? What is then the probability
 that data point <span class="math inline">\(i\)</span> is in our
 bootstrap sample (that is, more than <span class="math inline">\(0\)</span> times)?</li>
 <li>When <span class="math inline">\(n\)</span> is large <span class="math inline">\((1-\frac{1}{n})^n \approx \frac{1}{e}\)</span>.
 Use this to give a numerical value for the probability that a specific
 observation <span class="math inline">\(i\)</span> is in our bootstrap
 sample.</li>
-<li>Write a short R code chunk to check your result. (Hint: An example
-on how to this is on page 198 in our ISLR book.) You may also study the
-result in c. How good is the approximation as a function of <span class="math inline">\(n\)</span>?</li>
+<li>Write a short <code>R</code> code chunk to check your result. (Hint:
+An example on how to this is on page 198 in our ISLR book.) You may also
+study the result in c. How good is the approximation as a function of
+<span class="math inline">\(n\)</span>?</li>
 </ol>
 </div>
 <div id="problem-5" class="section level2">

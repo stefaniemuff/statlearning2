@@ -1,9 +1,9 @@
 ---
 title: 'Module 5: Recommended Exercises'
 author:
-- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "February 8, 2024"
+date: "February 12, 2025"
 output:
   html_document:
     df_print: paged
@@ -14,14 +14,12 @@ output:
     keep_tex: yes
     toc: no
     toc_depth: 2
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
 
 ```{r setup, include = FALSE}
-showsolA <- TRUE
-showsolB <- TRUE
 library(knitr)
 opts_chunk$set(tidy.opts = list(width.cutoff = 68), tidy = TRUE)
 knitr::opts_chunk$set(echo = TRUE,
@@ -47,36 +45,31 @@ Explain how $k$-fold cross-validation is implemented.
   
 a) Draw a figure.
 
-b) Specify algorithmically what is done, and in particular how the "results" from each fold are aggregated.
+b) Specify algorithmically what is done, and in particular how the results from each fold are aggregated.
 
-c) Relate to one example from regression. Ideas are the complexity w.r.t. polynomials of increasing degree in multiple linear regression, or $K$ in KNN-regression.
+c) Relate $k$-fold cross-validation to an example from regression. Ideas are the complexity with regards to polynomials of increasing degree in multiple linear regression, or $K$ in KNN-regression.
 
-d) Relate to one example from classification. Ideas are the complexity w.r.t. polynomials of increasing degree in logistic regression, or $K$ in KNN-classification.
+d) Relate $k$-fold cross-validation to an example from classification. Ideas are the complexity with regards to polynomials of increasing degree in logistic regression, or $K$ in KNN-classification.
 
 Hint: the words "loss function," "fold," "training," and "validation" are central.
 
-
 ## Problem 2 
 
-What are the advantages and disadvantages of $k$-fold cross-validation relative to
-
-a) The validation set approach
-b) Leave one out cross-validation (LOOCV)
-c) What are recommended values for $k$, and why?
+- a) What are the advantages and disadvantages of $k$-fold cross-validation relative to
+  - i) The validation set approach
+  - ii) Leave one out cross-validation (LOOCV)
+- b) What are recommended values for $k$, and why?
   
-  Hint: the words "bias," "variance" and "computational complexity" should be included.
-
+Hint: the words "bias," "variance" and "computational complexity" should be included.
 
 
 ## Problem 3
 
 Topic: Selection bias and the "wrong way to do CV."
 
-The task here is to devise an algorithm to "prove" that the wrong way is wrong and that the right way is right. 
+The task here is to devise an algorithm to show that the wrong way is wrong and that the right way is right.
 
  a) What are the steps of such an algorithm? Write down a suggestion. Hint: How do you generate data for predictors and class labels, how do you do the classification task, where is the CV in the correct way and wrong way inserted into your algorithm? Can you make a schematic drawing of the right and the wrong way?
-  
-  
   
   b) We are now doing a simulation to illustrate the selection bias problem in CV, when it is applied the wrong way. Here is what we are (conceptually) going to do:
   
@@ -93,36 +86,36 @@ Classification task:
 * Then we run CV ($k = 5$) on either only the $d$ (the wrong way), or on all $c + d$ predictors (the right way). 
 * Report misclassification errors for both situations.
 
-One possible version of this is presented in the R-code below. Go through the code and explain what is done in each step, then run the code and observe if the results are in agreement with what you expected. Make changes to the R-code if you want to test out different strategies.
+One possible version of this is presented in the `R`-code below. Go through the code and explain what is done in each step, then run the code and observe if the results are in agreement with what you expected. Make changes to the `R`-code if you want to test out different strategies.
 
 We start by generating data for $n=50$ observations
 ```{r,eval = FALSE}
 library(boot)
 # GENERATE DATA; use a seed for reproducibility
 set.seed(4268)
-n=100 #number of observations
-p=5000 #number of predictors
-d=10 #top correlated predictors chosen
+n <- 100 # Number of observations
+p <- 5000 # Number of predictors
+d <- 10 # Top correlated predictors chosen
 
 # Generating predictor data
-xs=matrix(rnorm(n*p,0,1),ncol=p,nrow=n) #simple way to to uncorrelated predictors
+xs <- matrix(rnorm(n * p, 0, 1), ncol = p, nrow = n) # uncorrelated predictors
 dim(xs) # n times p
-xs[1:10,1:10]
+xs[1:10, 1:10]
 
-# Generate class labels independent of predictors - so if all classifies as class 1 we expect 50% errors in general
-ys=c(rep(0,n/2),rep(1,n/2)) #now really 50% of each
+# Generate class labels independent of predictors 
+# - so if all classifies as class 1 we expect 50% errors in general
+ys <- c(rep(0, n / 2), rep(1, n / 2)) # Now really 50% of each
 table(ys)
 ```
 
 **WRONG CV**: Select the 25 most correlated predictors outside the CV.
 ```{r, eval = FALSE}
-corrs=apply(xs,2,cor,y=ys)
+corrs <- apply(xs, 2, cor, y = ys)
 hist(corrs)
 
+selected <- order(corrs^2, decreasing = TRUE)[1:d]  
 
-selected=order(corrs^2,decreasing = TRUE)[1:d]  
-
-data=data.frame(ys,xs[,selected])
+data <- data.frame(ys, xs[, selected])
 ```
 
 Then run CV around the fitting of the classifier - use logistic regression and built in `cv.glm()` function
@@ -135,7 +128,6 @@ cvres$delta
 ```
 Observe a misclassification rate of about 20\%.
 
-
 **CORRECT CV**: Do not pre-select predictors outside the CV, but as part of the CV. In order words, the entire analysis is done within the CV. We need to code this ourselves:
 ```{r, eval = FALSE}
 reorder <- sample(1:n, replace = FALSE)
@@ -145,9 +137,10 @@ for (i in 1:kfold) {
   trainids <- setdiff(1:n, (((i - 1) * neach + 1):(i * neach)))
   traindata <- data.frame(xs[reorder[trainids], ], ys[reorder[trainids]])
   validdata <- data.frame(xs[reorder[-trainids], ], ys[reorder[-trainids]])
-  colnames(traindata) <- colnames(validdata) <-  c(paste("X", 1:p), "y")
+  colnames(traindata) <- colnames(validdata) <- c(paste("X", 1:p), "y")
   foldcorrs <- apply(traindata[, 1:p], 2, cor, y = traindata[, p + 1])
-  selected <- order(foldcorrs^2, decreasing = TRUE)[1:d] # Select top d correlated 
+  # Select top d correlated predictors
+  selected <- order(foldcorrs^2, decreasing = TRUE)[1:d] 
   data <- traindata[, c(selected, p + 1)]
   trainlogfit <- glm(y ~ ., family = "binomial", data = data)
   pred <- plogis(predict.glm(trainlogfit, newdata = validdata[, selected]))
@@ -157,27 +150,6 @@ table(ys[reorder], validclass)
 1 - sum(diag(table(ys[reorder], validclass))) / n
 ```
 
-
-<!-- --- -->
-
-<!-- **Problem 4**: Trying out different versions of cross-validation with R.  -->
-
-<!-- * Maybe you can devise a simulated data set, or use a data set from the `ILSR` library.  -->
-<!-- * To see differences look at a large data set and a small data set (in the number of observations), and  -->
-<!-- * focus on regression and on classification.  -->
-<!-- * What if the optimal (lowest CV error) method has complexity $7$, but the CV error of complexity $2$ is not very different. What should we do then? Hint: rule of parsimony, Occam's razor. Later (ch 6) we will look at the "1SD rule". -->
-
-<!-- Use Section 5.3 in the ISL book as a starting point. -->
-
-<!-- a. Compare candidate models -->
-
-<!-- LOOCV with -->
-<!-- $k$-fold CV with built in function: cv.glm -->
-<!-- for loop -->
-
-
-
-
 ## Problem 4
 
 We will calculate the probability that a given observation in our original sample is part of a bootstrap sample. This is useful for us to know in Module 8.
@@ -185,20 +157,20 @@ We will calculate the probability that a given observation in our original sampl
 Our sample size is $n$.
 
 a. We draw one observation from our sample. What is the probability of drawing observation $i$ (i.e., $x_i$)? And of not drawing observation $i$?
-b. We make $n$ independent draws (with replacement). What is the probability of not drawing observation $i$ in any of the $n$ drawings? What is then the probability that data point $i$ is in our bootstrap sample (that is, more than $0$ times)?
+b. We make $n$ independent draws (with replacement). What is the probability of not drawing observation $i$ in any of the $n$ draws? What is then the probability that data point $i$ is in our bootstrap sample (that is, more than $0$ times)?
 c. When $n$ is large $(1-\frac{1}{n})^n \approx \frac{1}{e}$. Use this to give a numerical value for the probability that a specific observation $i$ is in our bootstrap sample.
-d. Write a short R code chunk to check your result. (Hint: An example on how to this is on page 198 in our ISLR book.) You may also study the result in c. How good is the approximation as a function of $n$?
+d. Write a short `R` code chunk to check your result. (Hint: An example on how to this is on page 198 in our ISLR book.) You may also study the result in c. How good is the approximation as a function of $n$?
 
 ```{r, echo = FALSE, eval = FALSE}
 n <- 100
 B <- 10000
 j <- 1
 res <- rep(NA, B)
-for (b in 1:B) res[b] <- (sum(sample(1:n, replace = TRUE) == j) > 0)
+for (b in 1:B) {
+  res[b] <- (sum(sample(1:n, replace = TRUE) == j) > 0)
+}
 mean(res)
 ```
-
-
 
 ## Problem 5
 
@@ -221,8 +193,3 @@ Now go ahead and use bootstrap to estimate the $95\%$ CI. Compare your result to
 ```{r, eval=FALSE}
 confint(SLID.lm)
 ```
-
-
-
-
-

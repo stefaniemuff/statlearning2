@@ -1,9 +1,9 @@
 ---
 title: 'Module 5: Solutions to Recommended Exercises'
 author:
-- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "February 8, 2024"
+date: "February 12, 2025"
 output:
   html_document:
     df_print: paged
@@ -12,7 +12,7 @@ output:
   pdf_document:
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
@@ -50,42 +50,26 @@ For a regression problem $\text{MSE}_j = \frac{1}{n_j}\sum_{i \in V_j} (y_i - \h
 For a binary classification problem the error might be the average of correctly classified observations.
 
 
-c) Find the optimal number of neighbors $K$ in $K$NN or the optimal polynomial degree in polynomial regression.
+c) Finding the optimal number of neighbors $K$ in KNN or the optimal polynomial degree in polynomial regression.
 
 d) For a classification problem we can use CV to choose between QDA or LDA.
 
 
 ## Problem 2
 
-Advantages and disadvantages of $k$-fold Cross-Validation
-
-a) The validation set approach:
-
-D: The $k$-fold cross validation is computationally more expensive.
-
-A: The advantage is that it has less variance and less bias (the validation set approach unifies the worst of both worlds, so to say).
-
-
-b) In LOOCV there is no randomness in the splits. 
-
-A: $k$-fold-CV is computationally less expensive, as we run the model $k$ times where $k \ll n$
-
-A: $k$-fold-CV has less variance, because in LOOCV we are averaging from $n$ fitted models that are trained on nearly the same data, therefore we have positively correlated data.
-
-D: $k$-fold-CV has more bias, as in LOOCV we use a larger data set to fit the model, which gives a less biased version of the test error.
-
-
-c) We know that if $k=n=$ LOOCV the estimator of test error will have small bias but high variance and it is computationally expensive.
-
-If $k$ is too small (for example 2), the estimator will have larger bias but lower variance.
-
-Experimental research (simulations) has found that $k = 5$ or $k=10$ to be good choices.
-
+- a) Advantages and disadvantages of $k$-fold Cross-Validation
+  - i) The validation set approach:
+    - D: $k$-fold cross validation is computationally more expensive.
+    - A: The advantage is that $k$-fold cross validation has less variance and less bias (the validation set approach unifies the worst of both worlds, so to say).
+  - ii) In LOOCV there is no randomness in the splits.
+    - A: $k$-fold-CV is computationally less expensive, as we run the model $k$ times where $k \ll n$
+    - A: $k$-fold-CV gives less variance in the estimates of the test errors, because in LOOCV we are averaging from $n$ fitted models that are trained on nearly the same data, therefore we have positively correlated estimates, which increases variance.
+    - D: $k$-fold-CV has more bias, as in LOOCV we use a larger data set to fit the model, which gives a less biased version of the test error.
+- b) We know that if $k=n=$ LOOCV the estimator of test error will have small bias but high variance and it is computationally expensive. If $k$ is too small (for example 2), the estimator will have larger bias but lower variance. Experimental research (simulations) has found that $k = 5$ or $k=10$ to often be good choices.
 
 ## Problem 3 
 
 No solution is provided on top of the guidelines in the exercise sheet.
-
  
 ## Problem 4 
 
@@ -93,10 +77,10 @@ No solution is provided on top of the guidelines in the exercise sheet.
 a) $P(\text{draw } X_i) = \frac{1}{n}$ and $P(\text{not draw } X_i) =1-P(\text{draw } X_i) = 1 - \frac{1}{n}$
 
 
-b) $P(\text{not draw any } X_i) = (1 - \frac{1}{n})^n$ and $P(\text{draw at least one } X_i) =1 - (1 - \frac{1}{n})^n$
+b) $P(\text{not draw any } X_i) = (1 - \frac{1}{n})^n$ and $P(\text{draw at least one } X_i) =1 - \left(1 - \frac{1}{n}\right)^n$
 
 
-c) $P(X_i \text{ in bootstrap sample}) = 1 - (1 - \frac{1}{n})^n \approx 1-\exp(-1) = 0.632$
+c) $P(X_i \text{ in bootstrap sample}) = 1 - \left(1 - \frac{1}{n}\right)^n \approx 1-\exp(-1) \approx 0.632$
 
 d)
 
@@ -202,9 +186,6 @@ bo
 
 * Use $k=5$ or $10$ fold cross-validation for model selection or assessment.
 * Use bootstrapping to estimate the standard deviation of an estimator, and understand how it is performed before module 8 on trees.
-
-
-
 
 
 # Further reading

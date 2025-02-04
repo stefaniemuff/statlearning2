@@ -98,12 +98,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 5: Recommended Exercises},
-  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -118,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee \and Department of Mathematical Sciences, NTNU}
-\date{February 8, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{February 12, 2025}
 
 \begin{document}
 \maketitle
@@ -133,8 +133,7 @@ course book (Lab: Cross-Validation and the Bootstrap)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1}{%
-\subsection{Problem 1}\label{problem-1}}
+\subsection{Problem 1}\label{problem-1}
 
 Explain how \(k\)-fold cross-validation is implemented.
 
@@ -144,47 +143,69 @@ Explain how \(k\)-fold cross-validation is implemented.
   Draw a figure.
 \item
   Specify algorithmically what is done, and in particular how the
-  ``results'' from each fold are aggregated.
+  results from each fold are aggregated.
 \item
-  Relate to one example from regression. Ideas are the complexity w.r.t.
-  polynomials of increasing degree in multiple linear regression, or
-  \(K\) in KNN-regression.
+  Relate \(k\)-fold cross-validation to an example from regression.
+  Ideas are the complexity with regards to polynomials of increasing
+  degree in multiple linear regression, or \(K\) in KNN-regression.
 \item
-  Relate to one example from classification. Ideas are the complexity
-  w.r.t. polynomials of increasing degree in logistic regression, or
-  \(K\) in KNN-classification.
+  Relate \(k\)-fold cross-validation to an example from classification.
+  Ideas are the complexity with regards to polynomials of increasing
+  degree in logistic regression, or \(K\) in KNN-classification.
 \end{enumerate}
 
 Hint: the words ``loss function,'' ``fold,'' ``training,'' and
 ``validation'' are central.
 
-\hypertarget{problem-2}{%
-\subsection{Problem 2}\label{problem-2}}
+\subsection{Problem 2}\label{problem-2}
 
-What are the advantages and disadvantages of \(k\)-fold cross-validation
-relative to
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \tightlist
+  \item
+    What are the advantages and disadvantages of \(k\)-fold
+    cross-validation relative to
+  \end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\tightlist
+  \begin{itemize}
+  \tightlist
+  \item
+    \begin{enumerate}
+    \def\labelenumi{\roman{enumi})}
+    \tightlist
+    \item
+      The validation set approach
+    \end{enumerate}
+  \item
+    \begin{enumerate}
+    \def\labelenumi{\roman{enumi})}
+    \setcounter{enumi}{1}
+    \tightlist
+    \item
+      Leave one out cross-validation (LOOCV)
+    \end{enumerate}
+  \end{itemize}
 \item
-  The validation set approach
-\item
-  Leave one out cross-validation (LOOCV)
-\item
-  What are recommended values for \(k\), and why?
-\end{enumerate}
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What are recommended values for \(k\), and why?
+  \end{enumerate}
+\end{itemize}
 
 Hint: the words ``bias,'' ``variance'' and ``computational complexity''
 should be included.
 
-\hypertarget{problem-3}{%
-\subsection{Problem 3}\label{problem-3}}
+\subsection{Problem 3}\label{problem-3}
 
 Topic: Selection bias and the ``wrong way to do CV.''
 
-The task here is to devise an algorithm to ``prove'' that the wrong way
-is wrong and that the right way is right.
+The task here is to devise an algorithm to show that the wrong way is
+wrong and that the right way is right.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -230,10 +251,11 @@ Classification task:
   Report misclassification errors for both situations.
 \end{itemize}
 
-One possible version of this is presented in the R-code below. Go
-through the code and explain what is done in each step, then run the
+One possible version of this is presented in the \texttt{R}-code below.
+Go through the code and explain what is done in each step, then run the
 code and observe if the results are in agreement with what you expected.
-Make changes to the R-code if you want to test out different strategies.
+Make changes to the \texttt{R}-code if you want to test out different
+strategies.
 
 We start by generating data for \(n=50\) observations
 
@@ -242,18 +264,18 @@ We start by generating data for \(n=50\) observations
 \FunctionTok{library}\NormalTok{(boot)}
 \CommentTok{\# GENERATE DATA; use a seed for reproducibility}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{n }\OtherTok{=} \DecValTok{100}  \CommentTok{\#number of observations}
-\NormalTok{p }\OtherTok{=} \DecValTok{5000}  \CommentTok{\#number of predictors}
-\NormalTok{d }\OtherTok{=} \DecValTok{10}  \CommentTok{\#top correlated predictors chosen}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100} \CommentTok{\# Number of observations}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{5000} \CommentTok{\# Number of predictors}
+\NormalTok{d }\OtherTok{\textless{}{-}} \DecValTok{10} \CommentTok{\# Top correlated predictors chosen}
 
 \CommentTok{\# Generating predictor data}
-\NormalTok{xs }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{ncol =}\NormalTok{ p, }\AttributeTok{nrow =}\NormalTok{ n)  }\CommentTok{\#simple way to to uncorrelated predictors}
-\FunctionTok{dim}\NormalTok{(xs)  }\CommentTok{\# n times p}
+\NormalTok{xs }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{ncol =}\NormalTok{ p, }\AttributeTok{nrow =}\NormalTok{ n) }\CommentTok{\# uncorrelated predictors}
+\FunctionTok{dim}\NormalTok{(xs) }\CommentTok{\# n times p}
 \NormalTok{xs[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
 
-\CommentTok{\# Generate class labels independent of predictors {-} so if all}
-\CommentTok{\# classifies as class 1 we expect 50\% errors in general}
-\NormalTok{ys }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, n}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))  }\CommentTok{\#now really 50\% of each}
+\CommentTok{\# Generate class labels independent of predictors }
+\CommentTok{\# {-} so if all classifies as class 1 we expect 50\% errors in general}
+\NormalTok{ys }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n }\SpecialCharTok{/} \DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, n }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)) }\CommentTok{\# Now really 50\% of each}
 \FunctionTok{table}\NormalTok{(ys)}
 \end{Highlighting}
 \end{Shaded}
@@ -263,13 +285,12 @@ CV.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{corrs }\OtherTok{=} \FunctionTok{apply}\NormalTok{(xs, }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ ys)}
+\NormalTok{corrs }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(xs, }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ ys)}
 \FunctionTok{hist}\NormalTok{(corrs)}
 
+\NormalTok{selected }\OtherTok{\textless{}{-}} \FunctionTok{order}\NormalTok{(corrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d]  }
 
-\NormalTok{selected }\OtherTok{=} \FunctionTok{order}\NormalTok{(corrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d]}
-
-\NormalTok{data }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(ys, xs[, selected])}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(ys, xs[, selected])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -297,27 +318,25 @@ CV. We need to code this ourselves:
 \NormalTok{reorder }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{validclass }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{kfold) \{}
-\NormalTok{    neach }\OtherTok{\textless{}{-}}\NormalTok{ n}\SpecialCharTok{/}\NormalTok{kfold}
-\NormalTok{    trainids }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, (((i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ neach }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(i }\SpecialCharTok{*}\NormalTok{ neach)))}
-\NormalTok{    traindata }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(xs[reorder[trainids], ], ys[reorder[trainids]])}
-\NormalTok{    validdata }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(xs[reorder[}\SpecialCharTok{{-}}\NormalTok{trainids], ], ys[reorder[}\SpecialCharTok{{-}}\NormalTok{trainids]])}
-    \FunctionTok{colnames}\NormalTok{(traindata) }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(validdata) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{p),}
-        \StringTok{"y"}\NormalTok{)}
-\NormalTok{    foldcorrs }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(traindata[, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{p], }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ traindata[, p }\SpecialCharTok{+}
-        \DecValTok{1}\NormalTok{])}
-\NormalTok{    selected }\OtherTok{\textless{}{-}} \FunctionTok{order}\NormalTok{(foldcorrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d]  }\CommentTok{\# Select top d correlated }
-\NormalTok{    data }\OtherTok{\textless{}{-}}\NormalTok{ traindata[, }\FunctionTok{c}\NormalTok{(selected, p }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)]}
-\NormalTok{    trainlogfit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{, }\AttributeTok{data =}\NormalTok{ data)}
-\NormalTok{    pred }\OtherTok{\textless{}{-}} \FunctionTok{plogis}\NormalTok{(}\FunctionTok{predict.glm}\NormalTok{(trainlogfit, }\AttributeTok{newdata =}\NormalTok{ validdata[, selected]))}
-\NormalTok{    validclass }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(validclass, }\FunctionTok{ifelse}\NormalTok{(pred }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\NormalTok{  neach }\OtherTok{\textless{}{-}}\NormalTok{ n }\SpecialCharTok{/}\NormalTok{ kfold}
+\NormalTok{  trainids }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, (((i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ neach }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(i }\SpecialCharTok{*}\NormalTok{ neach)))}
+\NormalTok{  traindata }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(xs[reorder[trainids], ], ys[reorder[trainids]])}
+\NormalTok{  validdata }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(xs[reorder[}\SpecialCharTok{{-}}\NormalTok{trainids], ], ys[reorder[}\SpecialCharTok{{-}}\NormalTok{trainids]])}
+  \FunctionTok{colnames}\NormalTok{(traindata) }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(validdata) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{p), }\StringTok{"y"}\NormalTok{)}
+\NormalTok{  foldcorrs }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(traindata[, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{p], }\DecValTok{2}\NormalTok{, cor, }\AttributeTok{y =}\NormalTok{ traindata[, p }\SpecialCharTok{+} \DecValTok{1}\NormalTok{])}
+  \CommentTok{\# Select top d correlated predictors}
+\NormalTok{  selected }\OtherTok{\textless{}{-}} \FunctionTok{order}\NormalTok{(foldcorrs}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{d] }
+\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ traindata[, }\FunctionTok{c}\NormalTok{(selected, p }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)]}
+\NormalTok{  trainlogfit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{, }\AttributeTok{data =}\NormalTok{ data)}
+\NormalTok{  pred }\OtherTok{\textless{}{-}} \FunctionTok{plogis}\NormalTok{(}\FunctionTok{predict.glm}\NormalTok{(trainlogfit, }\AttributeTok{newdata =}\NormalTok{ validdata[, selected]))}
+\NormalTok{  validclass }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(validclass, }\FunctionTok{ifelse}\NormalTok{(pred }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
 \NormalTok{\}}
 \FunctionTok{table}\NormalTok{(ys[reorder], validclass)}
-\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\FunctionTok{table}\NormalTok{(ys[reorder], validclass)))}\SpecialCharTok{/}\NormalTok{n}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(}\FunctionTok{table}\NormalTok{(ys[reorder], validclass))) }\SpecialCharTok{/}\NormalTok{ n}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{problem-4}{%
-\subsection{Problem 4}\label{problem-4}}
+\subsection{Problem 4}\label{problem-4}
 
 We will calculate the probability that a given observation in our
 original sample is part of a bootstrap sample. This is useful for us to
@@ -335,20 +354,20 @@ Our sample size is \(n\).
 \item
   We make \(n\) independent draws (with replacement). What is the
   probability of not drawing observation \(i\) in any of the \(n\)
-  drawings? What is then the probability that data point \(i\) is in our
+  draws? What is then the probability that data point \(i\) is in our
   bootstrap sample (that is, more than \(0\) times)?
 \item
   When \(n\) is large \((1-\frac{1}{n})^n \approx \frac{1}{e}\). Use
   this to give a numerical value for the probability that a specific
   observation \(i\) is in our bootstrap sample.
 \item
-  Write a short R code chunk to check your result. (Hint: An example on
-  how to this is on page 198 in our ISLR book.) You may also study the
-  result in c.~How good is the approximation as a function of \(n\)?
+  Write a short \texttt{R} code chunk to check your result. (Hint: An
+  example on how to this is on page 198 in our ISLR book.) You may also
+  study the result in c.~How good is the approximation as a function of
+  \(n\)?
 \end{enumerate}
 
-\hypertarget{problem-5}{%
-\subsection{Problem 5}\label{problem-5}}
+\subsection{Problem 5}\label{problem-5}
 
 Explain with words and an algorithm how you would proceed to use
 bootstrapping to estimate the standard deviation and the \(95\%\)
@@ -356,8 +375,7 @@ confidence interval of one of the regression parameters in multiple
 linear regression. Comment on which assumptions you make for your
 regression model.
 
-\hypertarget{problem-6}{%
-\subsection{Problem 6}\label{problem-6}}
+\subsection{Problem 6}\label{problem-6}
 
 Implement your algorithm from 5 both using for-loop and using the
 \texttt{boot} function. Hint: See section 5.3.4 (the Lab on the
