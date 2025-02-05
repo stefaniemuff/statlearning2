@@ -495,7 +495,7 @@ $\rightarrow$ Need to fit the model only once!
 
 $~$
 
-See Compulsory exercise 1 (todo: check).
+See Compulsory exercise 1.
 
 ---
 
