@@ -751,6 +751,42 @@ $$\text{CV}_{n}=\frac{1}{n} \sum_{i=1}^n {\text{Err}_i}$$
 
 ---
 
+Let us look at a data set from Chapter 2: 
+
+\centering
+![](213.png){width=80%}
+
+
+---
+
+We can fit logistic regression and look at the decision boundary, depending on the degree of of the regression model:
+
+\centering
+![](../../ISLR/Figures/Chapter5/57.png){width=50%}
+
+\flushleft
+
+* Error rates: 0.201, 0.197, 0.160, 0.162, respectively
+* Bayes error rate: 0.133
+
+---
+
+Which degree of the logistic regression polynomial is best? 
+
+$\rightarrow$ Cross-validation!
+
+\centering
+![](58.png){width=60%}
+
+
+\flushleft
+
+* Orange: True test error.
+* Black: 10-fold CV error. 
+* Blue: Training error.
+
+---
+
 ### Can we use CV for model assessment?
 \vspace{2mm}
 
