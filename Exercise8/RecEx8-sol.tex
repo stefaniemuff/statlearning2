@@ -1,21 +1,24 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -34,18 +37,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Module 8: Solutions to Recommended Exercises},
-  pdfauthor={Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={blue},
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -58,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -72,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -81,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -107,6 +98,18 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 8: Solutions to Recommended Exercises},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 8: Solutions to Recommended Exercises}
 \usepackage{etoolbox}
@@ -115,18 +118,17 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{March 7, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{March 5, 2025}
 
 \begin{document}
 \maketitle
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1-theoretical}{%
-\subsection{Problem 1 -- Theoretical}\label{problem-1-theoretical}}
+\subsection{Problem 1 -- Theoretical}\label{problem-1-theoretical}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -150,7 +152,9 @@ Muff \and Department of Mathematical Sciences, NTNU}
   the same tree):
 \end{enumerate}
 
-\[\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,\]
+\[
+\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,
+\]
 
 where \(|T|\) is the number of terminal nodes.
 
@@ -235,9 +239,9 @@ That is by averaging we get reduced variance.
 \emph{Idea behind bagging}: For decision trees, if we have \(B\)
 training sets, we could estimate
 \(\hat{f}_1({\boldsymbol x}),\hat{f}_2({\boldsymbol x}),\ldots, \hat{f}_B({\boldsymbol x})\)
-and average them as
-\[\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .\]
-However we do not have many data independent data sets, and we
+and average them as \[
+\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .
+\] However we do not have many data independent data sets, and we
 bootstraping to create \(B\) datasets. These datasets are however not
 completely independent and the reduction in variance is therefore not as
 large as for independent training sets.
@@ -285,9 +289,8 @@ reduces variance.
   \href{https://github.com/stefaniemuff/statlearning/blob/master/8Trees/M8_variableImportanceRandomization.pdf}{here}.
 \end{itemize}
 
-\hypertarget{problem-2-regression-book-ex.-8}{%
 \subsection{Problem 2 -- Regression (Book Ex.
-8)}\label{problem-2-regression-book-ex.-8}}
+8)}\label{problem-2-regression-book-ex.-8}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -300,11 +303,10 @@ reduces variance.
 \FunctionTok{library}\NormalTok{(ISLR)}
 \FunctionTok{data}\NormalTok{(}\StringTok{"Carseats"}\NormalTok{)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{n }\OtherTok{=} \FunctionTok{nrow}\NormalTok{(Carseats)}
-\NormalTok{train }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\FloatTok{0.7}\SpecialCharTok{*}\FunctionTok{nrow}\NormalTok{(Carseats), }\AttributeTok{replace =}\NormalTok{ F)}
-\NormalTok{test }\OtherTok{=}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n)[}\SpecialCharTok{{-}}\NormalTok{train]}
-\NormalTok{Carseats.train }\OtherTok{=}\NormalTok{ Carseats[train,]}
-\NormalTok{Carseats.test }\OtherTok{=}\NormalTok{ Carseats[}\SpecialCharTok{{-}}\NormalTok{train,]}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(Carseats)}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(n, }\FloatTok{0.7}\SpecialCharTok{*}\FunctionTok{nrow}\NormalTok{(Carseats), }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{Carseats.train }\OtherTok{\textless{}{-}}\NormalTok{ Carseats[train,]}
+\NormalTok{Carseats.test }\OtherTok{\textless{}{-}}\NormalTok{ Carseats[}\SpecialCharTok{{-}}\NormalTok{train,]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -318,7 +320,7 @@ reduces variance.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tree)}
-\NormalTok{tree.mod }\OtherTok{=} \FunctionTok{tree}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., Carseats, }\AttributeTok{subset =}\NormalTok{ train)}
+\NormalTok{tree.mod }\OtherTok{\textless{}{-}} \FunctionTok{tree}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., Carseats, }\AttributeTok{subset =}\NormalTok{ train)}
 \FunctionTok{summary}\NormalTok{(tree.mod)}
 \end{Highlighting}
 \end{Shaded}
@@ -364,8 +366,8 @@ reduces variance.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat }\OtherTok{=} \FunctionTok{predict}\NormalTok{(tree.mod, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
-\NormalTok{mse }\OtherTok{=} \FunctionTok{mean}\NormalTok{((yhat }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(tree.mod, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
+\NormalTok{mse }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((yhat }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 
 \FunctionTok{cat}\NormalTok{(}\StringTok{"test MSE:"}\NormalTok{, mse)}
 \end{Highlighting}
@@ -385,11 +387,14 @@ reduces variance.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{cv.Carseats  }\OtherTok{=} \FunctionTok{cv.tree}\NormalTok{(tree.mod) }
-\NormalTok{tree.min }\OtherTok{=}  \FunctionTok{which.min}\NormalTok{(cv.Carseats}\SpecialCharTok{$}\NormalTok{dev)}
-\NormalTok{best }\OtherTok{=}\NormalTok{ cv.Carseats}\SpecialCharTok{$}\NormalTok{size[tree.min]}
+\NormalTok{cv.Carseats }\OtherTok{\textless{}{-}} \FunctionTok{cv.tree}\NormalTok{(tree.mod) }
+\NormalTok{tree.min }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(cv.Carseats}\SpecialCharTok{$}\NormalTok{dev)}
+\NormalTok{best }\OtherTok{\textless{}{-}}\NormalTok{ cv.Carseats}\SpecialCharTok{$}\NormalTok{size[tree.min]}
 \FunctionTok{plot}\NormalTok{(cv.Carseats}\SpecialCharTok{$}\NormalTok{size, cv.Carseats}\SpecialCharTok{$}\NormalTok{dev, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(cv.Carseats}\SpecialCharTok{$}\NormalTok{size[tree.min], cv.Carseats}\SpecialCharTok{$}\NormalTok{dev[tree.min], }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(cv.Carseats}\SpecialCharTok{$}\NormalTok{size[tree.min],}
+\NormalTok{       cv.Carseats}\SpecialCharTok{$}\NormalTok{dev[tree.min],}
+       \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+       \AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -401,7 +406,7 @@ tree.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pr.tree }\OtherTok{=} \FunctionTok{prune.tree}\NormalTok{(tree.mod, }\AttributeTok{best =} \DecValTok{11}\NormalTok{)}
+\NormalTok{pr.tree }\OtherTok{\textless{}{-}} \FunctionTok{prune.tree}\NormalTok{(tree.mod, }\AttributeTok{best =} \DecValTok{11}\NormalTok{)}
 \FunctionTok{plot}\NormalTok{(pr.tree)}
 \FunctionTok{text}\NormalTok{(pr.tree, }\AttributeTok{pretty =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
@@ -411,8 +416,8 @@ tree.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat }\OtherTok{=} \FunctionTok{predict}\NormalTok{(pr.tree, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
-\NormalTok{mse }\OtherTok{=} \FunctionTok{mean}\NormalTok{((yhat }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }
+\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(pr.tree, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
+\NormalTok{mse }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((yhat }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }
 \NormalTok{mse}
 \end{Highlighting}
 \end{Shaded}
@@ -443,9 +448,13 @@ There is a slight reduction in MSE for the pruned tree with 11 leaves.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{bag.Carseats }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., Carseats.train, }\AttributeTok{mtry=}\FunctionTok{ncol}\NormalTok{(Carseats)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{, }\AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{yhat.bag }\OtherTok{=} \FunctionTok{predict}\NormalTok{(bag.Carseats, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
-\NormalTok{mse.bag }\OtherTok{=} \FunctionTok{mean}\NormalTok{((yhat.bag }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{bag.Carseats }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+\NormalTok{                             Carseats.train,}
+                             \AttributeTok{mtry =} \FunctionTok{ncol}\NormalTok{(Carseats) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{,}
+                             \AttributeTok{ntree =} \DecValTok{500}\NormalTok{,}
+                             \AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{yhat.bag }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(bag.Carseats, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
+\NormalTok{mse.bag }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((yhat.bag }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \NormalTok{mse.bag}
 \end{Highlighting}
 \end{Shaded}
@@ -495,8 +504,12 @@ importance plots we might conclude that \texttt{Price}and
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rf.Carseats }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., }\AttributeTok{data =}\NormalTok{ Carseats.train, }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{, }\AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{yhat.rf }\OtherTok{=} \FunctionTok{predict}\NormalTok{(rf.Carseats, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
+\NormalTok{rf.Carseats }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+                            \AttributeTok{data =}\NormalTok{ Carseats.train,}
+                            \AttributeTok{mtry =} \DecValTok{3}\NormalTok{,}
+                            \AttributeTok{ntree =} \DecValTok{500}\NormalTok{,}
+                            \AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{yhat.rf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rf.Carseats, }\AttributeTok{newdata =}\NormalTok{ Carseats.test)}
 \NormalTok{mse\_forest }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((yhat.rf }\SpecialCharTok{{-}}\NormalTok{ Carseats.test}\SpecialCharTok{$}\NormalTok{Sales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \NormalTok{mse\_forest}
 \end{Highlighting}
@@ -506,7 +519,7 @@ importance plots we might conclude that \texttt{Price}and
 ## [1] 2.25397
 \end{verbatim}
 
-We use \(p/3 = 10/3 \approx 3\) trees, and we obtain an MSE of 2.25
+We use \(p/3 = 10/3 \approx  3\) trees, and we obtain an MSE of 2.25
 which is slightly larger than Bagging MSE. The two most important
 Variables are again \texttt{Price}and \texttt{ShelveLoc}.
 
@@ -549,18 +562,38 @@ Variables are again \texttt{Price}and \texttt{ShelveLoc}.
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
 
-\NormalTok{train.predictors }\OtherTok{=}\NormalTok{ Carseats.train[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
-\NormalTok{test.predictors }\OtherTok{=}\NormalTok{ Carseats.test[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
-\NormalTok{Y.train }\OtherTok{=}\NormalTok{ Carseats.train[,}\DecValTok{1}\NormalTok{]}
-\NormalTok{Y.test }\OtherTok{=}\NormalTok{ Carseats.test[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{train.predictors }\OtherTok{\textless{}{-}}\NormalTok{ Carseats.train[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{test.predictors }\OtherTok{\textless{}{-}}\NormalTok{ Carseats.test[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{Y.train }\OtherTok{\textless{}{-}}\NormalTok{ Carseats.train[, }\DecValTok{1}\NormalTok{]}
+\NormalTok{Y.test }\OtherTok{\textless{}{-}}\NormalTok{ Carseats.test[, }\DecValTok{1}\NormalTok{]}
 
 \NormalTok{ntree }\OtherTok{\textless{}{-}} \DecValTok{500}
-\NormalTok{bag.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{10}\NormalTok{, }\AttributeTok{ntree =}\NormalTok{ ntree)}
-\NormalTok{rf.Car }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(train.predictors, }\AttributeTok{y =}\NormalTok{ Y.train, }\AttributeTok{xtest =}\NormalTok{ test.predictors, }\AttributeTok{ytest =}\NormalTok{ Y.test, }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =}\NormalTok{ ntree)}
-\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntree, bag.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Number of Trees"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Test MSE"}\NormalTok{,}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\FloatTok{2.8}\NormalTok{))}
+\NormalTok{bag.Car }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(train.predictors,}
+                        \AttributeTok{y =}\NormalTok{ Y.train,}
+                        \AttributeTok{xtest =}\NormalTok{ test.predictors,}
+                        \AttributeTok{ytest =}\NormalTok{ Y.test,}
+                        \AttributeTok{mtry =} \DecValTok{10}\NormalTok{,}
+                        \AttributeTok{ntree =}\NormalTok{ ntree)}
+\NormalTok{rf.Car }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(train.predictors,}
+                       \AttributeTok{y =}\NormalTok{ Y.train,}
+                       \AttributeTok{xtest =}\NormalTok{ test.predictors,}
+                       \AttributeTok{ytest =}\NormalTok{ Y.test,}
+                       \AttributeTok{mtry =} \DecValTok{3}\NormalTok{,}
+                       \AttributeTok{ntree =}\NormalTok{ ntree)}
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntree,}
+\NormalTok{     bag.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse,}
+     \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{type =} \StringTok{"l"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Number of Trees"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Test MSE"}\NormalTok{,}
+     \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{2.8}\NormalTok{))}
 \FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntree, rf.Car}\SpecialCharTok{$}\NormalTok{test}\SpecialCharTok{$}\NormalTok{mse, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{)}
 
-\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"m = p"}\NormalTok{, }\StringTok{"m = p/3"}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"green"}\NormalTok{), }\AttributeTok{cex =} \DecValTok{1}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{,}
+       \FunctionTok{c}\NormalTok{(}\StringTok{"m = p"}\NormalTok{, }\StringTok{"m = p/3"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"green"}\NormalTok{),}
+       \AttributeTok{cex =} \DecValTok{1}\NormalTok{,}
+       \AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -570,9 +603,7 @@ NB! Typically, RandomForest models outperform Bagging models due to
 their decorrealtion property stemming from a limited selection of
 predictors.
 
-\hypertarget{problem-3-classification}{%
-\subsection{Problem 3 --
-Classification}\label{problem-3-classification}}
+\subsection{Problem 3 -- Classification}\label{problem-3-classification}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -604,11 +635,11 @@ Classification}\label{problem-3-classification}}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ISLR)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{n }\OtherTok{=} \FunctionTok{nrow}\NormalTok{(spam)}
-\NormalTok{train }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\FloatTok{0.7}\SpecialCharTok{*}\NormalTok{n, }\AttributeTok{replace =}\NormalTok{ F)}
-\NormalTok{test }\OtherTok{=}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n)[}\SpecialCharTok{{-}}\NormalTok{train]}
-\NormalTok{spam.train }\OtherTok{=}\NormalTok{ spam[train,]}
-\NormalTok{spam.test }\OtherTok{=}\NormalTok{ spam[}\SpecialCharTok{{-}}\NormalTok{train,]}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(spam)}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\FloatTok{0.7} \SpecialCharTok{*}\NormalTok{ n, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n)[}\SpecialCharTok{{-}}\NormalTok{train]}
+\NormalTok{spam.train }\OtherTok{\textless{}{-}}\NormalTok{ spam[train,]}
+\NormalTok{spam.test }\OtherTok{\textless{}{-}}\NormalTok{ spam[}\SpecialCharTok{{-}}\NormalTok{train,]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -621,10 +652,10 @@ Classification}\label{problem-3-classification}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{spam.tree}\OtherTok{=}\FunctionTok{tree}\NormalTok{(type}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,spam,}\AttributeTok{subset=}\NormalTok{train)}
+\NormalTok{spam.tree }\OtherTok{\textless{}{-}} \FunctionTok{tree}\NormalTok{(type}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,spam,}\AttributeTok{subset=}\NormalTok{train)}
 
 \FunctionTok{plot}\NormalTok{(spam.tree)}
-\FunctionTok{text}\NormalTok{(spam.tree,}\AttributeTok{pretty=}\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(spam.tree, }\AttributeTok{pretty =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -658,10 +689,10 @@ Classification}\label{problem-3-classification}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat}\OtherTok{=}\FunctionTok{predict}\NormalTok{(spam.tree,spam[test,],}\AttributeTok{type=}\StringTok{"class"}\NormalTok{)}
-\NormalTok{response.test}\OtherTok{=}\NormalTok{spam}\SpecialCharTok{$}\NormalTok{type[test]}
+\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(spam.tree,spam[test,],}\AttributeTok{type=}\StringTok{"class"}\NormalTok{)}
+\NormalTok{response.test }\OtherTok{\textless{}{-}}\NormalTok{ spam}\SpecialCharTok{$}\NormalTok{type[test]}
 
-\NormalTok{misclass}\OtherTok{=}\FunctionTok{table}\NormalTok{(yhat,response.test)}
+\NormalTok{misclass }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(yhat,response.test)}
 \NormalTok{misclass}
 \end{Highlighting}
 \end{Shaded}
@@ -675,7 +706,7 @@ Classification}\label{problem-3-classification}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(misclass)}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass)) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(misclass)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -694,9 +725,9 @@ Classification}\label{problem-3-classification}}
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
 
-\NormalTok{cv.spam}\OtherTok{=}\FunctionTok{cv.tree}\NormalTok{(spam.tree,}\AttributeTok{FUN=}\NormalTok{prune.misclass)}
+\NormalTok{cv.spam }\OtherTok{\textless{}{-}} \FunctionTok{cv.tree}\NormalTok{(spam.tree, }\AttributeTok{FUN =}\NormalTok{ prune.misclass)}
 
-\FunctionTok{plot}\NormalTok{(cv.spam}\SpecialCharTok{$}\NormalTok{size,cv.spam}\SpecialCharTok{$}\NormalTok{dev,}\AttributeTok{type=}\StringTok{"b"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cv.spam}\SpecialCharTok{$}\NormalTok{size, cv.spam}\SpecialCharTok{$}\NormalTok{dev, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -708,10 +739,10 @@ according to this value.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{prune.spam}\OtherTok{=}\FunctionTok{prune.misclass}\NormalTok{(spam.tree,}\AttributeTok{best=}\DecValTok{6}\NormalTok{)}
+\NormalTok{prune.spam }\OtherTok{\textless{}{-}} \FunctionTok{prune.misclass}\NormalTok{(spam.tree, }\AttributeTok{best =} \DecValTok{6}\NormalTok{)}
 
 \FunctionTok{plot}\NormalTok{(prune.spam)}
-\FunctionTok{text}\NormalTok{(prune.spam,}\AttributeTok{pretty=}\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(prune.spam, }\AttributeTok{pretty =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -721,9 +752,9 @@ We predict the response for the test data:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat.prune}\OtherTok{=}\FunctionTok{predict}\NormalTok{(prune.spam,spam[test,],}\AttributeTok{type=}\StringTok{"class"}\NormalTok{)}
+\NormalTok{yhat.prune }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(prune.spam, spam[test, ], }\AttributeTok{type =} \StringTok{"class"}\NormalTok{)}
 
-\NormalTok{misclass.prune}\OtherTok{=}\FunctionTok{table}\NormalTok{(yhat.prune,response.test)}
+\NormalTok{misclass.prune }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(yhat.prune, response.test)}
 \NormalTok{misclass.prune}
 \end{Highlighting}
 \end{Shaded}
@@ -739,7 +770,7 @@ The misclassification rate is
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.prune))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(misclass.prune)}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.prune)) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(misclass.prune)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -757,7 +788,12 @@ The misclassification rate is
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(randomForest)}
-\NormalTok{bag.spam}\OtherTok{=}\FunctionTok{randomForest}\NormalTok{(type}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{spam,}\AttributeTok{subset=}\NormalTok{train,}\AttributeTok{mtry=}\FunctionTok{ncol}\NormalTok{(spam)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\AttributeTok{ntree=}\DecValTok{500}\NormalTok{,}\AttributeTok{importance=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{bag.spam }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+                         \AttributeTok{data =}\NormalTok{ spam,}
+                         \AttributeTok{subset =}\NormalTok{ train,}
+                         \AttributeTok{mtry =} \FunctionTok{ncol}\NormalTok{(spam) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{,}
+                         \AttributeTok{ntree =} \DecValTok{500}\NormalTok{,}
+                         \AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -765,9 +801,9 @@ We predict the response for the test data as before:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat.bag}\OtherTok{=}\FunctionTok{predict}\NormalTok{(bag.spam,}\AttributeTok{newdata=}\NormalTok{spam[test,])}
+\NormalTok{yhat.bag }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(bag.spam, }\AttributeTok{newdata =}\NormalTok{ spam[test, ])}
 
-\NormalTok{misclass.bag}\OtherTok{=}\FunctionTok{table}\NormalTok{(yhat.bag,response.test)}
+\NormalTok{misclass.bag }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(yhat.bag, response.test)}
 \NormalTok{misclass.bag}
 \end{Highlighting}
 \end{Shaded}
@@ -783,7 +819,7 @@ The misclassification rate is
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.bag))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(misclass.bag)}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.bag)) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(misclass.bag)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -805,7 +841,12 @@ specified in \texttt{mtry}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{rf.spam}\OtherTok{=}\FunctionTok{randomForest}\NormalTok{(type}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{spam,}\AttributeTok{subset=}\NormalTok{train,}\AttributeTok{mtry=}\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{ncol}\NormalTok{(spam)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)),}\AttributeTok{ntree=}\DecValTok{500}\NormalTok{,}\AttributeTok{importance=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{rf.spam }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+                        \AttributeTok{data =}\NormalTok{ spam,}
+                        \AttributeTok{subset =}\NormalTok{ train,}
+                        \AttributeTok{mtry =} \FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{ncol}\NormalTok{(spam) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)),}
+                        \AttributeTok{ntree =} \DecValTok{500}\NormalTok{,}
+                        \AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -837,10 +878,10 @@ We now predict the response for the test data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yhat.rf}\OtherTok{=}\FunctionTok{predict}\NormalTok{(rf.spam,}\AttributeTok{newdata=}\NormalTok{spam[test,])}
+\NormalTok{yhat.rf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rf.spam, }\AttributeTok{newdata =}\NormalTok{ spam[test, ])}
 
-\NormalTok{misclass.rf}\OtherTok{=}\FunctionTok{table}\NormalTok{(yhat.rf,response.test)}
-\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.rf))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(misclass.rf)}
+\NormalTok{misclass.rf }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(yhat.rf, response.test)}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(misclass.rf)) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(misclass.rf)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -868,9 +909,9 @@ The misclassification rate is given by
 \setcounter{enumi}{7}
 \tightlist
 \item
-  The ranks of missclassification rates: 1) random forest, 2) bagging,
-  3) decision tree, with a higher rank indicating a lower
-  missclassification rate. This order is what we expected.
+  The ranks of misclassification rates: 1) random forest, 2) bagging, 3)
+  decision tree, with a higher rank indicating a lower misclassification
+  rate. This order is what we expected.
 \end{enumerate}
 
 \end{document}

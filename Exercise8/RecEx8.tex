@@ -1,21 +1,24 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -34,18 +37,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Module 8: Recommended Exercises},
-  pdfauthor={Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={blue},
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -58,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -72,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -81,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -107,6 +98,18 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 8: Recommended Exercises},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 8: Recommended Exercises}
 \usepackage{etoolbox}
@@ -115,18 +118,17 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{March 7, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{March 5, 2025}
 
 \begin{document}
 \maketitle
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1-theoretical}{%
-\subsection{Problem 1 -- Theoretical}\label{problem-1-theoretical}}
+\subsection{Problem 1 -- Theoretical}\label{problem-1-theoretical}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -150,9 +152,8 @@ Muff \and Department of Mathematical Sciences, NTNU}
   evaluate the importance of the different predictors for these methods?
 \end{enumerate}
 
-\hypertarget{problem-2-regression-book-ex.-8}{%
 \subsection{Problem 2 -- Regression (Book Ex.
-8)}\label{problem-2-regression-book-ex.-8}}
+8)}\label{problem-2-regression-book-ex.-8}
 
 In the lab (8.3 Lab: Decision Trees), the Carseats dataset is used. This
 dataset comprises sales data for child car seats at 400 different
@@ -212,11 +213,11 @@ variable.
 \FunctionTok{library}\NormalTok{(ISLR)}
 \FunctionTok{data}\NormalTok{(}\StringTok{"Carseats"}\NormalTok{)}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{n }\OtherTok{=} \FunctionTok{nrow}\NormalTok{(Carseats)}
-\NormalTok{train }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\FloatTok{0.7}\SpecialCharTok{*}\FunctionTok{nrow}\NormalTok{(Carseats), }\AttributeTok{replace =}\NormalTok{ F)}
-\NormalTok{test }\OtherTok{=}\NormalTok{ ...}
-\NormalTok{Carseats.train }\OtherTok{=}\NormalTok{ ...}
-\NormalTok{Carseats.test }\OtherTok{=}\NormalTok{ ...}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(Carseats)}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(n, }\FunctionTok{round}\NormalTok{(}\FloatTok{0.7} \SpecialCharTok{*}\NormalTok{ n), }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ ...}
+\NormalTok{Carseats.train }\OtherTok{\textless{}{-}}\NormalTok{ ...}
+\NormalTok{Carseats.test }\OtherTok{\textless{}{-}}\NormalTok{ ...}
 \end{Highlighting}
 \end{Shaded}
 
@@ -234,7 +235,7 @@ variable.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tree)}
-\NormalTok{tree.mod }\OtherTok{=} \FunctionTok{tree}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., ..., }\AttributeTok{data =}\NormalTok{ ...)}
+\NormalTok{tree.mod }\OtherTok{\textless{}{-}} \FunctionTok{tree}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., ..., }\AttributeTok{data =}\NormalTok{ ...)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -252,9 +253,9 @@ variable.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{4268}\NormalTok{)}
-\NormalTok{cv.Carseats  }\OtherTok{=} \FunctionTok{cv.tree}\NormalTok{(...) }
-\NormalTok{tree.min }\OtherTok{=}  \FunctionTok{which.min}\NormalTok{(...)}
-\NormalTok{best }\OtherTok{=}\NormalTok{ cv.Carseats}\SpecialCharTok{$}\NormalTok{size[...]}
+\NormalTok{cv.Carseats  }\OtherTok{\textless{}{-}} \FunctionTok{cv.tree}\NormalTok{(...) }
+\NormalTok{tree.min }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(...)}
+\NormalTok{best }\OtherTok{\textless{}{-}}\NormalTok{ cv.Carseats}\SpecialCharTok{$}\NormalTok{size[...]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -274,7 +275,7 @@ variable.
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(randomForest)}
 \FunctionTok{dim}\NormalTok{(Carseats)}
-\NormalTok{bag.Carseats }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., ... , }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{, }\AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{bag.Carseats }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., ... , }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{, }\AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -294,7 +295,11 @@ variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rf.Carseats }\OtherTok{=} \FunctionTok{randomForest}\NormalTok{(Sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{., ... , }\AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }\AttributeTok{ntree =} \DecValTok{500}\NormalTok{, }\AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{rf.Carseats }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+\NormalTok{                            ...,}
+                            \AttributeTok{mtry =} \DecValTok{3}\NormalTok{,}
+                            \AttributeTok{ntree =} \DecValTok{500}\NormalTok{,}
+                            \AttributeTok{importance =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -308,9 +313,7 @@ variable.
   bagging and the random forest method.
 \end{enumerate}
 
-\hypertarget{problem-3-classification}{%
-\subsection{Problem 3 --
-Classification}\label{problem-3-classification}}
+\subsection{Problem 3 -- Classification}\label{problem-3-classification}
 
 In this exercise you are going to implement a spam filter for e-mails by
 using tree-based methods. Data from 4601 e-mails are collected and can
