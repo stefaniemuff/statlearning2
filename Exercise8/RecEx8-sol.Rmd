@@ -3,7 +3,7 @@ title: 'Module 8: Solutions to Recommended Exercises'
 author:
 - Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "March 5, 2025"
+date: "March 12, 2025"
 output:
   pdf_document:
     fig_caption: yes
