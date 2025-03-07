@@ -1,9 +1,9 @@
 ---
 title: 'Module 8: Solutions to Recommended Exercises'
 author:
-- Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "March 7, 2024"
+date: "March 12, 2025"
 output:
   pdf_document:
     fig_caption: yes
@@ -14,18 +14,24 @@ output:
     toc: no
     toc_depth: '2'
     df_print: paged
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize")
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize")
 ```
 
 
-```{r, eval=FALSE,echo=FALSE}
+```{r, eval = FALSE, echo = FALSE}
 install.packages("ISLR")
 install.packages("tree")
 install.packages("randomForest")
@@ -48,7 +54,9 @@ a)
 
 2. _Cost complexity pruning_ of the large tree from previoius step, in order to obtain a sequence of best trees as a function of a parameter $\alpha$. Each value of $\alpha$ corresponds to a subtree that minimize the following equation (several $\alpha$s for the same tree):
 
-$$\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,$$
+$$
+\sum_{m=1}^{|T|}\sum_{i:x_i\in R_m}(y_i - \hat y_{R_m})^2 + \alpha |T|,
+$$
 
 where $|T|$ is the number of terminal nodes.
 
@@ -89,7 +97,9 @@ That is by averaging we get reduced variance.
 
 *Idea behind bagging*:
 For decision trees, if we have $B$ training  sets, we could estimate $\hat{f}_1({\boldsymbol x}),\hat{f}_2({\boldsymbol x}),\ldots, \hat{f}_B({\boldsymbol x})$ and average them as
-$$\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .$$
+$$
+\hat{f}_{avg}({\boldsymbol x})=\frac{1}{B}\sum_{b=1}^B \hat{f}_b({\boldsymbol x}) \ .
+$$
 However we do not have many data independent data sets, and we bootstraping to create $B$ datasets. These datasets are however not completely independent and the reduction in variance is therefore not as large as for independent training sets.
 
 *How do random forests improve that idea?*:
@@ -118,22 +128,21 @@ a)
 library(ISLR)
 data("Carseats")
 set.seed(4268)
-n = nrow(Carseats)
-train = sample(1:n, 0.7*nrow(Carseats), replace = F)
-test = (1:n)[-train]
-Carseats.train = Carseats[train,]
-Carseats.test = Carseats[-train,]
+n <- nrow(Carseats)
+train <- sample(n, 0.7*nrow(Carseats), replace = FALSE)
+Carseats.train <- Carseats[train,]
+Carseats.test <- Carseats[-train,]
 ```
 
 b) 
 
-```{r,fig.width=10, fig.height=8,out.width='70%'}
+```{r, fig.width = 10, fig.height = 8, out.width = '70%'}
 library(tree)
-tree.mod = tree(Sales~., Carseats, subset = train)
+tree.mod <- tree(Sales ~ ., Carseats, subset = train)
 summary(tree.mod)
 ```
 
-```{r,fig.width=10, fig.height=8,out.width='70%'}
+```{r, fig.width = 10, fig.height = 8, out.width = '70%'}
 plot(tree.mod)
 text(tree.mod, pretty = 0)
 ```
@@ -145,9 +154,9 @@ text(tree.mod, pretty = 0)
 - For higher prices, Advertising becomes relevant, indicating that higher marketing efforts result in higher sales.
 - etc.
 
-```{r,fig.width=10, fig.height=8,out.width='70%'}
-yhat = predict(tree.mod, newdata = Carseats.test)
-mse = mean((yhat - Carseats.test$Sales)^2)
+```{r, fig.width = 10, fig.height = 8, out.width = '70%'}
+yhat <- predict(tree.mod, newdata = Carseats.test)
+mse <- mean((yhat - Carseats.test$Sales)^2)
 
 cat("test MSE:", mse)
 ```
@@ -156,18 +165,21 @@ c)
 
 ```{r}
 set.seed(4268)
-cv.Carseats  = cv.tree(tree.mod) 
-tree.min =  which.min(cv.Carseats$dev)
-best = cv.Carseats$size[tree.min]
+cv.Carseats <- cv.tree(tree.mod) 
+tree.min <- which.min(cv.Carseats$dev)
+best <- cv.Carseats$size[tree.min]
 plot(cv.Carseats$size, cv.Carseats$dev, type = "b")
-points(cv.Carseats$size[tree.min], cv.Carseats$dev[tree.min], col = "red", pch = 20)
+points(cv.Carseats$size[tree.min],
+       cv.Carseats$dev[tree.min],
+       col = "red",
+       pch = 20)
 ```
 
 We see that trees with sizes 11, 12, 16 and 17 have similar deviance values. We might choose the tree of size 11 as it gives the simpler tree.
 
 
-```{r,fig.width=10, fig.height=8,out.width='70%'}
-pr.tree = prune.tree(tree.mod, best = 11)
+```{r, fig.width = 10, fig.height = 8, out.width = '70%'}
+pr.tree <- prune.tree(tree.mod, best = 11)
 plot(pr.tree)
 text(pr.tree, pretty = 0)
 ```
@@ -175,8 +187,8 @@ text(pr.tree, pretty = 0)
 
 
 ```{r}
-yhat = predict(pr.tree, newdata = Carseats.test)
-mse = mean((yhat - Carseats.test$Sales)^2) 
+yhat <- predict(pr.tree, newdata = Carseats.test)
+mse <- mean((yhat - Carseats.test$Sales)^2) 
 mse
 ```
 
@@ -187,15 +199,19 @@ d)
 ```{r}
 library(randomForest)
 dim(Carseats)
-bag.Carseats = randomForest(Sales~., Carseats.train, mtry=ncol(Carseats)-1, ntree = 500, importance = TRUE)
-yhat.bag = predict(bag.Carseats, newdata = Carseats.test)
-mse.bag = mean((yhat.bag - Carseats.test$Sales)^2)
+bag.Carseats <- randomForest(Sales ~ .,
+                             Carseats.train,
+                             mtry = ncol(Carseats) - 1,
+                             ntree = 500,
+                             importance = TRUE)
+yhat.bag <- predict(bag.Carseats, newdata = Carseats.test)
+mse.bag <- mean((yhat.bag - Carseats.test$Sales)^2)
 mse.bag
 ```
 
 Bagging decreases the test MSE significantly to `r round(mse.bag,2)`. From the importance plots we might conclude that `Price`and `ShelveLoc` are the most important Variables.
 
-```{r,fig.width=8, fig.height=5,out.width='80%'}
+```{r, fig.width = 8, fig.height = 5, out.width = '80%'}
 importance(bag.Carseats)
 varImpPlot(bag.Carseats)
 ```
@@ -205,36 +221,60 @@ varImpPlot(bag.Carseats)
 e) 
 
 ```{r}
-rf.Carseats = randomForest(Sales~., data = Carseats.train, mtry = 3, ntree = 500, importance = TRUE)
-yhat.rf = predict(rf.Carseats, newdata = Carseats.test)
+rf.Carseats <- randomForest(Sales ~ .,
+                            data = Carseats.train,
+                            mtry = 3,
+                            ntree = 500,
+                            importance = TRUE)
+yhat.rf <- predict(rf.Carseats, newdata = Carseats.test)
 mse_forest <- mean((yhat.rf - Carseats.test$Sales)^2)
 mse_forest
 ```
 
 We use $p/3 = 10/3 \approx  3$ trees, and we obtain an MSE of `r round(mse_forest,2)` which is slightly larger than Bagging MSE. The two most important Variables are again `Price`and `ShelveLoc`.
 
-```{r,fig.width=8, fig.height=5,out.width='80%'}
+```{r, fig.width = 8, fig.height = 5, out.width = '80%'}
 importance(rf.Carseats)
 varImpPlot(rf.Carseats)
 ```
 
 f) 
 
-```{r,fig.width=4.5, fig.height=4,out.width='70%'}
+```{r, fig.width = 4.5, fig.height = 4, out.width = '70%'}
 set.seed(123)
 
-train.predictors = Carseats.train[,-1]
-test.predictors = Carseats.test[,-1]
-Y.train = Carseats.train[,1]
-Y.test = Carseats.test[,1]
+train.predictors <- Carseats.train[, -1]
+test.predictors <- Carseats.test[, -1]
+Y.train <- Carseats.train[, 1]
+Y.test <- Carseats.test[, 1]
 
 ntree <- 500
-bag.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 10, ntree = ntree)
-rf.Car = randomForest(train.predictors, y = Y.train, xtest = test.predictors, ytest = Y.test, mtry = 3, ntree = ntree)
-plot(1:ntree, bag.Car$test$mse, col = "blue", type = "l", xlab = "Number of Trees", ylab = "Test MSE",ylim=c(2,2.8))
+bag.Car <- randomForest(train.predictors,
+                        y = Y.train,
+                        xtest = test.predictors,
+                        ytest = Y.test,
+                        mtry = 10,
+                        ntree = ntree)
+rf.Car <- randomForest(train.predictors,
+                       y = Y.train,
+                       xtest = test.predictors,
+                       ytest = Y.test,
+                       mtry = 3,
+                       ntree = ntree)
+plot(1:ntree,
+     bag.Car$test$mse,
+     col = "blue",
+     type = "l",
+     xlab = "Number of Trees",
+     ylab = "Test MSE",
+     ylim = c(2, 2.8))
 lines(1:ntree, rf.Car$test$mse, col = "green")
 
-legend("topright", c("m = p", "m = p/3"), col = c("blue", "green"), cex = 1, lty = 1)
+legend("topright",
+       c("m = p", "m = p/3"),
+       col = c("blue", "green"),
+       cex = 1,
+       lty = 1)
 ```
 
 NB! Typically, RandomForest models outperform Bagging models due to their decorrealtion property stemming from a limited selection of predictors.
@@ -259,20 +299,20 @@ b)
 ```{r}
 library(ISLR)
 set.seed(4268)
-n = nrow(spam)
-train = sample(1:n, 0.7*n, replace = F)
-test = (1:n)[-train]
-spam.train = spam[train,]
-spam.test = spam[-train,]
+n <- nrow(spam)
+train <- sample(1:n, 0.7 * n, replace = FALSE)
+test <- (1:n)[-train]
+spam.train <- spam[train,]
+spam.test <- spam[-train,]
 ```
 
 c) 
 
-```{r,fig.width=10, fig.height=8,out.width='70%'}
-spam.tree=tree(type~.,spam,subset=train)
+```{r, fig.width = 10, fig.height = 8, out.width = '70%'}
+spam.tree <- tree(type~.,spam,subset=train)
 
 plot(spam.tree)
-text(spam.tree,pretty=1)
+text(spam.tree, pretty = 1)
 
 summary(spam.tree)
 ```
@@ -280,70 +320,75 @@ summary(spam.tree)
 d) 
 
 ```{r}
-yhat=predict(spam.tree,spam[test,],type="class")
-response.test=spam$type[test]
+yhat <- predict(spam.tree,spam[test,],type="class")
+response.test <- spam$type[test]
 
-misclass=table(yhat,response.test)
+misclass <- table(yhat,response.test)
 misclass
 
-1-sum(diag(misclass))/sum(misclass)
+1 - sum(diag(misclass)) / sum(misclass)
 ```
   
 e) 
 
-```{r,fig.width=6, fig.height=5,out.width='70%'}
+```{r, fig.width = 6, fig.height = 5, out.width = '70%'}
 set.seed(4268)
 
-cv.spam=cv.tree(spam.tree,FUN=prune.misclass)
+cv.spam <- cv.tree(spam.tree, FUN = prune.misclass)
 
-plot(cv.spam$size,cv.spam$dev,type="b")
+plot(cv.spam$size, cv.spam$dev, type = "b")
 ```
 
 According to the plot the optimal number of terminal nodes is 6 (or larger). We choose 6 as this gives the simplest tree, and prune the tree according to this value.
 
-```{r,fig.width=8, fig.height=6,out.width='70%'}
-prune.spam=prune.misclass(spam.tree,best=6)
+```{r, fig.width = 8, fig.height = 6, out.width = '70%'}
+prune.spam <- prune.misclass(spam.tree, best = 6)
 
 plot(prune.spam)
-text(prune.spam,pretty=1)
+text(prune.spam, pretty = 1)
 ```
 
 We predict the response for the test data:
 
 ```{r}
-yhat.prune=predict(prune.spam,spam[test,],type="class")
+yhat.prune <- predict(prune.spam, spam[test, ], type = "class")
 
-misclass.prune=table(yhat.prune,response.test)
+misclass.prune <- table(yhat.prune, response.test)
 misclass.prune
 ```
 
 The misclassification rate is
 
 ```{r}
-1-sum(diag(misclass.prune))/sum(misclass.prune)
+1 - sum(diag(misclass.prune)) / sum(misclass.prune)
 ```
 
 f) 
 
 ```{r}
 library(randomForest)
-bag.spam=randomForest(type~.,data=spam,subset=train,mtry=ncol(spam)-1,ntree=500,importance=TRUE)
+bag.spam <- randomForest(type ~ .,
+                         data = spam,
+                         subset = train,
+                         mtry = ncol(spam) - 1,
+                         ntree = 500,
+                         importance = TRUE)
 ```
 
 
 We predict the response for the test data as before:
 
 ```{r}
-yhat.bag=predict(bag.spam,newdata=spam[test,])
+yhat.bag <- predict(bag.spam, newdata = spam[test, ])
 
-misclass.bag=table(yhat.bag,response.test)
+misclass.bag <- table(yhat.bag, response.test)
 misclass.bag
 ```
 
 The misclassification rate is
 
 ```{r}
-1-sum(diag(misclass.bag))/sum(misclass.bag)
+1 - sum(diag(misclass.bag)) / sum(misclass.bag)
 ```
 
 g) 
@@ -352,18 +397,23 @@ We now use the random forest-algorithm and consider only $\sqrt{57}\approx 8$ of
 
 ```{r}
 set.seed(4268)
-rf.spam=randomForest(type~.,data=spam,subset=train,mtry=round(sqrt(ncol(spam)-1)),ntree=500,importance=TRUE)
+rf.spam <- randomForest(type ~ .,
+                        data = spam,
+                        subset = train,
+                        mtry = round(sqrt(ncol(spam) - 1)),
+                        ntree = 500,
+                        importance = TRUE)
 ```
 
 We study the importance of each variable
 
-```{r,eval=F}
+```{r, eval = F}
 importance(rf.spam)
 ```
 
 If `MeanDecreaseAccuracy` and `MeanDecreaseGini` are large, the corresponding covariate is important.
 
-```{r,fig.width=9, fig.height=6,out.width='90%'}
+```{r, fig.width = 9, fig.height = 6, out.width = '90%'}
 varImpPlot(rf.spam)
 ```
 
@@ -372,10 +422,10 @@ In this plot we see that `charExclamation` is the most important covariate, foll
 We now predict the response for the test data.
 
 ```{r}
-yhat.rf=predict(rf.spam,newdata=spam[test,])
+yhat.rf <- predict(rf.spam, newdata = spam[test, ])
 
-misclass.rf=table(yhat.rf,response.test)
-1-sum(diag(misclass.rf))/sum(misclass.rf)
+misclass.rf <- table(yhat.rf, response.test)
+1 - sum(diag(misclass.rf)) / sum(misclass.rf)
 ```
 
 The misclassification rate is given by
@@ -385,5 +435,5 @@ misclass.rf
 ```
 
 h) 
-The ranks of missclassification rates: 1) random forest, 2) bagging, 3) decision tree, with a higher rank indicating a lower missclassification rate.
+The ranks of misclassification rates: 1) random forest, 2) bagging, 3) decision tree, with a higher rank indicating a lower misclassification rate.
 This order is what we expected.

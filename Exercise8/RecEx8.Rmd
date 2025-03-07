@@ -1,9 +1,9 @@
 ---
 title: 'Module 8: Recommended Exercises'
 author:
-- Daesoo Lee, Kenneth Aase, Sara Martino, Stefanie Muff
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "March 7, 2024"
+date: "March 12, 2025"
 output:
   pdf_document:
     fig_caption: yes
@@ -14,14 +14,22 @@ output:
     toc: no
     toc_depth: '2'
     df_print: paged
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      cache=TRUE, size="scriptsize",fig.width=5.5, fig.height=3.5)
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      cache = TRUE,
+                      size = "scriptsize",
+                      fig.width = 5.5,
+                      fig.height = 3.5)
 ```
 
 ---
@@ -66,53 +74,57 @@ Now we will seek to predict `Sales` using regression trees and related approache
 a) Split the data set into a training set and a test set. (Hint: Use 70% of the data as training set and the rest 30% as testing set)
 
 **R-hints**
-```{r,eval=F,echo=T}
+```{r, eval = F, echo = T}
 library(ISLR)
 data("Carseats")
 set.seed(4268)
-n = nrow(Carseats)
-train = sample(1:n, 0.7*nrow(Carseats), replace = F)
-test = ...
-Carseats.train = ...
-Carseats.test = ...
+n <- nrow(Carseats)
+train <- sample(n, round(0.7 * n), replace = FALSE)
+test <- ...
+Carseats.train <- ...
+Carseats.test <- ...
 ```
 
 b) Fit a regression tree to the training set. Plot the tree, and interpret the results. What test MSE do you obtain?
 
 **R-hints**
 
-```{r,eval=F,echo=T}
+```{r, eval = F, echo = T}
 library(tree)
-tree.mod = tree(Sales~., ..., data = ...)
+tree.mod <- tree(Sales ~ ., ..., data = ...)
 ```
 
 c) Use cross-validation in order to determine the optimal level of tree complexity. Does pruning the tree improve the test MSE?
 
 **R-hints**
 
-```{r, eval=F, echo=T}
+```{r, eval = F, echo = T}
 set.seed(4268)
-cv.Carseats  = cv.tree(...) 
-tree.min =  which.min(...)
-best = cv.Carseats$size[...]
+cv.Carseats  <- cv.tree(...) 
+tree.min <- which.min(...)
+best <- cv.Carseats$size[...]
 ```
 
 d) Use the bagging approach with 500 trees in order to analyze the data. What test MSE do you obtain? Use the `importance()` function to determine which variables are most important.
 
 **R-hints**
 
-```{r, eval=F, echo=T}
+```{r, eval = F, echo = T}
 library(randomForest)
 dim(Carseats)
-bag.Carseats = randomForest(Sales~., ... , ntree = 500, importance = TRUE)
+bag.Carseats <- randomForest(Sales ~ ., ... , ntree = 500, importance = TRUE)
 ```
 
 e) Use random forests and to analyze the data. Include 500 trees and select 3 variables for each split. What test MSE do you obtain? Use the `importance()` function to determine which variables are most important. Describe the effect of m, the number of variables considered at each split, on the error rate obtained.
 
 **R-hints**
 
-```{r, eval=F, echo=T}
-rf.Carseats = randomForest(Sales~., ... , mtry = 3, ntree = 500, importance = TRUE)
+```{r, eval = F, echo = T}
+rf.Carseats <- randomForest(Sales ~ .,
+                            ...,
+                            mtry = 3,
+                            ntree = 500,
+                            importance = TRUE)
 ```
 
 

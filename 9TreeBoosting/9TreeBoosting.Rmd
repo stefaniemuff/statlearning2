@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 9: Boosting and additive trees"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "March 14 and 15, 2024"
+author: "Stefanie Muff and Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "March 13 and 14, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -1500,13 +1500,13 @@ plot(boost.boston,i="lstat",ylab="medv")
 
 ---
 
-# Can we use boosting for linear regression models?
+# Application of boosting for genomic prediction
 
 $~$
 
 Yes!
 
-Didrik Lindløv Sand, a current master student, will present his work.
+Gard Westrum Gravdal, a current master student, will present his work.
 
 
 

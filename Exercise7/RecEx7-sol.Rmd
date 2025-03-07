@@ -1,9 +1,9 @@
 ---
 title: 'Module 7: Solutions to recommended Exercises'
 author:
-- Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee
+- Sara Martino, Stefanie Muff, Kenneth Aase
 - Department of Mathematical Sciences, NTNU
-date: "Feb 29, 2024"
+date: "Feb 28, 2025"
 output:
   pdf_document:
     fig_caption: yes
@@ -14,7 +14,7 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
@@ -59,7 +59,8 @@ co <- rainbow(length(deg))
 MSE <- sapply(deg, function(d) {
   # fit model with this degree
   mod <- lm(mpg ~ poly(horsepower, d), ds[tr, ])
-  # add lines to the plot - use fitted values (for mpg) and horsepower from training set
+  # add lines to the plot 
+  # use fitted values (for mpg) and horsepower from training set
   lines(cbind(ds[tr, 1], mod$fit)[order(ds[tr, 1]), ], col = co[d])
   # calculate mean MSE - this is returned in the MSE variable
   mean((predict(mod, ds[-tr, ]) - ds[-tr, 2])^2)
@@ -93,8 +94,8 @@ dat <- c() # make a empty variable to store predicted values
 for (d in deg) {
   # fit model with this degree
   mod <- lm(mpg ~ poly(horsepower, d), ds[tr, ])
-  # dataframe of predicted values - use fitted values (for mpg) and horsepower from
-  # training set and add column (factor) for degree
+  # data frame of predicted values - use fitted values (for mpg) and horsepower 
+  # from training set and add column (factor) for degree
   dat <- rbind(dat, data.frame(
     horsepower = ds[tr, 1], mpg = mod$fit,
     degree = as.factor(rep(d, length(mod$fit)))
@@ -128,17 +129,19 @@ fit <- lm(mpg ~ factor(origin))
 new <- data.frame(origin = as.factor(sort(unique(origin))))
 # predicted values and standard errors
 pred <- predict(fit, new, se = TRUE)
-# dataframe including CI (z_alpha/2 = 1.96)
+# data frame including CI (z_alpha/2 = 1.96)
 dat <- data.frame(
   origin = new, mpg = pred$fit,
   lwr = pred$fit - 1.96 * pred$se.fit,
-  upr = pred$fit + 1.96 * pred$se.fit
-)
+  upr = pred$fit + 1.96 * pred$se.fit)
+
 # plot the fitted/predicted values and CI
 ggplot(dat, aes(x = origin, y = mpg)) +
   geom_point() +
   geom_segment(aes(x = origin, y = lwr, xend = origin, yend = upr)) +
-  scale_x_discrete(labels = c("1" = "1.American", "2" = "2.European", "3" = "3.Japanese"))
+  scale_x_discrete(labels = c("1" = "1.American",
+                              "2" = "2.European",
+                              "3" = "3.Japanese"))
 ```
 
 ## Problem 3
@@ -197,16 +200,20 @@ attach(Wage)
 # install.packages("gam")
 library(gam)
 
-# Write a couple of functions first, which will be used to produce the components
-# of the design matrix
+# Write a couple of functions first, which will be used to produce the 
+# components of the design matrix.
 # We write separate functions to generate X_1, X_2 and X_3 (the three components
 # of the model)
 # X_1: The function mybs() generates basis functions for the cubic spline
-mybs <- function(x, knots) cbind(x, x^2, x^3, sapply(knots, function(y) pmax(0, x - y)^3))
+mybs <- function(x, knots) {
+  cbind(x, x^2, x^3, sapply(knots, function(y) pmax(0, x - y)^3))
+} 
 
-# X_2: The function myns() generates basis functions for the natural cubic spline;
+# X_2: The function myns generates basis functions for the natural cubic spline;
 # d() is a helper function
-d <- function(c, cK, x) (pmax(0, x - c)^3 - pmax(0, x - cK)^3) / (cK - c)
+d <- function(c, cK, x) {
+  (pmax(0, x - c)^3 - pmax(0, x - cK)^3) / (cK - c)
+}
 myns <- function(x, knots) {
   kn <- c(min(x), knots, max(x))
   K <- length(kn)
@@ -216,7 +223,9 @@ myns <- function(x, knots) {
 
 # X_3: The function myfactor() generates the dummy-basis functions for a factor
 # covariate, building on the R-function model.matrix()
-myfactor <- function(x) model.matrix(~x)[, -1]
+myfactor <- function(x) {
+  model.matrix(~x)[, -1]
+}
 
 # Once these functions are prepared, we can generate the model matrix
 # X = (1,X_1, X_2, X_3) as a one-liner
@@ -226,18 +235,23 @@ X <- cbind(1, mybs(age, c(40, 60)), myns(year, 2006), myfactor(education))
 We have now created a model matrix $\mathbf X$ "by hand". The thing we wanted to illustrate with this exercise is that this hand-made matrix does not correspond to the internal representation of the model matrix that we would direclty get using the `gam()` function:
 
 ```{r eval = T, message=FALSE, warning=FALSE}
-X_gam <- model.matrix(~ bs(age, knots = c(40, 60)) + ns(year, knots = 2006) + education)
+X_gam <- model.matrix(~ bs(age, knots = c(40, 60)) +
+                        ns(year, knots = 2006) +
+                        education)
 ```
 
 ```{r eval = T, message=FALSE, warning=FALSE}
 # Anyway, if we now use our model matrix to fit a linear regression model
 # (excluding the intercept -1, because the first column of X already contains
-# only 1's and thus encodes for an intercept), we can obtain predicted values for yhat
+# only 1's and thus encodes for an intercept), we can obtain predicted values 
+# for yhat
 myhat <- lm(wage ~ X - 1)$fit
 
 # Comparing to the fitted values with gam shows that they are all equal
 # (all.equal() will indicate TRUE)
-yhat <- gam(wage ~ bs(age, knots = c(40, 60)) + ns(year, knots = 2006) + education)$fit
+yhat <- gam(wage ~ bs(age, knots = c(40, 60)) +
+              ns(year, knots = 2006) +
+              education)$fit
 all.equal(myhat, yhat)
 ```
 

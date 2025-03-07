@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie Muff" />
+<meta name="author" content="Sara Martino, Stefanie Muff, Kenneth Aase" />
 <meta name="author" content="Department of Mathematical Sciences, NTNU" />
 
-<meta name="date" content="2023-03-09" />
+<meta name="date" content="2025-03-12" />
 
 <title>Module 8: Recommended Exercises</title>
 
@@ -1623,11 +1623,10 @@ display: none;
 
 
 <h1 class="title toc-ignore">Module 8: Recommended Exercises</h1>
-<h3 class="subtitle">TMA4268 Statistical Learning V2023</h3>
-<h4 class="author">Daesoo Lee, Emma Skarstein, Kenneth Aase, Stefanie
-Muff</h4>
+<h3 class="subtitle">TMA4268 Statistical Learning V2025</h3>
+<h4 class="author">Sara Martino, Stefanie Muff, Kenneth Aase</h4>
 <h4 class="author">Department of Mathematical Sciences, NTNU</h4>
-<h4 class="date">March 9, 2023</h4>
+<h4 class="date">March 12, 2025</h4>
 
 </div>
 
@@ -1655,8 +1654,30 @@ methods?</p></li>
 </div>
 <div id="problem-2-regression-book-ex.-8" class="section level2">
 <h2>Problem 2 – Regression (Book Ex. 8)</h2>
-<p>In the lab, a classification tree was applied to the Carseats data
-set after converting the variable <code>Sales</code> into a qualitative
+<p>In the lab (8.3 Lab: Decision Trees), the Carseats dataset is used.
+This dataset comprises sales data for child car seats at 400 different
+stores. The dataset includes a mix of quantitative and qualitative
+predictors.</p>
+<p>Key attributes of the dataset include:</p>
+<ul>
+<li>Sales: The number of car seats sold at each location, serving as the
+response variable for regression analyses.</li>
+<li>CompPrice: The price charged by competitors at each location.</li>
+<li>Income: The community income level where the store is located.</li>
+<li>Advertising: The budget for advertising in each location.</li>
+<li>Population: The population size in the region around the store.</li>
+<li>Price: The price of the car seats at each store.</li>
+<li>ShelveLoc: A qualitative variable indicating the quality of the
+shelving location at the store (Good, Medium, Bad).</li>
+<li>Age: The average age of the local population.</li>
+<li>Education: The education level at each location.</li>
+<li>Urban: A qualitative variable indicating whether the store is in an
+urban or rural location.</li>
+<li>US: A qualitative variable indicating whether the store is in the US
+or not.</li>
+</ul>
+<p>In the lab, a classification tree was applied to the Carseats dataset
+after converting the variable <code>Sales</code> into a qualitative
 response variable. Now we will seek to predict <code>Sales</code> using
 regression trees and related approaches, treating the response as a
 quantitative variable.</p>
@@ -1668,27 +1689,27 @@ quantitative variable.</p>
 <pre class="r"><code>library(ISLR)
 data(&quot;Carseats&quot;)
 set.seed(4268)
-n = nrow(Carseats)
-train = sample(1:n, 0.7*nrow(Carseats), replace = F)
-test = ...
-Carseats.train = ...
-Carseats.test = ...</code></pre>
+n &lt;- nrow(Carseats)
+train &lt;- sample(n, round(0.7 * n), replace = FALSE)
+test &lt;- ...
+Carseats.train &lt;- ...
+Carseats.test &lt;- ...</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Fit a regression tree to the training set. Plot the tree, and
 interpret the results. What test MSE do you obtain?</li>
 </ol>
 <p><strong>R-hints</strong></p>
 <pre class="r"><code>library(tree)
-tree.mod = tree(Sales~., ..., data = ...)</code></pre>
+tree.mod &lt;- tree(Sales ~ ., ..., data = ...)</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Use cross-validation in order to determine the optimal level of tree
 complexity. Does pruning the tree improve the test MSE?</li>
 </ol>
 <p><strong>R-hints</strong></p>
 <pre class="r"><code>set.seed(4268)
-cv.Carseats  = cv.tree(...) 
-tree.min =  which.min(...)
-best = cv.Carseats$size[...]</code></pre>
+cv.Carseats  &lt;- cv.tree(...) 
+tree.min &lt;- which.min(...)
+best &lt;- cv.Carseats$size[...]</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Use the bagging approach with 500 trees in order to analyze the
 data. What test MSE do you obtain? Use the <code>importance()</code>
@@ -1697,7 +1718,7 @@ function to determine which variables are most important.</li>
 <p><strong>R-hints</strong></p>
 <pre class="r"><code>library(randomForest)
 dim(Carseats)
-bag.Carseats = randomForest(Sales~., ... , ntree = 500, importance = TRUE)</code></pre>
+bag.Carseats &lt;- randomForest(Sales ~ ., ... , ntree = 500, importance = TRUE)</code></pre>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Use random forests and to analyze the data. Include 500 trees and
 select 3 variables for each split. What test MSE do you obtain? Use the
@@ -1706,18 +1727,12 @@ important. Describe the effect of m, the number of variables considered
 at each split, on the error rate obtained.</li>
 </ol>
 <p><strong>R-hints</strong></p>
-<pre class="r"><code>rf.Carseats = randomForest(Sales~., ... , mtry = 3, ntree = 500, importance = TRUE)</code></pre>
+<pre class="r"><code>rf.Carseats &lt;- randomForest(Sales ~ .,
+                            ...,
+                            mtry = 3,
+                            ntree = 500,
+                            importance = TRUE)</code></pre>
 <ol start="6" style="list-style-type: lower-alpha">
-<li>Finally use boosting with 500 trees, an interaction depth <span class="math inline">\(d=4\)</span> and a shrinkage factor <span class="math inline">\(\lambda=0.1\)</span> (default in the
-<code>gbm()</code> function) on our data. Compare the MSE to all other
-methods.</li>
-</ol>
-<p><strong>R-hints</strong></p>
-<pre class="r"><code>library(gbm)
-r.boost=gbm(Sales~., Carseats.train,
-                 distribution=...,
-                 n.trees= ... ,interaction.depth= ..., shrinkage = ...)</code></pre>
-<ol start="7" style="list-style-type: lower-alpha">
 <li>What is the effect of the number of trees (<code>ntree</code>) on
 the test error? Plot the test MSE as a function of <code>ntree</code>
 for both the bagging and the random forest method.</li>
@@ -1762,12 +1777,12 @@ importance of each variable by using the function
 <code>importance()</code>. Are the results as expected based on earlier
 results? Again, predict the response for the test data and report the
 misclassification rate.</p></li>
-<li><p>Use <code>gbm()</code> to construct a boosted classification tree
-using 5000 trees, an interaction depth of <span class="math inline">\(d=3\)</span> and a shrinkage parameter of <span class="math inline">\(\lambda=0.001\)</span>. Predict the response for
-the test data and report the misclassification rate.</p></li>
-<li><p>Compare the misclassification rates in d-h. Which method gives
-the lowest misclassification rate for the test data? Are the results as
-expected?</p></li>
+</ol>
+<!-- h) Use `gbm()` to construct a boosted classification tree using 5000 trees, an interaction depth of $d=3$ and a shrinkage parameter of $\lambda=0.001$. Predict the response for the test data and report the misclassification rate. -->
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Compare the misclassification rates in d-g. Which method gives the
+lowest misclassification rate for the test data? Are the results as
+expected?</li>
 </ol>
 </div>
 

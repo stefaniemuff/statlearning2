@@ -98,12 +98,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 7: Solutions to recommended Exercises},
-  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo Lee; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Stefanie Muff, Kenneth Aase; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -118,16 +118,15 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Sara Martino, Stefanie Muff, Kenneth Aase, Daesoo
-Lee \and Department of Mathematical Sciences, NTNU}
-\date{Feb 29, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Sara Martino, Stefanie Muff, Kenneth Aase \and Department of
+Mathematical Sciences, NTNU}
+\date{Feb 28, 2025}
 
 \begin{document}
 \maketitle
 
-\hypertarget{problem-1}{%
-\subsection{Problem 1}\label{problem-1}}
+\subsection{Problem 1}\label{problem-1}
 
 The code below performs polynomial regression of degree \(1\), \(2\),
 \(3\) and \(4\). The function \texttt{sapply()} is an efficient
@@ -155,7 +154,8 @@ polynomial degree.
 \NormalTok{MSE }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(deg, }\ControlFlowTok{function}\NormalTok{(d) \{}
   \CommentTok{\# fit model with this degree}
 \NormalTok{  mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(horsepower, d), ds[tr, ])}
-  \CommentTok{\# add lines to the plot {-} use fitted values (for mpg) and horsepower from training set}
+  \CommentTok{\# add lines to the plot }
+  \CommentTok{\# use fitted values (for mpg) and horsepower from training set}
   \FunctionTok{lines}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(ds[tr, }\DecValTok{1}\NormalTok{], mod}\SpecialCharTok{$}\NormalTok{fit)[}\FunctionTok{order}\NormalTok{(ds[tr, }\DecValTok{1}\NormalTok{]), ], }\AttributeTok{col =}\NormalTok{ co[d])}
   \CommentTok{\# calculate mean MSE {-} this is returned in the MSE variable}
   \FunctionTok{mean}\NormalTok{((}\FunctionTok{predict}\NormalTok{(mod, ds[}\SpecialCharTok{{-}}\NormalTok{tr, ]) }\SpecialCharTok{{-}}\NormalTok{ ds[}\SpecialCharTok{{-}}\NormalTok{tr, }\DecValTok{2}\NormalTok{])}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
@@ -207,8 +207,8 @@ The same solution using \texttt{ggplot} is shown below.
 \ControlFlowTok{for}\NormalTok{ (d }\ControlFlowTok{in}\NormalTok{ deg) \{}
   \CommentTok{\# fit model with this degree}
 \NormalTok{  mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(horsepower, d), ds[tr, ])}
-  \CommentTok{\# dataframe of predicted values {-} use fitted values (for mpg) and horsepower from}
-  \CommentTok{\# training set and add column (factor) for degree}
+  \CommentTok{\# data frame of predicted values {-} use fitted values (for mpg) and horsepower }
+  \CommentTok{\# from training set and add column (factor) for degree}
 \NormalTok{  dat }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(dat, }\FunctionTok{data.frame}\NormalTok{(}
     \AttributeTok{horsepower =}\NormalTok{ ds[tr, }\DecValTok{1}\NormalTok{], }\AttributeTok{mpg =}\NormalTok{ mod}\SpecialCharTok{$}\NormalTok{fit,}
     \AttributeTok{degree =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(d, }\FunctionTok{length}\NormalTok{(mod}\SpecialCharTok{$}\NormalTok{fit)))}
@@ -239,8 +239,7 @@ The same solution using \texttt{ggplot} is shown below.
 
 \includegraphics{RecEx7-sol_files/figure-latex/unnamed-chunk-2-3.pdf}
 
-\hypertarget{problem-2}{%
-\subsection{Problem 2}\label{problem-2}}
+\subsection{Problem 2}\label{problem-2}
 
 We use \texttt{factor(origin)} for conversion to a factor variable. The
 function \texttt{predict(...,\ se\ =\ TRUE)} gives fitted values with
@@ -255,24 +254,25 @@ standard errors.
 \NormalTok{new }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{origin =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(origin))))}
 \CommentTok{\# predicted values and standard errors}
 \NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit, new, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\# dataframe including CI (z\_alpha/2 = 1.96)}
+\CommentTok{\# data frame including CI (z\_alpha/2 = 1.96)}
 \NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
   \AttributeTok{origin =}\NormalTok{ new, }\AttributeTok{mpg =}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{fit,}
   \AttributeTok{lwr =}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{fit }\SpecialCharTok{{-}} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{se.fit,}
-  \AttributeTok{upr =}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{fit }\SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{se.fit}
-\NormalTok{)}
+  \AttributeTok{upr =}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{fit }\SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ pred}\SpecialCharTok{$}\NormalTok{se.fit)}
+
 \CommentTok{\# plot the fitted/predicted values and CI}
 \FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ origin, }\AttributeTok{y =}\NormalTok{ mpg)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ origin, }\AttributeTok{y =}\NormalTok{ lwr, }\AttributeTok{xend =}\NormalTok{ origin, }\AttributeTok{yend =}\NormalTok{ upr)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"} \OtherTok{=} \StringTok{"1.American"}\NormalTok{, }\StringTok{"2"} \OtherTok{=} \StringTok{"2.European"}\NormalTok{, }\StringTok{"3"} \OtherTok{=} \StringTok{"3.Japanese"}\NormalTok{))}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"} \OtherTok{=} \StringTok{"1.American"}\NormalTok{,}
+                              \StringTok{"2"} \OtherTok{=} \StringTok{"2.European"}\NormalTok{,}
+                              \StringTok{"3"} \OtherTok{=} \StringTok{"3.Japanese"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{RecEx7-sol_files/figure-latex/unnamed-chunk-3-1.pdf}
 
-\hypertarget{problem-3}{%
-\subsection{Problem 3}\label{problem-3}}
+\subsection{Problem 3}\label{problem-3}
 
 The request is a design matrix \(X\) for a natural cubic spline with
 \(X =\) \texttt{year} and one internal knot at \(2006\). The definition
@@ -325,8 +325,7 @@ The design matrix (here also including an intercept term) is given by
 
 where \(b_1(x_i)\) and \(b_2(x_i)\) are as found above.
 
-\hypertarget{problem-4}{%
-\subsection{Problem 4}\label{problem-4}}
+\subsection{Problem 4}\label{problem-4}
 
 The matrix \(\mathbf X\) is obtained by using \texttt{cbind()} to join
 an intercept, a cubic spline, a natural cubic spline and a factor.
@@ -338,16 +337,20 @@ an intercept, a cubic spline, a natural cubic spline and a factor.
 \CommentTok{\# install.packages("gam")}
 \FunctionTok{library}\NormalTok{(gam)}
 
-\CommentTok{\# Write a couple of functions first, which will be used to produce the components}
-\CommentTok{\# of the design matrix}
+\CommentTok{\# Write a couple of functions first, which will be used to produce the }
+\CommentTok{\# components of the design matrix.}
 \CommentTok{\# We write separate functions to generate X\_1, X\_2 and X\_3 (the three components}
 \CommentTok{\# of the model)}
 \CommentTok{\# X\_1: The function mybs() generates basis functions for the cubic spline}
-\NormalTok{mybs }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, knots) }\FunctionTok{cbind}\NormalTok{(x, x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, x}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, }\FunctionTok{sapply}\NormalTok{(knots, }\ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ y)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{))}
+\NormalTok{mybs }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
+  \FunctionTok{cbind}\NormalTok{(x, x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, x}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{, }\FunctionTok{sapply}\NormalTok{(knots, }\ControlFlowTok{function}\NormalTok{(y) }\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ y)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{))}
+\NormalTok{\} }
 
-\CommentTok{\# X\_2: The function myns() generates basis functions for the natural cubic spline;}
+\CommentTok{\# X\_2: The function myns generates basis functions for the natural cubic spline;}
 \CommentTok{\# d() is a helper function}
-\NormalTok{d }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(c, cK, x) (}\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ c)}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ cK)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (cK }\SpecialCharTok{{-}}\NormalTok{ c)}
+\NormalTok{d }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(c, cK, x) \{}
+\NormalTok{  (}\FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ c)}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, x }\SpecialCharTok{{-}}\NormalTok{ cK)}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (cK }\SpecialCharTok{{-}}\NormalTok{ c)}
+\NormalTok{\}}
 \NormalTok{myns }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, knots) \{}
 \NormalTok{  kn }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{min}\NormalTok{(x), knots, }\FunctionTok{max}\NormalTok{(x))}
 \NormalTok{  K }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(kn)}
@@ -357,7 +360,9 @@ an intercept, a cubic spline, a natural cubic spline and a factor.
 
 \CommentTok{\# X\_3: The function myfactor() generates the dummy{-}basis functions for a factor}
 \CommentTok{\# covariate, building on the R{-}function model.matrix()}
-\NormalTok{myfactor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{myfactor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
 
 \CommentTok{\# Once these functions are prepared, we can generate the model matrix}
 \CommentTok{\# X = (1,X\_1, X\_2, X\_3) as a one{-}liner}
@@ -372,7 +377,9 @@ that we would direclty get using the \texttt{gam()} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{X\_gam }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education)}
+\NormalTok{X\_gam }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+}
+                        \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{                        education)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -380,12 +387,15 @@ that we would direclty get using the \texttt{gam()} function:
 \begin{Highlighting}[]
 \CommentTok{\# Anyway, if we now use our model matrix to fit a linear regression model}
 \CommentTok{\# (excluding the intercept {-}1, because the first column of X already contains}
-\CommentTok{\# only 1\textquotesingle{}s and thus encodes for an intercept), we can obtain predicted values for yhat}
+\CommentTok{\# only 1\textquotesingle{}s and thus encodes for an intercept), we can obtain predicted values }
+\CommentTok{\# for yhat}
 \NormalTok{myhat }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{fit}
 
 \CommentTok{\# Comparing to the fitted values with gam shows that they are all equal}
 \CommentTok{\# (all.equal() will indicate TRUE)}
-\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{gam}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education)}\SpecialCharTok{$}\NormalTok{fit}
+\NormalTok{yhat }\OtherTok{\textless{}{-}} \FunctionTok{gam}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}} \FunctionTok{bs}\NormalTok{(age, }\AttributeTok{knots =} \FunctionTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{)) }\SpecialCharTok{+}
+              \FunctionTok{ns}\NormalTok{(year, }\AttributeTok{knots =} \DecValTok{2006}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{              education)}\SpecialCharTok{$}\NormalTok{fit}
 \FunctionTok{all.equal}\NormalTok{(myhat, yhat)}
 \end{Highlighting}
 \end{Shaded}
@@ -401,8 +411,7 @@ Well, just as there were several ways to represent polynomials, there
 are also many equivalent ways to represent splines or factor variables
 using different choices of basis functions.
 
-\hypertarget{problem-5}{%
-\subsection{Problem 5}\label{problem-5}}
+\subsection{Problem 5}\label{problem-5}
 
 Fit additive model and commenting:
 
