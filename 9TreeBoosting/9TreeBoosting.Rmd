@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 9: Boosting and additive trees"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "March 14 and 15, 2024"
+author: "Stefanie Muff and Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "March 13 and 14, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -121,7 +121,7 @@ $~$
 
 \vspace{2mm}
 
-* It is also possible to boost, \emph{e.g.}, linear or penalized regression models (see presentation by a master student on Friday).
+* It is also possible to boost, \emph{e.g.}, linear or penalized regression models.
 
 
 ---
@@ -432,7 +432,7 @@ The procedure is repeated until some stopping criterion is reached. Each of the 
 
 1. Set $\hat{f}(x) = 0$ and $r_i = y_i$ for all $i$ in the training set.
 2. For $b=1,2,...,B$, repeat:  
-    a) Fit a tree $\hat{f}^b$ with $d$ splits ($d+1$ terminal nodes) to the training data.  
+    a) Fit a tree $\hat{f}^b$ with $d$ splits ($d+1$ terminal nodes) to the training data $(X,r)$.  
     b) Update $\hat{f}$ by adding in a shrunken version of the new tree: $$\hat{f}(x) \leftarrow \hat{f}(x)+\nu \hat{f}^b(x).$$  
     c) Update the residuals, $$r_i \leftarrow r_i - \nu \hat{f}^b(x_i).$$  
 3. The boosted model is $\hat{f}(x) = \sum_{b=1}^B \nu \hat{f}^b(x).$
@@ -565,10 +565,10 @@ $~$
 Start by looking again at _a single tree_. We need to find regions $R_j$ and values $f(x)=\gamma_j$ if $x\in R_j$, for $j=1,2,\ldots,J$. The tree can then be expressed as 
 
 \begin{equation*} 
-T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ .
+T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ ,
 \end{equation*}
 
-
+with parameters $\Theta=\{R_j,\gamma_j\}_1^J$. 
 For a given division into regions, we want to minimize
 
 \begin{equation}\label{eq:treeopt}
@@ -709,7 +709,7 @@ $~$
 
 $~$
 
-Recall that we want to fit trees $$f_m(x)=T(x;\Theta_m)=\sum_{j=1}^J \gamma_j I(x\in R_j) \ , $$ not aribtrary predictor functions $\mathbf{f}_m$. 
+Recall that we want to fit trees $$f_m(x)=T(x;\Theta_m)=\sum_{j=1}^J \gamma_j I(x\in R_j) \ , $$ not arbitrary predictor functions $\mathbf{f}_m$. 
 
 
 $~$
@@ -881,7 +881,7 @@ $~$
 $$-g_{ikm} = \left[ \frac{\partial L(y_i, f_1(x_i),\ldots, f_K(x_i))}{\partial f_k(x_i)} \right]_{f_{m-1}(x_i)} = I(y_i =k) - p_k(x_i) \ .$$
 $~$
 
-* For $K$ classes, we must build $K$ trees in each iteration of step 2. in the boosting procedure!
+* For $K$ classes, we must build $K$ trees in each iteration of step 2 in the boosting procedure!
 
 \vspace{2mm}
 
@@ -889,7 +889,7 @@ $~$
 
 \vspace{2mm}
 
-* In step 3., we aggregate the class probabilities for each class $k$.
+* In step 3, we aggregate the class probabilities for each class $k$.
 
 
 
@@ -1497,16 +1497,6 @@ plot(boost.boston,i="lstat",ylab="medv")
 
 
 
-
----
-
-# Can we use boosting for linear regression models?
-
-$~$
-
-Yes!
-
-Didrik Lindløv Sand, a current master student, will present his work.
 
 
 

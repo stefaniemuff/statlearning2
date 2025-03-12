@@ -57,7 +57,7 @@ Boosting: Based on building many models *sequentially*, where we let each model 
 
 ## Problem 2
 
-Consider the Gradient Tree Boosting Algorithm (given on slide 35 in this week's lectures).
+Consider the Gradient Tree Boosting Algorithm (given on slide 34 in this week's lectures).
 
 Explain the meaning behind each of the following symbols. If relevant, also explain what the impact of changing them will be, and explain how one might find or choose them.
 
