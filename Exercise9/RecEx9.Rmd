@@ -1,20 +1,20 @@
 ---
 title: 'Module 9: Recommended Exercises'
 author:
-- Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie Muff
+- Kenneth Aase, Sara Martino, Stefanie Muff
 - Department of Mathematical Sciences, NTNU
-date: "March 14, 2024"
+date: "March 19, 2025"
 output:
-  # html_document:
-  #   df_print: paged
-  #   toc: no
-  #   toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: no
+    toc_depth: '2'
   pdf_document:
     fig_caption: yes
     keep_tex: yes
     toc: no
     toc_depth: 2
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 

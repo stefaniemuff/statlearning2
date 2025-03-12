@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie Muff" />
+<meta name="author" content="Kenneth Aase, Sara Martino, Stefanie Muff" />
 <meta name="author" content="Department of Mathematical Sciences, NTNU" />
 
-<meta name="date" content="2024-03-14" />
+<meta name="date" content="2025-03-19" />
 
 <title>Module 9: Recommended Exercises</title>
 
@@ -1623,11 +1623,10 @@ display: none;
 
 
 <h1 class="title toc-ignore">Module 9: Recommended Exercises</h1>
-<h3 class="subtitle">TMA4268 Statistical Learning V2024</h3>
-<h4 class="author">Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie
-Muff</h4>
+<h3 class="subtitle">TMA4268 Statistical Learning V2025</h3>
+<h4 class="author">Kenneth Aase, Sara Martino, Stefanie Muff</h4>
 <h4 class="author">Department of Mathematical Sciences, NTNU</h4>
-<h4 class="date">March 14, 2024</h4>
+<h4 class="date">March 19, 2025</h4>
 
 </div>
 
@@ -1709,7 +1708,10 @@ marker_effects &lt;- apply(effect_weights, 1, function(w) {
 genetics &lt;- as.vector(X %*% marker_effects)
 environment &lt;- rnorm(N, sd = sqrt(var(genetics) / 2))
 y &lt;- genetics + environment
-dat &lt;- cbind(y, as.data.frame(X))</code></pre>
+dat &lt;- cbind(y, as.data.frame(X))
+
+# Looking at a few entries in the data:
+dat[1:6,1:20]</code></pre>
 <p>We will now try to predict <span class="math inline">\(y\)</span>
 using various tree boosting methods, adapted from code provided in .</p>
 <div id="a-a-basic-gbm" class="section level3">
@@ -1796,10 +1798,7 @@ grid_perf</code></pre>
 <h3>c) XGboost</h3>
 <p>Below we also provide code for applying cross-validated XGBoost to
 the same data set. Expand this code to perform a search of the
-hyperparameter space, similar to b). Finally, experimenting with the
-code from a), b) and c), what is the best model you are able to find?
-Fit that model using all available training data (no
-cross-validation).</p>
+hyperparameter space, similar to b).</p>
 <pre class="r"><code>set.seed(123)
 xgb &lt;- xgb.cv(
   data = X,
@@ -1818,6 +1817,12 @@ xgb &lt;- xgb.cv(
 
 # minimum test CV RMSE
 min(xgb$evaluation_log$test_rmse_mean)</code></pre>
+</div>
+<div id="d-model-evaluation" class="section level3">
+<h3>d) Model evaluation</h3>
+<p>Finally, experimenting with the code from a), b) and c), what is the
+best model you are able to find? Fit that model using all available
+training data (no cross-validation).</p>
 </div>
 </div>
 

@@ -98,12 +98,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 9: Recommended Exercises (Solution)},
-  pdfauthor={Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
+  pdfauthor={Kenneth Aase, Sara Martino, Stefanie Muff; Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -118,10 +118,10 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Kenneth Aase, Daesoo Lee, Sara Martino, Stefanie
-Muff \and Department of Mathematical Sciences, NTNU}
-\date{March 14, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Kenneth Aase, Sara Martino, Stefanie Muff \and Department of
+Mathematical Sciences, NTNU}
+\date{March 19, 2025}
 
 \begin{document}
 \maketitle
@@ -133,8 +133,7 @@ book (Lab: Boosting)}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{problem-1}{%
-\subsection{Problem 1}\label{problem-1}}
+\subsection{Problem 1}\label{problem-1}
 
 Both \textbf{bagging} and \textbf{boosting} are \emph{ensemble} methods.
 
@@ -162,8 +161,7 @@ Based on building many models \emph{sequentially}, where we let each
 model improve the fit for the parts of the problem that the model in the
 previous iteration struggled with.
 
-\hypertarget{problem-2}{%
-\subsection{Problem 2}\label{problem-2}}
+\subsection{Problem 2}\label{problem-2}
 
 Consider the Gradient Tree Boosting Algorithm (given on slide 35 in this
 week's lectures).
@@ -228,8 +226,7 @@ tree will be - i.e.~the simpler the base learners in the ensemble will
 be. And vice versa. More complicated base learners will also mean a
 higher computational cost per iteration.
 
-\hypertarget{problem-3---learning-rate}{%
-\subsection{Problem 3 - Learning rate}\label{problem-3---learning-rate}}
+\subsection{Problem 3 - Learning rate}\label{problem-3---learning-rate}
 
 The algorithm mentioned in Problem 2 does not include the so-called
 \emph{learning rate} parameter \(\nu\). In the context of boosting
@@ -257,9 +254,8 @@ would read
 \text{Update} \quad f_m(x)=f_{m-1}(x) + \nu \sum_{j=1}^{J_m} \gamma_{jm}I(x\in R_{jm}).
 \]
 
-\hypertarget{problem-4---boosting-methods}{%
 \subsection{Problem 4 - Boosting
-methods}\label{problem-4---boosting-methods}}
+methods}\label{problem-4---boosting-methods}
 
 In the code chunk below we simulate data meant to mimic a genomic data
 set for a set of markers (locations in the human genome) that underlie a
@@ -327,8 +323,7 @@ We will now try to predict \(y\) using various tree boosting methods,
 adapted from code provided in
 \url{https://bradleyboehmke.github.io/HOML/gbm.html}.
 
-\hypertarget{a-a-basic-gbm}{%
-\subsubsection{a) A basic GBM}\label{a-a-basic-gbm}}
+\subsubsection{a) A basic GBM}\label{a-a-basic-gbm}
 
 We first implement a standard gradient boosting tree using the package
 \texttt{gbm}. To make sure everything works, we run a very small
@@ -384,8 +379,7 @@ We could for example:
   could go to 5-fold CV, or even a training/test set approach.
 \end{itemize}
 
-\hypertarget{b-stochastic-gbms}{%
-\subsubsection{b) Stochastic GBMs}\label{b-stochastic-gbms}}
+\subsubsection{b) Stochastic GBMs}\label{b-stochastic-gbms}
 
 We now move on to stochastic gradient boosting tree models for the same
 data set, as implemented in the \texttt{h2o} package. Explain what is
@@ -456,8 +450,7 @@ We fix the learning rate to a low value of \(\nu = 0.05\), and choose
 has not improved by \(0.001\) over the last \(10\) iterations, if we
 reach \(10000\) iterations or if the runtime exceeds twenty minutes.
 
-\hypertarget{c-xgboost}{%
-\subsubsection{c) XGboost}\label{c-xgboost}}
+\subsubsection{c) XGboost}\label{c-xgboost}
 
 Below we also provide code for applying cross-validated XGBoost to the
 same data set. Expand this code to perform a search of the
@@ -538,8 +531,7 @@ what is done here.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{d-model-evaluation}{%
-\subsubsection{d) Model evaluation}\label{d-model-evaluation}}
+\subsubsection{d) Model evaluation}\label{d-model-evaluation}
 
 Finally, experimenting with the code from a), b) and c), what is the
 best model you are able to find? Fit that model using all available
