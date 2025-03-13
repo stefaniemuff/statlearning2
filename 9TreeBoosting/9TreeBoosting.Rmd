@@ -569,7 +569,7 @@ T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ ,
 \end{equation*}
 
 with parameters $\Theta=\{R_j,\gamma_j\}_1^J$. 
-For a given division into regions, we want to minimize
+For a given numbers of   regions J, we want to minimize
 
 \begin{equation}\label{eq:treeopt}
 \hat\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} L(y_i,\gamma_i) \ , 
@@ -682,6 +682,13 @@ $$g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ .$$
 \vspace{2mm}
 
 * The direction of _steepest descent_ is thus given by $-\mathbf{g}$.
+
+
+---
+
+
+$~$
+![](graphics/Steepest_descet.png)
 
 
 ---
@@ -976,17 +983,17 @@ Discuss!
 
 <!-- $J=3$, for examples, means that we allow for two-way interactions. It will rarely be reasonable to use $J>6$. In the Elements book, they say that in their experience, $4\leq J \leq 8$  --> 
 
----
+<!-- --- -->
 
-Some considerations / drawings:
+<!-- Some considerations / drawings: -->
 
-\vspace{60mm}
+<!-- \vspace{60mm} -->
 
-$~$
+<!-- $~$ -->
 
-In the end, $J$ is a tuning parameters, but does usually not give much better results than when using $J\approx 4 \text{ to } 6$.
+<!-- In the end, $J$ is a tuning parameters, but does usually not give much better results than when using $J\approx 4 \text{ to } 6$. -->
 
-\vspace{50mm}
+<!-- \vspace{50mm} -->
 
 <!-- Draw some trees with different $J$ and explain how $J=2$ is different in terms of intractions from $J=3$, for example. -->
 

@@ -137,28 +137,38 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{multirow}
 \usepackage{tcolorbox}
@@ -167,12 +177,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 9: Boosting and additive trees},
-  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  pdfauthor={Stefanie Muff and Sara Martino, Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -181,16 +191,17 @@
   pdfcreator={LaTeX via pandoc}}
 
 \title{Module 9: Boosting and additive trees}
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{March 14 and 15, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Stefanie Muff and Sara Martino, Department of Mathematical
+Sciences, NTNU}
+\date{March 13 and 14, 2025}
 
 \begin{document}
 \frame{\titlepage}
 
 \begin{frame}
 \begin{block}{Learning material for this module}
-\protect\hypertarget{learning-material-for-this-module}{}
+\phantomsection\label{learning-material-for-this-module}
 \(~\)
 
 \begin{itemize}
@@ -225,7 +236,7 @@ Greenwell (2020)
 
 \begin{frame}
 \begin{block}{What will you learn?}
-\protect\hypertarget{what-will-you-learn}{}
+\phantomsection\label{what-will-you-learn}
 \(~\)
 
 \begin{itemize}
@@ -286,7 +297,7 @@ Greenwell (2020)
 
 \begin{frame}
 \begin{block}{Boosting methods}
-\protect\hypertarget{boosting-methods}{}
+\phantomsection\label{boosting-methods}
 \(~\)
 
 \begin{itemize}
@@ -329,15 +340,15 @@ Greenwell (2020)
 \begin{itemize}
 \tightlist
 \item
-  It is also possible to boost, e.g., linear or penalized regression
-  models (see presentation by a master student on Friday).
+  It is also possible to boost, \emph{e.g.}, linear or penalized
+  regression models.
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Boosted trees vs deep learning (neural networks)}
-\protect\hypertarget{boosted-trees-vs-deep-learning-neural-networks}{}
+\phantomsection\label{boosted-trees-vs-deep-learning-neural-networks}
 \(~\)
 
 \begin{itemize}
@@ -370,7 +381,7 @@ Greenwell (2020)
 
 \begin{frame}
 \begin{block}{Examples (recent literature)}
-\protect\hypertarget{examples-recent-literature}{}
+\phantomsection\label{examples-recent-literature}
 \centering
 
 \includegraphics[width=0.7\textwidth,height=\textheight]{graphics/trees_vs_nns.png}
@@ -395,7 +406,7 @@ See here to access the paper:
 
 \begin{frame}
 \begin{block}{Recap: Trees and random forests}
-\protect\hypertarget{recap-trees-and-random-forests}{}
+\phantomsection\label{recap-trees-and-random-forests}
 \(~\)
 
 \begin{itemize}
@@ -451,7 +462,7 @@ See here to access the paper:
 
 \begin{frame}
 \begin{block}{Motivation for Boosting in the context of trees}
-\protect\hypertarget{motivation-for-boosting-in-the-context-of-trees}{}
+\phantomsection\label{motivation-for-boosting-in-the-context-of-trees}
 \(~\)
 
 \begin{itemize}
@@ -490,7 +501,7 @@ function further reduces the selected loss function.
 \begin{frame}
 \begin{block}{Simple example 1: Boosting for a classification problem:
 AdaBoost}
-\protect\hypertarget{simple-example-1-boosting-for-a-classification-problem-adaboost}{}
+\phantomsection\label{simple-example-1-boosting-for-a-classification-problem-adaboost}
 \tiny
 
 Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
@@ -523,7 +534,7 @@ Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
 \item
   Here, \(G(X)\) is assumed to be a
   \emph{\textcolor{red}{weak classifier}}, that is, its error rate is
-  only \emph{slightly} better than a random guess.
+  only \emph{slightly better than a random guess}.
 \end{itemize}
 
 \vspace{2mm}
@@ -566,24 +577,20 @@ Chapter 10.1 in Hastie, Tibshirani, and Friedman (2009), including Fig
   \end{itemize}
 \end{itemize}
 
-\vspace{2mm}
+\centering
 
-\begin{itemize}
-\tightlist
-\item
-  How do we then find the sequence \(G_m(x)\) and the corresponding
-  weights \(\alpha_m\)?
-\end{itemize}
+\includegraphics[width=0.5\textwidth,height=\textheight]{fig10_1_elements.png}
+
+\tiny
+
+(Taken from Hastie, Tibshirani, and Friedman (2009) )
 \end{frame}
 
 \begin{frame}
-\centering
+\vspace{2mm}
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{fig10_1_elements.png}
-
-\small
-
-(Taken from Hastie, Tibshirani, and Friedman (2009) )
+How do we then find the sequence \(G_m(x)\) and the corresponding
+weights \(\alpha_m\)?
 \end{frame}
 
 \begin{frame}
@@ -659,7 +666,7 @@ Explanations:
 
 \begin{frame}[fragile]
 \begin{block}{Example}
-\protect\hypertarget{example}{}
+\phantomsection\label{example}
 \(~\)
 
 Inspired by (10.2) in the Elements book:
@@ -729,7 +736,7 @@ decided on a case-by-case basis):
 
 \begin{frame}[fragile]
 \begin{block}{Error rates: AdaBoost vs random forest}
-\protect\hypertarget{error-rates-adaboost-vs-random-forest}{}
+\phantomsection\label{error-rates-adaboost-vs-random-forest}
 \(~\)
 
 AdaBoost test error:
@@ -746,7 +753,7 @@ AdaBoost test error:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.099
+## [1] 0.10175
 \end{verbatim}
 
 \(~\)
@@ -779,7 +786,7 @@ Random forest test error:
 \end{frame}
 
 \begin{frame}{Simple example 2: Boosting regression trees}
-\protect\hypertarget{simple-example-2-boosting-regression-trees}{}
+\phantomsection\label{simple-example-2-boosting-regression-trees}
 \(~\)
 
 In tree boosting, trees are grown \emph{sequentially} so that each tree
@@ -823,7 +830,7 @@ one split).
   \tightlist
   \item
     Fit a tree \(\hat{f}^b\) with \(d\) splits (\(d+1\) terminal nodes)
-    to the training data.\\
+    to the training data \((X,r)\).\\
   \item
     Update \(\hat{f}\) by adding in a shrunken version of the new tree:
     \[\hat{f}(x) \leftarrow \hat{f}(x)+\nu \hat{f}^b(x).\]\\
@@ -886,7 +893,7 @@ A very simple illustration of this idea can be found here:
 
 \begin{frame}[fragile]
 \begin{block}{Revisit the Boston data from module 8}
-\protect\hypertarget{revisit-the-boston-data-from-module-8}{}
+\phantomsection\label{revisit-the-boston-data-from-module-8}
 \(~\)
 
 We are now finally boosting the Boston trees! We use the \texttt{gbm()}
@@ -972,7 +979,7 @@ allow the interaction depth (number of splits per tree) to be of degree
 \end{frame}
 
 \begin{frame}{Boosting more generally}
-\protect\hypertarget{boosting-more-generally}{}
+\phantomsection\label{boosting-more-generally}
 \(~\)
 
 \begin{itemize}
@@ -1015,7 +1022,7 @@ allow the interaction depth (number of splits per tree) to be of degree
 
 \begin{frame}
 \begin{block}{Boosting trees -- what do we want to minimize?}
-\protect\hypertarget{boosting-trees-what-do-we-want-to-minimize}{}
+\phantomsection\label{boosting-trees-what-do-we-want-to-minimize}
 \(~\)
 
 Start by looking again at \emph{a single tree}. We need to find regions
@@ -1023,10 +1030,11 @@ Start by looking again at \emph{a single tree}. We need to find regions
 \(j=1,2,\ldots,J\). The tree can then be expressed as
 
 \begin{equation*} 
-T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ .
+T(x;\Theta) = \sum_{j=1}^J \gamma_j I(x\in R_j) \ ,
 \end{equation*}
 
-For a given division into regions, we want to minimize
+with parameters \(\Theta=\{R_j,\gamma_j\}_1^J\). For a given numbers of
+regions J, we want to minimize
 
 \begin{equation}\label{eq:treeopt}
 \hat\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} L(y_i,\gamma_i) \ , 
@@ -1061,10 +1069,10 @@ The optimization problem can thus be split into two parts:
 \tightlist
 \item
   \textbf{Finding the regions \(R_j\)}: This is the hard part. Usually
-  approximative via a greedy algorithm. Often, use smoother
+  approximated via a greedy algorithm. Often, use smoother
   approximations of the optimization criterion
   \begin{equation}\label{eq:approx}
-  \tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in R_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
+  \tilde\Theta = \arg \min_\Theta \sum_{j=1}^J \sum_{x_i \in \tilde{R}_j} \tilde{L}(y_i,T(x_i,\Theta)) \ , 
   \end{equation} and then use \(\hat{R}_j=\tilde{R}_j\) to find
   \(\gamma_j\) using criterion \eqref{eq:treeopt}.
 \end{enumerate}
@@ -1072,7 +1080,7 @@ The optimization problem can thus be split into two parts:
 
 \begin{frame}
 \begin{block}{From single trees to boosting}
-\protect\hypertarget{from-single-trees-to-boosting}{}
+\phantomsection\label{from-single-trees-to-boosting}
 \label{sl:toBoosting}
 
 \(~\)
@@ -1138,8 +1146,8 @@ The optimization problem can thus be split into two parts:
 \begin{itemize}
 \tightlist
 \item
-  Both strategies on the previous slide are straightforward, but
-  \emph{not very robust}.
+  Both strategies on the previous slide are straightforward, but either
+  \emph{not very robust and general}.
 \end{itemize}
 
 \vspace{2mm}
@@ -1171,7 +1179,7 @@ the previous tree. Motivated by steepest descent.
 
 \begin{frame}
 \begin{block}{Steepest descent -- a numerical optimization technique}
-\protect\hypertarget{steepest-descent-a-numerical-optimization-technique}{}
+\phantomsection\label{steepest-descent-a-numerical-optimization-technique}
 \(~\)
 
 \emph{The following considerations are not restricted to trees!}
@@ -1192,7 +1200,7 @@ the previous tree. Motivated by steepest descent.
 \item
   When trying to find the best function \(f(x)\) that minimizes a loss
   function \[L(f) = \sum_{i=1}^N L(y_i,f(x_i)) \ ,\] the direction of
-  steepest ascent is given by an \(N\)-dimensional
+  \emph{steepest ascent} is given by an \(N\)-dimensional
   \emph{\textcolor{red}{gradient vector}}
   \(\mathbf{g}^\top = (g_{1},g_{2},\ldots, g_{N})\) with entries
   \[g_{i} = \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right] \ .\]
@@ -1207,6 +1215,10 @@ the previous tree. Motivated by steepest descent.
   \(-\mathbf{g}\).
 \end{itemize}
 \end{block}
+\end{frame}
+
+\begin{frame}
+\(~\) \includegraphics{graphics/Steepest_descet.png}
 \end{frame}
 
 \begin{frame}
@@ -1242,12 +1254,12 @@ the previous tree. Motivated by steepest descent.
 
 \begin{frame}
 \begin{block}{Gradient Boosting: Steepest descent for trees}
-\protect\hypertarget{gradient-boosting-steepest-descent-for-trees}{}
+\phantomsection\label{gradient-boosting-steepest-descent-for-trees}
 \(~\)
 
 Recall that we want to fit trees
 \[f_m(x)=T(x;\Theta_m)=\sum_{j=1}^J \gamma_j I(x\in R_j) \ , \] not
-aribtrary predictor functions \(\mathbf{f}_m\).
+arbitrary predictor functions \(\mathbf{f}_m\).
 
 \(~\)
 
@@ -1294,7 +1306,7 @@ That is: Fit a tree \(T\) to the negative gradient using least squares!
 
 \begin{frame}
 \begin{block}{Gradient tree boosting algorithm}
-\protect\hypertarget{gradient-tree-boosting-algorithm}{}
+\phantomsection\label{gradient-tree-boosting-algorithm}
 \(~\)
 
 \textbf{Algorithm 10.3} in Hastie, Tibshirani, and Friedman (2009):
@@ -1353,7 +1365,7 @@ That is: Fit a tree \(T\) to the negative gradient using least squares!
 
 \begin{frame}
 \begin{block}{Gradient tree boosting for regression}
-\protect\hypertarget{gradient-tree-boosting-for-regression}{}
+\phantomsection\label{gradient-tree-boosting-for-regression}
 \(~\)
 
 \(r_{im} = - \left[ \frac{\partial L(y_i,f(x_i))}{\partial f(x_i)} \right]\)
@@ -1400,7 +1412,7 @@ are the components of the negative gradient. We call them
 
 \begin{frame}
 \begin{block}{Gradient tree boosting for regression -- loss functions}
-\protect\hypertarget{gradient-tree-boosting-for-regression-loss-functions}{}
+\phantomsection\label{gradient-tree-boosting-for-regression-loss-functions}
 \(~\)
 
 \begin{itemize}
@@ -1442,7 +1454,7 @@ Popular alternatives:
 
 \begin{frame}
 \begin{block}{Gradient tree boosting for binary classification}
-\protect\hypertarget{gradient-tree-boosting-for-binary-classification}{}
+\phantomsection\label{gradient-tree-boosting-for-binary-classification}
 \(~\)
 
 Replace the squared error loss by the \emph{binomial deviance} (now with
@@ -1463,7 +1475,7 @@ ensemble, similar to logistic regression.
 \begin{frame}
 \begin{block}{Gradient tree boosting for classification into \(K\)
 classes}
-\protect\hypertarget{gradient-tree-boosting-for-classification-into-k-classes}{}
+\phantomsection\label{gradient-tree-boosting-for-classification-into-k-classes}
 \(~\)
 
 For \(K>2\) classes, use as loss function the
@@ -1490,7 +1502,7 @@ corresponding functions \(f(x)\).
   \(~\)
 \item
   For \(K\) classes, we must build \(K\) trees in each iteration of step
-  2. in the boosting procedure!
+  2 in the boosting procedure!
 \end{itemize}
 
 \vspace{2mm}
@@ -1506,12 +1518,12 @@ corresponding functions \(f(x)\).
 \begin{itemize}
 \tightlist
 \item
-  In step 3., we aggregate the class probabilities for each class \(k\).
+  In step 3, we aggregate the class probabilities for each class \(k\).
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Practical considerations}
-\protect\hypertarget{practical-considerations}{}
+\phantomsection\label{practical-considerations}
 The three main ingredients of gradient boosting, which we need to
 determine in practice:
 
@@ -1537,7 +1549,7 @@ determine in practice:
 \end{frame}
 
 \begin{frame}{Parameter tuning}
-\protect\hypertarget{parameter-tuning}{}
+\phantomsection\label{parameter-tuning}
 \(~\)
 
 Given a loss function, we can tune the following parameters:
@@ -1570,7 +1582,7 @@ Given a loss function, we can tune the following parameters:
 
 \begin{frame}
 \begin{block}{a) Finding the right tree depth in boosting}
-\protect\hypertarget{a-finding-the-right-tree-depth-in-boosting}{}
+\phantomsection\label{a-finding-the-right-tree-depth-in-boosting}
 (10.11 in the Elements book)
 
 \(~\)
@@ -1622,21 +1634,8 @@ Discuss!
 \end{frame}
 
 \begin{frame}
-Some considerations / drawings:
-
-\vspace{60mm}
-
-\(~\)
-
-In the end, \(J\) is a tuning parameters, but does usually not give much
-better results than when using \(J\approx 4 \text{ to } 6\).
-
-\vspace{50mm}
-\end{frame}
-
-\begin{frame}
 \begin{block}{b) Minimum number of observations in terminal nodes}
-\protect\hypertarget{b-minimum-number-of-observations-in-terminal-nodes}{}
+\phantomsection\label{b-minimum-number-of-observations-in-terminal-nodes}
 \(~\)
 
 \begin{itemize}
@@ -1650,7 +1649,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  Moreover, by giving tree depth and tuning the number of trees, we can
+  Moreover, by fixing tree depth and tuning the number of trees, we can
   hope to get this parameter ``for free''.
 \end{itemize}
 
@@ -1671,7 +1670,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 
 \begin{frame}
 \begin{block}{c) The number of trees (regularization strategy 1)}
-\protect\hypertarget{c-the-number-of-trees-regularization-strategy-1}{}
+\phantomsection\label{c-the-number-of-trees-regularization-strategy-1}
 \(~\)
 
 \begin{itemize}
@@ -1703,7 +1702,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  Alternative: Cross-validation
+  Alternative: Monitor prediction error with cross-validation
 \end{itemize}
 
 \vspace{6mm}
@@ -1715,7 +1714,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 
 \begin{frame}
 \begin{block}{d) The learning rate (regularization strategy 2)}
-\protect\hypertarget{d-the-learning-rate-regularization-strategy-2}{}
+\phantomsection\label{d-the-learning-rate-regularization-strategy-2}
 \(~\)
 
 \begin{itemize}
@@ -1740,8 +1739,8 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 \begin{itemize}
 \tightlist
 \item
-  Empirically, it was found that small \(\nu\) (i.e., \(\nu<0.1\)) is
-  more robust.
+  Empirically, it was found that small \(\nu\) (\emph{i.e.},
+  \(\nu<0.1\)) is more robust.
 \end{itemize}
 
 \vspace{2mm}
@@ -1757,7 +1756,7 @@ better results than when using \(J\approx 4 \text{ to } 6\).
 
 \begin{frame}[fragile]
 \begin{block}{Application: Ames housing data}
-\protect\hypertarget{application-ames-housing-data}{}
+\phantomsection\label{application-ames-housing-data}
 \scriptsize
 
 Inspired by Boehmke and Greenwell (2020)
@@ -1902,7 +1901,7 @@ Plot error curve with training black and cross-validated MSE (green):
 
 \begin{frame}
 \begin{block}{Stochastic GBMs (regularization strategy 3)}
-\protect\hypertarget{stochastic-gbms-regularization-strategy-3}{}
+\phantomsection\label{stochastic-gbms-regularization-strategy-3}
 \scriptsize
 
 See Boehmke and Greenwell (2020)
@@ -1912,8 +1911,8 @@ See Boehmke and Greenwell (2020)
 \begin{itemize}
 \tightlist
 \item
-  Stochastic gradient boosting: chose a random subsample of the training
-  data for building each tree (J. H. Friedman 2002).
+  Stochastic gradient boosting: choose a random subsample of the
+  training data for building each tree (J. H. Friedman 2002).
 \end{itemize}
 
 \vspace{2mm}
@@ -1952,7 +1951,7 @@ hyper-parameter} that can be tuned\ldots{}
 
 \begin{frame}[fragile]
 \begin{block}{Variants of stochastic GBMs}
-\protect\hypertarget{variants-of-stochastic-gbms}{}
+\phantomsection\label{variants-of-stochastic-gbms}
 \(~\)
 
 There are a few variants of stochastic gradient boosting that can be
@@ -1986,8 +1985,8 @@ used, all of which have additional hyperparameters:
 
 \(~\)
 
-Here we only look at the case where we subsample rows (i.e., entire data
-samples), which is available in the \texttt{gbm()} package.
+Here we only look at the case where we subsample rows (\emph{i.e.},
+entire data samples), which is available in the \texttt{gbm()} package.
 \end{block}
 \end{frame}
 
@@ -2044,7 +2043,7 @@ Same as before:
 \end{frame}
 
 \begin{frame}[fragile]{XGBoost: Extreme Gradient Boosting}
-\protect\hypertarget{xgboost-extreme-gradient-boosting}{}
+\phantomsection\label{xgboost-extreme-gradient-boosting}
 Suggested by Chen and Guestrin (2016) and implemented in the R package
 \texttt{xgboost}.
 
@@ -2086,8 +2085,9 @@ Core ideas of XGBoost:
 \item
   \emph{\textcolor{red}{Regularization}}: XGBoost includes different
   regularization penalties to avoid overfitting. Each new tree is
-  regularized with two terms: The number of leafs (pruning) and the
-  weights on the leafs. The total penalizing term is typically given by
+  regularized with two terms: The number of leaves (pruning) and the
+  weights on the leaves. The total penalizing term is typically given
+  by\footnote{The weights $w$ correspond to the predicted values or probabilities for each observation.}
   \[\Omega(f) = \gamma |T| + \frac{1}{2}\lambda||w||^2  \text{ (L2 regularization)} \]
   or
   \[\Omega(f) = \gamma |T| +  \alpha ||w|| \text{ (L1 regularization)}  \ .  \]
@@ -2096,7 +2096,7 @@ Core ideas of XGBoost:
 
 \begin{frame}
 \begin{block}{Some words on regularization in XGBoost}
-\protect\hypertarget{some-words-on-regularization-in-xgboost}{}
+\phantomsection\label{some-words-on-regularization-in-xgboost}
 \(~\)
 
 Previous slide:
@@ -2149,7 +2149,7 @@ All these lead to additional hyperparameters.
 
 \begin{frame}[fragile]
 \begin{block}{Ames house pricing example continued}
-\protect\hypertarget{ames-house-pricing-example-continued}{}
+\phantomsection\label{ames-house-pricing-example-continued}
 \vspace{2mm}
 
 We apply XGBoost via the \texttt{xgboost} library on the same dataset as
@@ -2204,12 +2204,12 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
   \AttributeTok{early\_stopping\_rounds =} \DecValTok{50}\NormalTok{,   }
   
   \AttributeTok{params =} \FunctionTok{list}\NormalTok{( }
-    \AttributeTok{eta =} \FloatTok{0.1}\NormalTok{, }\CommentTok{\# learning rate (nu)}
+    \AttributeTok{eta =} \FloatTok{0.1}\NormalTok{, }\CommentTok{\# learning rate (we call it $\textbackslash{}nu$)}
     \AttributeTok{lambda=}\FloatTok{0.01}\NormalTok{, }\CommentTok{\# L2 regularization term}
     \AttributeTok{max\_depth =} \DecValTok{3}\NormalTok{,}
     \AttributeTok{min\_child\_weight =} \DecValTok{3}\NormalTok{,}
     \AttributeTok{subsample =} \FloatTok{0.8}\NormalTok{, }\CommentTok{\# Proportion of datapoints used for each tree}
-    \AttributeTok{colsample\_bytree =} \FloatTok{0.5}\NormalTok{, }\CommentTok{\# subsample ratio of columns when constructing each tree}
+    \AttributeTok{colsample\_bytree =} \FloatTok{0.5}\NormalTok{, }\CommentTok{\# subsample ratio of columns when constructing one tree}
     \AttributeTok{nthread=}\DecValTok{12}\NormalTok{),}
   \AttributeTok{verbose =} \DecValTok{0}
 \NormalTok{)  }
@@ -2224,13 +2224,13 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 19935.63
+## [1] 20386.74
 \end{verbatim}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Hyperparameter tuning}
-\protect\hypertarget{hyperparameter-tuning}{}
+\phantomsection\label{hyperparameter-tuning}
 \(~\)
 
 \begin{itemize}
@@ -2260,7 +2260,7 @@ pre-optimized\footnote{Adapted from https://bradleyboehmke.github.io/HOML/gbm.ht
 \end{frame}
 
 \begin{frame}[fragile]{Most recent advances: LightBGM, CatBoost}
-\protect\hypertarget{most-recent-advances-lightbgm-catboost}{}
+\phantomsection\label{most-recent-advances-lightbgm-catboost}
 \vspace{2mm}
 
 From \url{https://bradleyboehmke.github.io/HOML/gbm.html}:
@@ -2284,7 +2284,7 @@ Both frameworks are available in R (packages \texttt{lightgbm} and
 \end{frame}
 
 \begin{frame}{Interpretation of tree ensembles}
-\protect\hypertarget{interpretation-of-tree-ensembles}{}
+\phantomsection\label{interpretation-of-tree-ensembles}
 \(~\)
 
 \begin{itemize}
@@ -2326,7 +2326,7 @@ Both frameworks are available in R (packages \texttt{lightgbm} and
 
 \begin{frame}
 \begin{block}{Partial dependence plots}
-\protect\hypertarget{partial-dependence-plots}{}
+\phantomsection\label{partial-dependence-plots}
 \scriptsize
 
 (Section 10.13.2 in the Elements book Hastie, Tibshirani, and Friedman
@@ -2374,7 +2374,7 @@ Both frameworks are available in R (packages \texttt{lightgbm} and
   average over all observations
   \[\overline{f}(X_j) = \frac1N \sum_{i=1}^N f(X_{j},(X_{-j})_i)\] for a
   set of values for \(X_j\), where we evaluate the estimated tree value
-  \(f(X_{j},(X_{-j})_i\) for each data point \(i\).
+  \(f(X_{j},(X_{-j})_i)\) for each data point \(i\).
 \end{itemize}
 
 \vspace{4mm}
@@ -2393,7 +2393,7 @@ Both frameworks are available in R (packages \texttt{lightgbm} and
 
 \begin{frame}[fragile]
 \begin{block}{Partial dependence plots for the Boston example}
-\protect\hypertarget{partial-dependence-plots-for-the-boston-example}{}
+\phantomsection\label{partial-dependence-plots-for-the-boston-example}
 \(~\)
 
 \texttt{rm} (number of rooms) and \texttt{lstat} (\% of lower status
@@ -2421,57 +2421,48 @@ population) are the most important predictors.
 \end{block}
 \end{frame}
 
-\begin{frame}{Can we use boosting for linear regression models?}
-\protect\hypertarget{can-we-use-boosting-for-linear-regression-models}{}
-\(~\)
-
-Yes!
-
-Didrik Lindløv Sand, a current master student, will present his work.
-\end{frame}
-
 \begin{frame}{References}
-\protect\hypertarget{references}{}
+\phantomsection\label{references}
 \tiny
 
-\hypertarget{refs}{}
+\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-boehmke_greenwell2020}{}}%
+\bibitem[\citeproctext]{ref-boehmke_greenwell2020}
 Boehmke, B., and B. Greenwell. 2020. \emph{Hands-on Machine Learning
 with {R}}. https://bradleyboehmke.github.io/HOML/: CRC press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-chen2016xgboost}{}}%
+\bibitem[\citeproctext]{ref-chen2016xgboost}
 Chen, Tianqi, and Carlos Guestrin. 2016. {``Xgboost: A Scalable Tree
 Boosting System.''} In \emph{Proceedings of the 22nd Acm Sigkdd
 International Conference on Knowledge Discovery and Data Mining},
 785--94.
 
-\leavevmode\vadjust pre{\hypertarget{ref-freund1997decision}{}}%
+\bibitem[\citeproctext]{ref-freund1997decision}
 Freund, Yoav, and Robert E Schapire. 1997. {``A Decision-Theoretic
 Generalization of on-Line Learning and an Application to Boosting.''}
 \emph{Journal of Computer and System Sciences} 55 (1): 119--39.
 
-\leavevmode\vadjust pre{\hypertarget{ref-friedman2002}{}}%
+\bibitem[\citeproctext]{ref-friedman2002}
 Friedman, Jerome H. 2002. {``Stochastic Gradient Boosting.''}
 \emph{Computational Statistics \& Data Analysis} 38: 367--78.
 
-\leavevmode\vadjust pre{\hypertarget{ref-friedman2000additive}{}}%
+\bibitem[\citeproctext]{ref-friedman2000additive}
 Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2000.
 {``Additive Logistic Regression: A Statistical View of Boosting (with
 Discussion and a Rejoinder by the Authors).''} \emph{The Annals of
 Statistics} 28 (2): 337--407.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hastie_etal2009}{}}%
+\bibitem[\citeproctext]{ref-hastie_etal2009}
 Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. \emph{The
 Elements of Statistical Learning}. Vol. 2. Springer series in statistics
 New York.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ISL2}{}}%
+\bibitem[\citeproctext]{ref-ISL2}
 James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
 2021. \emph{An Introduction to Statistical Learning}. 2nd ed. Vol. 112.
 Springer.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ridgeway1999state}{}}%
+\bibitem[\citeproctext]{ref-ridgeway1999state}
 Ridgeway, Greg. 1999. {``The State of Boosting.''} \emph{Computing
 Science and Statistics}, 172--81.
 
