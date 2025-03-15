@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 10: Unsupervised learning"
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "April 4, 2024"
+date: "March 21, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -105,10 +105,12 @@ order to better understand the disease
 
     - Data pre-processing
 
-  - * *Clustering**
+  - **Clustering**
     
     - Discovering unknown subgroups in the data
+    
     - 1. k-means clustering
+    
     - 2. Hierarchical clustering
 
 # Data Visualization
@@ -141,7 +143,7 @@ most of the info as possible: **Principal Components Analysis (PCA)** is a way t
 
 $$Z_m = \sum_{j=1}^{p} \phi_{jm} X_j \quad \text{subject to} \quad \sum_{j=1}^p \phi_{jm}^2 = 1$$
   
-    - Why do we have the constrain $\sum_{j=1}^p \phi_{jm}^2 = 1$ ?
+- Why do we have the constrain $\sum_{j=1}^p \phi_{jm}^2 = 1$ ?
 
 # The first principal component $Z_1$ 
 
@@ -311,6 +313,101 @@ p1 + p2
   - Each Principal Component loading vector is unique, up to a sign flip.
   
   - Flipping the sign has no effect as the direction of the PC does not change.
+
+
+# PCA for face recognition
+
+```{r, echo=FALSE}
+
+library("magick")
+library(imager)
+library(tidyverse)
+library(ggmap)
+library(patchwork)
+library(loon.data)  # For the 'faces' dataset
+library(gridExtra)
+
+data(faces)  # The 'faces' dataset
+
+# The faces dataset is a list of images, so we will convert it into a matrix form
+face_matrix <- t(sapply(faces, function(x) as.vector(x)))
+
+# Loop through the first 10 images in the 'faces' dataset
+
+plot_list = list()
+ii = 1:50
+for(i in 1:length(ii))
+  plot_list[[i]] = ggimage(matrix(faces[[ii[i]]], nrow = 64, ncol = 64))
+
+grid.arrange(grobs=plot_list,ncol=10)
+
+
+```
+
+
+# PCA for face recognition
+
+  - The data set consist of 400 faces from 10 different persons.
+  
+  - Each picture has $64\times 64$ grey-scale pixels
+
+We want to use PCA to recognize faces.
+
+  - Training set 300 pictures
+  - Test set 100 pictures
+  
+  - Our training set is $300 \times 4096$ matrix
+
+# PCA analysis
+
+```{r, echo = TRUE}
+face_matrix <- t(sapply(faces, function(x) as.vector(x)))
+# set labels
+labels = rep(1:40, each = 10)
+# create test and training set
+train_indices = sort(sample(1:400, 300))
+train_data = face_matrix[train_indices,]
+test_data = face_matrix[-train_indices,]
+
+train_labels <- labels[train_indices]
+test_labels <- labels[-c(train_indices)]
+# Perform PCA
+pca_result <- prcomp(train_data, center = T, scale. = FALSE)
+```
+
+```{r, echo = FALSE, out.width="40%"}
+
+p1 = data.frame(var = pca_result$sdev^2) %>%
+  mutate(i = seq_along(var)) %>%
+  mutate(cum = cumsum(var)/sum(var) * 100) %>%
+  ggplot() + geom_point(aes(i, cum)) +
+  xlab("Pr. Comp") + ylab("Cum Explained Variance (%)")
+
+p2 = data.frame(var = pca_result$sdev^2) %>%
+  mutate(i = seq_along(var)) %>%
+  ggplot() + geom_point(aes(i, var)) +
+  xlab("Pr. Comp") + ylab("Explained Variance (%)")
+
+p1 + p2
+```
+
+# Eigenfaces
+
+```{r}
+# plot autofaces
+plot_list = list()
+ii = 1:25
+for(i in 1:25)
+  plot_list[[i]] = ggimage(matrix(pca_result$rotation[,i], nrow = 64, ncol = 64))
+grid.arrange(grobs=plot_list,ncol=5)
+ggimage(matrix(pca_result$center, nrow = 64, ncol = 64))
+```
+
+# PCA for face recognition
+
+Run the code
+
+\texttt{face\_recognition.R}
 
 # Clustering methods
 
