@@ -1,21 +1,24 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -34,18 +37,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Module 10: Recommended Exercises - Solutions},
-  pdfauthor={Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara Martino; Department of Mathematical Sciences, NTNU},
-  colorlinks=true,
-  linkcolor={Maroon},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={blue},
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -58,13 +49,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -72,7 +63,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -81,7 +72,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -107,6 +98,18 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Module 10: Recommended Exercises - Solutions},
+  pdfauthor={Kenneth Aase, Stefanie Muff, Sara Martino; Department of Mathematical Sciences, NTNU},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Module 10: Recommended Exercises - Solutions}
 \usepackage{etoolbox}
@@ -115,16 +118,15 @@
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{TMA4268 Statistical Learning V2024}
-\author{Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara
-Martino \and Department of Mathematical Sciences, NTNU}
-\date{April 4, 2024}
+\subtitle{TMA4268 Statistical Learning V2025}
+\author{Kenneth Aase, Stefanie Muff, Sara Martino \and Department of
+Mathematical Sciences, NTNU}
+\date{March 26, 2025}
 
 \begin{document}
 \maketitle
 
-\hypertarget{problem-1}{%
-\section{Problem 1}\label{problem-1}}
+\section{Problem 1}\label{problem-1}
 
 Get the data by loading it
 
@@ -134,7 +136,7 @@ Get the data by loading it
 \CommentTok{\# load("Exercise10\textbackslash{}\textbackslash{}pca{-}examples.rdata")  \# use this when running the code in Rmd}
 
 \CommentTok{\# We will work with nyt.frame}
-\NormalTok{nyt\_data }\OtherTok{=}\NormalTok{ nyt.frame}
+\NormalTok{nyt\_data }\OtherTok{\textless{}{-}}\NormalTok{ nyt.frame}
 \end{Highlighting}
 \end{Shaded}
 
@@ -142,19 +144,18 @@ Compute the PCA
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{nyt\_pca }\OtherTok{=} \FunctionTok{prcomp}\NormalTok{(nyt\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])  }\CommentTok{\# {-}1 removes the first column (label)}
+\NormalTok{nyt\_pca }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(nyt\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])  }\CommentTok{\# {-}1 removes the first column (label)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{default-biplot}{%
-\subsection{Default biplot}\label{default-biplot}}
+\subsection{Default biplot}\label{default-biplot}
 
 Too much information on the graph, we should select only a few loading
 vectors to display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{biplot}\NormalTok{(nyt\_pca, }\AttributeTok{scale=}\DecValTok{0}\NormalTok{)}
+\FunctionTok{biplot}\NormalTok{(nyt\_pca, }\AttributeTok{scale =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -169,21 +170,19 @@ absoulte value, since we don't care if they are negative or positive.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{nyt\_loading }\OtherTok{=}\NormalTok{ nyt\_pca}\SpecialCharTok{$}\NormalTok{rotation[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}
-\NormalTok{informative\_loadings }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(}
-  \FunctionTok{head}\NormalTok{(nyt\_loading[}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(nyt\_loading[,}\DecValTok{1}\NormalTok{]), }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]),}
-  \FunctionTok{head}\NormalTok{(nyt\_loading[}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(nyt\_loading[,}\DecValTok{2}\NormalTok{]), }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),])}
-\NormalTok{)}
+\NormalTok{nyt\_loading }\OtherTok{\textless{}{-}}\NormalTok{  nyt\_pca}\SpecialCharTok{$}\NormalTok{rotation[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}
+\NormalTok{informative\_loadings }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
+  \FunctionTok{head}\NormalTok{(nyt\_loading[}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(nyt\_loading[, }\DecValTok{1}\NormalTok{]), }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{), ]),}
+  \FunctionTok{head}\NormalTok{(nyt\_loading[}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(nyt\_loading[, }\DecValTok{2}\NormalTok{]), }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{), ]))}
 
-\FunctionTok{biplot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{y=}\NormalTok{ informative\_loadings, }\AttributeTok{scale=}\DecValTok{0}\NormalTok{)}
+\FunctionTok{biplot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{y =}\NormalTok{ informative\_loadings, }\AttributeTok{scale =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{RecEx10-sol_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
-\hypertarget{proportion-of-variance-explained-pve}{%
 \subsection{Proportion of variance explained
-(PVE)}\label{proportion-of-variance-explained-pve}}
+(PVE)}\label{proportion-of-variance-explained-pve}
 
 The numbers below show that although the graphs based on PC1 and PC2
 give some insight about document types, the first two PCs explain only
@@ -191,7 +190,7 @@ small portion of the variability contained in the data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pr.var}\OtherTok{=}\NormalTok{nyt\_pca}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{pr.var }\OtherTok{\textless{}{-}}\NormalTok{ nyt\_pca}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}
 \NormalTok{pr.var}
 \end{Highlighting}
 \end{Shaded}
@@ -217,7 +216,7 @@ small portion of the variability contained in the data.
 ##  [86] 7.175837e-03 7.160695e-03 7.109025e-03 7.036169e-03 6.984169e-03
 ##  [91] 6.892596e-03 6.805417e-03 6.670563e-03 6.566518e-03 6.466879e-03
 ##  [96] 6.420743e-03 6.337557e-03 6.233789e-03 6.191162e-03 6.025576e-03
-## [101] 5.283112e-03 2.604906e-32
+## [101] 5.283112e-03 3.102322e-32
 \end{verbatim}
 
 We can then compute the proportion of variance explained by each
@@ -225,7 +224,7 @@ principal component
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pve}\OtherTok{=}\NormalTok{pr.var}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(pr.var)}
+\NormalTok{pve }\OtherTok{\textless{}{-}}\NormalTok{ pr.var }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(pr.var)}
 \NormalTok{pve}
 \end{Highlighting}
 \end{Shaded}
@@ -251,7 +250,7 @@ principal component
 ##  [86] 7.554753e-03 7.538811e-03 7.484412e-03 7.407710e-03 7.352964e-03
 ##  [91] 7.256556e-03 7.164773e-03 7.022798e-03 6.913259e-03 6.808359e-03
 ##  [96] 6.759786e-03 6.672208e-03 6.562961e-03 6.518083e-03 6.343753e-03
-## [101] 5.562084e-03 2.742457e-32
+## [101] 5.562084e-03 3.266138e-32
 \end{verbatim}
 
 We can plot the PVE explained by each component, as well as the
@@ -260,10 +259,10 @@ cumulative PVE, as follows:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(pve, }
-     \AttributeTok{xlab=}\StringTok{"Principal Component"}\NormalTok{, }
-     \AttributeTok{ylab=}\StringTok{"Proportion of Variance Explained"}\NormalTok{, }
-     \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}
-     \AttributeTok{type=}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{)}
+     \AttributeTok{xlab =} \StringTok{"Principal Component"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Proportion of Variance Explained"}\NormalTok{, }
+     \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+     \AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -272,35 +271,32 @@ cumulative PVE, as follows:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(}\FunctionTok{cumsum}\NormalTok{(pve), }
-     \AttributeTok{xlab=}\StringTok{"Principal Component"}\NormalTok{, }
-     \AttributeTok{ylab=}\StringTok{"Cumulative Proportion of Variance Explained"}\NormalTok{, }
-     \AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}
-     \AttributeTok{type=}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{)}
+     \AttributeTok{xlab =} \StringTok{"Principal Component"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Cumulative Proportion of Variance Explained"}\NormalTok{, }
+     \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+     \AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{RecEx10-sol_files/figure-latex/unnamed-chunk-7-2} \end{center}
 
-\hypertarget{problem-2}{%
-\section{Problem 2}\label{problem-2}}
+\section{Problem 2}\label{problem-2}
 
 The answer is on page 517 of the book (Second edition), with the
 explanation around Equation (12.18). (In the First edition, it is on
 page 388, Equation (10.12)).
 
-\hypertarget{problem-3}{%
-\section{Problem 3}\label{problem-3}}
+\section{Problem 3}\label{problem-3}
 
 \(k\)-means clustering:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{km.out}\OtherTok{=}\FunctionTok{kmeans}\NormalTok{(nyt\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{],}\DecValTok{2}\NormalTok{,}\AttributeTok{nstart=}\DecValTok{20}\NormalTok{)}
+\NormalTok{km.out }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(nyt\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }\DecValTok{2}\NormalTok{, }\AttributeTok{nstart =} \DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{cluster-assignments}{%
-\subsection{Cluster assignments}\label{cluster-assignments}}
+\subsection{Cluster assignments}\label{cluster-assignments}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -314,8 +310,7 @@ page 388, Equation (10.12)).
 ##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 2 1 1 1 1 1 1
 \end{verbatim}
 
-\hypertarget{plot-the-data}{%
-\subsection{Plot the data}\label{plot-the-data}}
+\subsection{Plot the data}\label{plot-the-data}
 
 To plot the data we need to use the PCA projections. Below we will use
 the plot based on PCA with true labels (A for art and M for music) and
@@ -325,9 +320,9 @@ clustering.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# PCA with true labels}
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{pch=}\StringTok{"A"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{pch=}\StringTok{"M"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[ ,}\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \StringTok{"A"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[ ,}\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \StringTok{"M"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -337,28 +332,28 @@ PCA with true labels but colored by \(k\)-means clustering
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"A"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(km.out}\SpecialCharTok{$}\NormalTok{cluster}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{])}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"M"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(km.out}\SpecialCharTok{$}\NormalTok{cluster}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{])}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"A"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (km.out}\SpecialCharTok{$}\NormalTok{cluster }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{])}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"M"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (km.out}\SpecialCharTok{$}\NormalTok{cluster }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{RecEx10-sol_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
-\hypertarget{problem-4}{%
-\section{Problem 4}\label{problem-4}}
+\section{Problem 4}\label{problem-4}
 
-\hypertarget{perform-hierarchical-clustering}{%
 \subsection{Perform hierarchical
-clustering}\label{perform-hierarchical-clustering}}
+clustering}\label{perform-hierarchical-clustering}
 
-I will use euclidean distance and complete linkage
+We use Euclidean distance and complete linkage
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{hc.complete}\OtherTok{=}\FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method=}\StringTok{"complete"}\NormalTok{)}
+\NormalTok{hc.complete }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method =} \StringTok{"complete"}\NormalTok{)}
 \FunctionTok{str}\NormalTok{(hc.complete)}
 \end{Highlighting}
 \end{Shaded}
@@ -375,54 +370,57 @@ I will use euclidean distance and complete linkage
 ##  - attr(*, "class")= chr "hclust"
 \end{verbatim}
 
-\hypertarget{plot-dendograms}{%
-\subsection{Plot dendograms}\label{plot-dendograms}}
+\subsection{Plot dendograms}\label{plot-dendograms}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(hc.complete,}\AttributeTok{main=}\StringTok{"Complete Linkage"}\NormalTok{, }\AttributeTok{labels=}\FunctionTok{as.character}\NormalTok{(nyt\_data[,}\DecValTok{1}\NormalTok{]), }
-     \AttributeTok{xlab=}\StringTok{""}\NormalTok{, }\AttributeTok{sub=}\StringTok{""}\NormalTok{, }\AttributeTok{cex=}\NormalTok{.}\DecValTok{9}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(hc.complete,}
+     \AttributeTok{main =} \StringTok{"Complete Linkage"}\NormalTok{,}
+     \AttributeTok{labels =} \FunctionTok{as.character}\NormalTok{(nyt\_data[, }\DecValTok{1}\NormalTok{]), }
+     \AttributeTok{xlab =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{cex =} \FloatTok{0.9}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{RecEx10-sol_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
-\hypertarget{cluster-assignment}{%
-\subsection{Cluster assignment}\label{cluster-assignment}}
+\subsection{Cluster assignment}\label{cluster-assignment}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{hc.clusters}\OtherTok{=}\FunctionTok{cutree}\NormalTok{(hc.complete, }\DecValTok{2}\NormalTok{)}
+\NormalTok{hc.clusters }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(hc.complete, }\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{plot-the-data-1}{%
-\subsection{Plot the data}\label{plot-the-data-1}}
+\subsection{Plot the data}\label{plot-the-data-1}
 
 Based on the cluster assignment above and the plots below we see that
 hierarchical clustering performs worse than \(k\)-means for the same
-number of clusters (K=2)
+number of clusters (\(K=2\)).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# PCA with true labels}
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{pch=}\StringTok{"A"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{pch=}\StringTok{"M"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \StringTok{"A"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \StringTok{"M"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{RecEx10-sol_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
-PCA with true labels but colored by \(k\)-means clustering
+PCA with true labels but colored by \(k\)-means clustering:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"A"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clusters}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{])}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"M"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clusters}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{])}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"A"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clusters }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{])}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"M"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clusters }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -433,21 +431,27 @@ Lets see if single linkage or average linkage performs better.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#hierachical clustering}
-\NormalTok{hc.single}\OtherTok{=}\FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method=}\StringTok{"single"}\NormalTok{)}
-\NormalTok{hc.average}\OtherTok{=}\FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method=}\StringTok{"average"}\NormalTok{)}
+\NormalTok{hc.single }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method =} \StringTok{"single"}\NormalTok{)}
+\NormalTok{hc.average }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(nyt\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]), }\AttributeTok{method =} \StringTok{"average"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{plot-dendogram}{%
-\section{Plot dendogram}\label{plot-dendogram}}
+\section{Plot dendogram}\label{plot-dendogram}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
-\FunctionTok{plot}\NormalTok{(hc.single,}\AttributeTok{main=}\StringTok{"Single Linkage"}\NormalTok{, }
-     \AttributeTok{labels=}\FunctionTok{as.character}\NormalTok{(nyt\_data[,}\DecValTok{1}\NormalTok{]), }\AttributeTok{xlab=}\StringTok{""}\NormalTok{, }\AttributeTok{sub=}\StringTok{""}\NormalTok{, }\AttributeTok{cex=}\NormalTok{.}\DecValTok{9}\NormalTok{)}
-\FunctionTok{plot}\NormalTok{(hc.average,}\AttributeTok{main=}\StringTok{"Average Linkage"}\NormalTok{, }
-     \AttributeTok{labels=}\FunctionTok{as.character}\NormalTok{(nyt\_data[,}\DecValTok{1}\NormalTok{]), }\AttributeTok{xlab=}\StringTok{""}\NormalTok{, }\AttributeTok{sub=}\StringTok{""}\NormalTok{, }\AttributeTok{cex=}\NormalTok{.}\DecValTok{9}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(hc.single,}\AttributeTok{main =} \StringTok{"Single Linkage"}\NormalTok{, }
+     \AttributeTok{labels =} \FunctionTok{as.character}\NormalTok{(nyt\_data[, }\DecValTok{1}\NormalTok{]),}
+     \AttributeTok{xlab =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{cex =} \FloatTok{0.9}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(hc.average,}
+     \AttributeTok{main =} \StringTok{"Average Linkage"}\NormalTok{, }
+     \AttributeTok{labels =} \FunctionTok{as.character}\NormalTok{(nyt\_data[, }\DecValTok{1}\NormalTok{]),}
+     \AttributeTok{xlab =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+     \AttributeTok{cex =} \FloatTok{0.9}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -455,9 +459,9 @@ Lets see if single linkage or average linkage performs better.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#divide into clusters}
-\NormalTok{hc.clustersSingle}\OtherTok{=}\FunctionTok{cutree}\NormalTok{(hc.single, }\DecValTok{2}\NormalTok{)}
-\NormalTok{hc.clustersAverage}\OtherTok{=}\FunctionTok{cutree}\NormalTok{(hc.average, }\DecValTok{2}\NormalTok{)}
+\CommentTok{\# Divide into clusters}
+\NormalTok{hc.clustersSingle }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(hc.single, }\DecValTok{2}\NormalTok{)}
+\NormalTok{hc.clustersAverage }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(hc.average, }\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -465,17 +469,21 @@ Plot clusters in PC1 and PC2-dimension
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"A"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clustersSingle}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{])}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"M"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clustersSingle}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{])}
-\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{type=}\StringTok{"n"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"A"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clustersAverage}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"art"}\NormalTok{])}
-\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
-       \AttributeTok{pch=}\StringTok{"M"}\NormalTok{,}\AttributeTok{col=}\NormalTok{(hc.clustersAverage}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)[nyt\_data[,}\StringTok{"class.labels"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"music"}\NormalTok{])}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"A"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clustersSingle }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{])}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"M"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clustersSingle }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{])}
+\FunctionTok{plot}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{type =} \StringTok{"n"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"A"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clustersAverage }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"art"}\NormalTok{])}
+\FunctionTok{points}\NormalTok{(nyt\_pca}\SpecialCharTok{$}\NormalTok{x[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}
+       \AttributeTok{pch =} \StringTok{"M"}\NormalTok{,}
+       \AttributeTok{col =}\NormalTok{ (hc.clustersAverage }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)[nyt\_data[, }\StringTok{"class.labels"}\NormalTok{] }\SpecialCharTok{==} \StringTok{"music"}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
