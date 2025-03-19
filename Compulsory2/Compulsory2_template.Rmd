@@ -43,9 +43,6 @@ library("rmarkdown")
 <!--  Etc (load all packages needed). -->
 
 
-
-
-
 ## Introduction: Scope and purpose of your project
 
 
