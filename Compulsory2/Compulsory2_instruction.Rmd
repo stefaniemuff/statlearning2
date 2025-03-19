@@ -75,6 +75,7 @@ Supervision hours (in the usual lecture room):
 * Wednesday, March 26, 16:15-18:00
 * Thursday, March 27, 8:15-10:00
 * Friday, March 28, 8:15-10:00
+* Wednesday, April 2, 16:15-18:00
 
 **Remember that there is also the Mattelab forum, and we strongly encourage you to use it for your questions outside the supervision hours!** This ensures that all other students benefit from the answers (try to avoid emailing the course staff).
 
