@@ -1,24 +1,18 @@
 ---
 title: "Compulsory Exercise 2"
 author:
-- Kenneth Aase, Daesoo Lee, Stefanie Muff, Sara Martino
+- Kenneth Aase, Stefanie Muff, Sara Martino
 - Department of Mathematical Sciences, NTNU
 header-includes: \usepackage{amsmath}
 output:
   pdf_document:
     toc: no
     toc_depth: '2'
-  # html_document:
-  #   toc: no
-  #   toc_depth: '2'
-  #   df_print: paged
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
----
-
-**The submission deadline is: Monday April 15, 23:59h**
+**The submission deadline is: Monday April 7, 23:59h**
 
 
 ```{r setup, include=FALSE}
@@ -42,23 +36,23 @@ knitr::opts_chunk$set(echo = TRUE,
 
 In this project, you will be working on analyzing a data set by developing *prediction/classification* models using statistical learning techniques.
 
-The goal of this relatively open project is to give you hands-on experience, with the methods learned in the course, and to help you develop your skills in data pre-processing, model selection, and evaluation.
+The goal of this relatively open project is to give you hands-on experience with the methods learned in the course, and to help you develop your skills in data pre-processing, model selection, and evaluation.
 
 To get started, here is a broad guideline for your project:
 
 1. **Choose a data set for your project.** We list two possible data sets below, or you can find one on your own.
-    - **Heart Failure:**  [The data set](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction) is provided by user *Fedesoriano* on Kaggle. More information can be found in the provided link.
-    - **AirBnB Prices in European Cities:** [The data set](https://www.kaggle.com/datasets/thedevastator/airbnb-prices-in-european-cities) is provided by user *The Devastator* on Kaggle. More information can be found in the provided link. Note that the description says that the dataset  is designed for inference, but we will use it for prediction or classification. You can choose to focus on data from one city, or combine data from different cities.
-    - **Choosing your own data set:** If you choose to use another dataset, ensure that that it is diverse enough and contains enough data points to train a good model. There are many example data sets provided by `R` packages (e.g. `carData`), and you can find a variety of data sets on [Kaggle](https://www.kaggle.com/datasets) or [TidyTuesday](https://github.com/rfordatascience/tidytuesday). Try searching for a topic that you find interesting and would like to work with. To find a "well-organized" data on Kaggle set we recommend choosing a data set with sufficiently-large amount of upvotes. Otherwise, a data set could be often unorganized or poorly structured with missing values. We do not want you to spend much time on data cleaning!
+    - **Heart Failure Prediction Dataset:**  [The data set](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction) is provided by user *Fedesoriano* on Kaggle. More information can be found in the provided link.
+    - **AirBnB Prices in European Cities:** [The data set](https://www.kaggle.com/datasets/thedevastator/airbnb-prices-in-european-cities) is provided by user *The Devastator* on Kaggle. More information can be found in the provided link. Note that the description says that the dataset is designed for inference, but we will use it for prediction or classification. You can choose to focus on data from one city, or combine data from different cities.
+    - **Choosing your own data set:** If you choose to use another dataset, ensure that that it is diverse enough and contains enough data points to train a good model. There are many example data sets provided by `R` packages (for example `carData`), and you can find a variety of data sets on [Kaggle](https://www.kaggle.com/datasets) or [TidyTuesday](https://github.com/rfordatascience/tidytuesday). Try searching for a topic that you find interesting and would like to work with. To find a "well-organized" data on Kaggle set we recommend choosing a data set with sufficiently-large amount of upvotes. Otherwise, a data set could be unorganized, poorly structured, or contain a lot of missing values. We do not want you to spend much time on data cleaning!
 
-2. **Decide on a prediction/classification task.** What are you trying to predict/classify with the data set? Decide on this *before* you try out any of the models - it's fine if it turns out in the end that you are not able to get good predictions, as long as you have done everything correctly. Some ideas are provided here, but in principle you can decide on anything that makes sense.
+2. **Decide on a prediction/classification task.** What are you trying to predict/classify with the data set? Decide on this *before* you try out any of the models - it's fine if it turns out in the end that you are not able to get good predictions, as long as you have done a sound, meaningful analysis. Some ideas are provided here, but in principle you can decide on anything that makes sense.
     - For the heart failure data set you could try to classify whether a patient gets heart disease or not, predict their age, or predict their cholesterol.
     - For the AirBnB price data set, you could try to predict the price or the rating of of accommodation, or classify the room type or "superhost" status of the host.
     - If you chose another data set you should come up with a prediction or classification task that makes sense from the data.
 
 3. **Data pre-processing.** Before building your model, you might need to pre-process the data (data wrangling), depending on what format your methods require.
 
-4. **Choose appropriate** models and methods for your project. You should use methods that you have learned about in the course. Make sure to justify your choice of algorithm, check model assumptions and, if relevant, tune the hyperparameters to improve model performance. **Use methods from at least two different modules of the course**. You can also consider transformations of the variables in your data set, and interaction effects. Make sure that you do the model selection in a *valid* way, as you have learned in the course, and remember the bias-variance tradeoff.
+4. **Choose appropriate models and methods**. You should use methods that you have learned about in the course. Make sure to justify your choice of algorithm, check model assumptions and, if relevant, tune the hyperparameters to improve model performance. **Use methods from at least two different modules of the course**. You can also consider transformations of the variables in your data set, and interaction effects. Make sure that you do the model selection in a *valid* way, as you have learned in the course, and remember the bias-variance tradeoff.
     -  If you are solving a prediction task, you could try methods such as multiple linear regression, GAMs, ridge/lasso regression, trees, random forests, boosting *etc*.
     - If you are solving a classification task, you could try methods such as logistic regression, LDA, QDA, KNN, regression trees, random forests and boosting *etc*.
 
@@ -76,12 +70,14 @@ Maximal score is 100 points and the number of points given for each section of y
 
 We will use the times where we would have lectures and exercises for supervision.
 
-Supervision hours (in the usual lecture rooms):
+Supervision hours (in the usual lecture room):
 
-* Thursday, April 11, 8:15-10:00 and 16:15-18:00
-* Friday April 12, 12:15-14:00
+* Wednesday, March 26, 16:15-18:00
+* Thursday, March 27, 8:15-10:00
+* Friday, March 28, 8:15-10:00
+* Wednesday, April 2, 16:15-18:00
 
-Remember that there is also the Mattelab forum, and we strongly encourage you to use it for your questions outside the supervision hours -- this ensures that all other students benefit from the answers (try to avoid emailing the course staff). 
+**Remember that there is also the Mattelab forum, and we strongly encourage you to use it for your questions outside the supervision hours!** This ensures that all other students benefit from the answers (try to avoid emailing the course staff).
 
 ## Practical issues (Please read carefully)
 
@@ -91,7 +87,8 @@ Remember that there is also the Mattelab forum, and we strongly encourage you to
 * Do not include the text from the file that you are reading now. We want your (relevant) `R` code, plots and written solutions - use the attached template `Compulsory2_template.Rmd`.
 * Please **no more than 14 pages** in your pdf-file. **We will stop reading your report after page 14.** Keep this in mind when choosing what `R`-code/output to include, and when sizing your figures.
 * In the `R`-chunks, carefully consider when to set `echo` and `eval` to `TRUE` or `FALSE`, to make it simpler for us to read and grade. Use common sense, and do not include irrelevant output and code.
-* Please save us time and **do not submit word or zip**, and do not submit only the Rmd or pdf (submit **both**). This only results in extra work for us.
+* Please save us time and **do not submit word or zip**, and do not submit only the Rmd or pdf (you should submit **both**). This only results in extra work for us.
+* **Use of AI tools:** make sure you have read and understood NTNU's guidelines on the use of such tools, found [here](https://i.ntnu.no/wiki/-/wiki/English/Artificial+intelligence+in+student+papers). Note especially the part about submitting an AI declaration, which can be submitted as an additional document when you hand in your report. As a rule of thumb, we expect you to show that you understand what you are doing when you analyze the data for your project. Points obviously cannot be given for automatically generated reports.
 * **Bonus hint: Neat reports are easier to understand and may result in a better grade - simply because we cannot give full points if things are unclear, ambiguous or messy.** Pretend that the task you decided on was given to you by your boss at a company, and the report is what you will deliver to the boss. When writing the report, keep in mind that boss has limited time and attention, and has not spent as much time as you have on getting familiar with the problem.
 
 ---
@@ -109,10 +106,9 @@ Replace the placeholder title by an informative title.
 The purpose of the abstract it to give a short and concise summary of your project. It is a stand-alone text that is given before the actual report starts. It includes the following components:
 
 1. Begin your abstract by clearly stating the purpose of your project. What problem are you trying to solve? What question do you want to answer? It is important to be concise and to the point.
-2. In the next few sentences, describe the data and methods you used to conduct your study. What kind of data set did you use? How did you analyze it? What tools, techniques, or methods did you use? Be specific, but avoid going into too much detail.
-3. Summarize your key findings: In the main part of your abstract, summarize the most important results of your project and interpret them briefly (i.e., what does this mean?). Highlight the most significant findings, and provide enough detail to give the reader a sense of what you discovered.
-4. (optional) Emphasize the significance of your results: Explain why or/and how your finding(s) is/are important. Highlight any novel or unexpected findings, and explain how they add to our understanding of the topic. 
-
+2. In the next few sentences, describe the data and methods you used to conduct your study. What kind of data did you use? How did you analyze it? What tools, techniques, or methods did you use? Be specific, but avoid going into too much detail.
+3. Summarize your key findings: In the main part of your abstract, summarize the most important results of your project and interpret them briefly (i.e., what do your results mean?). Highlight the most significant findings, and provide enough detail to give the reader a sense of what you discovered.
+4. (optional) Emphasize the significance of your results: Explain why and/or how your findings are important (or not important). Highlight any novel or unexpected findings, and explain how they add to our understanding of the topic. 
 
 ## Introduction: Scope and purpose of your project (15 points)
 
@@ -125,24 +121,21 @@ The purpose of the abstract it to give a short and concise summary of your proje
 
 ## Descriptive data analysis/statistics (15 points)
 
-Conduct descriptive data analysis to get an overview over your data (see [this example](https://www.kaggle.com/code/upadorprofzs/basic-visualization-techniques) for inspiration). Try to **focus on what will be relevant for your modelling** and use common sense. For example, too much detail, or figures without any explanation or axis labels, are not useful to the reader.
+Conduct descriptive data analysis to get an overview over your data (see [this example](https://www.kaggle.com/code/upadorprofzs/basic-visualization-techniques) for inspiration). Try to **focus on what will be relevant for your modelling** and use common sense. For example, too much detail, or figures without any explanation or axis labels, are not useful to the reader. Be selective, and focus on what is most important.
 
-For example:
+For example, you could:
 
 * Report measures such as mean, median, range, standard deviation, and variance to describe the central tendency, variability, and distribution of a data set.
-* Scatter plots and correlation matrices across different variables and histograms of variables (see [this example](https://ggobi.github.io/ggally/reference/ggpairs.html)).
-* Box plots of variables.
-
-
+* Make scatter plots and correlation matrices across different variables and histograms of variables (see [this example](https://ggobi.github.io/ggally/reference/ggpairs.html)).
+* Make box plots of variables.
 
 ## Methods (30 points)
 
-* Describe the methods that you are using in your project and explain in detail how you applied them. You should use several methods for your problem so that you can compare their performance.
+* Describe the methods that you are using in your project and explain in detail how you applied them. You should use at least 2 methods for your problem so that you can compare their performance.
 * Explain briefly how each method works, what its strengths and weaknesses are, both in general but also in the light of your project (how suitable is the method _in your case_?).
-* Describe which hyperparameters are optimized for the methods (e.g., the shrinkage factor is a hyperparameter in Lasso regression).
-* Describe clearly how you evaluate the performance of the different models and methods (accuracy, MSE, misclassification error, CV error,...). Explain how each metric is calculated, and why it is a useful measure of model performance.
+* If relevant, describe which hyperparameters are optimized for the methods (e.g., the shrinkage factor is a hyperparameter in Lasso regression).
+* Describe clearly how you evaluate the performance of the different models and methods (accuracy, MSE, misclassification error, CV error,...). Explain how each performance metric is calculated, and on what data, and why it is a useful measure of model performance.
 * (optional) Consider and describe potential limitations of the methods and the chosen evaluation metrics. 
-
 
 ## Results and interpretation (30 points)
 
@@ -153,7 +146,6 @@ For example:
 3. Discuss any limitations or caveats that are important to keep in mind when interpreting your results.
 
 4. (Optional) Give an outlook on potential alternative/better ways to analyze your data in the future.
-
 
 ## Summary (5 points)
 

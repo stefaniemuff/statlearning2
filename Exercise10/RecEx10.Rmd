@@ -1,9 +1,9 @@
 ---
 title: 'Module 10: Recommended Exercises'
 author:   
-  - Daesoo Lee, Kenneth Aase, Stefanie Muff, Sara Martino
+  - Kenneth Aase, Stefanie Muff, Sara Martino
   - Department of Mathematical Sciences, NTNU
-date: "April 4, 2024"
+date: "March 26, 2025"
 output:
    pdf_document:
      fig_caption: yes
@@ -14,15 +14,22 @@ output:
     df_print: paged
     toc: no
     toc_depth: '2'
-subtitle: TMA4268 Statistical Learning V2024
+subtitle: TMA4268 Statistical Learning V2025
 urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
-                      size="scriptsize",fig.width=4, fig.height=3,fig.align = "center")
-
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      strip.white = TRUE,
+                      prompt = FALSE,
+                      size = "scriptsize",
+                      fig.width = 4,
+                      fig.height = 3,
+                      fig.align = "center")
 ```
 
 
@@ -37,9 +44,7 @@ New stories were randomly selected from the [New York Times Annotated Corpus](ht
 
 The `nyt_data` is a dataset containing these 102 stories, which represent the 102 observations. The first column contains class labels of the stories (art and music) and, and the other stories contain the counts of each word in a given story (weight by the inverse document frequency and normalized by vector length).
 
-The New York Times stories dataset are contained in the file `pca-exampes.rdata` which is already included in the directory. 
-You can still download it from google drive (https://drive.google.com/open?id=1vaK9GDvMw4Hsuv0T1jHeq9ZyrqLhJ6MR) and store in the directory of your Rmd file. 
-The `pca-examples.rdata` can be loaded with the following code.
+The New York Times stories dataset are contained in the file `pca-exampes.rdata` which is already included in the directory. You can still download it from Google drive (https://drive.google.com/open?id=1vaK9GDvMw4Hsuv0T1jHeq9ZyrqLhJ6MR) and store in the directory of your Rmd file. The `pca-examples.rdata` can be loaded with the following code.
 
 ```{r, eval = T}
 load("pca-examples.rdata")  # use this when knitting
@@ -49,7 +54,6 @@ load("pca-examples.rdata")  # use this when knitting
 nyt_data <- nyt.frame  # dimension: (102, 4432)
 ```
 
-
 ```{r, echo=T, eval=F}
 str(nyt_data)
 summary(nyt_data$class.labels)
@@ -58,33 +62,29 @@ summary(nyt_data$class.labels)
 Let's check some word samples:
 
 ```{r, message=FALSE, warning=FALSE}
-colnames(nyt_data)[sample(ncol(nyt_data),30)]
+colnames(nyt_data)[sample(ncol(nyt_data), 30)]
 ```
 
 Let's check some values in the dataset. We have many zeroes, as most words do not appear in most stories.
 
 ```{r, message=FALSE, warning=FALSE}
-signif(nyt_data[sample(nrow(nyt_data),5),sample(ncol(nyt_data),10)],3)
+signif(nyt_data[sample(nrow(nyt_data), 5), sample(ncol(nyt_data), 10)], 3)
 ```
 
-
-
-
 # Problem 1
-
-
 
 - For the New York Times stories (`nyt_data`) dataset:
     - Create a biplot and explain the type of information that you can extract from the plot.
     - Create plots for the proportion of variance explained (PVE) and cumulative PVE. Describe what type of information you can extract from the plots.
-    
-
+  
 
 # Problem 2
 
 Show that the algorithm below is guaranteed to decrease the value of the objective
 
-$$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2 \right\}$$
+$$
+\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2 \right\}
+$$
 
 at each step. 
 
@@ -97,8 +97,6 @@ at each step.
 
 Perform $k$-means clustering in the New York Times stories dataset. 
 
-
 # Problem 4
 
 Perform hierarchical clustering in the New York Times stories dataset. 
-
