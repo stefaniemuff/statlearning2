@@ -64,7 +64,7 @@ train_pca <- predict(pca_result, train_data)
 
 
 # reconstruct face with less components
-num_components = 3
+num_components = 30
 ii = sample(1:300,1)
 aa = train_pca[ii,,drop = F][, 1:num_components] %*% t(pca_result$rotation[, 1:num_components])
 g1 = ggimage(matrix(aa + pca_result$center, 64,64))
@@ -102,10 +102,10 @@ which(preds==0)
 # best matching face ------------------------------------------------------
 
 
-num_components = 100
+num_components = 10
 
 train_scores <- pca_result$x[, 1:num_components]
-test_id = 7#sample(1:dim(test_data)[1],1)
+test_id = 17#sample(1:dim(test_data)[1],1)
 test_image <- test_data[test_id,,drop = F]  # Change this to your actual test image
 
 # Project the test image into the PCA space using the same principal components
@@ -125,6 +125,11 @@ best_match_face <- train_data[[best_match_index]]
 p1 = ggimage(matrix(test_data[test_id,], nrow = 64, ncol = 64))
 p2 = ggimage(matrix(train_data[best_match_index,], nrow = 64, ncol = 64))
 p1 + p2
+
+
+
+
+
 
 # can we try clustering?
 library(cluster)

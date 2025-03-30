@@ -1,8 +1,8 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 11: Deep Learning and Neural Networks"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "April 18 and 19, 2024"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "April 3 and 4, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -43,7 +43,7 @@ whichformat="latex"
 
 $~$
 
-* Some of this material was (in a modified version) created by Mette Langaas who has put a lot of effort in creating this module in its original version. Thanks to Mette for the permission to use the material!
+* Most of the slides were created by Stefanie Muff, also some of this material was (in a modified version) created by Mette Langaas who has put a lot of effort in creating this module in its original version. Thanks to Steffi and Mette for the permission to use the material!
 
 * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
 
@@ -195,6 +195,7 @@ $~$
 
 
 <!-- ![](AI_ML_DL.png) -->
+
 
 ---
 
@@ -461,7 +462,7 @@ $~$
 
 Objective: classify the digit contained in an image (28 $\times$ 28 greyscale).
 
-![](mnist.png)
+![](MNIST_dataset_example.png)
 
 <!-- \scriptsize -->
 <!-- ```{r, echo=FALSE} -->
@@ -1267,7 +1268,7 @@ The filter highlights regions in the image that are similar to the filter itself
 Filtering for vertical or horizontal stripes:
 
 \centering
-![](fig107.png){width=80%}
+![](fig10_7.png){width=80%}
 
 \scriptsize
 (Figure 10.7)
@@ -1324,10 +1325,10 @@ $$\left[
 
 ---
 
-In a CNN, we now combine convolution and pooling steps interatively:
+In a CNN, we now combine convolution and pooling steps iteratively:
 
 \centering
-![](fig108.png)
+![](fig10_8.png)
 
 * The number of channels after a convolution step is the number of filters ($K$) that is used in this iteration.
 
@@ -1349,13 +1350,17 @@ $~$
 
 * Example: 
 
-![](fig109.png){width=90%}
+![](fig10_9.png){width=90%}
 
 
 \scriptsize Figure 10.9 of @ISL
 
 ---
 
+### An Interactive Node-Link Visualization of Convolutional Neural Networks
+
+<https://adamharley.com/nn_vis/>
+---
 ### Examples
 
 $~$
@@ -1420,7 +1425,8 @@ $~$
 
 Example of one-hot encoding a text with 20 words:
 
-![](One_hot_1013.png)
+![](fig10_13.png
+)
 
 \scriptsize
 Figure 10.13 in @ISL
@@ -1596,7 +1602,7 @@ We compare
 
 ---
 
-![](Table10_2.png)
+![](table10_2.png)
 $~$
 
 Conclusions?
@@ -1613,14 +1619,14 @@ Lots of papers like those:
 
 \centering
 
-![](ML_logreg1.png){width=80%}
-
+<!--![](ML_logreg1.png){width=80%}
+-->
 $~$
 
-![](ML_logreg2.png){width=100%}
-
-![](ML_logreg3.png){width=100%}
-
+<!--![](ML_logreg2.png){width=100%}
+-->
+<!--![](ML_logreg3.png){width=100%}
+-->
 ---
 
 ### DL/ML in Ecology
@@ -1629,8 +1635,8 @@ $~$
 
 Very recent paper:
 
-![](dl_ecology.png)
-
+<!--![](dl_ecology.png)
+-->
 
 ---
 
