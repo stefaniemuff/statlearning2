@@ -174,7 +174,7 @@ $~$
 ## AI, machine learning and statistics
 
 
-\includegraphics[angle=-90]{AI_ML_DL.png}
+\includegraphics[]{AI_ML_DL.png}
 
 ---
 
@@ -244,7 +244,6 @@ $~$
 
 * Rather, deep referes to the _layers of representation_, for example in a neural network. 
 
-$~$
 
 \center
 ![](deep.png){width=80%}
@@ -887,6 +886,28 @@ $~$
 * The _chain rule_ is used to compute derivatives of functions of other functions where the derivatives are known. This is efficiently done with backpropagation.
 
 
+---
+
+### Backpropagation algorithm 
+
+We look at the quadratic loss function.
+
+We want to compute the gradient of 
+$$
+R(\theta) = \sum R_i(\theta) 
+$$
+where
+
+$$
+\begin{aligned}
+R_i(\theta) = \frac{1}{2}\left(y_i - f(\mathbf{x}_i)\right)^2 = \frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} z_{ik}\right)^2 = \\
+\frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} g(\alpha_{k0} + \sum_{j = 1}^p\alpha_{kj}x_{ij})\right)^2
+\end{aligned}
+$$
+
+wrt $\beta_{k}$ and $\alpha_{kj}$
+
+We consider one data point at the time.
 
 ---
 

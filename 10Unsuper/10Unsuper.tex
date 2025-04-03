@@ -141,7 +141,7 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -157,14 +157,74 @@
 \title{Module 10: Unsupervised learning (Overview/quizz lecture)}
 \subtitle{TMA4268 Statistical Learning V2023}
 \author{Sara Martino, Department of Mathematical Sciences, NTNU}
-\date{April 5, 2024}
+\date{April 21, 2025}
 
 \begin{document}
 \frame{\titlepage}
 
+\begin{frame}{PCA - Standardization?}
+\phantomsection\label{pca---standardization}
+\begin{itemize}
+\tightlist
+\item
+  Mentimeter
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{PCA - Standardization?}
+\phantomsection\label{pca---standardization-1}
+\begin{verbatim}
+##         Murder Assault UrbanPop Rape
+## Alabama   13.2     236       58 21.2
+## Alaska    10.0     263       48 44.5
+## Arizona    8.1     294       80 31.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(USArrests,}\DecValTok{2}\NormalTok{,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Murder  Assault UrbanPop     Rape 
+##    7.788  170.760   65.540   21.232
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(USArrests,}\DecValTok{2}\NormalTok{,var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Murder    Assault   UrbanPop       Rape 
+##   18.97047 6945.16571  209.51878   87.72916
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# perform PCA}
+\NormalTok{p1 }\OtherTok{=}  \FunctionTok{prcomp}\NormalTok{(USArrests, }\AttributeTok{scale =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{center =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{p2 }\OtherTok{=}  \FunctionTok{prcomp}\NormalTok{(USArrests, }\AttributeTok{scale =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{center =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{p3 }\OtherTok{=}  \FunctionTok{prcomp}\NormalTok{(USArrests, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{center =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{Explained Variance}
+\phantomsection\label{explained-variance}
+\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-5-1.pdf}
+\end{frame}
+
+\begin{frame}{Biplot}
+\phantomsection\label{biplot}
+\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-6-1.pdf}
+\end{frame}
+
 \begin{frame}[fragile]
 \begin{block}{PCA example}
-\protect\hypertarget{pca-example}{}
+\phantomsection\label{pca-example}
 \(~\)
 
 \begin{itemize}
@@ -183,8 +243,7 @@
 \FunctionTok{library}\NormalTok{(FactoMineR)}
 \FunctionTok{data}\NormalTok{(}\StringTok{"decathlon2"}\NormalTok{)}
 \NormalTok{decathlon2.active }\OtherTok{\textless{}{-}}\NormalTok{ decathlon2[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{23}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
-\FunctionTok{names}\NormalTok{(decathlon2.active) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"100m"}\NormalTok{, }\StringTok{"long\_jump"}\NormalTok{, }\StringTok{"shot\_put"}\NormalTok{, }\StringTok{"high\_jump"}\NormalTok{,}
-    \StringTok{"400m"}\NormalTok{, }\StringTok{"110.hurdle"}\NormalTok{, }\StringTok{"discus"}\NormalTok{, }\StringTok{"pole\_vault"}\NormalTok{, }\StringTok{"javeline"}\NormalTok{, }\StringTok{"1500m"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(decathlon2.active) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"100m"}\NormalTok{,}\StringTok{"long\_jump"}\NormalTok{,}\StringTok{"shot\_put"}\NormalTok{,}\StringTok{"high\_jump"}\NormalTok{,}\StringTok{"400m"}\NormalTok{,}\StringTok{"110.hurdle"}\NormalTok{,}\StringTok{"discus"}\NormalTok{,}\StringTok{"pole\_vault"}\NormalTok{,}\StringTok{"javeline"}\NormalTok{,}\StringTok{"1500m"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -212,7 +271,7 @@
 
 \begin{frame}
 \begin{block}{Proportion of varianced explained (PVE)}
-\protect\hypertarget{proportion-of-varianced-explained-pve}{}
+\phantomsection\label{proportion-of-varianced-explained-pve}
 \(~\)
 
 \textbf{Recap:} The PVE by PC \(m\) is given by
@@ -225,7 +284,7 @@
 
 \begin{frame}
 \begin{block}{Scree plot}
-\protect\hypertarget{scree-plot}{}
+\phantomsection\label{scree-plot}
 \(~\)
 
 A graphical description of the \textbf{proportion of variance explained
@@ -233,12 +292,12 @@ A graphical description of the \textbf{proportion of variance explained
 
 \centering
 
-\includegraphics[width=0.9\linewidth]{10Unsuper_files/figure-beamer/unnamed-chunk-5-1}
+\includegraphics[width=0.9\linewidth]{10Unsuper_files/figure-beamer/unnamed-chunk-9-1}
 \end{block}
 \end{frame}
 
 \begin{frame}[fragile]{Another example}
-\protect\hypertarget{another-example}{}
+\phantomsection\label{another-example}
 Protein consumption in twenty-five European countries for nine food
 groups.
 
@@ -261,17 +320,17 @@ groups.
 \end{frame}
 
 \begin{frame}{Correlation Matrix}
-\protect\hypertarget{correlation-matrix}{}
-\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-7-1.pdf}
+\phantomsection\label{correlation-matrix}
+\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-11-1.pdf}
 \end{frame}
 
 \begin{frame}{PCA}
-\protect\hypertarget{pca}{}
-\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-8-1.pdf}
+\phantomsection\label{pca}
+\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-12-1.pdf}
 \end{frame}
 
 \begin{frame}[fragile]{Variance Explained}
-\protect\hypertarget{variance-explained}{}
+\phantomsection\label{variance-explained}
 \footnotesize
 
 \begin{verbatim}
@@ -288,12 +347,12 @@ groups.
 \end{frame}
 
 \begin{frame}{Variance Explained - Scree plot}
-\protect\hypertarget{variance-explained---scree-plot}{}
-\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-10-1.pdf}
+\phantomsection\label{variance-explained---scree-plot}
+\includegraphics{10Unsuper_files/figure-beamer/unnamed-chunk-14-1.pdf}
 \end{frame}
 
 \begin{frame}{Clustering}
-\protect\hypertarget{clustering}{}
+\phantomsection\label{clustering}
 \(~\)
 
 \begin{itemize}
@@ -310,12 +369,12 @@ Difference to PCA?
 \pause
 
 \(\rightarrow\) PCA looks for low-dimensional representation of the
-data.
+data. \(\rightarrow\) Clustering aims at creating homogeneous subgroups
 \end{frame}
 
 \begin{frame}
 \begin{block}{K-means vs.~hierarchical clustering}
-\protect\hypertarget{k-means-vs.-hierarchical-clustering}{}
+\phantomsection\label{k-means-vs.-hierarchical-clustering}
 \(~\)
 
 See menti.com
@@ -324,7 +383,7 @@ See menti.com
 
 \begin{frame}
 \begin{block}{K-means clustering}
-\protect\hypertarget{k-means-clustering}{}
+\phantomsection\label{k-means-clustering}
 \(~\)
 
 \begin{itemize}
@@ -347,13 +406,13 @@ See menti.com
 \end{frame}
 
 \begin{frame}{K-means clustering - Algorithm}
-\protect\hypertarget{k-means-clustering---algorithm}{}
+\phantomsection\label{k-means-clustering---algorithm}
 \includegraphics{imgs/kmeans_algo.png}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Hierarchical clustering}
-\protect\hypertarget{hierarchical-clustering}{}
+\phantomsection\label{hierarchical-clustering}
 \(~\)
 
 Bottom-up agglomerative clustering that results in a
@@ -365,9 +424,8 @@ Bottom-up agglomerative clustering that results in a
 \end{block}
 \end{frame}
 
-\begin{frame}
-\begin{block}{Important in hierarchical clustering}
-\protect\hypertarget{important-in-hierarchical-clustering}{}
+\begin{frame}{Important in hierarchical clustering}
+\phantomsection\label{important-in-hierarchical-clustering}
 \(~\)
 
 \begin{itemize}
@@ -385,23 +443,50 @@ Bottom-up agglomerative clustering that results in a
   correlation. \emph{Other similarity/distance measures?}
   \footnote{ Note: Correlation is actually a similarity measure, not a distance measure. Implication?}
 \end{itemize}
-\end{block}
 \end{frame}
 
-\begin{frame}
-\begin{block}{Hierarchical clustering -- example}
-\protect\hypertarget{hierarchical-clustering-example}{}
+\begin{frame}{Hierarchical clustering -- example}
+\phantomsection\label{hierarchical-clustering-example}
 \(~\)
 
 \includegraphics{imgs/dendogram_misleading.png}
 
 Note: The representation on the right is not possible in
 high-dimensional space (i.e., if we have \(X_1, X_2, X_3, ...., X_p\)).
-\end{block}
+\end{frame}
+
+\begin{frame}{Nested clusters:}
+\phantomsection\label{nested-clusters}
+Not always suited for a arbitrary dataset
+
+Group of people
+
+\begin{itemize}
+\tightlist
+\item
+  evenly split between male and female
+\item
+  evenly split between americans, japanese and french
+\item
+  best division in two groups -\textgreater{} gender
+\item
+  best division in three groups -\textgreater{} nationality
+\item
+  not nested
+\end{itemize}
+
+This explains why hierarchical clusters can sometimes yield worse
+results than K-means for a given number of clusters
+\end{frame}
+
+\begin{frame}{Standardization}
+\phantomsection\label{standardization}
+data.fram2(name = c(Artis, Baiba, Cintija, Dainis), Caviar =
+c(0,0.1,1.0,1.1), Bread = c(10,9,7.5,4.5))
 \end{frame}
 
 \begin{frame}{Exercise 2 from the book}
-\protect\hypertarget{exercise-2-from-the-book}{}
+\phantomsection\label{exercise-2-from-the-book}
 We have the following dissimilarity matrix:
 
 \[\begin{bmatrix}0&0.3&0.4&0.7 \\0.3&0&0.5&0.8 \\0.4&0.5&0&0.45 \\0.7&0.8&0.45&0 \\\end{bmatrix}\]
@@ -420,14 +505,14 @@ We have the following dissimilarity matrix:
 \end{frame}
 
 \begin{frame}{Exercise 11 from the book}
-\protect\hypertarget{exercise-11-from-the-book}{}
+\phantomsection\label{exercise-11-from-the-book}
 \includegraphics{imgs/Ch10_ex11.png}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Pros and cons of clusterization methods / practical
 issues}
-\protect\hypertarget{pros-and-cons-of-clusterization-methods-practical-issues}{}
+\phantomsection\label{pros-and-cons-of-clusterization-methods-practical-issues}
 \(~\)
 
 \(~\)
@@ -451,7 +536,7 @@ issues}
 \end{frame}
 
 \begin{frame}{References}
-\protect\hypertarget{references}{}
+\phantomsection\label{references}
 \end{frame}
 
 \end{document}
