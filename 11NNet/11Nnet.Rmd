@@ -23,6 +23,9 @@ header-includes:
 - \usepackage{tcolorbox}
 - \setbeamertemplate{navigation symbols}{}
 - \setbeamertemplate{footline}[page number]
+classoption:
+- twocolumn
+---
 
 ---
 
@@ -1212,6 +1215,38 @@ See recommended exercise.
 
 ---
 
+# Neural Networks 
+
+:::::::::::::: {.columns}
+::: {.column width="50%"}
+
+![](fig10_4.png){width=120%}
+
+:::
+::: {.column width="60%"}
+
+ - Output layer activation
+ - Hidden layer activation
+ - Network architecture
+ - Loss function
+ - Optimizers
+ 
+:::
+::::::::::::::
+
+--- 
+
+
+# Today
+
+ - Two important types of NN
+  
+    - Convolutional NN
+    - Recurrent NN
+    
+
+---
+
 # Convolutional neural networks (CNNs)
 
 $~$
@@ -1232,9 +1267,10 @@ $~$
 
 ---
 
-\vspace{2mm}
 
-* Idea of CNNs: recognize features and patterns. 
+# Idea of CNNs: recognize features and patterns. 
+
+
 
 \vspace{2mm}
 
@@ -1244,9 +1280,18 @@ $~$
 
 * These low-level features are then combined into _higher-level features_. 
 
-\vspace{2mm}
+\centering
 
-* Two types of layers: _\textcolor{red}{Convolution layers}_ and _\textcolor{red}{pooling layers}_.
+![](fig10_6.png){width=50%}
+
+---
+
+# Elements of a CNN
+
+Two types of layers: 
+
+   - _\textcolor{red}{Convolution layers}_ 
+   - _\textcolor{red}{Pooling layers}_.
 
 ---
 
@@ -1380,8 +1425,17 @@ $~$
 
 ### An Interactive Node-Link Visualization of Convolutional Neural Networks
 
+$~$
+
+See 
+
+\vspace{2mm}
+
+
 <https://adamharley.com/nn_vis/>
+
 ---
+
 ### Examples
 
 $~$
@@ -1396,6 +1450,33 @@ See
 
 * Examples in the recommended exercise 11.
 
+
+---
+
+# Recurrent neural networks (RNNs) - Motivation
+
+<!-- https://builtin.com/data-science/recurrent-neural-networks-and-lstm -->
+
+What is the next word?
+
+
+\centering
+
+How to make ...
+
+ - pizza?
+ - yoga?
+ - rain?
+
+---
+
+# Problems with other "vanilla" NN
+
+ - Length of input
+
+\vspace{2mm}
+
+ - Sequenciality of input
 
 ---
 
@@ -1588,6 +1669,14 @@ $~$
 
 ---
 
+# Recurrent Neural Network
+
+ - We presented only a simple version
+ - More complex variats do exist
+ - Much used in LLM
+
+---
+
 # When to use deep learning?
 
 $~$
@@ -1630,18 +1719,79 @@ Conclusions?
 
 * ...
 * ...
-* ...
+
+\vspace{2mm}
+
+\pause
+
+Typically, NN are attractive when the size of the training set is extremely large and when model interpretability is not a priority!
+
 
 ---
 
-### DL in Medicine 
+
+# Double descent
+
+
+![](bias_variance.png){width=60%}
+
+
+---
+
+
+# Double descent
+
+
+![](double_descent.png){width=60%}
+
+Does this contraddict the bias-variance trade off?
+
+
+---
+
+We want to recover the function
+$$
+y = \sin(x)
+$$
+We have 20 noisy observations of the signal where
+$$
+y_i = \sin(x_i) +\epsilon_i, \qquad \epsilon_i\sim\mathcal{N}(0,0.3^2)
+$$
+We use natural splines...
+
+---
+
+![](fig10_21.png)
+
+---
+
+
+![](fig10-20-2.png){width=80%}
+
+
+---
+
+# Double descent - some consideration
+
+ - Does not contradict the bias variance trade-off (the $x$-axis expresses the flexibility of the model)
+ 
+ - For deep learning algorithms we can sometimes achieve good test error while interpolating the training error - particularly  in problems with *high signal-to-noise ratio*, such as natural image recognition and language translation
+ 
+ - Most of the statistical learning methods seen  do not exhibit double descent. Regularized methods  can give great results without interpolating the data!
+
+
+**To summarize: though double descent can sometimes occur in neural net- works, we typically do not want to rely on this behavior.** [James et al. Ch 10.8]
+
+---
+
+# DL in Medicine 
 
 Lots of papers like those:
 
-\centering
 
-<!--![](ML_logreg1.png){width=80%}
--->
+![](paper_1.png){width=80%}
+
+
 $~$
 
 <!--![](ML_logreg2.png){width=100%}
@@ -1650,14 +1800,14 @@ $~$
 -->
 ---
 
-### DL/ML in Ecology
+# DL/ML in Ecology
 
 $~$
 
-Very recent paper:
 
-<!--![](dl_ecology.png)
--->
+
+![](paper2.png)
+
 
 ---
 
@@ -1670,7 +1820,6 @@ Very recent paper:
 * @kerasR
 * @goodfellow (used in IT3030) <https://www.deeplearningbook.org/>
 * Explaining backpropagation <http://neuralnetworksanddeeplearning.com/chap2.html>
-* Slides from MA8701 (Thiago Martins) <https://www.math.ntnu.no/emner/MA8701/2019v/DeepLearning/>
 
 
 # Acknowledgements
