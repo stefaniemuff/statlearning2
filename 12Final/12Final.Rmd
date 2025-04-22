@@ -1,8 +1,8 @@
 ---
-subtitle: "TMA4268 Statistical Learning V2024"
+subtitle: "TMA4268 Statistical Learning V2025"
 title: "Module 12: Summing up and some cautionary notes"
 author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "April 25, 2024"
+date: "April 24, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -40,7 +40,7 @@ whichformat="latex"
 
 $~$
 
-* Course content and learning outcome
+* Some exam information
 \vspace{2mm}
 
 * Overview of modules and core course topics
@@ -60,24 +60,12 @@ Some of the figures and slides in this presentation are taken (or are inspired) 
 
 ---
 
-# Learning outcomes of TMA4268
-
-1. **Knowledge.** The student has knowledge about the most popular statistical learning models and methods that are used for _prediction_ and _inference_ in science and technology. Emphasis is on regression- and classification-type statistical models.
-
-2. **Skills.** The student can, based on an existing data set, _choose a suitable statistical model, apply sound statistical methods_, and _perform the analyses using statistical software_. The student can present, interpret and communicate the results from the statistical analyses, and knows which conclusions can be drawn from the analyses, and what are the caveats.  
-
-$~$
-
-**And**: you got to be an expert in using the R language and writing R Markdown reports.
-
----
-
 
 # The exam
 
 $~$
 
-* **School exam** May 11, 09-13h, plus 15min for file upload.
+* **School exam** May 19, 09-13h, plus 15min for file upload.
 
 $~$
 
@@ -90,9 +78,22 @@ Tentative plan:
 
 $~$
 
-**Check out the exam from 2023 and additional information on the course website:**
+Aids: 
 
-https://wiki.math.ntnu.no/tma4268/2024v/subpage16
+![](exam_aids.jpg)
+
+* A hand-written A4 sheet.
+* The course book.
+
+
+
+---
+
+$~$
+
+**Check out the exam from 2024 and additional information on the course website:**
+
+https://wiki.math.ntnu.no/tma4268/2025v/subpage16
 
 
 
@@ -104,7 +105,7 @@ $~$
 
 Attention: 
 
-* We have now worked with the _second edition_ this year:
+* We have worked with the _second edition_ this year:
 https://www.statlearning.com/
 
 * This edition included a new chapter on Deep Learning, which we discussed in module 11.
@@ -984,9 +985,9 @@ The distribution of the $p$-values is now skewed: many of them reach rather smal
 
 $~$
 
-\colorbox{lightgray}{\begin{minipage}{10cm}
+\begin{tcolorbox}
 When model selection is carried out based on objective criteria, the effect sizes will to be too large and the uncertainty too small. So you end up being too sure about a too large effect. 
-\end{minipage}}
+\end{tcolorbox}
 
 $~$
 
