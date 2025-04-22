@@ -1,8 +1,8 @@
 ---
 subtitle: "TMA4268 Statistical Learning V2024"
 title: "Module 11: Deep Learning and Neural Networks"
-author: "Stefanie Muff, Department of Mathematical Sciences, NTNU"
-date: "April 18 and 19, 2024"
+author: "Sara Martino, Department of Mathematical Sciences, NTNU"
+date: "April 3 and 4, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -23,6 +23,9 @@ header-includes:
 - \usepackage{tcolorbox}
 - \setbeamertemplate{navigation symbols}{}
 - \setbeamertemplate{footline}[page number]
+classoption:
+- twocolumn
+---
 
 ---
 
@@ -43,7 +46,7 @@ whichformat="latex"
 
 $~$
 
-* Some of this material was (in a modified version) created by Mette Langaas who has put a lot of effort in creating this module in its original version. Thanks to Mette for the permission to use the material!
+* Most of the slides were created by Stefanie Muff, also some of this material was (in a modified version) created by Mette Langaas who has put a lot of effort in creating this module in its original version. Thanks to Steffi and Mette for the permission to use the material!
 
 * Some of the figures and slides in this presentation are taken (or are inspired) from @ISL.
 
@@ -174,7 +177,7 @@ $~$
 ## AI, machine learning and statistics
 
 
-\includegraphics[angle=-90]{AI_ML_DL.png}
+\includegraphics[]{AI_ML_DL.png}
 
 ---
 
@@ -195,6 +198,7 @@ $~$
 
 
 <!-- ![](AI_ML_DL.png) -->
+
 
 ---
 
@@ -243,7 +247,6 @@ $~$
 
 * Rather, deep referes to the _layers of representation_, for example in a neural network. 
 
-$~$
 
 \center
 ![](deep.png){width=80%}
@@ -461,7 +464,7 @@ $~$
 
 Objective: classify the digit contained in an image (28 $\times$ 28 greyscale).
 
-![](mnist.png)
+![](MNIST_dataset_example.png)
 
 <!-- \scriptsize -->
 <!-- ```{r, echo=FALSE} -->
@@ -886,6 +889,28 @@ $~$
 * The _chain rule_ is used to compute derivatives of functions of other functions where the derivatives are known. This is efficiently done with backpropagation.
 
 
+---
+
+### Backpropagation algorithm 
+
+We look at the quadratic loss function.
+
+We want to compute the gradient of 
+$$
+R(\theta) = \sum R_i(\theta) 
+$$
+where
+
+$$
+\begin{aligned}
+R_i(\theta) = \frac{1}{2}\left(y_i - f(\mathbf{x}_i)\right)^2 = \frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} z_{ik}\right)^2 = \\
+\frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} g(\alpha_{k0} + \sum_{j = 1}^p\alpha_{kj}x_{ij})\right)^2
+\end{aligned}
+$$
+
+wrt $\beta_{k}$ and $\alpha_{kj}$
+
+We consider one data point at the time.
 
 ---
 
@@ -1190,6 +1215,38 @@ See recommended exercise.
 
 ---
 
+# Neural Networks 
+
+:::::::::::::: {.columns}
+::: {.column width="50%"}
+
+![](fig10_4.png){width=120%}
+
+:::
+::: {.column width="60%"}
+
+ - Output layer activation
+ - Hidden layer activation
+ - Network architecture
+ - Loss function
+ - Optimizers
+ 
+:::
+::::::::::::::
+
+--- 
+
+
+# Today
+
+ - Two important types of NN
+  
+    - Convolutional NN
+    - Recurrent NN
+    
+
+---
+
 # Convolutional neural networks (CNNs)
 
 $~$
@@ -1210,9 +1267,10 @@ $~$
 
 ---
 
-\vspace{2mm}
 
-* Idea of CNNs: recognize features and patterns. 
+# Idea of CNNs: recognize features and patterns. 
+
+
 
 \vspace{2mm}
 
@@ -1222,9 +1280,18 @@ $~$
 
 * These low-level features are then combined into _higher-level features_. 
 
-\vspace{2mm}
+\centering
 
-* Two types of layers: _\textcolor{red}{Convolution layers}_ and _\textcolor{red}{pooling layers}_.
+![](fig10_6.png){width=50%}
+
+---
+
+# Elements of a CNN
+
+Two types of layers: 
+
+   - _\textcolor{red}{Convolution layers}_ 
+   - _\textcolor{red}{Pooling layers}_.
 
 ---
 
@@ -1267,7 +1334,7 @@ The filter highlights regions in the image that are similar to the filter itself
 Filtering for vertical or horizontal stripes:
 
 \centering
-![](fig107.png){width=80%}
+![](fig10_7.png){width=80%}
 
 \scriptsize
 (Figure 10.7)
@@ -1324,10 +1391,10 @@ $$\left[
 
 ---
 
-In a CNN, we now combine convolution and pooling steps interatively:
+In a CNN, we now combine convolution and pooling steps iteratively:
 
 \centering
-![](fig108.png)
+![](fig10_8.png)
 
 * The number of channels after a convolution step is the number of filters ($K$) that is used in this iteration.
 
@@ -1349,10 +1416,23 @@ $~$
 
 * Example: 
 
-![](fig109.png){width=90%}
+![](fig10_9.png){width=90%}
 
 
 \scriptsize Figure 10.9 of @ISL
+
+---
+
+### An Interactive Node-Link Visualization of Convolutional Neural Networks
+
+$~$
+
+See 
+
+\vspace{2mm}
+
+
+<https://adamharley.com/nn_vis/>
 
 ---
 
@@ -1370,6 +1450,33 @@ See
 
 * Examples in the recommended exercise 11.
 
+
+---
+
+# Recurrent neural networks (RNNs) - Motivation
+
+<!-- https://builtin.com/data-science/recurrent-neural-networks-and-lstm -->
+
+What is the next word?
+
+
+\centering
+
+How to make ...
+
+ - pizza?
+ - yoga?
+ - rain?
+
+---
+
+# Problems with other "vanilla" NN
+
+ - Length of input
+
+\vspace{2mm}
+
+ - Sequenciality of input
 
 ---
 
@@ -1420,7 +1527,8 @@ $~$
 
 Example of one-hot encoding a text with 20 words:
 
-![](One_hot_1013.png)
+![](fig10_13.png
+)
 
 \scriptsize
 Figure 10.13 in @ISL
@@ -1561,6 +1669,14 @@ $~$
 
 ---
 
+# Recurrent Neural Network
+
+ - We presented only a simple version
+ - More complex variats do exist
+ - Much used in LLM
+
+---
+
 # When to use deep learning?
 
 $~$
@@ -1596,40 +1712,101 @@ We compare
 
 ---
 
-![](Table10_2.png)
+![](table10_2.png)
 $~$
 
 Conclusions?
 
 * ...
 * ...
-* ...
+
+\vspace{2mm}
+
+\pause
+
+Typically, NN are attractive when the size of the training set is extremely large and when model interpretability is not a priority!
+
 
 ---
 
-### DL in Medicine 
+
+# Double descent
+
+
+![](bias_variance.png){width=60%}
+
+
+---
+
+
+# Double descent
+
+
+![](double_descent.png){width=60%}
+
+Does this contraddict the bias-variance trade off?
+
+
+---
+
+We want to recover the function
+$$
+y = \sin(x)
+$$
+We have 20 noisy observations of the signal where
+$$
+y_i = \sin(x_i) +\epsilon_i, \qquad \epsilon_i\sim\mathcal{N}(0,0.3^2)
+$$
+We use natural splines...
+
+---
+
+![](fig10_21.png)
+
+---
+
+
+![](fig10-20-2.png){width=80%}
+
+
+---
+
+# Double descent - some consideration
+
+ - Does not contradict the bias variance trade-off (the $x$-axis expresses the flexibility of the model)
+ 
+ - For deep learning algorithms we can sometimes achieve good test error while interpolating the training error - particularly  in problems with *high signal-to-noise ratio*, such as natural image recognition and language translation
+ 
+ - Most of the statistical learning methods seen  do not exhibit double descent. Regularized methods  can give great results without interpolating the data!
+
+
+**To summarize: though double descent can sometimes occur in neural net- works, we typically do not want to rely on this behavior.** [James et al. Ch 10.8]
+
+---
+
+# DL in Medicine 
 
 Lots of papers like those:
 
-\centering
 
-![](ML_logreg1.png){width=80%}
+![](paper_1.png){width=80%}
+
 
 $~$
 
-![](ML_logreg2.png){width=100%}
-
-![](ML_logreg3.png){width=100%}
-
+<!--![](ML_logreg2.png){width=100%}
+-->
+<!--![](ML_logreg3.png){width=100%}
+-->
 ---
 
-### DL/ML in Ecology
+# DL/ML in Ecology
 
 $~$
 
-Very recent paper:
 
-![](dl_ecology.png)
+
+![](paper2.png)
 
 
 ---
@@ -1643,7 +1820,6 @@ Very recent paper:
 * @kerasR
 * @goodfellow (used in IT3030) <https://www.deeplearningbook.org/>
 * Explaining backpropagation <http://neuralnetworksanddeeplearning.com/chap2.html>
-* Slides from MA8701 (Thiago Martins) <https://www.math.ntnu.no/emner/MA8701/2019v/DeepLearning/>
 
 
 # Acknowledgements

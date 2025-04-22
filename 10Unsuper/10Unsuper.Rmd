@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 10: Unsupervised learning (Overview/quizz lecture)"
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "April 5, 2024"
+date: "April 21, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -38,16 +38,96 @@ library(ISLR)
 library(ggplot2)
 library(GGally)
 library(patchwork)
+library(ggbiplot)
+
+PCbiplot <- function(PC, x="PC1", y="PC2", colors=c('black', 'black', 'red', 'red')) {
+    # PC being a prcomp object
+    data <- data.frame(obsnames=row.names(PC$x), PC$x)
+    plot <- ggplot(data, aes_string(x=x, y=y)) + geom_text(alpha=.4, size=3, aes(label=obsnames), color=colors[1])
+    plot <- plot + geom_hline(yintercept = 0, size=.2) + 
+      geom_vline(xintercept  = 0, size=.2, color=colors[2])
+    datapc <- data.frame(varnames=rownames(PC$rotation), PC$rotation)
+    mult <- min(
+        (max(data[,y]) - min(data[,y])/(max(datapc[,y])-min(datapc[,y]))),
+        (max(data[,x]) - min(data[,x])/(max(datapc[,x])-min(datapc[,x])))
+        )
+    datapc <- transform(datapc,
+            v1 = .7 * mult * (get(x)),
+            v2 = .7 * mult * (get(y))
+            )
+    plot <- plot + coord_equal() + geom_text(data=datapc, aes(x=v1, y=v2, label=varnames), size = 5, vjust=1, color=colors[3])
+    plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), arrow=arrow(length=unit(0.2,"cm")), alpha=0.75, color=colors[4])
+    plot
+}
+
+
+```
+
+# PCA - Standardization?
+
+
+
+ - Mentimeter
+
+# PCA - Standardization?
+
+
+<!--here we look at why we want to standardize our data before PCA
+-->
+
+```{r, echo = FALSE}
+states = row.names(USArrests)
+USArrests[1:3,]
+```
+```{r, echo = TRUE}
+apply(USArrests,2,mean)
+apply(USArrests,2,var)
+
+# perform PCA
+p1 =  prcomp(USArrests, scale = FALSE, center = FALSE)
+p2 =  prcomp(USArrests, scale = FALSE, center = TRUE)
+p3 =  prcomp(USArrests, scale = TRUE, center = TRUE)
+```
+
+# Explained Variance
+
+```{r}
+plot1 = data.frame(ncom = 1:4,
+           p1 = p1$sdev^2,
+           p2 = p2$sdev^2,
+           p3 = p3$sdev^2
+           ) %>% pivot_longer(-ncom) %>%
+  ggplot() + geom_line(aes(ncom, value, group = name,color = name)) +
+  ggtitle("Variance of each PC")
+
+plot2 = data.frame(ncom = 1:4,
+           p1 = cumsum(p1$sdev^2)/sum(p1$sdev^2),
+           p2 = cumsum(p2$sdev^2)/sum(p2$sdev^2),
+           p3 = cumsum(p3$sdev^2)/sum(p3$sdev^2)
+           ) %>% pivot_longer(-ncom) %>%
+  ggplot() + geom_line(aes(ncom, value, group = name,color = name))+
+  ggtitle("Variance Explained (%)")
+
+plot1 + plot2
+
+```
+
+
+# Biplot
+```{r, echo=FALSE}
+
+PCbiplot(p1) +
+  PCbiplot(p2) +
+  PCbiplot(p3)  + plot_layout(ncol = 2)
+  
+
+
 ```
 
 
 
-
-
-
-
-
 ---
+
 
 ### PCA example
 
@@ -75,7 +155,7 @@ decathlon2.active[c(1,3,4),]
 ---
 
 ```{r biplot,eval=T,echo=F,fig.width=7,fig.height=7,out.width="55%",fig.cap=""}
-r.prcomp <- prcomp(decathlon2.active, scale=T)
+r.prcomp <- prcomp(decathlon2.active, scale=T, center = T)
 
 biplot(r.prcomp)
 ```
@@ -192,6 +272,7 @@ Difference to PCA?
 \pause
 
 $\rightarrow$ PCA looks for low-dimensional representation of the data.
+$\rightarrow$ Clustering aims at creating homogeneous subgroups
 
 ---
 
@@ -242,7 +323,7 @@ $~$
 
 ---
 
-### Important in hierarchical clustering
+# Important in hierarchical clustering
 
 $~$
 
@@ -255,13 +336,59 @@ $~$
 
 ---
 
-### Hierarchical clustering -- example
+# Hierarchical clustering -- example
 
 $~$
 
 ![](imgs/dendogram_misleading.png)
 
 Note: The representation on the right is not possible in high-dimensional space (i.e., if we have $X_1, X_2, X_3, ...., X_p$).
+
+---
+
+
+# Nested clusters:
+
+Not always suited for a arbitrary dataset
+
+Group of people
+
+  - evenly split between male and female
+  - evenly split between americans, japanese and french
+  - best division in two groups -> gender
+  -  best division in three groups -> nationality
+  - not nested
+
+This explains why hierarchical clusters can sometimes yield worse results than K-means for a given number of clusters
+
+---
+
+# Standardization
+```{r}
+
+groceries = data.frame(name = c("Artis", "Baiba",	"Cintija", "Dainis"),
+          Caviar_Kg = c(0,0.1,1.0,1.1),
+          Bread_Kg = c(10,9,7.5,4.5))
+
+
+
+ggplot() + geom_point(data = grocery, aes(Caviar_Kg, Bread_Kg, text = name))
+
+
+
+# Reproducibility.
+set.seed(1)
+# K-means with original variables.
+kmeans_orig <- kmeans(groceries[,-1], centers = 2)
+
+```
+
+
+
+
+
+
+
 
 ---
 

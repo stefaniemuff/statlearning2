@@ -2,7 +2,7 @@
 subtitle: "TMA4268 Statistical Learning V2023"
 title: "Module 10: Unsupervised learning"
 author: "Sara Martino, Department of Mathematical Sciences, NTNU"
-date: "March 21, 2025"
+date: "March 20, 2025"
 fontsize: 10pt
 output:
   beamer_presentation:
@@ -314,6 +314,21 @@ p1 + p2
   
   - Flipping the sign has no effect as the direction of the PC does not change.
 
+# PCA for dimension reduction
+
+![](imgs/fig12.2.png){width=50%}
+
+
+
+
+
+  - PC provide low dimension linear surfaces that are *closest* to the observations 
+  - We can represent our data using the first $M$ PC
+  $$
+  x_{ij}\approx \sum_{m = 1}^M z_{im}\phi_{jm}
+  $$
+  This is accurate if $M$ is large enough
+  
 
 # PCA for face recognition
 
@@ -461,17 +476,14 @@ Run the code
 
 - A good cluster is one for which the **within-cluster variation** is **as small as possible**
 
-- Within-cluster variation (squared Euclidean distance)
-
-$$W(C_k) = \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2$$
-
-- As small as possible
+- Within-cluster variation  as small as possible
 
 $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K}W(C_k)\right\}$$
 
 
 - Squared Euclidean distance is the most common
 
+$$W(C_k) = \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^{p}(x_{ij} - x_{i'j})^2$$
 
 # K-means algorithm
 
@@ -506,7 +518,7 @@ $$\underset{C_1, \ldots, C_k}{\text{minimize}}\left\{\sum_{k=1}^{K} \frac{1}{|C_
 - Final result is obtained after 10 iterations
 
 
-# K-means algorithm (stating conditions)
+# K-means algorithm (starting conditions)
 
 
 ![](imgs/kmeans_algo_random_init.png){width=60%}
