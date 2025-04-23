@@ -362,7 +362,7 @@ $~$
 \vspace{2mm}
 * Cross-validation for regression and for classification.
 \vspace{2mm}
-* LOOCV, 5 and 10 fold CV.
+* LOOCV, 5- and 10-fold CV.
 \vspace{2mm}
 * Good and bad issues with validation set, LOOCV, 10-fold CV.
 \vspace{2mm}
@@ -537,12 +537,12 @@ $~$
 
 \vspace{2mm}
 
-* Most common boosting approach is  **gradient boosting**, where we fit a tree $T$ to the negative gradient using least squares:
+* Most common boosting approach is  **gradient boosting**, where we fit a tree $T$ to the negative gradient of the loss function ($-g_{im}$) using least squares:
 
 \vspace{6mm}
 
 \begin{tcolorbox}
-\textbf{The central idea}: find a tree $T(x;\Theta_m)$ that is as close as possible to the negative gradient 
+\textbf{The central idea}: find a tree $T(x;\Theta_m)$ that is as close as possible to the negative gradient in each step $m$
 
 \begin{equation}
 \tilde{\Theta}_m= \arg \min_\Theta \sum_{i=1}^N (-g_{im} -T(x_i;\Theta))^2 \ .
@@ -596,13 +596,13 @@ $~$
 \vspace{2mm}
 
 * Clustering:
-     + $k$-means: number of clusters given, iterative algorithm to classify to nearest centroid and recalculate centroid
-     + Hierarchical clustering: choice of distance measure, choice of linkage method (single, average, complete), 
+     + $k$-means: number of clusters given, iterative algorithm to classify to nearest centroid and recalculate centroid. Stochastic: depends on starting conditions.
+     + Hierarchical clustering: choice of distance measure (Euclidean, correlation,...), choice of linkage method (single, average, complete). Deterministic.
 
 ---
 
 \centering
-```{r,echo=FALSE,out.width="70%"}
+```{r,echo=FALSE,out.width="90%"}
 # reading data on consumption of different beverages for countries
 drink <- read.csv("https://www.math.ntnu.no/emner/TMA4267/2017v/drikke.TXT",sep=",",header=TRUE)
 drink <- na.omit(drink)
@@ -912,11 +912,12 @@ r.lm.aic <- lm(Y~.,data_aic)
 \normalsize
 As expected, the distribution of the $p$-values is (more or less) uniform between 0 and 1, with none below 0.05: 
 
+$~$
+
 \scriptsize
 
 \centering
-
-```{r, fig.width=4, fig.height=4.5,out.width="4cm"}
+```{r, fig.width=4, fig.height=4.5,out.width="4.5cm"}
 hist(summary(r.lm.aic)$coef[-1,4],freq=T,main="50 variables",xlab="p-values")
 ```
  
