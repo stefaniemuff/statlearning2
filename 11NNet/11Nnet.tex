@@ -6,7 +6,7 @@
 \documentclass[
   10pt,
   ignorenonframetext,
-]{beamer}
+  twocolumn]{beamer}
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
@@ -144,28 +144,38 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{multirow}
 \usepackage{tcolorbox}
@@ -174,12 +184,12 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
   pdftitle={Module 11: Deep Learning and Neural Networks},
-  pdfauthor={Stefanie Muff, Department of Mathematical Sciences, NTNU},
+  pdfauthor={Sara Martino, Department of Mathematical Sciences, NTNU},
   colorlinks=true,
   linkcolor={Maroon},
   filecolor={Maroon},
@@ -189,31 +199,34 @@
 
 \title{Module 11: Deep Learning and Neural Networks}
 \subtitle{TMA4268 Statistical Learning V2024}
-\author{Stefanie Muff, Department of Mathematical Sciences, NTNU}
-\date{April 18 and 19, 2024}
+\author{Sara Martino, Department of Mathematical Sciences, NTNU}
+\date{April 3 and 4, 2025}
 
 \begin{document}
 \frame{\titlepage}
 
+\begin{frame}
+\end{frame}
+
 \begin{frame}{Acknowledgements}
-\protect\hypertarget{acknowledgements}{}
+\phantomsection\label{acknowledgements}
 \(~\)
 
 \begin{itemize}
 \item
-  Some of this material was (in a modified version) created by Mette
-  Langaas who has put a lot of effort in creating this module in its
-  original version. Thanks to Mette for the permission to use the
-  material!
+  Most of the slides were created by Stefanie Muff, also some of this
+  material was (in a modified version) created by Mette Langaas who has
+  put a lot of effort in creating this module in its original version.
+  Thanks to Steffi and Mette for the permission to use the material!
 \item
   Some of the figures and slides in this presentation are taken (or are
-  inspired) from James et al. (2021).
+  inspired) from James et al. (2013).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Learning material for this module}
-\protect\hypertarget{learning-material-for-this-module}{}
+\phantomsection\label{learning-material-for-this-module}
 \vspace{2mm}
 
 \begin{itemize}
@@ -260,7 +273,7 @@ reading material.
 
 \begin{frame}
 \begin{block}{What will you learn?}
-\protect\hypertarget{what-will-you-learn}{}
+\phantomsection\label{what-will-you-learn}
 \(~\)
 
 \begin{itemize}
@@ -304,7 +317,7 @@ reading material.
 \end{frame}
 
 \begin{frame}{Introduction: Time line}
-\protect\hypertarget{introduction-time-line}{}
+\phantomsection\label{introduction-time-line}
 \(~\)
 
 \begin{itemize}
@@ -387,14 +400,14 @@ Image credits: By Egm4313.s12 (Prof.~Loc Vu-Quoc)
 
 \begin{frame}
 \begin{block}{AI, machine learning and statistics}
-\protect\hypertarget{ai-machine-learning-and-statistics}{}
-\includegraphics[angle=-90]{AI_ML_DL.png}
+\phantomsection\label{ai-machine-learning-and-statistics}
+\includegraphics[]{AI_ML_DL.png}
 \end{block}
 \end{frame}
 
 \begin{frame}
 \begin{block}{AI}
-\protect\hypertarget{ai}{}
+\phantomsection\label{ai}
 \(~\)
 
 \begin{itemize}
@@ -420,7 +433,7 @@ Image credits: By Egm4313.s12 (Prof.~Loc Vu-Quoc)
 
 \begin{frame}
 \begin{block}{Machine learning}
-\protect\hypertarget{machine-learning}{}
+\phantomsection\label{machine-learning}
 \(~\)
 
 \begin{itemize}
@@ -460,7 +473,7 @@ an engineering science.}
 
 \begin{frame}
 \begin{block}{Deep learning}
-\protect\hypertarget{deep-learning}{}
+\phantomsection\label{deep-learning}
 \(~\)
 
 \begin{quote}
@@ -485,8 +498,6 @@ Geoffrey Hinton (Google)
   Rather, deep referes to the \emph{layers of representation}, for
   example in a neural network.
 \end{itemize}
-
-\(~\)
 
 \center
 
@@ -562,7 +573,7 @@ Achievements of deep learning include
 \end{frame}
 
 \begin{frame}{Feedforward networks}
-\protect\hypertarget{feedforward-networks}{}
+\phantomsection\label{feedforward-networks}
 \centering
 
 \includegraphics[width=0.8\textwidth,height=\textheight]{drawNNp3h2o3.png}
@@ -570,7 +581,7 @@ Achievements of deep learning include
 
 \begin{frame}
 \begin{block}{The single hidden layer feedforward network}
-\protect\hypertarget{the-single-hidden-layer-feedforward-network}{}
+\phantomsection\label{the-single-hidden-layer-feedforward-network}
 \(~\)
 
 The nodes are also called \emph{neurons}.
@@ -666,7 +677,7 @@ The nodes are also called \emph{neurons}.
 \begin{frame}
 \begin{block}{Special case: linear activation function for the hidden
 layer}
-\protect\hypertarget{special-case-linear-activation-function-for-the-hidden-layer}{}
+\phantomsection\label{special-case-linear-activation-function-for-the-hidden-layer}
 \(~\)
 
 If we assume that \(g(z)=z\) (linear or identity activiation):
@@ -687,7 +698,7 @@ If we assume that \(g(z)=z\) (linear or identity activiation):
 
 \begin{frame}
 \begin{block}{Multilayer neural networks}
-\protect\hypertarget{multilayer-neural-networks}{}
+\phantomsection\label{multilayer-neural-networks}
 \(~\)
 
 Alternative: networks with more than one hidden layer. A network with
@@ -699,7 +710,7 @@ Alternative: networks with more than one hidden layer. A network with
 
 \scriptsize
 
-(Fig 10.4 James et al. (2021))
+(Fig 10.4 James et al. (2013))
 \end{block}
 \end{frame}
 
@@ -723,7 +734,7 @@ Alternative: networks with more than one hidden layer. A network with
 
 \begin{frame}
 \begin{block}{Outcome encoding}
-\protect\hypertarget{outcome-encoding}{}
+\phantomsection\label{outcome-encoding}
 \(~\)
 
 \begin{itemize}
@@ -752,7 +763,7 @@ Alternative: networks with more than one hidden layer. A network with
 
 \begin{frame}
 \begin{block}{Example: MNIST dataset}
-\protect\hypertarget{example-mnist-dataset}{}
+\phantomsection\label{example-mnist-dataset}
 \(~\)
 
 \begin{itemize}
@@ -785,12 +796,12 @@ Alternative: networks with more than one hidden layer. A network with
 Objective: classify the digit contained in an image (28 \(\times\) 28
 greyscale).
 
-\includegraphics{mnist.png}
+\includegraphics{MNIST_dataset_example.png}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Neural network parts}
-\protect\hypertarget{neural-network-parts}{}
+\phantomsection\label{neural-network-parts}
 \(~\)
 
 We now focus on the different elements of neural networks.
@@ -848,7 +859,7 @@ We now focus on the different elements of neural networks.
 
 \begin{frame}
 \begin{block}{1) Output layer activation}
-\protect\hypertarget{output-layer-activation}{}
+\phantomsection\label{output-layer-activation}
 \(~\)
 
 These choices have been guided by solutions in statistics (multiple
@@ -880,7 +891,7 @@ Note that we denote by \(Z_m\) the value in the output node \(m\)
 
 \begin{frame}
 \begin{block}{2) Hidden layer activation}
-\protect\hypertarget{hidden-layer-activation}{}
+\phantomsection\label{hidden-layer-activation}
 \tiny
 
 (See chapter 6.3 in Goodfellow, Bengio, and Courville (2016))
@@ -935,7 +946,7 @@ Among all the possibilities, ReLU is nowadays the most popular one. Why?
 
 \begin{frame}
 \begin{block}{Universal approximation property}
-\protect\hypertarget{universal-approximation-property}{}
+\phantomsection\label{universal-approximation-property}
 \(~\)
 
 \begin{itemize}
@@ -980,7 +991,7 @@ with any desired non-zero amount of error.
 
 \begin{frame}
 \begin{block}{3) Network architecture}
-\protect\hypertarget{network-architecture}{}
+\phantomsection\label{network-architecture}
 \(~\)
 
 Network architecture contains three components:
@@ -1014,7 +1025,7 @@ is important.
 
 \begin{frame}[fragile]
 \begin{block}{4) Loss function (``Method'')}
-\protect\hypertarget{loss-function-method}{}
+\phantomsection\label{loss-function-method}
 \(~\)
 
 \begin{itemize}
@@ -1080,7 +1091,7 @@ Classification (C\textgreater2) & C & \texttt{softmax} &
 
 \begin{frame}
 \begin{block}{5) Optimizors}
-\protect\hypertarget{optimizors}{}
+\phantomsection\label{optimizors}
 \(~\)
 
 Let the unknown parameters be denoted \({\boldsymbol \theta}\) (what we
@@ -1105,7 +1116,7 @@ where the gradient is calculated via
 
 \begin{frame}
 \begin{block}{Gradient descent}
-\protect\hypertarget{gradient-descent}{}
+\phantomsection\label{gradient-descent}
 \(~\)
 
 \begin{itemize}
@@ -1141,7 +1152,7 @@ where the gradient is calculated via
 
 \begin{frame}
 \begin{block}{Finding optimal weights: Gradient descent algorithm}
-\protect\hypertarget{finding-optimal-weights-gradient-descent-algorithm}{}
+\phantomsection\label{finding-optimal-weights-gradient-descent-algorithm}
 \vspace{2mm}
 
 \begin{enumerate}
@@ -1180,7 +1191,7 @@ where the gradient is calculated via
 
 \begin{frame}
 \begin{block}{Full vs.~stochastic gradient descent (SGD)}
-\protect\hypertarget{full-vs.-stochastic-gradient-descent-sgd}{}
+\phantomsection\label{full-vs.-stochastic-gradient-descent-sgd}
 \(~\)
 
 \begin{itemize}
@@ -1211,7 +1222,7 @@ where the gradient is calculated via
 
 \begin{frame}
 \begin{block}{Mini-batch stochastic gradient descent (SGD)}
-\protect\hypertarget{mini-batch-stochastic-gradient-descent-sgd}{}
+\phantomsection\label{mini-batch-stochastic-gradient-descent-sgd}
 \(~\)
 
 \textbf{Crucial idea}:
@@ -1264,12 +1275,12 @@ and full gradient descent (full dataset per iteration)
 In the 3rd video (on backpropagation) from 3Blue1Brown there is nice
 example of one trajectory from gradient decent and one from SGD (10:10
 minutes into the video):
-\url{https://www.youtube.com/watch?v=Ilg3gGewQ5U\&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi\&index=3}
+\url{https://www.youtube.com/watch?v=Ilg3gGewQ5U&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=3}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Backpropagation algorithm}
-\protect\hypertarget{backpropagation-algorithm}{}
+\phantomsection\label{backpropagation-algorithm}
 \(~\)
 
 \begin{itemize}
@@ -1303,6 +1314,28 @@ minutes into the video):
 \end{frame}
 
 \begin{frame}
+\begin{block}{Backpropagation algorithm}
+\phantomsection\label{backpropagation-algorithm-1}
+We look at the quadratic loss function.
+
+We want to compute the gradient of \[
+R(\theta) = \sum R_i(\theta) 
+\] where
+
+\[
+\begin{aligned}
+R_i(\theta) = \frac{1}{2}\left(y_i - f(\mathbf{x}_i)\right)^2 = \frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} z_{ik}\right)^2 = \\
+\frac{1}{2}\left(y_i - \beta_{0} - \sum_{k = 1}^K \beta_{k} g(\alpha_{k0} + \sum_{j = 1}^p\alpha_{kj}x_{ij})\right)^2
+\end{aligned}
+\]
+
+wrt \(\beta_{k}\) and \(\alpha_{kj}\)
+
+We consider one data point at the time.
+\end{block}
+\end{frame}
+
+\begin{frame}
 More background:
 
 \(~\)
@@ -1310,7 +1343,7 @@ More background:
 \begin{itemize}
 \tightlist
 \item
-  James et al. (2021) Chapter 10.7 (this is part of the compulsory
+  James et al. (2013) Chapter 10.7 (this is part of the compulsory
   course material - study yourself).
 \end{itemize}
 
@@ -1335,7 +1368,7 @@ More background:
 
 \begin{frame}
 \begin{block}{Regularization}
-\protect\hypertarget{regularization}{}
+\phantomsection\label{regularization}
 \(~\)
 
 \begin{itemize}
@@ -1379,7 +1412,7 @@ More background:
 
 \begin{frame}
 \begin{block}{Regularization in neural networks}
-\protect\hypertarget{regularization-in-neural-networks}{}
+\phantomsection\label{regularization-in-neural-networks}
 \(~\)
 
 \begin{itemize}
@@ -1445,7 +1478,7 @@ More background:
 
 \begin{frame}
 \begin{block}{Early stopping}
-\protect\hypertarget{early-stopping}{}
+\phantomsection\label{early-stopping}
 \tiny Based on Goodfellow, Bengio, and Courville (2016), Section 7.8
 
 \normalsize
@@ -1483,7 +1516,7 @@ More background:
 
 \begin{frame}
 \begin{block}{Dropout}
-\protect\hypertarget{dropout}{}
+\phantomsection\label{dropout}
 \tiny
 
 Based on Goodfellow, Bengio, and Courville (2016), Section 7.12, and
@@ -1515,15 +1548,15 @@ Dropout was developed by Geoff Hinton and his students.
 
 \begin{frame}
 \begin{block}{Dropout}
-\protect\hypertarget{dropout-1}{}
+\phantomsection\label{dropout-1}
 \includegraphics{fig10_19.png} \scriptsize Fig 10.19, James et al.
-(2021)
+(2013)
 \end{block}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Ways to avoid overfitting}
-\protect\hypertarget{ways-to-avoid-overfitting}{}
+\phantomsection\label{ways-to-avoid-overfitting}
 \(~\)
 
 There are \textbf{hyperparameters} when building and fitting a neural
@@ -1560,7 +1593,7 @@ effectively overfit the validation set.
 
 \begin{frame}[fragile]
 \begin{block}{How to fit those models?}
-\protect\hypertarget{how-to-fit-those-models}{}
+\phantomsection\label{how-to-fit-those-models}
 \(~\)
 
 \begin{itemize}
@@ -1587,9 +1620,9 @@ effectively overfit the validation set.
 \end{frame}
 
 \begin{frame}[fragile]{An example}
-\protect\hypertarget{an-example}{}
+\phantomsection\label{an-example}
 \begin{block}{Boston house prices}
-\protect\hypertarget{boston-house-prices}{}
+\phantomsection\label{boston-house-prices}
 \vspace{2mm}
 
 \textbf{Objective}: To predict the median price of owner-occupied homes
@@ -1718,7 +1751,7 @@ Calculate the MSE and the mean absolute error:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 31.10861
+## [1] 31.05929
 \end{verbatim}
 
 \begin{Shaded}
@@ -1728,7 +1761,7 @@ Calculate the MSE and the mean absolute error:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.91189
+## [1] 2.75665
 \end{verbatim}
 \end{frame}
 
@@ -1745,15 +1778,56 @@ Calculate the MSE and the mean absolute error:
 
 \begin{frame}[fragile]
 \begin{block}{Boston example using \texttt{keras}}
-\protect\hypertarget{boston-example-using-keras}{}
+\phantomsection\label{boston-example-using-keras}
 \(~\)
 
 See recommended exercise.
 \end{block}
 \end{frame}
 
+\begin{frame}{Neural Networks}
+\phantomsection\label{neural-networks}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\includegraphics[width=1.2\textwidth,height=\textheight]{fig10_4.png}
+\end{column}
+
+\begin{column}{0.6\textwidth}
+\begin{itemize}
+\tightlist
+\item
+  Output layer activation
+\item
+  Hidden layer activation
+\item
+  Network architecture
+\item
+  Loss function
+\item
+  Optimizers
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Today}
+\phantomsection\label{today}
+\begin{itemize}
+\item
+  Two important types of NN
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convolutional NN
+  \item
+    Recurrent NN
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Convolutional neural networks (CNNs)}
-\protect\hypertarget{convolutional-neural-networks-cnns}{}
+\phantomsection\label{convolutional-neural-networks-cnns}
 \(~\)
 
 \begin{itemize}
@@ -1782,15 +1856,8 @@ See recommended exercise.
 (Example from the CIFAR-10 data set with only 10 classes).
 \end{frame}
 
-\begin{frame}
-\vspace{2mm}
-
-\begin{itemize}
-\tightlist
-\item
-  Idea of CNNs: recognize features and patterns.
-\end{itemize}
-
+\begin{frame}{Idea of CNNs: recognize features and patterns.}
+\phantomsection\label{idea-of-cnns-recognize-features-and-patterns.}
 \vspace{2mm}
 
 \begin{itemize}
@@ -1809,19 +1876,27 @@ See recommended exercise.
   features}.
 \end{itemize}
 
-\vspace{2mm}
+\centering
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{fig10_6.png}
+\end{frame}
+
+\begin{frame}{Elements of a CNN}
+\phantomsection\label{elements-of-a-cnn}
+Two types of layers:
 
 \begin{itemize}
 \tightlist
 \item
-  Two types of layers: \emph{\textcolor{red}{Convolution layers}} and
-  \emph{\textcolor{red}{pooling layers}}.
+  \emph{\textcolor{red}{Convolution layers}}
+\item
+  \emph{\textcolor{red}{Pooling layers}}.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Convolution layers}
-\protect\hypertarget{convolution-layers}{}
+\phantomsection\label{convolution-layers}
 \(~\)
 
 \begin{itemize}
@@ -1868,7 +1943,7 @@ Filtering for vertical or horizontal stripes:
 
 \centering
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{fig107.png}
+\includegraphics[width=0.8\textwidth,height=\textheight]{fig10_7.png}
 
 \scriptsize
 
@@ -1920,7 +1995,7 @@ Filtering for vertical or horizontal stripes:
 
 \begin{frame}
 \begin{block}{Pooling layers}
-\protect\hypertarget{pooling-layers}{}
+\phantomsection\label{pooling-layers}
 \(~\)
 
 \begin{itemize}
@@ -1953,11 +2028,11 @@ Filtering for vertical or horizontal stripes:
 \end{frame}
 
 \begin{frame}
-In a CNN, we now combine convolution and pooling steps interatively:
+In a CNN, we now combine convolution and pooling steps iteratively:
 
 \centering
 
-\includegraphics{fig108.png}
+\includegraphics{fig10_8.png}
 
 \begin{itemize}
 \item
@@ -1978,7 +2053,7 @@ In a CNN, we now combine convolution and pooling steps interatively:
 
 \begin{frame}
 \begin{block}{Data augmentation}
-\protect\hypertarget{data-augmentation}{}
+\phantomsection\label{data-augmentation}
 \(~\)
 
 \begin{itemize}
@@ -1996,15 +2071,29 @@ In a CNN, we now combine convolution and pooling steps interatively:
   Example:
 \end{itemize}
 
-\includegraphics[width=0.9\textwidth,height=\textheight]{fig109.png}
+\includegraphics[width=0.9\textwidth,height=\textheight]{fig10_9.png}
 
-\scriptsize Figure 10.9 of James et al. (2021)
+\scriptsize Figure 10.9 of James et al. (2013)
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{An Interactive Node-Link Visualization of Convolutional
+Neural Networks}
+\phantomsection\label{an-interactive-node-link-visualization-of-convolutional-neural-networks}
+\(~\)
+
+See
+
+\vspace{2mm}
+
+\url{https://adamharley.com/nn_vis/}
 \end{block}
 \end{frame}
 
 \begin{frame}
 \begin{block}{Examples}
-\protect\hypertarget{examples}{}
+\phantomsection\label{examples}
 \(~\)
 
 See
@@ -2027,8 +2116,44 @@ See
 \end{block}
 \end{frame}
 
+\begin{frame}{Recurrent neural networks (RNNs) - Motivation}
+\phantomsection\label{recurrent-neural-networks-rnns---motivation}
+What is the next word?
+
+\centering
+
+How to make \ldots{}
+
+\begin{itemize}
+\tightlist
+\item
+  pizza?
+\item
+  yoga?
+\item
+  rain?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Problems with other ``vanilla'' NN}
+\phantomsection\label{problems-with-other-vanilla-nn}
+\begin{itemize}
+\tightlist
+\item
+  Length of input
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{itemize}
+\tightlist
+\item
+  Sequenciality of input
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Recurrent neural networks (RNNs)}
-\protect\hypertarget{recurrent-neural-networks-rnns}{}
+\phantomsection\label{recurrent-neural-networks-rnns}
 \(~\)
 
 \begin{itemize}
@@ -2080,7 +2205,7 @@ See
 
 \includegraphics[width=0.8\textwidth,height=\textheight]{fig10_12.png}
 
-\scriptsize Figure 10.12 in James et al. (2021)
+\scriptsize Figure 10.12 in James et al. (2013)
 
 \vspace{2mm}
 
@@ -2117,11 +2242,11 @@ See
 \begin{frame}
 Example of one-hot encoding a text with 20 words:
 
-\includegraphics{One_hot_1013.png}
+\includegraphics{fig10_13.png}
 
 \scriptsize
 
-Figure 10.13 in James et al. (2021)
+Figure 10.13 in James et al. (2013)
 \end{frame}
 
 \begin{frame}
@@ -2158,7 +2283,7 @@ Figure 10.13 in James et al. (2021)
 
 \begin{frame}
 \begin{block}{Fitting the weights in an RNN}
-\protect\hypertarget{fitting-the-weights-in-an-rnn}{}
+\phantomsection\label{fitting-the-weights-in-an-rnn}
 \(~\)
 
 \begin{itemize}
@@ -2223,7 +2348,7 @@ Why are the outputs \(O_1, \ldots, O_{L-1}\) there at all?
 
 \begin{frame}
 \begin{block}{Example of an RNN: Time series forecasting}
-\protect\hypertarget{example-of-an-rnn-time-series-forecasting}{}
+\phantomsection\label{example-of-an-rnn-time-series-forecasting}
 \vspace{2mm}
 
 Trading statistics from New York Stock exchange:
@@ -2232,7 +2357,7 @@ Trading statistics from New York Stock exchange:
 
 \includegraphics[width=0.7\textwidth,height=\textheight]{fig10_14.png}
 
-\scriptsize Figure 10.14 of James et al. (2021)
+\scriptsize Figure 10.14 of James et al. (2013)
 \end{block}
 \end{frame}
 
@@ -2318,8 +2443,21 @@ Y = v_t\]
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Recurrent Neural Network}
+\phantomsection\label{recurrent-neural-network}
+\begin{itemize}
+\tightlist
+\item
+  We presented only a simple version
+\item
+  More complex variats do exist
+\item
+  Much used in LLM
+\end{itemize}
+\end{frame}
+
 \begin{frame}{When to use deep learning?}
-\protect\hypertarget{when-to-use-deep-learning}{}
+\phantomsection\label{when-to-use-deep-learning}
 \(~\)
 
 \begin{itemize}
@@ -2349,7 +2487,7 @@ Y = v_t\]
 
 \begin{frame}[fragile]
 \begin{block}{Example: The Hitters data set}
-\protect\hypertarget{example-the-hitters-data-set}{}
+\phantomsection\label{example-the-hitters-data-set}
 \(~\)
 
 \begin{itemize}
@@ -2379,7 +2517,7 @@ We compare
 \end{frame}
 
 \begin{frame}
-\includegraphics{Table10_2.png} \(~\)
+\includegraphics{table10_2.png} \(~\)
 
 Conclusions?
 
@@ -2389,41 +2527,84 @@ Conclusions?
   \ldots{}
 \item
   \ldots{}
-\item
-  \ldots{}
 \end{itemize}
+
+\vspace{2mm}
+
+\pause
+
+Typically, NN are attractive when the size of the training set is
+extremely large and when model interpretability is not a priority!
+\end{frame}
+
+\begin{frame}{Double descent}
+\phantomsection\label{double-descent}
+\includegraphics[width=0.6\textwidth,height=\textheight]{bias_variance.png}
+\end{frame}
+
+\begin{frame}{Double descent}
+\phantomsection\label{double-descent-1}
+\includegraphics[width=0.6\textwidth,height=\textheight]{double_descent.png}
+
+Does this contraddict the bias-variance trade off?
 \end{frame}
 
 \begin{frame}
-\begin{block}{DL in Medicine}
-\protect\hypertarget{dl-in-medicine}{}
+We want to recover the function \[
+y = \sin(x)
+\] We have 20 noisy observations of the signal where \[
+y_i = \sin(x_i) +\epsilon_i, \qquad \epsilon_i\sim\mathcal{N}(0,0.3^2)
+\] We use natural splines\ldots{}
+\end{frame}
+
+\begin{frame}
+\includegraphics{fig10_21.png}
+\end{frame}
+
+\begin{frame}
+\includegraphics[width=0.8\textwidth,height=\textheight]{fig10-20-2.png}
+\end{frame}
+
+\begin{frame}{Double descent - some consideration}
+\phantomsection\label{double-descent---some-consideration}
+\begin{itemize}
+\item
+  Does not contradict the bias variance trade-off (the \(x\)-axis
+  expresses the flexibility of the model)
+\item
+  For deep learning algorithms we can sometimes achieve good test error
+  while interpolating the training error - particularly in problems with
+  \emph{high signal-to-noise ratio}, such as natural image recognition
+  and language translation
+\item
+  Most of the statistical learning methods seen do not exhibit double
+  descent. Regularized methods can give great results without
+  interpolating the data!
+\end{itemize}
+
+\textbf{To summarize: though double descent can sometimes occur in
+neural net- works, we typically do not want to rely on this behavior.}
+{[}James et al.~Ch 10.8{]}
+\end{frame}
+
+\begin{frame}{DL in Medicine}
+\phantomsection\label{dl-in-medicine}
 Lots of papers like those:
 
-\centering
-
-\includegraphics[width=0.8\textwidth,height=\textheight]{ML_logreg1.png}
+\includegraphics[width=0.8\textwidth,height=\textheight]{paper_1.png}
 
 \(~\)
-
-\includegraphics[width=1\textwidth,height=\textheight]{ML_logreg2.png}
-
-\includegraphics[width=1\textwidth,height=\textheight]{ML_logreg3.png}
-\end{block}
 \end{frame}
 
-\begin{frame}
-\begin{block}{DL/ML in Ecology}
-\protect\hypertarget{dlml-in-ecology}{}
+\begin{frame}{DL/ML in Ecology}
+\phantomsection\label{dlml-in-ecology}
 \(~\)
 
-Very recent paper:
-
-\includegraphics{dl_ecology.png}
-\end{block}
+\includegraphics{paper2.png}
 \end{frame}
 
 \begin{frame}{References and further reading}
-\protect\hypertarget{references-and-further-reading}{}
+\phantomsection\label{references-and-further-reading}
 \begin{itemize}
 \tightlist
 \item
@@ -2444,37 +2625,34 @@ Very recent paper:
 \item
   Explaining backpropagation
   \url{http://neuralnetworksanddeeplearning.com/chap2.html}
-\item
-  Slides from MA8701 (Thiago Martins)
-  \url{https://www.math.ntnu.no/emner/MA8701/2019v/DeepLearning/}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Acknowledgements}
-\protect\hypertarget{acknowledgements-1}{}
-\hypertarget{refs}{}
+\phantomsection\label{acknowledgements-1}
+\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-kerasR}{}}%
+\bibitem[\citeproctext]{ref-kerasR}
 Chollet, François, and J. J. Allaire. 2018. \emph{Deep Learning with r}.
 Manning Press. \url{https://www.manning.com/books/deep-learning-with-r}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-casi}{}}%
+\bibitem[\citeproctext]{ref-casi}
 Efron, Bradley, and Trevor Hastie. 2016. \emph{Computer Age Statistical
 Inference - Algorithms, Evidence, and Data Science}. Cambridge
 University Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ESL}{}}%
+\bibitem[\citeproctext]{ref-ESL}
 Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2001. \emph{The
 Elements of Statistical Learning}. Vol. 1. Springer series in statistics
 New York.
 
-\leavevmode\vadjust pre{\hypertarget{ref-goodfellow}{}}%
+\bibitem[\citeproctext]{ref-goodfellow}
 Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. \emph{Deep
 Learning}. MIT Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ISL}{}}%
+\bibitem[\citeproctext]{ref-ISL}
 James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
-2021. \emph{An Introduction to Statistical Learning}. 2nd ed. Vol. 112.
+2013. \emph{An Introduction to Statistical Learning}. Vol. 112.
 Springer.
 
 \end{CSLReferences}
