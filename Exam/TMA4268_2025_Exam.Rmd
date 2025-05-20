@@ -329,7 +329,7 @@ summary(r.boston2)$coef
 
 ## c) (4P)
 
- (i) (2P) Now use Lasso to do model selection and at the same time to find a (possibly simpler) model that (hopefully) is better at predicting than the linear model fitted in b). To this end, use the training data and choose the $\lambda$ with the minimal error in a 10-fold cross-validation. As above, include the quadratic term for `age`.
+ (i) (2P) Now use Lasso to do model selection and at the same time to find a (possibly simpler) model that (hopefully) is better at predicting than the linear model fitted in b). To this end, use the training data and choose the $\lambda$ with the minimal error in a 10-fold cross-validation. As above, include the quadratic term for `rm` (in the exam we mistakingly wrote `age`, but both would be graded as correct).
  **Requirement**: Use `set.seed(4268)` before running the cross-validation.
  
  (ii) (2P) Fit the Lasso-model with $\lambda_\text{min}$ selected in (i) to the training data, and calculate the MSE on the test data. Compare to the linear regression situation and interpret. 
@@ -367,6 +367,7 @@ set.seed(4268)
 cv.lasso <- cv.glmnet(x.train, y.train, alpha=1,nfolds=10)
 # The plot is not required, but nice to have:
 plot(cv.lasso)
+cv.lasso$lambda.min
 ```
 
 (ii)
@@ -387,11 +388,11 @@ MSE does not get better than with simple linear regression. Also, none of the co
 
 ## d) (3P)
 
-It is time to use a more advanced prediction method with lover MSE. We therefore turn to a tree-boosting method using the `gbm()` function from the `gbm` package in R.   
+It is time to use a more advanced prediction method with lower MSE. We therefore turn to a tree-boosting method using the `gbm()` function from the `gbm` package in R.   
 
    (i) (1P) Use the same input variables as above (you may drop the quadratic term for `rm`) and fit the model on the training data. Choose reasonable parameters and explain all your choices carefully. 
-   (ii)  Predict on the test set and calculate the MSE. Interpret the result in comparison to what you found in a) and c).  
-   (iii) Look at variable importances using the `summary()` function. 
+   (ii) (1P) Predict on the test set and calculate the MSE. Interpret the result in comparison to what you found in a) and c).  
+   (iii) (1P) Look at variable importances using the `summary()` function. 
 
 **Solution:**
 (i)
@@ -400,10 +401,14 @@ library(gbm)
 r.gbm  <- gbm(medv ~ . , data=d.boston.train,distribution="gaussian",n.trees=1000,interaction.depth=2,shrinkage=0.05)
 ```
 
+Explanation of how n.trees, interaction.depth and shrinkage are chosen.
+
 (ii)
 ```{r}
 mean((d.boston.test$medv -predict(r.gbm,newdata=d.boston.test))^2)
 ```
+
+Most will find that the test error has decreased, which could indicate that there are non-linearities involved in the association between the covariates and the response.
 
 (iii)
 ```{r}
@@ -419,13 +424,13 @@ library(gam)
 r.gam <- gam(medv ~ bs(rm,df=5) +  crim + dis + bs(age,knots=quantile(age,c(0.2,0.4,0.6,0.8))) + black + chas , data=d.boston.train)
 ```
 
-(i) How many degrees of freedom does the spline for `age` in the model consume?
-(ii) Fit the above model and calculate the MSE for the test dataset. Compare to the results from the other methods.
+(i) (1P) How many degrees of freedom does the spline for `age` in the model consume?
+(ii) (1P) Fit the above model and calculate the MSE for the test dataset. Compare to the results from the other methods.
 
 **Solution:**
 
-(i) 7: 5 for the knots + 2
-
+(i) 7: 4 for the knots + 3 (K+3) without the intercept, because the intercept is already in the model, so it should not be counted here. If the answer was 8, we only deducted -0.5 P.
+ 
 (ii) 
 ```{r}
 mean((d.boston.test$medv -predict(r.gam,newdata=d.boston.test))^2)
@@ -434,7 +439,7 @@ So even though we do not use all the regression variables, we get a lower test e
  
  
 ###################################
-# Problem 5 -- Data analysis 1 (xx P)
+# Problem 5 -- Data analysis 1 (17 P)
 ###################################
 
 We will look at a classification problem using the data set \texttt{default.csv} that you can find here.
