@@ -188,7 +188,7 @@ $$
 
 **Questions**
 
-   1. What proportion of the total variance is explained by the first four principal components combined? [0.96]
+   1. What proportion of the total variance is explained by the first four principal components combined? [0.98]
    
    2.  If you want to retain at least 90% of the total variance, how many principal components do you have to keep? [3]
    
@@ -401,7 +401,7 @@ library(gbm)
 r.gbm  <- gbm(medv ~ . , data=d.boston.train,distribution="gaussian",n.trees=1000,interaction.depth=2,shrinkage=0.05)
 ```
 
-Explanation of how n.trees, interaction.depth and shrinkage are chosen.
+Explanation of how n.trees, interaction.depth and shrinkage are chosen. In particular, students should not just use "sufficiently many trees", because n.trees is effectively a tuning parameter in boosting.
 
 (ii)
 ```{r}
