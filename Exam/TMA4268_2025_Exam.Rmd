@@ -249,7 +249,7 @@ Based on this dissimilarity matrix, sketch the dendogram that results from hiera
 
 Complete linkage means that the maximal intercluster dissimilarity between all pairs in a cluster are used. The result therefore looks as follows:
 
-![](tree.jpg){width=30%}
+![](tree.jpg){width=50%}
 
 -1P is deducted for each mistake (including errors on the y-axis, or when the axis is missing).
 
@@ -381,6 +381,7 @@ coef(boston.lasso)
 mse.lasso = mean((y.test - predict(boston.lasso, newx = x.test))^2)
 mse.lasso
 ```
+1P for the correct MSE, 1P for the interpretation:
 MSE does not get better than with simple linear regression. Also, none of the coefficients have become zero. Probably this is a situation where most coefficients are having an effect - that is probably also why they are in the dataset.
 
 
@@ -401,7 +402,7 @@ library(gbm)
 r.gbm  <- gbm(medv ~ . , data=d.boston.train,distribution="gaussian",n.trees=1000,interaction.depth=2,shrinkage=0.05)
 ```
 
-Explanation of how n.trees, interaction.depth and shrinkage are chosen. In particular, students should not just use "sufficiently many trees", because n.trees is effectively a tuning parameter in boosting.
+Explanation of how n.trees, interaction.depth and shrinkage are chosen. In particular, students should not just use "sufficiently many trees", because n.trees is effectively a tuning parameter in boosting. For each parameter that is not explained (or not set in the function), -0.25P.
 
 (ii)
 ```{r}
